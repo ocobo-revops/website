@@ -19,24 +19,41 @@ import {
 } from '~/components/homepage';
 import { Loader } from '~/components/ui/Loader';
 import i18nServer from '~/localization/i18n.server';
-import { createHybridLoader } from '~/modules/cache';
-import { fetchStories } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
 import { getImageOgFullPath } from '~/utils/url';
 
-export const loader = createHybridLoader(
-  async (args: LoaderFunctionArgs) => {
-    await redirectWithLocale(args);
-    const t = await i18nServer.getFixedT(getLang(args.params), 'home');
+export async function loader(args: LoaderFunctionArgs) {
+  await redirectWithLocale(args);
+  const t = await i18nServer.getFixedT(getLang(args.params), 'home');
 
-    const [status, state, storiesData] = await fetchStories();
+  const url = new URL(args.request.url);
+  const lang = getLang(args.params) || 'fr';
 
-    // Handle errors gracefully
-    if (status !== 200 || !storiesData) {
-      console.error(`Failed to fetch stories: ${state}`);
+  // Build API URL with same origin (internal call)
+  const apiUrl = new URL('/api/stories', url.origin);
+  if (lang !== 'fr') apiUrl.searchParams.set('lang', lang);
+
+  try {
+    // Call internal API route (optimized on Vercel)
+    const response = await fetch(apiUrl.toString());
+
+    if (!response.ok) {
+      console.error(`API call failed: ${response.status}`);
+      return {
+        title: t('meta.title'),
+        description: t('meta.description'),
+        stories: [],
+        ogImageSrc: getImageOgFullPath('homepage', args.request.url),
+      };
+    }
+
+    const { data: storiesData, isError } = await response.json();
+
+    if (isError || !storiesData) {
+      console.error('API returned error');
       return {
         title: t('meta.title'),
         description: t('meta.description'),
@@ -77,9 +94,16 @@ export const loader = createHybridLoader(
       stories,
       ogImageSrc: getImageOgFullPath('homepage', args.request.url),
     };
-  },
-  'story', // Use story cache strategy
-);
+  } catch (error) {
+    console.error('Failed to fetch from API:', error);
+    return {
+      title: t('meta.title'),
+      description: t('meta.description'),
+      stories: [],
+      ogImageSrc: getImageOgFullPath('homepage', args.request.url),
+    };
+  }
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (!data) {

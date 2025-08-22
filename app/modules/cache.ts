@@ -100,34 +100,10 @@ export function getHtmlCacheHeaders(bypassCache = false) {
   };
 }
 
-// Legacy functions for backward compatibility - DEPRECATED
-export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
-  return getApiCacheHeaders(strategy, bypassCache);
-}
-
-export function createHybridLoader<T>(
-  fetcher: (args: any) => Promise<T>,
-  _strategy?: CacheStrategy,
-) {
-  return async (args: any) => {
-    const data = await fetcher(args);
-    return data;
-  };
-}
-
-export function getCacheStrategyForPath(pathname: string): CacheStrategy {
-  const pathWithoutLang = pathname.replace(/^\/(en|fr)/, '') || '/';
-
-  if (pathWithoutLang.startsWith('/blog')) {
-    return 'blogPost';
-  }
-
-  if (pathWithoutLang.startsWith('/clients')) {
-    return 'story';
-  }
-
-  return 'static';
-}
+// Removed deprecated functions:
+// - createHybridLoader: Pages now use standard loaders calling API routes
+// - getCacheHeaders: Replaced by getApiCacheHeaders/getHtmlCacheHeaders
+// - getCacheStrategyForPath: HTML pages use unified HTML caching
 
 export function logCacheStrategy(): void {
   const strategy = isUsingGitHub()

@@ -13,8 +13,7 @@ import { ServerRouter } from 'react-router';
 import * as i18n from '~/localization/i18n'; // your i18n configuration file
 import i18nServer from '~/localization/i18n.server';
 import {
-  getCacheHeaders,
-  getCacheStrategyForPath,
+  getHtmlCacheHeaders,
   logCacheStrategy,
   shouldBypassCache,
 } from '~/modules/cache';
@@ -67,10 +66,9 @@ export default async function handleRequest(
           const stream = createReadableStreamFromReadable(body);
           responseHeaders.set('Content-Type', 'text/html');
 
-          // Apply framework-native cache headers at response level
-          const cacheStrategy = getCacheStrategyForPath(pathname);
+          // Apply simplified HTML cache headers at response level
           const bypassCache = shouldBypassCache(request);
-          const cacheHeaders = getCacheHeaders(cacheStrategy, bypassCache);
+          const cacheHeaders = getHtmlCacheHeaders(bypassCache);
 
           // Set cache headers on response (bypasses Vercel framework-level override)
           for (const [key, value] of Object.entries(cacheHeaders)) {

@@ -9,22 +9,27 @@ import { ClientCarousel } from '~/components/ClientCarousel';
 import { Hero, StoryList } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
 import { Loader } from '~/components/ui/Loader';
-import { createHybridLoader } from '~/modules/cache';
-import { fetchStories } from '~/modules/content';
-import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { getMetaTags } from '~/utils/metatags';
 import { getImageOgFullPath } from '~/utils/url';
 
-export const loader = createHybridLoader(
-  async ({ request }: LoaderFunctionArgs) => {
-    const url = new URL(request.url);
-    const tag = url.searchParams.get('tag');
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
 
-    const [status, state, storiesData] = await fetchStories();
+  // Extract existing parameters
+  const tag = url.searchParams.get('tag');
+  const lang = url.searchParams.get('lang') || 'fr';
 
-    // Handle errors gracefully
-    if (status !== 200 || !storiesData) {
-      console.error(`Failed to fetch stories: ${state}`);
+  // Build API URL with same origin (internal call)
+  const apiUrl = new URL('/api/stories', url.origin);
+  if (tag) apiUrl.searchParams.set('tag', tag);
+  if (lang !== 'fr') apiUrl.searchParams.set('lang', lang);
+
+  try {
+    // Call internal API route (optimized on Vercel)
+    const response = await fetch(apiUrl.toString());
+
+    if (!response.ok) {
+      console.error(`API call failed: ${response.status}`);
       return {
         stories: [],
         isError: true,
@@ -32,29 +37,31 @@ export const loader = createHybridLoader(
       };
     }
 
-    const entries = storiesData as MarkdocFile<StoryFrontmatter>[];
+    const { data, isError } = await response.json();
 
-    // Filter and sort stories
-    const filteredEntries = tag
-      ? entries.filter((entry) => entry.frontmatter.tags.includes(tag))
-      : entries;
-
-    const stories = filteredEntries
-      .map((entry) => ({
-        ...entry,
-        _sortDate: new Date(entry.frontmatter.date).getTime(),
-      }))
-      .sort((a, b) => b._sortDate - a._sortDate)
-      .map(({ _sortDate, ...entry }) => entry);
+    if (isError) {
+      console.error('API returned error');
+      return {
+        stories: [],
+        isError: true,
+        ogImageSrc: getImageOgFullPath('clients', request.url),
+      };
+    }
 
     return {
-      stories,
+      stories: data || [],
       isError: false,
       ogImageSrc: getImageOgFullPath('clients', request.url),
     };
-  },
-  'story', // Use story cache strategy
-);
+  } catch (error) {
+    console.error('Failed to fetch from API:', error);
+    return {
+      stories: [],
+      isError: true,
+      ogImageSrc: getImageOgFullPath('clients', request.url),
+    };
+  }
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) {

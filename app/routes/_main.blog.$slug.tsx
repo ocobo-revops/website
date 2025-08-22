@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, MetaFunction, data } from 'react-router';
+import { type LoaderFunctionArgs, MetaFunction } from 'react-router';
 import { useLoaderData } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
@@ -6,8 +6,6 @@ import { css } from '@ocobo/styled-system/css';
 import { BlogArticle } from '~/components/blog';
 import { Container } from '~/components/ui/Container';
 import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
-import { createHybridLoader } from '~/modules/cache';
-import { fetchBlogpost } from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -15,32 +13,46 @@ export const handle = {
   scripts: () => [{ src: 'https://player.ausha.co/ausha-player.js' }],
 };
 
-export const loader = createHybridLoader(
-  async ({ params }: LoaderFunctionArgs) => {
-    const { slug } = params;
+export async function loader({ params, request }: LoaderFunctionArgs) {
+  const { slug } = params;
 
-    if (!slug) {
+  if (!slug) {
+    throw new Response('Not Found', { status: 404 });
+  }
+
+  const url = new URL(request.url);
+  const lang = url.searchParams.get('lang') || 'fr';
+
+  // Build API URL with same origin (internal call)
+  const apiUrl = new URL(`/api/posts/${slug}`, url.origin);
+  if (lang !== 'fr') apiUrl.searchParams.set('lang', lang);
+
+  try {
+    // Call internal API route (optimized on Vercel)
+    const response = await fetch(apiUrl.toString());
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Response('Not Found', { status: 404 });
+      }
+      throw new Response('Internal Server Error', { status: 500 });
+    }
+
+    const { data: article, isError } = await response.json();
+
+    if (isError || !article) {
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchBlogpost(slug);
-
-    if (status !== 200 || !article) {
-      throw new Response('Not Found', { status: 404 });
+    return { article };
+  } catch (error) {
+    if (error instanceof Response) {
+      throw error;
     }
-
-    return data(
-      { article },
-      {
-        headers: {
-          'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
-          Vary: 'Accept-Language',
-        },
-      },
-    );
-  },
-  'blogPost', // Use blog post cache strategy
-);
+    console.error('Failed to fetch from API:', error);
+    throw new Response('Internal Server Error', { status: 500 });
+  }
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   return getMetaTags({
