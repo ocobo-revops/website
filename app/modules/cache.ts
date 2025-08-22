@@ -1,31 +1,31 @@
 /**
- * Cache strategy for React Router loaders
- *
- * - Local filesystem: No caching
- * - GitHub content: Vercel Edge Cache
- * - Testing: ?refresh=1 bypasses cache
+ * Simplified cache strategy for API-first architecture
  */
-
-import type { LoaderFunctionArgs } from 'react-router';
 import { getPrivateEnvVars } from './env.server';
 
-/**
- * Cache strategy types for different content
- */
-export type CacheStrategy = 'blogPost' | 'story' | 'static';
+export type CacheStrategy =
+  | 'blogListing'
+  | 'blogPost'
+  | 'storyListing'
+  | 'story'
+  | 'static';
 
-/**
- * Cache configuration for each strategy type
- */
+// BALANCED: Aggressive cache for individual content, shorter for listings to show new content
 const CACHE_CONFIG = {
-  blogPost: { maxAge: 3600, staleWhileRevalidate: 86400 }, // 1h + 24h
-  story: { maxAge: 3600, staleWhileRevalidate: 86400 }, // 1h + 24h
-  static: { maxAge: 86400, staleWhileRevalidate: 604800 }, // 24h + 7d
+  // Blog post listings: Short cache to show new articles quickly
+  blogListing: { maxAge: 3600, staleWhileRevalidate: 7200 }, // 1h + 2h
+  // Individual blog posts: Long cache since content doesn't change once published
+  blogPost: { maxAge: 604800, staleWhileRevalidate: 1209600 }, // 7d + 14d
+
+  // Story listings: Short cache to show new stories quickly
+  storyListing: { maxAge: 3600, staleWhileRevalidate: 7200 }, // 1h + 2h
+  // Individual stories: Long cache since content doesn't change once published
+  story: { maxAge: 1209600, staleWhileRevalidate: 2592000 }, // 14d + 30d
+
+  // Static content: cache for 30 days + 60 days stale = 90 days total
+  static: { maxAge: 2592000, staleWhileRevalidate: 5184000 }, // 30d + 60d
 } as const;
 
-/**
- * Check if using GitHub as content source
- */
 function isUsingGitHub(): boolean {
   try {
     const { readContentFrom } = getPrivateEnvVars();
@@ -35,26 +35,23 @@ function isUsingGitHub(): boolean {
   }
 }
 
-/**
- * Check if request should bypass cache (refresh parameter)
- */
 export function shouldBypassCache(request: Request): boolean {
   const url = new URL(request.url);
   return url.searchParams.has('refresh');
 }
 
-/**
- * Build cache control header based on strategy
- */
 function buildCacheControl(strategy: CacheStrategy): string {
   const { maxAge, staleWhileRevalidate } = CACHE_CONFIG[strategy];
   return `s-maxage=${maxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
 }
 
 /**
- * Get cache headers for GitHub content or local filesystem
+ * Cache headers for API routes (data caching)
  */
-export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
+export function getApiCacheHeaders(
+  strategy: CacheStrategy,
+  bypassCache = false,
+) {
   if (bypassCache) {
     return {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -65,15 +62,12 @@ export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
   if (isUsingGitHub()) {
     const cacheControl = buildCacheControl(strategy);
     return {
-      // Standard header for browsers and other CDNs
       'Cache-Control': cacheControl,
-      // Vercel-specific header (highest priority, Vercel-only)
       'Vercel-CDN-Cache-Control': cacheControl,
       Vary: 'Accept-Language',
     };
   }
 
-  // Local filesystem: no caching
   return {
     'Cache-Control': 'no-cache',
     'Vercel-CDN-Cache-Control': 'no-cache',
@@ -81,28 +75,47 @@ export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
 }
 
 /**
- * Hybrid loader that returns data for meta functions with cache headers
- *
- * This is the main loader function used throughout the application.
- * It handles both data access (for meta functions) and caching.
- *
- * Note: Cache headers are now applied at the HTML response level in entry.server.tsx
+ * Cache headers for HTML pages (rendering caching)
+ * Shorter cache for faster content updates
  */
+export function getHtmlCacheHeaders(bypassCache = false) {
+  if (bypassCache) {
+    return {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Vercel-CDN-Cache-Control': 'no-cache, no-store, must-revalidate',
+    };
+  }
+
+  if (isUsingGitHub()) {
+    return {
+      'Cache-Control': 's-maxage=300, stale-while-revalidate=3600', // 5min + 1h
+      'Vercel-CDN-Cache-Control': 's-maxage=300, stale-while-revalidate=3600',
+      Vary: 'Accept-Language',
+    };
+  }
+
+  return {
+    'Cache-Control': 'no-cache',
+    'Vercel-CDN-Cache-Control': 'no-cache',
+  };
+}
+
+// Legacy functions for backward compatibility - DEPRECATED
+export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
+  return getApiCacheHeaders(strategy, bypassCache);
+}
+
 export function createHybridLoader<T>(
-  fetcher: (args: LoaderFunctionArgs) => Promise<T>,
-  _strategy?: CacheStrategy, // Keep for backward compatibility but no longer used
+  fetcher: (args: any) => Promise<T>,
+  _strategy?: CacheStrategy,
 ) {
-  return async (args: LoaderFunctionArgs) => {
+  return async (args: any) => {
     const data = await fetcher(args);
     return data;
   };
 }
 
-/**
- * Determine cache strategy based on pathname
- */
 export function getCacheStrategyForPath(pathname: string): CacheStrategy {
-  // Remove language prefix if present
   const pathWithoutLang = pathname.replace(/^\/(en|fr)/, '') || '/';
 
   if (pathWithoutLang.startsWith('/blog')) {
@@ -113,13 +126,9 @@ export function getCacheStrategyForPath(pathname: string): CacheStrategy {
     return 'story';
   }
 
-  // Default to static for homepage and other pages
   return 'static';
 }
 
-/**
- * Log cache strategy being used on server startup
- */
 export function logCacheStrategy(): void {
   const strategy = isUsingGitHub()
     ? 'Vercel Edge Cache'
