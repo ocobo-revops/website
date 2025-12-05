@@ -140,7 +140,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   basepath: "${loaderData?.agoBasePath || 'https://ocobo.useago.com/'}",
                   widgetApiKey: "${loaderData?.agoApiKey}",
                   title: "🤖 Ocobot",
-                  icon: "https://media.licdn.com/dms/image/v2/D4E0BAQELEQbhWlOLCA/company-logo_200_200/company-logo_200_200/0/1716484672248/ocobofr_logo?e=1763596800&v=beta&t=AGsBXIuLYBJJrtvc35jvRkKOyrfqnpTvNsNttVOAJrM",
+                  icon: "https://www.ocobo.co/android-chrome-192x192.png",
                   prompt: "👋 Posez vos questions à l'IA — Ocobot vous explique notre approche, sans pitch de vente.",
                   colors: {
                     button: "#232323",
