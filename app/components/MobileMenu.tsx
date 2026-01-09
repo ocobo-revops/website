@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { ark } from '@ark-ui/react/factory';
 import { createContext } from '@radix-ui/react-context';
 import * as Portal from '@radix-ui/react-portal';
-import { Slot } from '@radix-ui/react-slot';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useNavigation } from 'react-router';
 
@@ -61,7 +61,7 @@ const MobileMenu: React.FunctionComponent<React.PropsWithChildren> = ({
 
   return (
     <Portal.Root>
-      <RemoveScroll as={Slot} allowPinchZoom enabled>
+      <RemoveScroll as={ark.div} allowPinchZoom enabled>
         <div
           className={css({
             position: 'fixed',

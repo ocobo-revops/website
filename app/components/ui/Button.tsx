@@ -1,28 +1,21 @@
 import * as React from 'react';
 
-import { Slot } from '@radix-ui/react-slot';
+import { ark } from '@ark-ui/react/factory';
 
 import { HTMLStyledProps, styled } from '@ocobo/styled-system/jsx';
 import { button } from '@ocobo/styled-system/recipes';
 
+// BaseButton: unstyled Ark UI button for composition (used by IconButton)
 const BaseButton = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    asChild?: boolean;
-    children?: React.ReactNode;
-  }
->(({ asChild = false, children, ...props }, ref) => {
-  const Comp = asChild ? Slot : 'button';
-  return (
-    <Comp ref={ref} {...props}>
-      {children}
-    </Comp>
-  );
+  React.ComponentPropsWithoutRef<typeof ark.button>
+>((props, ref) => {
+  return <ark.button ref={ref} {...props} />;
 });
+BaseButton.displayName = 'BaseButton';
 
-BaseButton.displayName = 'Button';
-
-const Button = styled(BaseButton, button);
+// Button: styled with button recipe
+const Button = styled(ark.button, button);
 type ButtonProps = HTMLStyledProps<typeof Button>;
 
 export { Button, BaseButton };

@@ -1,42 +1,72 @@
 import * as React from 'react';
 
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { createStyleContext } from '@shadow-panda/style-context';
+import { Accordion as ArkAccordion } from '@ark-ui/react/accordion';
 import { ChevronRight } from 'lucide-react';
 
-import { styled } from '@ocobo/styled-system/jsx';
+import { cx } from '@ocobo/styled-system/css';
 import { accordion } from '@ocobo/styled-system/recipes';
 
-const { withProvider, withContext } = createStyleContext(accordion);
-
-const Header = withContext(styled(AccordionPrimitive.Header), 'header');
-
 const TriggerBase = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ children, ...props }, ref) => (
-  <Header>
-    <AccordionPrimitive.Trigger ref={ref} {...props}>
-      {children}
-      <ChevronRight />
-    </AccordionPrimitive.Trigger>
-  </Header>
-));
-TriggerBase.displayName = AccordionPrimitive.Trigger.displayName;
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<typeof ArkAccordion.ItemTrigger>
+>(({ children, className, ...props }, ref) => {
+  const styles = accordion();
+  return (
+    <div className={styles.header}>
+      <ArkAccordion.ItemTrigger
+        ref={ref}
+        className={cx(styles.trigger, className)}
+        {...props}
+      >
+        {children}
+        <ChevronRight />
+      </ArkAccordion.ItemTrigger>
+    </div>
+  );
+});
+TriggerBase.displayName = 'AccordionTrigger';
 
+// Wrapper for content with inner div for animation
 const ContentBase = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ children, ...props }, ref) => (
-  <AccordionPrimitive.Content ref={ref} {...props}>
-    <div>{children}</div>
-  </AccordionPrimitive.Content>
-));
-ContentBase.displayName = AccordionPrimitive.Content.displayName;
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof ArkAccordion.ItemContent>
+>(({ children, ...props }, ref) => {
+  const styles = accordion();
+  return (
+    <ArkAccordion.ItemContent ref={ref} className={styles.content} {...props}>
+      <div>{children}</div>
+    </ArkAccordion.ItemContent>
+  );
+});
+ContentBase.displayName = 'AccordionContent';
 
-const Root = withProvider(styled(AccordionPrimitive.Root), 'root');
-const Item = withContext(styled(AccordionPrimitive.Item), 'item');
-const Trigger = withContext(styled(TriggerBase), 'trigger');
-const Content = withContext(styled(ContentBase), 'content');
+const RootBase = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof ArkAccordion.Root>
+>((props, ref) => {
+  const styles = accordion();
+  return <ArkAccordion.Root ref={ref} className={styles.root} {...props} />;
+});
+RootBase.displayName = 'AccordionRoot';
 
-export const Accordion = { Root, Item, Trigger, Content };
+const ItemBase = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof ArkAccordion.Item>
+>(({ className, ...props }, ref) => {
+  const styles = accordion();
+  return (
+    <ArkAccordion.Item
+      ref={ref}
+      className={cx(styles.item, className)}
+      {...props}
+    />
+  );
+});
+ItemBase.displayName = 'AccordionItem';
+
+export const Accordion = {
+  Root: RootBase,
+  Item: ItemBase,
+  Trigger: TriggerBase,
+  Content: ContentBase,
+};
