@@ -1,0 +1,34 @@
+# Workflow Status Template
+
+# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
+# Implementation phase is tracked separately in sprint-status.yaml
+
+# STATUS DEFINITIONS:
+# ==================
+# Initial Status (before completion):
+#   - required: Must be completed to progress
+#   - optional: Can be completed but not required
+#   - recommended: Strongly suggested but not required
+#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
+#
+# Completion Status:
+#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
+#   - skipped: Optional/conditional workflow that was skipped
+
+generated: ""
+project: "ocobo-website"
+project_type: "web-application"
+selected_track: ""
+field_type: "brownfield"
+workflow_path: ""
+workflow_status: ""
+
+# User Description
+user_description: |
+  Clean pass avant refonte UI conséquente:
+  - Mise à jour des dépendances
+  - Nettoyage des fichiers obsolètes
+  - Challenge de l'architecture
+  - Migration Radix UI → Ark UI
+  - Optimisation des structures et patterns
+  Objectif: Remise à niveau et préparation pour refonte graphique
