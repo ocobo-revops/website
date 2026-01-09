@@ -17,10 +17,10 @@ export const keyframes = defineKeyframes({
   },
   'accordion-down': {
     from: { height: 0 },
-    to: { height: 'var(--radix-accordion-content-height)' },
+    to: { height: 'var(--height)' }, // Ark UI provides --height CSS variable
   },
   'accordion-up': {
-    from: { height: 'var(--radix-accordion-content-height)' },
+    from: { height: 'var(--height)' }, // Ark UI provides --height CSS variable
     to: { height: 0 },
   },
   slide: {

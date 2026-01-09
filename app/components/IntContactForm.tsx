@@ -1,3 +1,4 @@
+import { createListCollection } from '@ark-ui/react/select';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'react-router';
 
@@ -7,6 +8,15 @@ import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Label } from './ui/Label';
 import { Select } from './ui/Select';
+
+// Create collection for team size select
+const teamSizeCollection = createListCollection({
+  items: [
+    { value: '1', label: '1-10' },
+    { value: '11', label: '11-50' },
+    { value: '50', label: '50+' },
+  ],
+});
 
 const ContactForm: React.FunctionComponent<React.PropsWithChildren> = (
   props,
@@ -59,15 +69,22 @@ const ContactForm: React.FunctionComponent<React.PropsWithChildren> = (
         })}
       >
         <Label htmlFor="team">{t('form.team', { ns: 'contact' })}*</Label>
-        <Select.Root name="team" defaultValue="1" required>
+        <Select.Root
+          name="team"
+          collection={teamSizeCollection}
+          defaultValue={['1']}
+          required
+        >
           <Select.Trigger id="team">
             <Select.Value />
           </Select.Trigger>
           <Select.Content>
             <Select.Group>
-              <Select.Item value="1">1-10</Select.Item>
-              <Select.Item value="11">11-50</Select.Item>
-              <Select.Item value="50">50+</Select.Item>
+              {teamSizeCollection.items.map((item) => (
+                <Select.Item key={item.value} item={item}>
+                  {item.label}
+                </Select.Item>
+              ))}
             </Select.Group>
           </Select.Content>
         </Select.Root>
