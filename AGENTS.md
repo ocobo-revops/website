@@ -36,6 +36,52 @@ Welcome AI agents! This file provides specialized navigation and context for dif
 - **Run `pnpm check`** before any commit
 - **Consider SSR implications** — server-first architecture
 
+## Search & Discovery Tools
+
+> [!CAUTION]
+> **MANDATORY: Use mgrep for all semantic code searches**
+
+### Critical Rule: mgrep Only
+
+**ALWAYS use mgrep for semantic searches in the codebase.** Never use grep, the Grep tool, or ripgrep directly.
+
+mgrep provides semantic understanding of code context, unlike basic text search tools.
+
+### When to Use mgrep
+
+- Searching for concepts or patterns in the codebase
+- Finding functions, classes, or variables by name
+- Locating module references or imports
+- Any search requiring semantic understanding of code
+- Exploratory searches to understand project structure
+
+### Syntax
+
+```bash
+# Local codebase search
+mgrep "query"
+
+# Web search
+mgrep --web "query"
+```
+
+### Examples
+
+**Correct:**
+```bash
+mgrep "authentication function"
+mgrep "UserService class"
+mgrep "i18n configuration"
+mgrep --web "React Router 7 migration guide"
+```
+
+**Incorrect - DO NOT USE:**
+```bash
+grep "authentication"        # ❌ Do not use grep
+Grep tool pattern="auth"     # ❌ Do not use Grep tool
+rg "UserService"             # ❌ Do not use ripgrep
+```
+
 ## Navigation by Agent Specialization
 
 ### 🔨 Development & Code Agents
