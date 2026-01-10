@@ -1,27 +1,22 @@
-# Workflow Status Template
+# Workflow Status - Quick Flow Mode
 
-# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
-# Implementation phase is tracked separately in sprint-status.yaml
+# This project uses Quick Flow methodology - minimal planning with direct implementation
+# For Quick Flow work, use the quick-flow-solo-dev agent
+# This file documents completed work for reference only
 
 # STATUS DEFINITIONS:
 # ==================
-# Initial Status (before completion):
-#   - required: Must be completed to progress
-#   - optional: Can be completed but not required
-#   - recommended: Strongly suggested but not required
-#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
-#
 # Completion Status:
-#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
-#   - skipped: Optional/conditional workflow that was skipped
+#   - {file-path}: File created/found
+#   - completed: Work completed without artifact
+#   - skipped: Not applicable
 
-generated: ""
-project: "ocobo-website"
+generated: "2026-01-09"
+project: "website"
 project_type: "web-application"
-selected_track: ""
+selected_track: "quick-flow"
 field_type: "brownfield"
-workflow_path: ""
-workflow_status: ""
+workflow_path: "quick-flow-brownfield"
 
 # User Description
 user_description: |
@@ -32,3 +27,18 @@ user_description: |
   - Migration Radix UI → Ark UI
   - Optimisation des structures et patterns
   Objectif: Remise à niveau et préparation pour refonte graphique
+
+# Quick Flow Work Completed
+workflow_status:
+  cleanup-and-migration: "_bmad-output/implementation-artifacts/tech-spec-ocobo-cleanup-migration-ui.md"
+  dependencies-cleanup: "_bmad-output/implementation-artifacts/tech-spec-dependencies-cleanup.md"
+
+# Next Steps (Flexible - Quick Flow Mode)
+# ========================================
+# Use quick-flow-solo-dev agent for:
+# - Direct implementation from user requests
+# - Optional tech-specs when helpful
+# - Flexible, rapid development
+#
+# No formal workflow tracking needed in Quick Flow mode.
+# This file serves as historical reference only.
