@@ -1,44 +1,42 @@
 import * as React from 'react';
 
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import { createStyleContext } from '@shadow-panda/style-context';
+import { ScrollArea as ArkScrollArea } from '@ark-ui/react/scroll-area';
 
 import { styled } from '@ocobo/styled-system/jsx';
 import { scrollArea } from '@ocobo/styled-system/recipes';
 
-const { withProvider, withContext } = createStyleContext(scrollArea);
-
-const Viewport = withContext(ScrollAreaPrimitive.Viewport, 'viewport');
-const Corner = withContext(ScrollAreaPrimitive.Corner, 'corner');
-const Thumb = withContext(ScrollAreaPrimitive.ScrollAreaThumb, 'thumb');
+// Ark UI uses styled() directly, no @shadow-panda/style-context needed
+const StyledRoot = styled(ArkScrollArea.Root);
+const StyledViewport = styled(ArkScrollArea.Viewport);
+const StyledScrollbar = styled(ArkScrollArea.Scrollbar);
+const StyledThumb = styled(ArkScrollArea.Thumb);
+const StyledCorner = styled(ArkScrollArea.Corner);
 
 const BaseScrollBar = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof ArkScrollArea.Scrollbar>
 >(({ orientation = 'vertical', ...props }, ref) => (
-  <ScrollAreaPrimitive.ScrollAreaScrollbar
-    ref={ref}
-    orientation={orientation}
-    data-orientation={orientation}
-    {...props}
-  >
-    <Thumb />
-  </ScrollAreaPrimitive.ScrollAreaScrollbar>
+  <StyledScrollbar ref={ref} orientation={orientation} {...props}>
+    <StyledThumb />
+  </StyledScrollbar>
 ));
-BaseScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
+BaseScrollBar.displayName = 'ScrollBar';
 
-export const ScrollBar = withContext(styled(BaseScrollBar), 'scrollbar');
+export const ScrollBar = BaseScrollBar;
 
 const BaseScrollArea = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root ref={ref} {...props}>
-    <Viewport>{children}</Viewport>
-    <ScrollBar />
-    <Corner />
-  </ScrollAreaPrimitive.Root>
-));
-BaseScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<typeof ArkScrollArea.Root>
+>(({ children, ...props }, ref) => {
+  const styles = scrollArea();
+  return (
+    <StyledRoot ref={ref} className={styles.root} {...props}>
+      <StyledViewport className={styles.viewport}>{children}</StyledViewport>
+      <ScrollBar className={styles.scrollbar} />
+      <StyledCorner className={styles.corner} />
+    </StyledRoot>
+  );
+});
+BaseScrollArea.displayName = 'ScrollArea';
 
-export const ScrollArea = withProvider(styled(BaseScrollArea), 'root');
+export const ScrollArea = BaseScrollArea;

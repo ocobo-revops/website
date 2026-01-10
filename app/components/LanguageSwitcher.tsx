@@ -1,3 +1,4 @@
+import { createListCollection } from '@ark-ui/react/select';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
@@ -69,10 +70,17 @@ const LanguageSwitcher = () => {
 
   if (!params.lang || supportedLngs.length < 2) return null;
 
+  // Create collection for Ark UI Select
+  const languageCollection = createListCollection({
+    items: supportedLngs.map((lng) => ({ value: lng, label: lng })),
+  });
+
   return (
     <Select.Root
-      defaultValue={lang}
-      onValueChange={(value) => {
+      collection={languageCollection}
+      defaultValue={[lang]}
+      onValueChange={(details: any) => {
+        const value = details.value[0];
         const convertPathname = (lng: string) => {
           return pathname.replace(`/${lang}`, `/${lng}`);
         };
@@ -94,11 +102,11 @@ const LanguageSwitcher = () => {
       </Select.Trigger>
 
       <Select.Content>
-        {supportedLngs.map((lng) => (
-          <Select.Item key={lng} value={lng}>
+        {languageCollection.items.map((item) => (
+          <Select.Item key={item.value} item={item}>
             <span className={flex({ gap: '2', alignItems: 'center' })}>
-              <Flag lang={lng} />
-              {t(`common:language.${lng}`)}
+              <Flag lang={item.value} />
+              {t(`common:language.${item.value}`)}
             </span>
           </Select.Item>
         ))}

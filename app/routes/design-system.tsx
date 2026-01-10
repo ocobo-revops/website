@@ -1,3 +1,4 @@
+import { createListCollection } from '@ark-ui/react/select';
 import { Check, ChevronRight, Menu, X } from 'lucide-react';
 import type { MetaFunction } from 'react-router';
 
@@ -15,6 +16,17 @@ import { Label } from '~/components/ui/Label';
 import { Logocobo } from '~/components/ui/Logocobo';
 import { Select } from '~/components/ui/Select';
 import { getMetaTags } from '~/utils/metatags';
+
+// Create collection for fruit select
+const fruitCollection = createListCollection({
+  items: [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'blueberry', label: 'Blueberry' },
+    { value: 'grapes', label: 'Grapes' },
+    { value: 'pineapple', label: 'Pineapple' },
+  ],
+});
 
 export const meta: MetaFunction = () => {
   return getMetaTags({
@@ -560,18 +572,18 @@ export default function Index() {
             <Label htmlFor="email_error" className={css({})}>
               Select
             </Label>
-            <Select.Root>
+            <Select.Root collection={fruitCollection}>
               <Select.Trigger>
                 <Select.Value placeholder="Select a fruit" />
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
                   <Select.Label>Fruits</Select.Label>
-                  <Select.Item value="apple">Apple</Select.Item>
-                  <Select.Item value="banana">Banana</Select.Item>
-                  <Select.Item value="blueberry">Blueberry</Select.Item>
-                  <Select.Item value="grapes">Grapes</Select.Item>
-                  <Select.Item value="pineapple">Pineapple</Select.Item>
+                  {fruitCollection.items.map((item) => (
+                    <Select.Item key={item.value} item={item}>
+                      {item.label}
+                    </Select.Item>
+                  ))}
                 </Select.Group>
               </Select.Content>
             </Select.Root>

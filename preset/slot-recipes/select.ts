@@ -20,7 +20,7 @@ export const select = defineSlotRecipe({
       display: 'flex',
       h: 'input',
       w: 'full',
-      maxWidth: '[240px]',
+      // Note: maxWidth can be overridden via className prop if needed
       alignItems: 'center',
       justifyContent: 'space-between',
       border: 'thin',
@@ -31,9 +31,14 @@ export const select = defineSlotRecipe({
       gap: '2',
       cursor: 'pointer',
       focusRingOffsetColor: 'background',
+      transition: 'colors',
 
       _placeholder: {
         color: 'muted',
+      },
+
+      _hover: {
+        borderColor: 'gray',
       },
 
       _focusVisible: {
@@ -45,20 +50,23 @@ export const select = defineSlotRecipe({
         cursor: 'not-allowed',
         opacity: '0.5',
       },
+
+      '&[data-state=open]': {
+        borderColor: 'gray',
+      },
     },
     viewport: {
       p: '1',
 
       '&[data-position=popper]': {
-        h: 'var(--radix-select-trigger-height)',
+        // Ark UI uses anchor positioning, no CSS variables needed
         w: 'full',
-        minW: 'var(--radix-select-trigger-width)',
       },
     },
     content: {
       position: 'relative',
       zIndex: 50,
-      minW: '8rem',
+      minW: 'var(--reference-width)', // Ark UI provides trigger width
       overflow: 'hidden',
       border: 'thin',
       borderColor: 'gray.light',
@@ -129,10 +137,29 @@ export const select = defineSlotRecipe({
       pl: '8',
       pr: '2',
       outline: '2px solid transparent',
+      transition: 'colors',
+
+      _hover: {
+        bg: 'gray.light',
+        color: 'dark',
+      },
 
       _focus: {
         bg: 'gray.light',
         color: 'dark',
+      },
+
+      // Ark UI uses data-highlighted for keyboard/mouse hover
+      '&[data-highlighted]': {
+        bg: 'gray.light',
+        color: 'dark',
+      },
+
+      // Ark UI uses data-selected for selected items
+      '&[data-selected]': {
+        bg: 'gray.light',
+        color: 'dark',
+        fontWeight: 'semibold',
       },
 
       ['&[data-disabled]']: {
