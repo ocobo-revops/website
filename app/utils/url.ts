@@ -11,6 +11,7 @@ export const url = {
   webinars: '/webinars',
   blog: '/blog',
   contact: '/contact',
+  offers: '/offers',
   tools: '/tools',
   privacy: '/privacy',
   notFound: '/404',

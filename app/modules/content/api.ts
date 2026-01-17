@@ -9,6 +9,8 @@ import type { MarkdocFile } from '~/types';
 import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
+  type OfferFrontmatter,
+  OfferFrontmatterSchema,
   type PageFrontmatter,
   PageFrontmatterSchema,
   type StoryFrontmatter,
@@ -28,6 +30,7 @@ export const ContentValidators = {
     'Blogpost',
   ),
   page: createValidator<PageFrontmatter>(PageFrontmatterSchema, 'Page'),
+  offer: createValidator<OfferFrontmatter>(OfferFrontmatterSchema, 'Offer'),
 } as const;
 
 /**
@@ -100,12 +103,23 @@ export class PageFetcher extends GenericContentFetcher {
   }
 }
 
+export class OfferFetcher extends GenericContentFetcher {
+  async fetchOffer(path: string, slug: string = '') {
+    return this.fetchSingle(path, slug, ContentValidators.offer);
+  }
+
+  async fetchOffers(path: string) {
+    return this.fetchMultiple(path, ContentValidators.offer);
+  }
+}
+
 /**
  * Default instances for immediate use
  */
 export const storyFetcher = new StoryFetcher();
 export const blogpostFetcher = new BlogpostFetcher();
 export const pageFetcher = new PageFetcher();
+export const offerFetcher = new OfferFetcher();
 export const genericFetcher = new GenericContentFetcher();
 
 /**
@@ -141,6 +155,16 @@ export async function fetchPage(path: string, slug: string = '') {
 
 export async function fetchPages(path: string) {
   return pageFetcher.fetchPages(path);
+}
+
+export async function fetchOffer(slug: string = '', language: string = 'fr') {
+  const path = `offers/${language}`;
+  return offerFetcher.fetchOffer(path, slug);
+}
+
+export async function fetchOffers(language: string = 'fr') {
+  const path = `offers/${language}`;
+  return offerFetcher.fetchOffers(path);
 }
 
 /**

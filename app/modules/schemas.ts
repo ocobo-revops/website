@@ -130,12 +130,49 @@ export const PageFrontmatterSchema = z.object({
 });
 
 /**
+ * Offer frontmatter schema
+ * Job offers and career opportunities
+ */
+export const OfferFrontmatterSchema = z.object({
+  /** Job title */
+  title: CommonSchemas.nonEmptyString,
+
+  /** Job description/summary */
+  description: CommonSchemas.nonEmptyString,
+
+  /** Contract type (CDI, CDD, Freelance, etc.) */
+  contractType: CommonSchemas.nonEmptyString,
+
+  /** Job location */
+  location: CommonSchemas.nonEmptyString,
+
+  /** Required experience level (Junior, Mid-level, Senior, etc.) */
+  experience: CommonSchemas.nonEmptyString,
+
+  /** Required education level (Bac+3, Bac+5, etc.) */
+  education: CommonSchemas.nonEmptyString,
+
+  /** Optional department */
+  department: CommonSchemas.nonEmptyString.optional(),
+
+  /** Optional salary range */
+  salary: CommonSchemas.nonEmptyString.optional(),
+
+  /** Job tags for categorization */
+  tags: CommonSchemas.stringArray,
+
+  /** Publication date */
+  date: CommonSchemas.dateString,
+});
+
+/**
  * Inferred TypeScript types from Zod schemas
  * These replace the manually defined types
  */
 export type StoryFrontmatter = z.infer<typeof StoryFrontmatterSchema>;
 export type BlogpostFrontmatter = z.infer<typeof BlogpostFrontmatterSchema>;
 export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
+export type OfferFrontmatter = z.infer<typeof OfferFrontmatterSchema>;
 
 /**
  * Union type for all frontmatter types
@@ -143,7 +180,8 @@ export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
 export type AnyFrontmatter =
   | StoryFrontmatter
   | BlogpostFrontmatter
-  | PageFrontmatter;
+  | PageFrontmatter
+  | OfferFrontmatter;
 
 /**
  * Validation result type
@@ -254,6 +292,15 @@ export const Validators = {
    */
   page: (data: unknown, context?: string): ValidationResult<PageFrontmatter> =>
     validateWithSchema(PageFrontmatterSchema, data, context),
+
+  /**
+   * Validate offer frontmatter with detailed error reporting
+   */
+  offer: (
+    data: unknown,
+    context?: string,
+  ): ValidationResult<OfferFrontmatter> =>
+    validateWithSchema(OfferFrontmatterSchema, data, context),
 } as const;
 
 /**
@@ -276,6 +323,12 @@ export function isValidPageFrontmatter(data: unknown): data is PageFrontmatter {
   return PageFrontmatterSchema.safeParse(data).success;
 }
 
+export function isValidOfferFrontmatter(
+  data: unknown,
+): data is OfferFrontmatter {
+  return OfferFrontmatterSchema.safeParse(data).success;
+}
+
 /**
  * Schema registry for dynamic validation
  */
@@ -283,6 +336,7 @@ export const SchemaRegistry = {
   story: StoryFrontmatterSchema,
   blogpost: BlogpostFrontmatterSchema,
   page: PageFrontmatterSchema,
+  offer: OfferFrontmatterSchema,
 } as const;
 
 /**
