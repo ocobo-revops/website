@@ -53,7 +53,7 @@ export function getPrivateEnvVars(): PrivateEnvVars {
     }
 
     const githubRepoAPIUrl = `https://api.github.com/repos/${githubAccount}/${githubRepo}/contents`;
-    const localeRepoAPIUrl = untildify(`~/projects/${githubRepo}`);
+    const localeRepoAPIUrl = untildify(`~/projects/ocobo/${githubRepo}`);
 
     const readContentFrom: 'locale' | 'github' =
       process.env.NODE_ENV === 'production'
