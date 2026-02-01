@@ -23,7 +23,7 @@ export const carousel = definePattern({
       scrollbarWidth: hideScrollbar ? 'none' : 'auto',
       WebkitOverflowScrolling: 'touch',
       '&::-webkit-scrollbar': {
-        display: hideScrollbar ? 'none' : 'auto',
+        display: hideScrollbar ? 'none' : 'block',
       },
       ...rest,
     };

@@ -29,3 +29,14 @@ Created: 2026-02-01T12:00:00Z
 - Ready for implementation
 
 ---
+
+## Feature 1: Upgrade Panda CSS v0.37 → v1.8 and Ark UI to v5.30
+- Upgraded @pandacss/dev, @pandacss/preset-base, @pandacss/preset-panda, @pandacss/types from ^0.37.2 → ^1.8.1
+- Ark UI already at ^5.30.0, no change needed
+- Removed unused @shadow-panda/preset devDependency
+- Fixed: definePreset now requires `name` property (added 'ocobo-preset')
+- Fixed: carousel pattern `display: 'auto'` → `display: 'block'` (stricter types in v1)
+- Kept @shadow-panda/style-context (still used by NavigationMenu.tsx)
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests ✅ (2 pre-existing failures unrelated)
+
+---

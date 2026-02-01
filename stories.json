@@ -32,10 +32,10 @@
         "Run pnpm dev:local — site renders without console errors",
         "Update docs/development/getting-started.md with new dep versions"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-01T16:19:00Z"
     },
     {
       "id": 2,

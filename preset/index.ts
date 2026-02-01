@@ -16,6 +16,7 @@ import { tokens } from './tokens';
 import { utilities } from './utilities';
 
 export default definePreset({
+  name: 'ocobo-preset',
   presets: [pandaPreset],
   globalVars,
   globalCss,
