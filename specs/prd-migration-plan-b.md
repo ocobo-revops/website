@@ -99,6 +99,15 @@ Split `locales/fr/common.json` → per-page namespace files:
 4. Update `AGENTS.md` constraints and navigation if changed.
 5. Archive or remove obsolete prototype specs that no longer apply.
 
+### Continuous: Migration notes
+
+After each step, update `docs/migration-notes.md` with:
+- **Deferred issues** — bugs or tech debt spotted but out of scope for this step.
+- **Learnings** — patterns discovered, gotchas, decisions made and why.
+- **Ideas / future refactors** — improvements to revisit later.
+
+Delete this file after the migration is fully complete.
+
 ---
 
 ## External links kept until migrated

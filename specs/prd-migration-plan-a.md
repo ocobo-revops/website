@@ -132,6 +132,15 @@ After **each step above**, update relevant docs:
 
 **Rule**: No step is complete until its doc impact is assessed and updated.
 
+### Continuous: Migration notes
+
+After each step, update `docs/migration-notes.md` with:
+- **Deferred issues** — bugs or tech debt spotted but out of scope for this step.
+- **Learnings** — patterns discovered, gotchas, decisions made and why.
+- **Ideas / future refactors** — improvements to revisit in Plan B or later.
+
+Delete this file after the migration branch merges.
+
 ---
 
 ## Verification
