@@ -92,10 +92,10 @@
         "Update docs/architecture/patterns.md with feature flag pattern",
         "Update docs/development/getting-started.md with env vars"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-01T16:50:00Z"
     },
     {
       "id": 5,
@@ -161,7 +161,7 @@
       "description": "Migrate Home page (redesign)",
       "steps": [
         "Update route _main.($lang)._index.tsx with new loader + meta",
-        "Add home.* keys to locales/fr/common.json, stub en",
+        "Fill locales/{fr,en}/home.json with page content keys",
         "Port Home components → app/components/home/",
         "Convert styled() → recipes, hardcoded text → t()",
         "Convert HashRouter Link → NavLink",
@@ -182,7 +182,7 @@
       "description": "Migrate Offer page + route consolidation with redirects",
       "steps": [
         "Create route _main.($lang).offer.tsx with loader + meta",
-        "Add offer.* keys to locales/fr/common.json, stub en",
+        "Fill locales/{fr,en}/offer.json with page content keys",
         "Port Offer components → app/components/offer/",
         "Convert styled() → recipes, hardcoded text → t()",
         "Remove old /strategies-revenue-operations and /projets-revops routes",
@@ -206,7 +206,7 @@
       "description": "Migrate Method page",
       "steps": [
         "Create route _main.($lang).method.tsx with loader + meta",
-        "Add method.* keys to locales/fr/common.json, stub en",
+        "Fill locales/{fr,en}/method.json with page content keys",
         "Port Method components → app/components/method/",
         "Convert styled() → recipes, hardcoded text → t()",
         "Update useMenuItems.ts + app/utils/url.ts",
@@ -227,7 +227,7 @@
       "description": "Migrate About Us page",
       "steps": [
         "Create route _main.($lang).about-us.tsx with loader + meta",
-        "Add about.* keys to locales/fr/common.json, stub en",
+        "Fill locales/{fr,en}/about.json with page content keys",
         "Port About Us components → app/components/about/",
         "Convert styled() → recipes, hardcoded text → t()",
         "Remove external Notion link from nav",

@@ -9,7 +9,7 @@ Plan A delivers the foundation: upgraded deps, design system, layout, P1 pages, 
 1. Migrate P2 pages: Technology, Studio.
 2. Redesign existing pages (Blog, Stories, Contact) to fully match prototype.
 3. Migrate P3–P4 pages: Jobs, Podcasts (replacing external links).
-4. Split localisation into per-page namespace files.
+4. Add P2+ localisation namespaces, remove legacy ones, complete EN translations.
 5. Clean dependencies and remove unused components.
 6. Complete EN translations.
 7. Add E2E tests and finalise documentation.
@@ -57,13 +57,13 @@ Port prototype section components, match visual design exactly.
 
 **Doc update**: `app/utils/url.ts`, `useMenuItems.ts`.
 
-### Step 4: Localisation cleanup
+### Step 4: Localisation — add P2+ namespaces and clean up
 
-Split `locales/fr/common.json` → per-page namespace files:
-- `locales/fr/home.json`, `locales/fr/offer.json`, `locales/fr/method.json`, `locales/fr/about.json`, `locales/fr/technology.json`, `locales/fr/studio.json`, `locales/fr/jobs.json`, `locales/fr/podcasts.json`.
-- Same for `locales/en/`.
-- Update components: `useTranslation('offer')` + shorter keys `t('hero.title')`.
-- Keep `common.json` for shared strings (nav, footer, common UI).
+Per-page namespace pattern already in place from Plan A (`home.json`, `offer.json`, `method.json`, `about.json` + `common.json` for shared nav/footer keys). This step:
+- Create namespace files for P2+ pages: `locales/{fr,en}/technology.json`, `studio.json`, `jobs.json`, `podcasts.json`.
+- Register new namespaces in `app/localization/resources.ts`.
+- Remove legacy `strategy.json` and `projects.json` (replaced by `offer.json` in story 9).
+- Complete EN translations for all namespace files.
 
 **Doc update**: `docs/architecture/patterns.md` (namespace convention).
 
@@ -131,7 +131,7 @@ Delete this file after the migration is fully complete.
 
 - All prototype pages live in production.
 - No external Notion/Ausha links for migrated pages.
-- Localisation split into per-page namespaces, EN complete.
+- All per-page namespaces populated, legacy `strategy`/`projects` removed, EN complete.
 - No unused components or dependencies.
 - E2E tests passing for critical flows.
 - Documentation fully up to date.
