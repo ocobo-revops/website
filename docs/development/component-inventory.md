@@ -6,18 +6,18 @@
 
 ## Component Overview
 
-The OCOBO website implements a comprehensive component library built on Radix UI primitives with custom styling via Panda CSS. Components are organized by function and reusability, following atomic design principles.
+The OCOBO website implements a comprehensive component library built on Ark UI primitives with custom styling via Panda CSS. Components are organized by function and reusability, following atomic design principles.
 
 ## Base UI Components (`app/components/ui/`)
 
 ### Form Components
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
-| **Button** | `Button.tsx` | Primary action buttons with variants | Radix Slot, Panda recipes |
+| **Button** | `Button.tsx` | Primary action buttons with variants | Ark UI factory, Panda recipes |
 | **IconButton** | `IconButton.tsx` | Icon-only buttons | Button component, Lucide icons |
 | **Input** | `Input.tsx` | Text input fields with validation | Panda styling |
 | **Label** | `Label.tsx` | Form field labels | Accessibility support |
-| **Select** | `Select.tsx` | Dropdown selection component | Radix Select |
+| **Select** | `Select.tsx` | Dropdown selection component | Ark UI Select |
 
 ### Layout Components
 | Component | File | Purpose | Dependencies |
@@ -29,14 +29,14 @@ The OCOBO website implements a comprehensive component library built on Radix UI
 ### Navigation Components
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
-| **NavigationMenu** | `NavigationMenu.tsx` | Main navigation menu | Radix NavigationMenu |
+| **NavigationMenu** | `NavigationMenu.tsx` | Main navigation menu | Radix NavigationMenu (not yet migrated) |
 | **Breadcrumb** | `Breadcrumb.tsx` | Navigation breadcrumbs | Custom implementation |
 
 ### Interactive Components
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
-| **Accordion** | `Accordion.tsx` | Expandable content sections | Radix Accordion |
-| **ScrollArea** | `ScrollArea.tsx` | Custom scrollable areas | Radix ScrollArea |
+| **Accordion** | `Accordion.tsx` | Expandable content sections | Ark UI Accordion |
+| **ScrollArea** | `ScrollArea.tsx` | Custom scrollable areas | Ark UI ScrollArea |
 | **DotButton** | `DotButton.tsx` | Carousel navigation dots | Custom styling |
 | **DotPagination** | `DotPagination.tsx` | Pagination indicator | Custom implementation |
 
@@ -193,17 +193,22 @@ The OCOBO website implements a comprehensive component library built on Radix UI
 - **Typography**: Consistent text styling
 - **Section**: Page section patterns
 
-### Radix UI Integration
+### Ark UI Components
 - **Accordion**: Expandable content sections
-- **NavigationMenu**: Main site navigation
 - **Select**: Form dropdowns
 - **ScrollArea**: Custom scrollbars
-- **Slot**: Component composition
+- **Button**: Via `ark.button` factory
+
+### Radix UI (remaining)
+- **NavigationMenu**: Main site navigation (not yet migrated)
+- **react-context**: Context utility used by Card, AsideCard, MobileMenu
 
 ## Component Dependencies
 
 ### External Dependencies
-- `@radix-ui/react-*`: UI primitives
+- `@ark-ui/react`: UI primitives (primary)
+- `@radix-ui/react-navigation-menu`: Navigation (pending migration)
+- `@radix-ui/react-context`: Context utility
 - `lucide-react`: Icon library
 - `react-snap-carousel`: Carousel functionality
 - `framer-motion`: Animations
@@ -229,7 +234,7 @@ The OCOBO website implements a comprehensive component library built on Radix UI
 - Clear distinction between layout and content components
 
 ### Accessibility Features
-- Radix UI provides accessible primitives
+- Ark UI provides accessible primitives
 - Proper ARIA labels and roles
 - Keyboard navigation support
 - Screen reader compatibility

@@ -16,7 +16,7 @@
 | **CSS Framework** | Panda CSS | ^0.37.2 | Type-safe CSS-in-JS with atomic CSS generation, zero-runtime overhead |
 | **Design System** | Custom Panda Preset | - | Comprehensive design tokens, recipes, and patterns for consistent UI |
 | **Animation** | Framer Motion | ^12.23.12 | React animation library for complex interactions and micro-animations |
-| **UI Components** | Radix UI | Multiple | Accessible, unstyled UI primitives (Accordion, Navigation, Select, etc.) |
+| **UI Components** | Ark UI | ^5.30.0 | Accessible, unstyled UI primitives (Accordion, Select, ScrollArea). NavigationMenu still on Radix. |
 
 ## Internationalization
 
