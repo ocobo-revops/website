@@ -10,6 +10,9 @@ Read this section FIRST on each iteration.
 - i18n: remix-i18next with useTranslation('common') + t('page.section.key')
 - Routes follow ($lang) prefix pattern: _main.($lang).<page>.tsx
 - Panda CSS recipes in preset/recipes/, tokens in preset/tokens/
+- Legacy recipes live in preset/recipes/_legacy/ — delete dir when migration complete
+- New/prototype recipes go in preset/recipes/ (standard path)
+- When a legacy recipe reaches 0 usage, delete from _legacy/
 - Named exports only, kebab-case filenames, no barrel files
 
 ---

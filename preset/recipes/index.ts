@@ -1,14 +1,16 @@
 import { badge } from './badge';
-import { button } from './button';
-import { icon } from './icon';
 import { iconBox } from './icon-box';
-import { iconButton } from './icon-button';
-import { input } from './input';
-import { link } from './link';
 import { section } from './section';
-import { subtitle } from './subtitle';
 import { text } from './text';
-import { typography } from './typography';
+
+// Legacy recipes — delete when migration is complete
+import { button } from './_legacy/button';
+import { icon } from './_legacy/icon';
+import { iconButton } from './_legacy/icon-button';
+import { input } from './_legacy/input';
+import { link } from './_legacy/link';
+import { subtitle } from './_legacy/subtitle';
+import { typography } from './_legacy/typography';
 
 export const recipes = {
   badge,

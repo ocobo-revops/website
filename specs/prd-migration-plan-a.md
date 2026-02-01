@@ -53,9 +53,12 @@ Key gaps between prototype and production:
 
 - Port prototype tokens (colours, shadows, animations) → `preset/tokens/`.
 - Port new recipes (text, badge, iconBox, section) → `preset/recipes/`.
+- Move legacy recipes to `preset/recipes/_legacy/` (button, icon, icon-button, input, link, subtitle, typography). Import paths updated in `preset/recipes/index.ts`.
 - Convert prototype `styled()` wrappers → `css()` or recipe variants.
+- When a story replaces a legacy recipe and usage drops to 0, delete from `_legacy/`.
+- Post-migration: delete `_legacy/` directory entirely.
 
-**Doc update**: `docs/architecture/patterns.md` (new recipes), `docs/development/component-inventory.md`.
+**Doc update**: `docs/architecture/patterns.md` (new recipes, `_legacy/` convention), `docs/development/component-inventory.md`.
 
 ### Step 3: Feature flags
 
