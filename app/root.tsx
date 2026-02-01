@@ -22,6 +22,7 @@ import { getLang } from '~/utils/lang';
 
 import { ErrorMessage } from './components/ErrorMessage';
 import { useSetViewportHeight } from './hooks/useSetViewportHeight';
+import { getDisabledPages } from './modules/feature-flags';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
@@ -52,6 +53,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return {
     locale,
     isProduction,
+    disabledPages: getDisabledPages(),
     gaTrackingId: process.env.GA_TRACKING_ID,
     agoBasePath: process.env.AGO_BASEPATH,
     agoApiKey: process.env.AGO_API_KEY,

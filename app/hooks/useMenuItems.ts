@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next';
+import { useRouteLoaderData } from 'react-router';
 
 import { button } from '@ocobo/styled-system/recipes';
 
 import { SubMenu } from '~/components/SubMenu';
+import type { PageSlug } from '~/modules/feature-flags';
+import type { loader as rootLoader } from '~/root';
 import { url } from '~/utils/url';
 
 import { useLocalizedPathname } from './useLocalizedPathname';
@@ -24,9 +27,24 @@ type MenuItem = {
   className?: string;
 };
 
+/** Map menu item keys to feature flag slugs where applicable */
+const menuKeyToSlug: Record<string, PageSlug> = {
+  news: 'news',
+  tools: 'tools',
+  podcasts: 'podcasts',
+  jobs: 'jobs',
+};
+
 export const useMenuItems = (): MenuItem[] => {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
+  const rootData = useRouteLoaderData<typeof rootLoader>('root');
+  const disabledPages = rootData?.disabledPages ?? [];
+
+  const isHidden = (key: string): boolean => {
+    const slug = menuKeyToSlug[key];
+    return slug !== undefined && disabledPages.includes(slug);
+  };
 
   return [
     {
@@ -82,13 +100,14 @@ export const useMenuItems = (): MenuItem[] => {
           title: t('navigation.resources.news'),
           url: url.news,
           variant: 'mint',
-          shouldHide: true,
+          shouldHide: isHidden('news'),
         },
         {
           key: 'podcasts',
           title: t('navigation.resources.podcasts'),
           url: url.podcasts,
           variant: 'mint',
+          shouldHide: isHidden('podcasts'),
         },
         {
           key: 'webinars',
@@ -107,7 +126,7 @@ export const useMenuItems = (): MenuItem[] => {
           title: t('navigation.resources.tools'),
           url: url.tools,
           variant: 'mint',
-          shouldHide: true,
+          shouldHide: isHidden('tools'),
         },
       ],
     },
