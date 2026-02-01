@@ -1,0 +1,333 @@
+{
+  "project": {
+    "name": "Website Migration — Plan A (Prep + P1)",
+    "branch": "migration-plan-a"
+  },
+  "source_prd": "specs/prd-migration-plan-a.md",
+  "created_at": "2026-02-01T12:00:00Z",
+  "rules": [
+    "Work on ONE feature at a time",
+    "Read ## Codebase Patterns section FIRST each iteration",
+    "Only modify 'passes', 'blocked', 'blocked_reason', 'completed_at' fields",
+    "Never edit or remove feature definitions",
+    "Test end-to-end before marking passes: true",
+    "Commit after each completed feature",
+    "Add reusable patterns to TOP of progress.txt",
+    "Append feature log to BOTTOM of progress.txt",
+    "Update AGENTS.md if you learn module-specific patterns"
+  ],
+  "features": [
+    {
+      "id": 1,
+      "category": "integration",
+      "priority": "high",
+      "description": "Upgrade Panda CSS v0.37 → v1.8 and Ark UI to v5.30",
+      "steps": [
+        "Update @pandacss/dev to ^1.8 in package.json",
+        "Update @ark-ui/react to ^5.30 in package.json",
+        "Run pnpm install",
+        "Fix all breaking changes in existing components (recipes, tokens, styled API)",
+        "Remove deprecated/unused deps",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Run pnpm dev:local — site renders without console errors",
+        "Update docs/development/getting-started.md with new dep versions"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 2,
+      "category": "functional",
+      "priority": "high",
+      "description": "Port design system tokens from prototype (colours, shadows, animations)",
+      "steps": [
+        "Clone/read prototype repo token files",
+        "Port colour tokens → preset/tokens/",
+        "Port shadow tokens → preset/tokens/",
+        "Port animation tokens → preset/tokens/",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual spot-check: existing pages still render correctly",
+        "Update docs/architecture/patterns.md with new token structure"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 3,
+      "category": "functional",
+      "priority": "high",
+      "description": "Port design system recipes from prototype (text, badge, iconBox, section)",
+      "steps": [
+        "Port text recipe → preset/recipes/",
+        "Port badge recipe → preset/recipes/",
+        "Port iconBox recipe → preset/recipes/",
+        "Port section recipe → preset/recipes/",
+        "Convert any styled() wrappers → css() or recipe variants",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Update docs/development/component-inventory.md with new recipes",
+        "Update docs/architecture/patterns.md with recipe usage patterns"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 4,
+      "category": "functional",
+      "priority": "high",
+      "description": "Create feature flag system for unreleased pages",
+      "steps": [
+        "Create app/modules/feature-flags.ts with page slug → boolean from process.env",
+        "Wire useMenuItems.ts shouldHide to feature flags",
+        "Add flag check in route loaders — throw 404 when disabled",
+        "Set P2+ pages (technology, studio, jobs, podcasts) to disabled",
+        "Verify disabled page returns 404",
+        "Verify disabled page is hidden from nav",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Update docs/architecture/patterns.md with feature flag pattern",
+        "Update docs/development/getting-started.md with env vars"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 5,
+      "category": "functional",
+      "priority": "high",
+      "description": "Set up localisation with structured keys in common.json",
+      "steps": [
+        "Extend locales/fr/common.json with nav.*, footer.* keys",
+        "Add page-level key structure (home.*, offer.*, method.*, about.*)",
+        "Create stub locales/en/common.json with same keys",
+        "Verify useTranslation('common') + t('page.section.key') works",
+        "Verify EN locale falls back to FR",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Update docs/architecture/patterns.md with localisation key convention"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 6,
+      "category": "ui",
+      "priority": "high",
+      "description": "Migrate Navbar from prototype (Ark UI Menu, responsive drawer, scroll behaviour)",
+      "steps": [
+        "Port prototype Navbar component → replace Header.tsx / MainMenu.tsx / MainMobileMenu.tsx",
+        "Implement Ark UI Menu for desktop nav",
+        "Implement responsive drawer for mobile nav",
+        "Implement scroll behaviour (hide/show on scroll)",
+        "Localise nav strings under nav.* keys using t()",
+        "Wire nav items to useMenuItems with feature flags",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype — desktop and mobile",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 7,
+      "category": "ui",
+      "priority": "high",
+      "description": "Migrate Footer from prototype",
+      "steps": [
+        "Port prototype Footer → replace Footer.tsx",
+        "Localise footer strings under footer.* keys using t()",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 8,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate Home page (redesign)",
+      "steps": [
+        "Update route _main.($lang)._index.tsx with new loader + meta",
+        "Add home.* keys to locales/fr/common.json, stub en",
+        "Port Home components → app/components/home/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Convert HashRouter Link → NavLink",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype Home page",
+        "SSR hydration check — no console errors",
+        "Update docs/architecture/overview.md route map"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 9,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate Offer page + route consolidation with redirects",
+      "steps": [
+        "Create route _main.($lang).offer.tsx with loader + meta",
+        "Add offer.* keys to locales/fr/common.json, stub en",
+        "Port Offer components → app/components/offer/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Remove old /strategies-revenue-operations and /projets-revops routes",
+        "Add 301 redirects from old routes → /offer",
+        "Update useMenuItems.ts + app/utils/url.ts",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype Offer page",
+        "Verify 301 redirects work",
+        "Update docs/architecture/overview.md route map",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 10,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate Method page",
+      "steps": [
+        "Create route _main.($lang).method.tsx with loader + meta",
+        "Add method.* keys to locales/fr/common.json, stub en",
+        "Port Method components → app/components/method/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Update useMenuItems.ts + app/utils/url.ts",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype Method page",
+        "Update docs/architecture/overview.md route map",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 11,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate About Us page",
+      "steps": [
+        "Create route _main.($lang).about-us.tsx with loader + meta",
+        "Add about.* keys to locales/fr/common.json, stub en",
+        "Port About Us components → app/components/about/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Remove external Notion link from nav",
+        "Update useMenuItems.ts + app/utils/url.ts",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype About Us page",
+        "Update docs/architecture/overview.md route map",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 12,
+      "category": "ui",
+      "priority": "medium",
+      "description": "Adapt Blog pages to new design system",
+      "steps": [
+        "Update Blog list and detail pages to use new tokens/recipes",
+        "Replace old styled components with new design system equivalents",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual check — Blog pages render correctly with new design system",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 13,
+      "category": "ui",
+      "priority": "medium",
+      "description": "Adapt Stories/Clients pages to new design system",
+      "steps": [
+        "Update Stories list and detail pages to use new tokens/recipes",
+        "Replace old styled components with new design system equivalents",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual check — Stories pages render correctly",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 14,
+      "category": "ui",
+      "priority": "medium",
+      "description": "Adapt Contact page to new design system",
+      "steps": [
+        "Update Contact page to use new tokens/recipes",
+        "Replace old styled components with new design system equivalents",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual check — Contact page renders correctly",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 15,
+      "category": "ui",
+      "priority": "medium",
+      "description": "Adapt Legal pages to new design system",
+      "steps": [
+        "Update Legal pages to use new tokens/recipes",
+        "Replace old styled components with new design system equivalents",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual check — Legal pages render correctly",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 16,
+      "category": "validation",
+      "priority": "medium",
+      "description": "Final documentation sync and verification pass",
+      "steps": [
+        "Review CLAUDE.md / AGENTS.md — commands and key files are accurate",
+        "Review docs/architecture/overview.md — Panda v1, new routes, feature flags documented",
+        "Review docs/architecture/patterns.md — recipes, localisation, feature flags documented",
+        "Review docs/development/component-inventory.md — all migrated/removed components listed",
+        "Review docs/development/getting-started.md — deps, env vars, dev commands correct",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "SSR hydration check on all P1 pages — no console errors"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    }
+  ]
+}

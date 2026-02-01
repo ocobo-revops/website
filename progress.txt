@@ -1,0 +1,31 @@
+## Codebase Patterns
+<!--
+Reusable patterns discovered during implementation.
+Add new patterns here as you learn them.
+Read this section FIRST on each iteration.
+-->
+- Use pnpm, not npm
+- Run `pnpm check && pnpm typecheck` after every change
+- Content source: CONTENT_SOURCE=locale for local dev (reads from ~/projects/ocobo-posts/)
+- i18n: remix-i18next with useTranslation('common') + t('page.section.key')
+- Routes follow ($lang) prefix pattern: _main.($lang).<page>.tsx
+- Panda CSS recipes in preset/recipes/, tokens in preset/tokens/
+- Named exports only, kebab-case filenames, no barrel files
+
+---
+
+# Progress Log
+
+Project: Website Migration — Plan A (Prep + P1)
+Source: specs/prd-migration-plan-a.md
+Branch: migration-plan-a
+Created: 2026-02-01T12:00:00Z
+
+## Initial Setup
+- Created stories.json with 16 features
+- High priority: 11 features (deps, design system, flags, i18n, layout, P1 pages)
+- Medium priority: 5 features (existing page adaptations, final doc sync)
+- Low priority: 0 features
+- Ready for implementation
+
+---
