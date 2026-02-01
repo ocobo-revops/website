@@ -5,27 +5,27 @@ export const colors = {
   darker: { value: '#000' },
   white: { value: '#ffffff' },
   yellow: {
-    DEFAULT: { value: '#f1cf25' },
-    light: { value: '#fffcee' },
+    DEFAULT: { value: '#F1CF25' },
+    light: { value: '#FFFCEE' },
     dark: { value: '#b59b1c' },
   },
   mint: {
-    DEFAULT: { value: '#9adbba' },
-    light: { value: '#ebfaf3' },
+    DEFAULT: { value: '#9ADBBA' },
+    light: { value: '#EBFDF5' },
     dark: { value: '#5e9177' },
   },
   sky: {
-    DEFAULT: { value: '#99d1df' },
-    light: { value: '#e4f2f6' },
+    DEFAULT: { value: '#99D1DF' },
+    light: { value: '#F0F9FB' },
     dark: { value: '#608791' },
   },
   coral: {
-    DEFAULT: { value: '#fe9c87' },
-    light: { value: '#fff5f2' },
+    DEFAULT: { value: '#FE9C87' },
+    light: { value: '#FFF5F2' },
     dark: { value: '#af4934' },
   },
   gray: {
     DEFAULT: { value: '#767676' },
-    light: { value: '#f0efea' },
+    light: { value: '#F5F5F5' },
   },
 };

@@ -200,7 +200,9 @@ describe('Environment Configuration', () => {
 
         const result = getPrivateEnvVars();
 
-        expect(result.localeRepoAPIUrl).toBe('/home/user/projects/ocobo/my-project');
+        expect(result.localeRepoAPIUrl).toBe(
+          '/home/user/projects/ocobo/my-project',
+        );
       });
 
       it('should handle special characters in repository names', () => {

@@ -22,6 +22,8 @@ export const tokens = defineTokens({
   radii: {
     full: { value: '9999px' },
     radius: { value: '0.5rem' },
+    '2xl': { value: '1rem' },
+    '3xl': { value: '1.5rem' },
   },
   fontWeights,
   lineHeights,
@@ -46,9 +48,50 @@ export const tokens = defineTokens({
       ],
     },
     none: { value: 'none' },
+    soft: { value: '0 8px 20px -10px rgba(0,0,0,0.08)' },
+    'soft-md': { value: '0 15px 40px -10px rgba(0,0,0,0.12)' },
+    'soft-lg': { value: '0 25px 60px -15px rgba(0,0,0,0.15)' },
+    dark: { value: '0 30px 100px -20px rgba(0,0,0,0.5)' },
+    card: { value: '0 15px 50px -15px rgba(0,0,0,0.05)' },
+    ring: { value: '0 0 0 10px #fcfcfc' },
+    offset: { value: '8px 8px 0px 0px rgba(33,35,35,1)' },
   },
   blurs: {
     base: { value: '8px' },
+  },
+  animations: {
+    'float-cursor': { value: 'float-cursor 5s infinite ease-in-out' },
+    'float-very-slow': { value: 'float-very-slow 12s ease-in-out infinite' },
+    'float-gentle': { value: 'float-gentle 8s ease-in-out infinite' },
+    'float-grid': { value: 'float-grid 6s ease-in-out infinite' },
+    'float-blob': { value: 'float-blob 12s infinite ease-in-out' },
+    'slow-fade': { value: 'slow-fade 6s infinite ease-in-out' },
+    'fade-in-up': {
+      value: 'fade-in-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
+    'fade-in-up-small': {
+      value:
+        'fade-in-up-small 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
+    'hero-reveal': {
+      value: 'hero-reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
+    'gentle-reveal': {
+      value: 'gentle-reveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
+    'bounce-slow': { value: 'bounce-slow 3s ease-in-out infinite' },
+    'bounce-subtle': { value: 'bounce-subtle 3s ease-in-out infinite' },
+    'spin-slow': { value: 'spin-slow 20s linear infinite' },
+    'radar-sweep': { value: 'radar-sweep 10s linear infinite' },
+    'marquee-ultra-slow': {
+      value: 'marquee-ultra-slow 90s linear infinite',
+    },
+    'blueprint-in': {
+      value: 'blueprint-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
+    'box-pop': {
+      value: 'box-pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+    },
   },
   spacing,
   sizes,

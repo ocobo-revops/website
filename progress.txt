@@ -40,3 +40,15 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests ✅ (2 pre-existing failures unrelated)
 
 ---
+
+## Feature 2: Port design system tokens from prototype
+- Colours: updated light variants to match prototype (mint.light #EBFDF5, sky.light #F0F9FB, gray.light #F5F5F5)
+- Shadows: added soft, soft-md, soft-lg, dark, card, ring, offset from prototype
+- Animations: added 17 animation tokens + keyframes (float, fade, bounce, spin, marquee, entry)
+- Typography: added sans/display font aliases, custom lineHeights per size, fixed 2xl fontSize (1.375rem)
+- Radii: added 2xl (1rem), 3xl (1.5rem) from prototype
+- Fonts now reference names directly (Bornia/Bermia) instead of CSS vars
+- Removed unused --font-header/--font-body CSS vars from index.css
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
+
+---
