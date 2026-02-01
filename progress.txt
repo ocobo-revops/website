@@ -52,3 +52,14 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
 
 ---
+
+## Feature 3: Port design system recipes from prototype
+- Added text recipe (display-xl/lg/md, subtitle, body, label + colour variants)
+- Added badge recipe (yellow/mint/sky/coral/dark/gray, sm/md sizes, sm/full rounded)
+- Added iconBox recipe (sm/md/lg sizes, solid/outline/ghost variants, colour compoundVariants)
+- Updated section recipe (added bg variants: white/gray/dark/yellow/sky/mint/coral + padding sm/md/lg)
+- Existing section() calls unaffected — defaults to bg:'white', padding:'lg' (same py:24 as before)
+- Adapted prototype ocobo.* colour refs → flat token names (dark, yellow, mint, etc.)
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
+
+---
