@@ -83,7 +83,7 @@ describe('Environment Configuration', () => {
         githubRepoAPIUrl:
           'https://api.github.com/repos/test-account/test-repo/contents',
         readContentFrom: 'locale',
-        localeRepoAPIUrl: '/home/user/projects/test-repo',
+        localeRepoAPIUrl: '/home/user/projects/ocobo/test-repo',
       });
     });
 
@@ -200,7 +200,7 @@ describe('Environment Configuration', () => {
 
         const result = getPrivateEnvVars();
 
-        expect(result.localeRepoAPIUrl).toBe('/home/user/projects/my-project');
+        expect(result.localeRepoAPIUrl).toBe('/home/user/projects/ocobo/my-project');
       });
 
       it('should handle special characters in repository names', () => {
