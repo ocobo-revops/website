@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { ExternalLink } from 'lucide-react';
 import { NavLink } from 'react-router';
 
@@ -7,12 +9,15 @@ import { center, flex } from '@ocobo/styled-system/patterns';
 import { hoverStyles, hoverTextStyles, iconStyles } from './styles';
 import type { DropdownItem } from './types';
 
-type NavDropdownItemProps = {
+type NavDropdownItemProps = React.ComponentPropsWithoutRef<'a'> & {
   item: DropdownItem;
   onClose?: () => void;
 };
 
-export function NavDropdownItem({ item, onClose }: NavDropdownItemProps) {
+export const NavDropdownItem = React.forwardRef<
+  HTMLAnchorElement,
+  NavDropdownItemProps
+>(function NavDropdownItem({ item, onClose, ...props }, ref) {
   const { label, description, path, icon: Icon, color, isExternal } = item;
 
   const content = (
@@ -94,11 +99,13 @@ export function NavDropdownItem({ item, onClose }: NavDropdownItemProps) {
   if (isExternal) {
     return (
       <a
+        ref={ref}
         href={path}
         target="_blank"
         rel="noopener noreferrer"
         className={itemClass}
         onClick={onClose}
+        {...props}
       >
         {content}
       </a>
@@ -106,8 +113,14 @@ export function NavDropdownItem({ item, onClose }: NavDropdownItemProps) {
   }
 
   return (
-    <NavLink to={path} className={itemClass} onClick={onClose}>
+    <NavLink
+      ref={ref}
+      to={path}
+      className={itemClass}
+      onClick={onClose}
+      {...props}
+    >
       {content}
     </NavLink>
   );
-}
+});
