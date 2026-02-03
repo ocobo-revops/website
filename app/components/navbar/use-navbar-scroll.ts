@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { SCROLL_THRESHOLD } from './styles';
 import type { NavbarScrollState, ScrollDirection } from './types';
 
 type UseNavbarScrollReturn = {
@@ -7,8 +8,6 @@ type UseNavbarScrollReturn = {
   scrollDirection: ScrollDirection;
   scrollY: number;
 };
-
-const SCROLL_THRESHOLD = 30;
 
 export function useNavbarScroll(): UseNavbarScrollReturn {
   const [scrollY, setScrollY] = React.useState(0);

@@ -12,15 +12,8 @@ import { button } from '@ocobo/styled-system/recipes';
 
 import { useMenuItems } from '~/hooks/useMenuItems';
 
-import type { Color, DropdownItem, NavItem } from './types';
-
-// Matching prototype styles exactly
-const iconStyles: Record<Color, string> = {
-  yellow: css({ bg: 'ocobo.yellow/10', color: 'ocobo.yellow' }),
-  sky: css({ bg: 'ocobo.sky/10', color: 'ocobo.sky' }),
-  coral: css({ bg: 'ocobo.coral/10', color: 'ocobo.coral' }),
-  mint: css({ bg: 'ocobo.mint/10', color: 'ocobo.mint' }),
-};
+import { iconStyles } from './styles';
+import type { DropdownItem, NavItem } from './types';
 
 type MobileMenuProps = {
   open: boolean;
@@ -186,12 +179,13 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    if (navigation.state === 'loading') {
+    if (navigation.state === 'loading' && open) {
       onOpenChange(false);
     }
-  }, [navigation.state, onOpenChange]);
+  }, [navigation.state, open, onOpenChange]);
 
   React.useEffect(() => {
+    // 1024px matches Panda CSS `lg` breakpoint
     const mediaQueryList = window.matchMedia('(min-width: 1024px)');
 
     const handleChange = () => {
@@ -243,6 +237,7 @@ export function MobileMenu({ open, onOpenChange }: MobileMenuProps) {
           })}
         >
           <Dialog.Content
+            aria-label="Navigation menu"
             className={cx(
               vstack(),
               css({

@@ -13,9 +13,27 @@ import { useMenuItems } from '~/hooks/useMenuItems';
 import { Spinner } from '../ui/Spinner';
 import { MobileMenu } from './mobile-menu';
 import { NavItemWithDropdown } from './nav-item-with-dropdown';
+import { SCROLL_THRESHOLD } from './styles';
 import { useNavbarScroll } from './use-navbar-scroll';
 
-const SCROLL_THRESHOLD = 40;
+const getLinkStyles = (isDropdownActive: boolean, isCurrent: boolean) =>
+  cx(
+    flex({ gap: '1', align: 'center' }),
+    css({
+      px: '4',
+      py: '2',
+      rounded: 'full',
+      fontSize: 'sm',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      transition: 'all',
+      transitionDuration: '300ms',
+      color: isDropdownActive || isCurrent ? 'ocobo.dark' : 'gray.500',
+      _hover: { color: 'ocobo.dark' },
+      textDecoration: 'none',
+      whiteSpace: 'nowrap',
+    }),
+  );
 
 export function Navbar() {
   const navigation = useNavigation();
@@ -34,26 +52,6 @@ export function Navbar() {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
   }, [location.pathname]);
-
-  const getLinkStyles = (isDropdownActive: boolean, isCurrent: boolean) => {
-    return cx(
-      flex({ gap: '1', align: 'center' }),
-      css({
-        px: '4',
-        py: '2',
-        rounded: 'full',
-        fontSize: 'sm',
-        fontWeight: 'bold',
-        cursor: 'pointer',
-        transition: 'all',
-        transitionDuration: '300ms',
-        color: isDropdownActive || isCurrent ? 'ocobo.dark' : 'gray.500',
-        _hover: { color: 'ocobo.dark' },
-        textDecoration: 'none',
-        whiteSpace: 'nowrap',
-      }),
-    );
-  };
 
   return (
     <div

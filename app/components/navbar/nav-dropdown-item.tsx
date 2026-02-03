@@ -4,41 +4,8 @@ import { NavLink } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 
-import type { Color, DropdownItem } from './types';
-
-// Matching prototype styles exactly
-const iconStyles: Record<Color, string> = {
-  yellow: css({
-    bg: 'ocobo.yellow/10',
-    color: 'ocobo.yellow',
-  }),
-  sky: css({
-    bg: 'ocobo.sky/10',
-    color: 'ocobo.sky',
-  }),
-  coral: css({
-    bg: 'ocobo.coral/10',
-    color: 'ocobo.coral',
-  }),
-  mint: css({
-    bg: 'ocobo.mint/10',
-    color: 'ocobo.mint',
-  }),
-};
-
-const hoverStyles: Record<Color, string> = {
-  yellow: css({ _hover: { bg: 'ocobo.yellow.light' } }),
-  sky: css({ _hover: { bg: 'ocobo.sky.light' } }),
-  coral: css({ _hover: { bg: 'ocobo.coral.light' } }),
-  mint: css({ _hover: { bg: 'ocobo.mint.light' } }),
-};
-
-const hoverTextStyles: Record<Color, string> = {
-  yellow: css({ _groupHover: { color: 'ocobo.yellow' } }),
-  sky: css({ _groupHover: { color: 'ocobo.sky' } }),
-  coral: css({ _groupHover: { color: 'ocobo.coral' } }),
-  mint: css({ _groupHover: { color: 'ocobo.mint' } }),
-};
+import { hoverStyles, hoverTextStyles, iconStyles } from './styles';
+import type { DropdownItem } from './types';
 
 type NavDropdownItemProps = {
   item: DropdownItem;

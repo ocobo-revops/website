@@ -127,7 +127,7 @@ const Footer = () => {
 
   const services =
     items
-      ?.find((item) => item.key === 'services')
+      ?.find((item) => item.key === 'method')
       ?.dropdown?.filter((item) => !item.shouldHide)
       ?.map((item) => ({
         label: item.label,
