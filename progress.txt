@@ -103,3 +103,16 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 7: Migrate Footer from prototype
+- Replaced old Footer with prototype design (4-column grid, darker bg, border separator)
+- Uses Lucide icons (Linkedin, Youtube) in circular buttons with hover effects
+- Outline CTA button matching prototype style (border, uppercase, arrow icon)
+- Yellow link hover colour matching prototype (_hover: { color: 'ocobo.yellow' })
+- Reuses Logocobo SVG component with white colour
+- Keeps production components: NewsletterForm (HubSpot), LanguageSwitcher
+- Dynamic menu items from useMenuItems (company, method dropdowns)
+- All strings localised via t() using footer.* keys
+- pnpm check ✅ pnpm typecheck ✅
+
+---
