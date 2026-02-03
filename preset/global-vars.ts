@@ -1,5 +1,5 @@
 export const globalVars = {
-  // Add your global variables here
-  '--main-header-height': '90px',
-  '--main-header-height-mobile': '70px',
+  // Navbar height accounts for the fixed floating navbar plus padding
+  '--main-header-height': '128px',
+  '--main-header-height-mobile': '80px',
 };

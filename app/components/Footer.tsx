@@ -23,7 +23,7 @@ const Title = styled('p', {
 });
 
 type TItem = {
-  title: string;
+  label: string;
   path: string;
 };
 
@@ -35,8 +35,8 @@ const FooterMenu: React.FunctionComponent<{
     <div className={css({})}>
       <Title>{title}</Title>
       <ul className={css({ textStyle: 'nav' })}>
-        {items.map(({ title, path }) => (
-          <li key={title} className={css({ mb: '3' })}>
+        {items.map(({ label, path }) => (
+          <li key={label} className={css({ mb: '3' })}>
             <NavLink
               to={path}
               className={css({
@@ -49,7 +49,7 @@ const FooterMenu: React.FunctionComponent<{
                 },
               })}
             >
-              {title}
+              {label}
             </NavLink>
           </li>
         ))}
@@ -119,28 +119,28 @@ const Footer = () => {
   const company =
     items
       ?.find((item) => item.key === 'company')
-      ?.subItems?.filter((item) => !item.shouldHide)
+      ?.dropdown?.filter((item) => !item.shouldHide)
       ?.map((item) => ({
-        title: item.title,
-        path: item.url,
+        label: item.label,
+        path: item.path,
       })) ?? [];
 
   const services =
     items
       ?.find((item) => item.key === 'services')
-      ?.subItems?.filter((item) => !item.shouldHide)
+      ?.dropdown?.filter((item) => !item.shouldHide)
       ?.map((item) => ({
-        title: item.title,
-        path: item.url,
+        label: item.label,
+        path: item.path,
       })) ?? [];
 
   const resources =
     items
       ?.find((item) => item.key === 'resources')
-      ?.subItems?.filter((item) => !item.shouldHide)
+      ?.dropdown?.filter((item) => !item.shouldHide)
       ?.map((item) => ({
-        title: item.title,
-        path: item.url,
+        label: item.label,
+        path: item.path,
       })) ?? [];
 
   const stories = items?.find((item) => item.key === 'stories');
@@ -210,12 +210,12 @@ const Footer = () => {
                           },
                         })}
                       >
-                        {stories.title}
+                        {stories.label}
                       </NavLink>
                     </li>
                   )}
-                  {resources.map(({ title, path }) => (
-                    <li key={title} className={css({ mb: '3' })}>
+                  {resources.map(({ label, path }) => (
+                    <li key={label} className={css({ mb: '3' })}>
                       <NavLink
                         to={path}
                         className={css({
@@ -228,7 +228,7 @@ const Footer = () => {
                           },
                         })}
                       >
-                        {title}
+                        {label}
                       </NavLink>
                     </li>
                   ))}

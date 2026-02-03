@@ -1,8 +1,13 @@
 export const url = {
   homepage: '/',
+  offer: '/offer',
+  method: '/method',
+  technology: '/technology',
+  studio: '/studio',
   strategy: '/strategies-revenue-operations',
   projects: '/projets-revops',
   stories: '/clients',
+  aboutUs: '/about-us',
   about:
     'https://ocobo.notion.site/Ocobo-Qui-sommes-nous-b94fb96269cb4d6294cdf21569ebd479',
   careers:
@@ -15,6 +20,8 @@ export const url = {
   privacy: '/privacy',
   notFound: '/404',
   podcasts: 'https://podcast.ausha.co/revenue-echoes',
+  youtube: 'https://www.youtube.com/@ocobo',
+  modernRevenueClub: 'https://modernrevenueclub.com',
 };
 
 export const getImageOgFullPath = (name: string, url: string) => {

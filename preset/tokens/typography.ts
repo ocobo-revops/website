@@ -5,6 +5,7 @@ export const fontSizes: Tokens['fontSizes'] = {
   xs: { value: '0.75rem' },
   sm: { value: '0.875rem' },
   md: { value: '1rem' },
+  base: { value: '1rem' },
   lg: { value: '1.125rem' },
   xl: { value: '1.25rem' },
   '2xl': { value: '1.375rem' },

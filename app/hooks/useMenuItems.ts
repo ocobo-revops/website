@@ -1,41 +1,32 @@
+import {
+  BookOpen,
+  Briefcase,
+  Cpu,
+  Layers,
+  Mic,
+  Users,
+  Youtube,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router';
 
-import { button } from '@ocobo/styled-system/recipes';
-
-import { SubMenu } from '~/components/SubMenu';
+import type { DropdownItem, NavItem } from '~/components/navbar/types';
 import type { PageSlug } from '~/modules/feature-flags';
 import type { loader as rootLoader } from '~/root';
 import { url } from '~/utils/url';
 
 import { useLocalizedPathname } from './useLocalizedPathname';
 
-type SubMenuItem = {
-  key: string;
-  title: string;
-  url: string;
-  variant: React.ComponentProps<typeof SubMenu.Item>['variant'];
-  shouldHide?: boolean;
-};
-
-type MenuItem = {
-  key: string;
-  title: string;
-  url: string | null;
-  subItems?: SubMenuItem[];
-  shouldHide?: boolean;
-  className?: string;
-};
-
-/** Map menu item keys to feature flag slugs where applicable */
 const menuKeyToSlug: Record<string, PageSlug> = {
+  technology: 'technology',
+  studio: 'studio',
+  jobs: 'jobs',
+  podcasts: 'podcasts',
   news: 'news',
   tools: 'tools',
-  podcasts: 'podcasts',
-  jobs: 'jobs',
 };
 
-export const useMenuItems = (): MenuItem[] => {
+export function useMenuItems(): NavItem[] {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
   const rootData = useRouteLoaderData<typeof rootLoader>('root');
@@ -46,95 +37,129 @@ export const useMenuItems = (): MenuItem[] => {
     return slug !== undefined && disabledPages.includes(slug);
   };
 
+  const methodDropdown: DropdownItem[] = [
+    {
+      key: 'framework',
+      label: t('navigation.method.framework'),
+      description: t('navigation.method.framework.description'),
+      path: getLocalizedPath(url.method),
+      icon: Layers,
+      color: 'yellow',
+    },
+    {
+      key: 'technology',
+      label: t('navigation.method.technology'),
+      description: t('navigation.method.technology.description'),
+      path: getLocalizedPath(url.technology),
+      icon: Cpu,
+      color: 'sky',
+      shouldHide: isHidden('technology'),
+    },
+    {
+      key: 'studio',
+      label: t('navigation.method.studio'),
+      description: t('navigation.method.studio.description'),
+      path: getLocalizedPath(url.studio),
+      icon: Briefcase,
+      color: 'mint',
+      shouldHide: isHidden('studio'),
+    },
+  ];
+
+  const companyDropdown: DropdownItem[] = [
+    {
+      key: 'about',
+      label: t('navigation.company.about'),
+      description: t('navigation.company.about.description'),
+      path: getLocalizedPath(url.aboutUs),
+      icon: Users,
+      color: 'coral',
+    },
+    {
+      key: 'jobs',
+      label: t('navigation.company.jobs'),
+      description: t('navigation.company.jobs.description'),
+      path: url.careers,
+      icon: Briefcase,
+      color: 'coral',
+      isExternal: true,
+      shouldHide: isHidden('jobs'),
+    },
+  ];
+
+  const resourcesDropdown: DropdownItem[] = [
+    {
+      key: 'podcasts',
+      label: t('navigation.resources.podcasts'),
+      description: t('navigation.resources.podcasts.description'),
+      path: url.podcasts,
+      icon: Mic,
+      color: 'yellow',
+      isExternal: true,
+      shouldHide: isHidden('podcasts'),
+    },
+    {
+      key: 'youtube',
+      label: t('navigation.resources.youtube'),
+      description: t('navigation.resources.youtube.description'),
+      path: url.youtube,
+      icon: Youtube,
+      color: 'coral',
+      isExternal: true,
+    },
+    {
+      key: 'blog',
+      label: t('navigation.resources.blog'),
+      description: t('navigation.resources.blog.description'),
+      path: getLocalizedPath(url.blog),
+      icon: BookOpen,
+      color: 'coral',
+    },
+    {
+      key: 'club',
+      label: t('navigation.resources.club'),
+      description: t('navigation.resources.club.description'),
+      path: url.modernRevenueClub,
+      icon: Users,
+      color: 'sky',
+      isExternal: true,
+    },
+  ];
+
   return [
     {
-      key: 'services',
-      title: t('navigation.services.title'),
-      url: null,
-      subItems: [
-        {
-          key: 'strategy',
-          title: t('navigation.services.strategy'),
-          url: getLocalizedPath(url.strategy),
-          variant: 'yellow',
-        },
-        {
-          key: 'revops',
-          title: t('navigation.services.revops'),
-          url: getLocalizedPath(url.projects),
-          variant: 'sky',
-        },
-      ],
+      key: 'offer',
+      label: t('navigation.offer'),
+      path: getLocalizedPath(url.offer),
+    },
+    {
+      key: 'method',
+      label: t('navigation.method.title'),
+      path: null,
+      dropdown: methodDropdown,
     },
     {
       key: 'stories',
-      title: t('navigation.stories'),
-      url: url.stories,
+      label: t('navigation.stories'),
+      path: getLocalizedPath(url.stories),
     },
     {
       key: 'company',
-      title: t('navigation.company.title'),
-      url: null,
-      subItems: [
-        {
-          key: 'about',
-          title: t('navigation.company.about'),
-          url: url.about,
-          variant: 'coral',
-        },
-        {
-          key: 'careers',
-          title: t('navigation.company.jobs'),
-          url: url.careers,
-          variant: 'coral',
-        },
-      ],
+      label: t('navigation.company.title'),
+      path: null,
+      dropdown: companyDropdown,
     },
     {
       key: 'resources',
-      title: t('navigation.resources.title'),
-      url: null,
-      subItems: [
-        {
-          key: 'news',
-          title: t('navigation.resources.news'),
-          url: url.news,
-          variant: 'mint',
-          shouldHide: isHidden('news'),
-        },
-        {
-          key: 'podcasts',
-          title: t('navigation.resources.podcasts'),
-          url: url.podcasts,
-          variant: 'mint',
-          shouldHide: isHidden('podcasts'),
-        },
-        {
-          key: 'webinars',
-          title: t('navigation.resources.webinars'),
-          url: 'https://app.getcontrast.io/ocobo',
-          variant: 'mint',
-        },
-        {
-          key: 'blog',
-          title: t('navigation.resources.blog'),
-          url: url.blog,
-          variant: 'mint',
-        },
-        {
-          key: 'tools',
-          title: t('navigation.resources.tools'),
-          url: url.tools,
-          variant: 'mint',
-          shouldHide: isHidden('tools'),
-        },
-      ],
+      label: t('navigation.resources.title'),
+      path: null,
+      dropdown: resourcesDropdown,
     },
     {
       key: 'contact',
-      title: t('contact.cta'),
-      url: getLocalizedPath(url.contact),
-      className: button({ variant: 'solid' }),
+      label: t('contact.cta'),
+      path: getLocalizedPath(url.contact),
+      isButton: true,
     },
   ];
-};
+}
