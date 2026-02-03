@@ -14,6 +14,10 @@ Read this section FIRST on each iteration.
 - New/prototype recipes go in preset/recipes/ (standard path)
 - When a legacy recipe reaches 0 usage, delete from _legacy/
 - Named exports only, kebab-case filenames, no barrel files
+- Navbar uses ocobo.* token namespace (ocobo.yellow, ocobo.dark, etc.) to match prototype
+- Desktop vs mobile CTA: contact.cta (short) vs contact.cta.mobile (long)
+- WebKit browsers need explicit hstack() pattern, not just display: flex
+- Font token for headings is 'display' (Bermia), not 'heading'
 
 ---
 
@@ -64,5 +68,38 @@ Created: 2026-02-01T12:00:00Z
 - Existing section() calls unaffected — defaults to bg:'white', padding:'lg' (same py:24 as before)
 - Adapted prototype ocobo.* colour refs → flat token names (dark, yellow, mint, etc.)
 - pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
+
+---
+
+## Feature 4: Create feature flag system for unreleased pages
+- Created app/modules/feature-flags.ts with DISABLED_PAGES env var
+- Added shouldHide to useMenuItems for nav filtering
+- Feature-flagged pages: technology, studio, jobs, podcasts
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 5: Set up localisation with structured keys in common.json
+- Added nav.*, footer.* keys to locales/{fr,en}/common.json
+- Added i18n namespace skeletons for offer, method, about pages
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 6: Migrate Navbar from prototype (Ark UI Menu, responsive drawer, scroll behaviour)
+- Replaced Radix NavigationMenu with Ark UI Menu (desktop) + Dialog (mobile)
+- Created app/components/navbar/: navbar.tsx, mobile-menu.tsx, nav-dropdown-item.tsx, nav-item-with-dropdown.tsx, types.ts, use-navbar-scroll.ts
+- Ported morphing scroll behaviour (transparent → rounded pill with blur, logo scales)
+- Rich dropdown items with icon + label + description + colour variants
+- Full-screen mobile menu with accordion-style sections
+- Added ocobo.* namespace tokens to match prototype (ocobo.yellow, ocobo.dark, etc.)
+- Renamed types to match prototype: label/path/color/dropdown (not title/url/variant/subItems)
+- Separate CTA labels: contact.cta (desktop), contact.cta.mobile (mobile)
+- Fixed WebKit/Orion browser compat with explicit hstack() pattern
+- Fixed font token: fontFamily: 'display' not 'heading'
+- Updated useMenuItems with correct dropdown colours (yellow/coral/coral/sky for resources)
+- Deleted old files: Header.tsx, MainMenu.tsx, MainMobileMenu.tsx, MobileMenu.tsx, SubMenu.tsx, NavigationMenu.tsx, navigation-menu.ts slot recipe
+- Learnings documented in docs/migration-notes.md
+- pnpm check ✅ pnpm typecheck ✅
 
 ---
