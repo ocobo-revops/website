@@ -47,7 +47,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             className={css({
               overflow: 'hidden',
               height: '280px',
-              rounded: 'xl',
+              roundedTop: 'xl',
             })}
           >
             <img
@@ -75,8 +75,8 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
               right: '16px',
               transform: 'translateY(50%)',
               bg: 'ocobo.dark',
-              px: 3,
-              py: 2,
+              px: 4,
+              py: 3,
               rounded: 'lg',
             })}
           >
@@ -85,11 +85,11 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
               alt={item.name}
               loading="lazy"
               decoding="async"
-              width={40}
-              height={20}
+              width={60}
+              height={28}
               className={css({
-                w: '40px',
-                h: '20px',
+                w: '60px',
+                h: '28px',
                 objectFit: 'contain',
               })}
             />
