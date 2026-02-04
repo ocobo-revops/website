@@ -136,16 +136,19 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **PostMetas** | `PostMetas.tsx` | Article metadata display | Reusable for content |
 
 ### Client Stories Components (`app/components/stories/`)
+
+*Updated 2026-02-04: Migrated to new design system with card styling, `fontFamily: 'display'` headings, and i18n empty states.*
+
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
-| **Hero** | `Hero.tsx` | Stories page hero | Stories-specific |
-| **StoryList** | `StoryList.tsx` | Client stories listing | Stories-specific |
-| **StoryItem** | `StoryItem.tsx` | Story card component | Reusable |
+| **Hero** | `Hero.tsx` | Stories page hero with display font | Stories-specific |
+| **StoryList** | `StoryList.tsx` | Client stories grid with i18n empty state | Stories-specific |
+| **StoryItem** | `StoryItem.tsx` | Story card with shadow, rounded corners, hover | Reusable |
 | **StoryArticle** | `StoryArticle.tsx` | Full story display | Stories-specific |
-| **StoryHeader** | `StoryHeader.tsx` | Story header section | Reusable for content |
-| **StoryMetas** | `StoryMetas.tsx` | Story metadata | Reusable for content |
+| **StoryHeader** | `StoryHeader.tsx` | Story header with display font | Reusable for content |
+| **StoryMetas** | `StoryMetas.tsx` | Story metadata in AsideCard | Reusable for content |
 | **StoryDeliverables** | `StoryDeliverables.tsx` | Deliverables section | Stories-specific |
-| **StorySpeaker** | `StorySpeaker.tsx` | Speaker/testimonial | Reusable |
+| **StorySpeaker** | `StorySpeaker.tsx` | Speaker with display font | Reusable |
 | **StoryMarkdownContainer** | `StoryMarkdownContainer.tsx` | Content wrapper | Reusable |
 
 ### Projects Components (`app/components/projects/`)

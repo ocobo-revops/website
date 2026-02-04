@@ -33,6 +33,8 @@
     "Voici comment."
   ],
   "clients.deliverables": "Livrables de la mission",
+  "clients.empty.title": "Aucun témoignage client disponible",
+  "clients.empty.subtitle": "Découvrez bientôt les retours d'expérience de nos clients.",
   "see_more": "En savoir plus",
   "footer.copyright": "{{year}} © Ocobo - Tous droits réservés",
   "footer.company.title": "Ocobo",

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { css } from '@ocobo/styled-system/css';
 
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
@@ -9,21 +11,29 @@ interface StoryListProps {
 }
 
 const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
+  const { t } = useTranslation('common');
+
   if (items.length === 0) {
     return (
       <div
         className={css({
           py: { base: 12, lg: 24 },
           textAlign: 'center',
-          color: 'gray.medium',
+          color: 'gray.600',
         })}
       >
-        <p className={css({ fontSize: 'lg', mb: 4 })}>
-          Aucun témoignage client disponible
+        <p
+          className={css({
+            fontFamily: 'display',
+            fontSize: { base: 'xl', md: '2xl' },
+            fontWeight: 'bold',
+            color: 'ocobo.dark',
+            mb: '4',
+          })}
+        >
+          {t('clients.empty.title')}
         </p>
-        <p className={css({ fontSize: 'sm' })}>
-          Découvrez bientôt les retours d'expérience de nos clients.
-        </p>
+        <p className={css({ fontSize: 'sm' })}>{t('clients.empty.subtitle')}</p>
       </div>
     );
   }
@@ -31,16 +41,21 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
   return (
     <ul
       className={css({
-        py: 10,
+        py: { base: 6, lg: 12 },
         display: 'grid',
         gridTemplateColumns: { base: '1', lg: 'repeat(3, 1fr)' },
         gap: 10,
         alignItems: 'stretch',
       })}
     >
-      {items.map((entry) => (
-        <li key={entry.slug}>
-          <StoryItem slug={entry.slug} item={entry.frontmatter} />
+      {items.map((entry, i) => (
+        <li
+          key={entry.slug}
+          className={css({
+            position: 'relative',
+          })}
+        >
+          <StoryItem slug={entry.slug} item={entry.frontmatter} index={i} />
         </li>
       ))}
     </ul>

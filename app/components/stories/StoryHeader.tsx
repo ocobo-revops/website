@@ -21,7 +21,11 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
     >
       <h1
         className={css({
-          textStyle: 'heading2',
+          fontFamily: 'display',
+          fontSize: { base: '2xl', md: '3xl', lg: '4xl' },
+          fontWeight: 'bold',
+          color: 'ocobo.dark',
+          letterSpacing: 'tight',
         })}
       >
         {item.title}

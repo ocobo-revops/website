@@ -28,7 +28,10 @@
   "contact.cta.mobile": "Book an appointment",
   "contact.meet": "Let's talk about your projects",
   "see_more": "Learn more",
-  "clients.title": "Favorites of current and future leaders",
+  "clients.title": "Favourites of current and future leaders",
+  "clients.deliverables": "Mission deliverables",
+  "clients.empty.title": "No client testimonials available",
+  "clients.empty.subtitle": "Discover our clients' experiences soon.",
   "clients.description.items": [
     "Ocobo a accompagné une <0>multitude d'entreprises de toutes tailles en forte croissance</0> à se développer plus rapidement, plus intelligemment et plus solidement.",
     "Voici comment."
