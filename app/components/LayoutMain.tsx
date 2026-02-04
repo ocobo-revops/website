@@ -19,9 +19,15 @@ export function LayoutMain({ children }: LayoutMainProps) {
       })}
     >
       <Navbar />
-      <React.Suspense fallback={<Loader className={css({ h: '300px' })} />}>
-        {children}
-      </React.Suspense>
+      <div
+        className={css({
+          pt: { base: '24', md: '28', lg: '32' },
+        })}
+      >
+        <React.Suspense fallback={<Loader className={css({ h: '300px' })} />}>
+          {children}
+        </React.Suspense>
+      </div>
       <Footer />
     </div>
   );
