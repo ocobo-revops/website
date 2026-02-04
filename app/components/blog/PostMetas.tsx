@@ -1,4 +1,5 @@
 import { CalendarDaysIcon, CoffeeIcon, TagsIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { circle, flex } from '@ocobo/styled-system/patterns';
@@ -11,8 +12,8 @@ import { getAuthor, getTag } from '~/utils/labels';
 import { AsideCard } from '../AsideCard';
 import { Avatar } from '../ui/Avatar';
 
-const formatDate = (date: string) => {
-  return new Intl.DateTimeFormat('fr', {
+const formatDate = (date: string, locale: string) => {
+  return new Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -28,6 +29,8 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
   item,
   ...props
 }) => {
+  const { i18n } = useTranslation();
+
   return (
     <AsideCard.Root variant="post" {...props}>
       <AsideCard.Section>
@@ -45,7 +48,7 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
       <AsideCard.Section>
         <div className={flex({ gap: 3, alignItems: 'center' })}>
           <CalendarDaysIcon className={icon({ size: 'lg' })} />
-          {formatDate(item.date)}
+          {formatDate(item.date, i18n.language || 'fr')}
         </div>
       </AsideCard.Section>
       <AsideCard.Section>

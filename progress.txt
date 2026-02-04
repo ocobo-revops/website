@@ -153,3 +153,11 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 12: Adapt Blog pages to new design system
+- Refreshed blog list cards to match new typography, spacing, and card treatments
+- Updated blog article header styles and metadata presentation
+- Localized blog empty state and back label via `blog` namespace
+- Added blog i18n resources to localization registry
+- pnpm check ✅ pnpm typecheck ✅
+
+---

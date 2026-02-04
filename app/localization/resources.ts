@@ -1,4 +1,5 @@
 import en_about from '../../locales/en/about.json';
+import en_blog from '../../locales/en/blog.json';
 import en_common from '../../locales/en/common.json';
 import en_contact from '../../locales/en/contact.json';
 import en_home from '../../locales/en/home.json';
@@ -7,6 +8,7 @@ import en_offer from '../../locales/en/offer.json';
 import en_projects from '../../locales/en/projects.json';
 import en_strategy from '../../locales/en/strategy.json';
 import fr_about from '../../locales/fr/about.json';
+import fr_blog from '../../locales/fr/blog.json';
 import fr_common from '../../locales/fr/common.json';
 import fr_contact from '../../locales/fr/contact.json';
 import fr_home from '../../locales/fr/home.json';
@@ -24,6 +26,7 @@ export const resources = {
   fr: {
     common: fr_common,
     home: fr_home,
+    blog: fr_blog,
     strategy: fr_strategy,
     projects: fr_projects,
     contact: fr_contact,
@@ -34,6 +37,7 @@ export const resources = {
   en: {
     common: en_common,
     home: en_home,
+    blog: en_blog,
     strategy: en_strategy,
     projects: en_projects,
     contact: en_contact,

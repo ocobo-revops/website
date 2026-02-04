@@ -255,10 +255,10 @@
         "Visual check — Blog pages render correctly with new design system",
         "Update docs/development/component-inventory.md"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-04T20:40:00Z"
     },
     {
       "id": 13,

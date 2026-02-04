@@ -15,7 +15,12 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
     >
       <h1
         className={css({
-          textStyle: 'heading1',
+          fontFamily: 'display',
+          fontSize: { base: '4xl', md: '6xl' },
+          fontWeight: 'bold',
+          color: 'ocobo.dark',
+          lineHeight: '0.95',
+          letterSpacing: 'tight',
         })}
       >
         {item.title}
@@ -23,8 +28,14 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
 
       <p
         className={css({
-          textStyle: 'large',
-          bleft: 'sky',
+          fontSize: { base: 'lg', md: 'xl' },
+          color: 'gray.600',
+          fontWeight: 'medium',
+          lineHeight: 'relaxed',
+          borderLeftWidth: '4px',
+          borderColor: 'ocobo.sky',
+          pl: '6',
+          mt: '6',
         })}
       >
         {item.exerpt || item.description}
@@ -38,8 +49,8 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
           width: '100%',
           height: 'auto',
           objectFit: 'cover',
-          borderRadius: '8',
-          my: 8,
+          borderRadius: '2xl',
+          my: 10,
         })}
       />
     </header>

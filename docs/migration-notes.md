@@ -65,3 +65,8 @@ Don't assume all items in a dropdown share the same colour.
 
 - **Long-form copy benefits from structured i18n:** Store manifesto lines as arrays with tone/weight metadata to preserve visual rhythm without hardcoding styles.
 - **Multiline invitation needs `whiteSpace: pre-line`:** Using `\n` in translation strings avoids JSX `<br />` and keeps copy editable in locales.
+
+### Story 12: Blog design system learnings
+
+- **Blog list is easier to theme with card wrappers:** Moving styling to the `article` container keeps typography and spacing consistent across list and detail pages.
+- **Blog i18n still matters:** Even without localized routes, empty states and UI labels should pull from `blog` namespace for future EN support.
