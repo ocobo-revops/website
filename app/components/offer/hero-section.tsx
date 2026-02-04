@@ -20,7 +20,7 @@ export const HeroSection = () => {
   return (
     <section
       className={css({
-        pt: '40',
+        pt: { base: '8', md: '12', lg: '16' },
         pb: '4',
         position: 'relative',
       })}

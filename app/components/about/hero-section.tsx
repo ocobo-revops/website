@@ -9,7 +9,9 @@ export const HeroSection = () => {
   const { t } = useTranslation('about');
 
   return (
-    <section className={css({ pt: '40', pb: '10' })}>
+    <section
+      className={css({ pt: { base: '8', md: '12', lg: '16' }, pb: '10' })}
+    >
       <Container>
         <div
           className={css({

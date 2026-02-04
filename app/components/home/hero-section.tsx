@@ -20,7 +20,7 @@ export const HeroSection = () => {
   return (
     <header
       className={css({
-        pt: '40',
+        pt: { base: '8', md: '12', lg: '16' },
         pb: '24',
         position: 'relative',
         overflow: 'hidden',
