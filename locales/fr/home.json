@@ -1,47 +1,164 @@
 {
-  "meta.title": "RevOps & Stratégies Revenue",
-  "meta.description": "Ocobo vous permet de faire plus avec moins. Organisez vos équipes, déployez des processus de pointe et boostez vos performances",
-  "hero.title": "RevOps pour\n Entreprises Modernes",
-  "hero.subtitle": "Agence leader en revenue operations et stratégies revenus b2b & b2c",
-  "hero.description": "Nous vous aidons à transformer l’organisation et les processus de vos équipes Revenue pour les rendre plus performantes et vous permettre d’atteindre vos objectifs de croissance et de rentabilité.",
-  "faster.title": "Plus vite à vos fins",
-  "faster.subtitle": "Profitez de la double compétence métier et technique de ceux qui l’ont déjà fait.",
-  "faster.description": "Atteignez vos objectifs et accélérez les initiatives de vos équipes Revenue - Marketing, Sales, Clients - grâce aux meilleures stratégies RevOps, et à l’aide d’experts intégrés à votre équipe. Nous évaluons votre organisation, identifions les bons leviers de croissance et travaillons dans le détail avec vous pour y parvenir.",
-  "faster.items": [
-    "Faites plus avec moins de ressources",
-    "Gagnez en performance avec des stratégies et des process de pointe",
-    "Planifiez, lancez et scalez des projets RevOps"
+  "meta.title": "Ocobo · RevOps & Revenue Experience",
+  "meta.description": "Ocobo conçoit l'architecture RevOps qui rend la croissance simple, fluide et pilotable.",
+  "hero.title.lines": [
+    "L'architecture",
+    "qui fait tenir",
+    "votre croissance."
   ],
-  "better.title": "Avec la meilleure\n agence du marché",
-  "better.cards.0.title": "Ocobo",
-  "better.cards.0.items": [
-    "Allie connaissance métier et expertise technique",
-    "Structure et présente de la donnée utile",
-    "Déploie les dernières stratégies et les meilleurs pratiques",
-    "Brise les silos et connecte vos équipes"
+  "hero.subtitle.before": "Voici comment nous transformons la croissance en",
+  "hero.subtitle.highlight": "expérience simple, fluide et pilotable.",
+  "hero.callout.before": "Le RevOps n'est pas un outil : c'est",
+  "hero.callout.emphasis": "la science qui organise votre revenu.",
+  "hero.cta": "Rencontrer un architecte",
+  "socialProof.label": "Ils nous font confiance",
+  "socialProof.title": "La preuve par l'expérience",
+  "socialProof.clients": [
+    "TheFork",
+    "ePack Hygiène",
+    "Qonto",
+    "PayFit",
+    "Spendesk",
+    "Qobra",
+    "Tomorro",
+    "Jus Mundi",
+    "Vizzia",
+    "Combo",
+    "Sortlist",
+    "Zenchef"
   ],
-  "better.cards.1.title": "Les intégrateurs\n et les cabinets de conseil",
-  "better.cards.1.items": [
-    "Spécialistes d’un outil ou d’une thématique",
-    "Vous noient sous les tableaux",
-    "Utilisent des frameworks datés",
-    "Favorisent les silos (Sales Ops, Marketing Ops, CS Ops…)"
+  "socialProof.testimonial.quote": "Nous avons fait appel à Ocobo dans notre seconde phase d'hypercroissance afin de réinventer notre modèle de commissionnement.",
+  "socialProof.testimonial.authorName": "Arnaud Meunier",
+  "socialProof.testimonial.authorRole": "CSO @ ePack Hygiène",
+  "socialProof.testimonial.ctaText": "Découvrir nos stories",
+  "painPoint.title.line1": "Le RevOps est partout.",
+  "painPoint.title.line2": "Mais personne ne comprend vraiment ce dont il s'agit.",
+  "painPoint.description": "Le marché a transformé un métier essentiel en une discipline fourre-tout : CRM, intégration, automatisation, data, growth… Résultat : une cacophonie, des stacks qui débordent et des organisations qui avancent à tâtons.",
+  "painPoint.badge": "Nous refusons ce flou",
+  "painPoint.cards": [
+    {
+      "title": "Aligner",
+      "description": "les équipes",
+      "label": "Organiser =",
+      "colour": "coral"
+    },
+    {
+      "title": "Simplifier",
+      "description": "les process",
+      "label": "Organiser =",
+      "colour": "yellow"
+    },
+    {
+      "title": "Fiabiliser",
+      "description": "la donnée",
+      "label": "Organiser =",
+      "colour": "sky"
+    },
+    {
+      "title": "Piloter",
+      "description": "la croissance",
+      "label": "Organiser =",
+      "colour": "mint"
+    }
   ],
-  "aligned.title": "Alignés sur vos objectifs",
-  "aligned.subtitle": "Un nouvel outil ne paiera pas vos factures.",
-  "aligned.description": "Nous nous concentrons sur les principaux facteurs de croissance et d'évolution d'une entreprise, tels que le revenu, le pipeline, et les métriques composant le NRR et la Sales Velocity.",
-  "aligned.cta": "Découvrez nos cas clients",
-  "stronger.title": "Remarquable seul.\n Incroyables ensemble.",
-  "stronger.description": "Nous analysons vos objectifs et initiatives clés, identifions vos principaux leviers de croissance, et élaborons un plan personnalisé pour vous aider à les atteindre.",
-  "stronger.cards.0.title": "Stratégies Revenue Operations",
-  "stronger.cards.0.description": "Nos experts en stratégies Revenue vous fournissent <0>un plan d’actions RevOps</0>, comprennent vos équipes et vos processus, optimisent la data, et brisent les silos.",
-  "stronger.cards.0.caption": "Analyses du funnel et mapping du customer journey. Organisation d’équipes. Forecasting & budgets. Segmentation. Territory Planning.",
-  "stronger.cards.1.title": "Projets Revenue Operations",
-  "stronger.cards.1.description": "L'appui d'experts en exécution <0>accélère le déploiement de vos initiatives</0> et vous permet de profiter de l’expertise de ceux qui l’ont déjà fait.",
-  "stronger.cards.1.caption": "Process de ventes. Support clients. Reports & Dashboards. Plan de rémunérations. Setup d’acquisition Inbound & Outbound.",
-  "tools.title": "Experts de vos technologies",
-  "tools.description": "Nous collaborons directement au sein de vos systèmes et outils avec votre équipe, en élaborant une architecture robuste, qui évoluera avec le développement l’entreprise.",
-  "contact.title": "Rencontrez un Expert RevOps",
-  "contact.subtitle": "Prenez rendez-vous pour découvrir si nous sommes le partenaire idéal pour vous accompagner dans votre croissance.",
-  "contact.description": "Nous évaluerons votre situation pour déterminer si nous pouvons vous aider."
+  "painPoint.mission.label": "Notre Mission",
+  "painPoint.mission.title": "Démocratiser la science du revenu.",
+  "painPoint.mission.description": "Pour que chaque organisation puisse faire l'expérience d'une croissance saine et maîtrisée.",
+  "transformation.title": "On ne scale pas avec des outils. On scale avec un système.",
+  "transformation.description": "La plupart des organisations grandissent en empilant les outils. Nous préférons construire des fondations solides et un système qui tient la charge.",
+  "transformation.items": [
+    {
+      "title": "Clarté radicale",
+      "description": "Une vérité partagée entre équipes. Des décisions éclairées. La fin du pilotage à l'intuition."
+    },
+    {
+      "title": "Simplicité opérationnelle",
+      "description": "Moins de friction, moins de complexité, moins d'outils. Des équipes concentrées sur le closing."
+    },
+    {
+      "title": "Performance mesurable",
+      "description": "Des conversions qui augmentent. Des cycles qui raccourcissent. Un revenu enfin prévisible."
+    }
+  ],
+  "transformation.method.title.line1": "Ce n'est pas un hasard.",
+  "transformation.method.title.line2": "C'est une méthode.",
+  "transformation.method.items": [
+    {
+      "title": "Alignment",
+      "description": "Aligner les équipes qui font le revenu.",
+      "colour": "yellow"
+    },
+    {
+      "title": "Technology",
+      "description": "Une stack claire, connectée, utile.",
+      "colour": "sky"
+    },
+    {
+      "title": "Performance",
+      "description": "Indicateurs fiables, pilotage, cockpit.",
+      "colour": "mint"
+    },
+    {
+      "title": "Enablement",
+      "description": "Équipes formées et autonomes.",
+      "colour": "coral"
+    }
+  ],
+  "transformation.method.label": "The Revenue Experience System™",
+  "transformation.method.cta": "Découvrir notre méthode",
+  "interventions.title": "Nos interventions",
+  "interventions.subtitle": "Nous vous aidons à construire les fondations RevOps dont dépend votre croissance.",
+  "interventions.items": [
+    {
+      "badge": "DESIGN",
+      "badgeColor": "yellow",
+      "subtitle": "L'architecture",
+      "title": "Immersion, diagnostic et plan d'action RevOps",
+      "description": "Ne construisez pas à l'aveugle. Nous auditons votre GTM (équipes, systèmes, données) et livrons la roadmap précise (Budget & Planning) pour sécuriser l'année."
+    },
+    {
+      "badge": "OPERATE",
+      "badgeColor": "sky",
+      "subtitle": "La construction",
+      "title": "La phase de transformation intensive.",
+      "description": "Une Squad complète déploie votre infrastructure en sprints de 2 semaines. On priorise, on construit, on teste, on livre."
+    },
+    {
+      "badge": "GROW",
+      "badgeColor": "mint",
+      "subtitle": "La croissance",
+      "title": "Le passage de témoin vers la performance durable.",
+      "description": "Nous pilotons votre \"Run\" au quotidien pour maximiser le ROI et récolter les fruits du travail accompli."
+    }
+  ],
+  "interventions.more": "Voir le détail",
+  "interventions.cta": "Voir toutes nos interventions",
+  "comparatif.title.line1": "Pourquoi Ocobo n'est pas un intégrateur.",
+  "comparatif.title.line2": "Ni un cabinet. Ni un freelance CRM.",
+  "comparatif.subtitle": "Notre savoir-faire : transformer une machine commerciale grippée en mécanique de précision.",
+  "comparatif.ocobo.label": "Ocobo",
+  "comparatif.ocobo.title": "La Revenue Experience",
+  "comparatif.ocobo.items": [
+    "Commence par la stratégie, pas par l'outil",
+    "Conçoit l'architecture complète de votre croissance",
+    "Travaille en immersion, en sprints courts",
+    "Opère comme une direction revenue, pas comme un prestataire",
+    "Mesure l'impact, pas les livrables"
+  ],
+  "comparatif.others.title": "Les autres acteurs",
+  "comparatif.others.items": [
+    "Pensent \"outil\" avant \"système\"",
+    "Empilent les automatisations",
+    "Reproduisent les silos (Sales Ops, Marketing Ops…)",
+    "Livrent des dashboards illisibles",
+    "Confondent complexité et performance"
+  ],
+  "comparatif.cta": "Découvrez le RevOps Studio",
+  "stack.title": "La bonne technologie. Au bon moment. Pour les bonnes raisons.",
+  "stack.description": "Nous ne sommes pas là pour empiler les outils, mais pour construire un écosystème cohérent. Nous certifions et implémentons les solutions leaders du marché.",
+  "stack.cta": "Nos solutions partenaires",
+  "stack.tagline": "Notre rôle : démanteler les usines à gaz et rendre votre stack utile.",
+  "cta.title": "Rencontrer un architecte RevOps",
+  "cta.subtitle": "En 30 minutes, nous évaluons la maturité de votre machine revenue. Vous repartez avec plus de clarté.",
+  "cta.button": "Prendre RDV"
 }

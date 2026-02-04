@@ -1,20 +1,23 @@
-import { cx } from '@ocobo/styled-system/css';
-import { container } from '@ocobo/styled-system/patterns';
+import { css, cx } from '@ocobo/styled-system/css';
 
 const Container: React.FunctionComponent<
   React.PropsWithChildren<
-    React.HTMLAttributes<HTMLDivElement> & { isMobileFullWidth?: boolean }
+    React.HTMLAttributes<HTMLDivElement> & {
+      isMobileFullWidth?: boolean;
+      narrow?: boolean;
+    }
   >
-> = ({ children, className, isMobileFullWidth, ...props }) => {
+> = ({ children, className, isMobileFullWidth, narrow, ...props }) => {
+  const maxW = narrow ? '5xl' : '7xl';
+  const maxWValue = isMobileFullWidth ? { base: 'full', md: maxW } : maxW;
+
   return (
     <div
       className={cx(
-        container({
-          maxWidth: {
-            base: isMobileFullWidth ? 'full' : 'mobile',
-            lg: 'desktop',
-            '2xl': 'xlarge',
-          },
+        css({
+          maxW: maxWValue,
+          mx: 'auto',
+          px: { base: '4', sm: '6', lg: '8' },
         }),
         className,
       )}

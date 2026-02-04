@@ -39,3 +39,11 @@ Don't assume all items in a dropdown share the same colour.
 
 - Modern Revenue Club uses custom image icon from HubSpot; consider supporting image icons in DropdownItem type
 - Consider removing legacy button recipe once all pages migrated
+
+### Story 8: Home page migration learnings
+
+- **Panda token extraction needs literal values:** Dynamic token strings (e.g. computed `bg`/`border` values) can fail to emit styles. Prefer static `css()` mappings for tokenized variants.
+- **Prototype base styles matter for parity:** The prototype’s `globals.css` sets body font smoothing and heading defaults (Bermia 900 + tight tracking). Reintroducing these in `app/index.css` brought typography back in line.
+- **Container sizing drift is easy to miss:** The prototype `Container` uses `maxW: 7xl` (and `5xl` for `narrow`), while the website used custom `mobile/desktop` sizes. Aligning these was required to match layout rhythm.
+- **Dot background scale affects perceived spacing:** The dot pattern size (40px/30px) meaningfully changes the visual density; parity requires matching those exact values.
+- **Feature flags should guard CTAs too:** Studio/Technology CTAs on the homepage need to respect `isPageEnabled` to avoid linking to disabled pages.

@@ -171,10 +171,10 @@
         "SSR hydration check — no console errors",
         "Update docs/architecture/overview.md route map"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-04T12:00:00Z"
     },
     {
       "id": 9,

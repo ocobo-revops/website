@@ -116,3 +116,13 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 8: Migrate Home page (redesign)
+- Rebuilt Home route to match prototype section order and layout
+- Added new home section components + shared layout pieces in app/components/home/
+- Added Home i18n keys in locales/{fr,en}/home.json based on prototype content
+- Synced dot-pattern backgrounds and other minor visual parity adjustments
+- Aligned container sizing with prototype and set global font base styles
+- Ensured CTA visibility respects feature flags (studio/technology)
+- pnpm check ✅ pnpm typecheck ✅
+
+---

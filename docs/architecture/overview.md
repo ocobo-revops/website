@@ -98,6 +98,16 @@ Design Tokens → Panda Compilation → CSS Generation → Component Application
 - **Image Optimization** automatic
 - **Bundle Analysis** integrated
 
+## Route Map (Key Public Routes)
+
+- `/` — Homepage (redesigned, Plan A)
+- `/($lang)/` — Locale-prefixed routes (FR/EN)
+- `/blog` — Blog listing
+- `/blog/$slug` — Blog detail
+- `/clients` — Client stories
+- `/clients/$slug` — Client story detail
+- `/contact` — Contact page
+
 ## Major Architectural Decisions
 
 ### 1. React Router v7 vs Alternatives
