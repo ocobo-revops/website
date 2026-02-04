@@ -53,3 +53,5 @@ Don't assume all items in a dropdown share the same colour.
 - **Group hover needs a `.group` parent:** `_groupHover` styles won’t trigger unless the parent has the `group` class; add it to card links.
 - **Nested i18n structures should be explicit:** Use `returnObjects: true` for arrays (`logoRows`, `tags`, `pyramid`) and model optional shapes in the component to avoid rigid layouts.
 - **Redirects should preserve locale:** Use `redirectWithLocale` then redirect to `/${lang}/offer` for legacy routes.
+- **Orion/WebKit sizing quirks:** Fixed-size elements styled with `center()` can stretch to full width; use `center({ inline: true })` + `flexShrink: 0` to enforce dimensions.
+- **writing-mode fallback:** `writing-mode` + `transform` is unreliable in Orion; add a `@supports not (writing-mode: vertical-rl)` fallback that uses `rotate(-90deg)` with `writingMode: horizontal-tb`.

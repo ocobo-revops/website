@@ -39,8 +39,6 @@ export const ArchitecturalGrid = () => {
         >
           <div
             className={css({
-              writingMode: 'vertical-lr',
-              transform: 'rotate(180deg)',
               fontFamily: 'display',
               fontWeight: 'bold',
               color: 'ocobo.dark/40',
@@ -48,6 +46,15 @@ export const ArchitecturalGrid = () => {
               textTransform: 'uppercase',
               letterSpacing: '0.6em',
               mb: '4',
+              whiteSpace: 'nowrap',
+              writingMode: 'vertical-lr',
+              textOrientation: 'mixed',
+              transform: 'rotate(180deg)',
+              '@supports not (writing-mode: vertical-rl)': {
+                writingMode: 'horizontal-tb',
+                transform: 'rotate(-90deg)',
+                transformOrigin: 'center',
+              },
             })}
           >
             {t('hero.grid.axis')}

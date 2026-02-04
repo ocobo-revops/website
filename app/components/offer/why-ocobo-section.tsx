@@ -35,7 +35,7 @@ export const WhyOcoboSection = () => {
           {reasons.map((reason) => (
             <div key={reason.title} className={css({ textAlign: 'center' })}>
               <div
-                className={`${center()} ${css({
+                className={`${center({ inline: true })} ${css({
                   w: '16',
                   h: '16',
                   bg: colorMap[reason.color],
@@ -43,6 +43,7 @@ export const WhyOcoboSection = () => {
                   color: 'ocobo.dark',
                   mx: 'auto',
                   mb: '6',
+                  flexShrink: '0',
                 })}`}
               >
                 <CheckCircle2 size={32} strokeWidth={4} />

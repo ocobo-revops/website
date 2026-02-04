@@ -70,7 +70,7 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
         })}
       >
         <div
-          className={`${center()} ${css({
+          className={`${center({ inline: true })} ${css({
             w: '16',
             h: '16',
             bg: colorToken,
@@ -82,6 +82,8 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
             borderColor: 'ocobo.dark',
             shadow: 'offset',
             mb: '8',
+            flexShrink: '0',
+            alignSelf: 'flex-start',
           })}`}
         >
           {service.number}
