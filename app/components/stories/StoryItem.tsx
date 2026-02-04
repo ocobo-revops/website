@@ -37,13 +37,17 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
       >
         <NavLink
           to={`${url.stories}/${slug}`}
-          className={css({ display: 'block' })}
+          className={css({
+            display: 'block',
+            position: 'relative',
+            mb: 4,
+          })}
         >
           <div
             className={css({
-              position: 'relative',
               overflow: 'hidden',
               height: '280px',
+              rounded: 'xl',
             })}
           >
             <img
@@ -61,37 +65,34 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 objectPosition: 'center',
                 filter: 'brightness(0.75)',
                 transition: 'filter 0.3s ease',
-                _groupHover: {
-                  filter: 'brightness(1)',
-                },
               })}
             />
-            <div
+          </div>
+          <div
+            className={css({
+              position: 'absolute',
+              bottom: 0,
+              right: '16px',
+              transform: 'translateY(50%)',
+              bg: 'ocobo.dark',
+              px: 3,
+              py: 2,
+              rounded: 'lg',
+            })}
+          >
+            <img
+              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+              alt={item.name}
+              loading="lazy"
+              decoding="async"
+              width={40}
+              height={20}
               className={css({
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                transform: 'translateY(50%)',
-                bg: 'ocobo.dark',
-                px: 3,
-                py: 2,
-                roundedTopLeft: 'lg',
+                w: '40px',
+                h: '20px',
+                objectFit: 'contain',
               })}
-            >
-              <img
-                src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-                alt={item.name}
-                loading="lazy"
-                decoding="async"
-                width={40}
-                height={20}
-                className={css({
-                  w: '40px',
-                  h: '20px',
-                  objectFit: 'contain',
-                })}
-              />
-            </div>
+            />
           </div>
         </NavLink>
 
