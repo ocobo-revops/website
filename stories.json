@@ -325,10 +325,10 @@
         "Run pnpm check && pnpm typecheck — zero errors",
         "SSR hydration check on all P1 pages — no console errors"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-04T22:30:00Z"
     }
   ]
 }
