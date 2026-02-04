@@ -55,3 +55,8 @@ Don't assume all items in a dropdown share the same colour.
 - **Redirects should preserve locale:** Use `redirectWithLocale` then redirect to `/${lang}/offer` for legacy routes.
 - **Orion/WebKit sizing quirks:** Fixed-size elements styled with `center()` can stretch to full width; use `center({ inline: true })` + `flexShrink: 0` to enforce dimensions.
 - **writing-mode fallback:** `writing-mode` + `transform` is unreliable in Orion; add a `@supports not (writing-mode: vertical-rl)` fallback that uses `rotate(-90deg)` with `writingMode: horizontal-tb`.
+
+### Story 10: Method page migration learnings
+
+- **SVG text must be localized too:** Diagram labels in SVGs are user-facing; keep them under i18n keys and pass as arrays to avoid hardcoding.
+- **Prefer grouped diagram keys:** Using a nested `scope.diagram` structure keeps the SVG text cohesive and avoids scattering translation keys across components.

@@ -92,6 +92,17 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **CtaSection** | `cta-section.tsx` | Offer CTA | Reusable with props |
 | **SectionHeader** | `section-header.tsx` | Offer section header | Reusable |
 
+### Method Components (`app/components/method/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | Method hero section | Method-specific |
+| **AttioPillarsIllustration** | `attio-pillars-illustration.tsx` | Method hero illustration | Method-specific |
+| **PillarsSection** | `pillars-section.tsx` | 4 pillars overview | Method-specific |
+| **PillarCard** | `pillar-card.tsx` | Pillar detail card | Reusable |
+| **ScopeSection** | `scope-section.tsx` | Scope + diagram | Method-specific |
+| **UnifiedBowtie** | `unified-bowtie.tsx` | Revenue scope diagram | Method-specific |
+| **ScopeCard** | `scope-card.tsx` | Scope detail card | Reusable |
+
 ### Legacy Homepage Components (`app/components/homepage/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|

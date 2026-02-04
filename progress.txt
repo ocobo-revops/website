@@ -136,3 +136,11 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 10: Migrate Method page
+- Added method route `_main.($lang).method.tsx` with loader/meta
+- Ported method components and illustrations in `app/components/method/`
+- Localized method content in `locales/{fr,en}/method.json` including diagram text
+- Updated sitemap and docs route map + component inventory
+- pnpm check ✅ pnpm typecheck ✅
+
+---

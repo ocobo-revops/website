@@ -1,8 +1,168 @@
 {
   "meta.title": "Our method",
-  "meta.description": "",
-  "hero.title": "",
-  "hero.subtitle": "",
-  "hero.description": "",
-  "hero.cta": ""
+  "meta.description": "A RevOps framework built on 4 pillars to deliver a solid, durable revenue architecture.",
+  "hero.badge": "OUR METHOD",
+  "hero.title.line1": "4 pillars for",
+  "hero.title.line2": "a",
+  "hero.title.highlight": "solid architecture.",
+  "hero.subtitle.bold": "The Revenue Experience System™",
+  "hero.subtitle.rest": "is our proprietary framework designed to turn operational chaos into a manageable revenue engine.",
+  "hero.quote": "\"Healthy growth is never an accident; it is the result of a system built to last and encourage adoption.\"",
+  "hero.cta": "Audit my system",
+  "hero.illustration.labels": ["Alignment", "Technology", "Performance", "Enablement"],
+  "pillars.title": "The Revenue Experience System™",
+  "pillars.subtitle": "We never intervene at random. We follow a logical order to guarantee the stability of the structure.",
+  "pillars.deliverablesLabel": "KEY DELIVERABLES",
+  "pillars.items": [
+    {
+      "number": "01",
+      "title": "Alignment",
+      "description": "Before touching tools, we align people. We break silos between Marketing, Sales, and CS to create a single Revenue team with shared goals.",
+      "color": "yellow",
+      "icon": "layout",
+      "deliverables": [
+        {
+          "title": "Lifecycle map",
+          "description": "Clear visualization of the customer journey and friction points."
+        },
+        {
+          "title": "Handover protocols & SLAs",
+          "description": "Strict rules for team handoffs (no more gray areas)."
+        },
+        {
+          "title": "Data dictionary (key KPIs)",
+          "description": "Shared definitions across the company to protect data integrity."
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Technology",
+      "description": "We build a connected, streamlined stack. No gas factory. Just the right tools, connected at the right time to serve the process.",
+      "color": "sky",
+      "icon": "sliders",
+      "deliverables": [
+        {
+          "title": "Stack audit & cleanup",
+          "description": "Clear technical debt and remove redundant tools."
+        },
+        {
+          "title": "Scalable data architecture (core model)",
+          "description": "CRM structure ready for multi-segment and hyper-growth."
+        },
+        {
+          "title": "Enrichment & automated routing",
+          "description": "Mechanisms to deliver the right info to the right rep at the right time."
+        }
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Performance",
+      "description": "You can’t steer what you don’t measure. We align indicators and incentives (comp) with your strategic goals.",
+      "color": "mint",
+      "icon": "lineChart",
+      "deliverables": [
+        {
+          "title": "Executive & investor dashboards",
+          "description": "Macro views for strategic steering (CAC, LTV, churn) and financial reporting."
+        },
+        {
+          "title": "Comp plans",
+          "description": "Variable plans that shape behavior toward real value."
+        },
+        {
+          "title": "Forecast reliability",
+          "description": "Routines to move from guesswork to a reliable forecast (+/- 10%)."
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "title": "Enablement",
+      "description": "The best system is useless if it isn’t used. We train, coach, and document to ensure lasting adoption.",
+      "color": "coral",
+      "icon": "graduationCap",
+      "deliverables": [
+        {
+          "title": "Execution playbooks",
+          "description": "Practical guides (Sales & Ops) to standardize ways of working."
+        },
+        {
+          "title": "Sustainable technical documentation",
+          "description": "A complete wiki so knowledge isn’t trapped in individuals."
+        },
+        {
+          "title": "CRM onboarding routines",
+          "description": "Training paths that make new hires productive fast."
+        }
+      ]
+    }
+  ],
+  "scope.title": "Our scope",
+  "scope.subtitle": "We operate across the full revenue value chain.",
+  "scope.items": [
+    {
+      "title": "Revenue generation",
+      "color": "yellow",
+      "icon": "target",
+      "items": ["Lead gen & scoring", "Pipeline management", "Account-based marketing"]
+    },
+    {
+      "title": "Architecture & data",
+      "color": "sky",
+      "icon": "database",
+      "items": ["CRM setup (HubSpot/SFDC)", "Data quality & enrichment", "Integrations & stack"]
+    },
+    {
+      "title": "Steering & performance",
+      "color": "mint",
+      "icon": "barChart3",
+      "items": ["Forecasting & reporting", "Comp plan", "Territory planning"]
+    },
+    {
+      "title": "Customer success & expansion",
+      "color": "coral",
+      "icon": "refreshCw",
+      "items": ["Churn management & health score", "Upsell & cross-sell routines", "Onboarding & CS Ops strategy"]
+    },
+    {
+      "title": "Sales enablement",
+      "color": "yellow",
+      "icon": "graduationCap",
+      "items": ["Playbooks & sales methodology", "Onboarding & continuous training", "Sales content & tool adoption"]
+    },
+    {
+      "title": "Governance & strategy",
+      "color": "sky",
+      "icon": "layers",
+      "items": ["Go-to-market strategy review", "Revenue planning & board reporting", "Revenue management & leadership"]
+    }
+  ],
+  "scope.diagram": {
+    "loops": {
+      "acquisition": "Acquisition",
+      "expansion": "Expansion"
+    },
+    "center": {
+      "line1": "New",
+      "line2": "Customer"
+    },
+    "flow": {
+      "left": ["MQL", "SQL", "SQO"],
+      "right": ["ACTIVE", "UPSELL", "CROSS-SELL"]
+    },
+    "stages": [
+      "DEMAND",
+      "GENERATION",
+      "QUALIFICATION",
+      "NEGOTIATION",
+      "ONBOARDING",
+      "ADOPTION",
+      "IMPACT"
+    ]
+  },
+  "cta.title": "Ready to stop the patchwork?",
+  "cta.subtitle": "Our method is the result of 10 years of experience in top-performing scale-ups (TheFork, PayFit, Spendesk).",
+  "cta.button": "Build my architecture"
 }
