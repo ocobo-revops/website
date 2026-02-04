@@ -102,6 +102,7 @@ Design Tokens → Panda Compilation → CSS Generation → Component Application
 
 - `/` — Homepage (redesigned, Plan A)
 - `/($lang)/` — Locale-prefixed routes (FR/EN)
+- `/($lang)/offer` — Offer page
 - `/blog` — Blog listing
 - `/blog/$slug` — Blog detail
 - `/clients` — Client stories

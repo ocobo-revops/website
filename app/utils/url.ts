@@ -4,8 +4,8 @@ export const url = {
   method: '/method',
   technology: '/technology',
   studio: '/studio',
-  strategy: '/strategies-revenue-operations',
-  projects: '/projets-revops',
+  strategy: '/offer',
+  projects: '/offer',
   stories: '/clients',
   aboutUs: '/about-us',
   about:

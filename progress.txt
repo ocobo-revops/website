@@ -126,3 +126,13 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 9: Migrate Offer page + route consolidation with redirects
+- Created offer route `_main.($lang).offer.tsx` with loader/meta
+- Added offer sections in `app/components/offer/` including hero, symptoms, levers, method, implications, and CTA
+- Localized offer content in `locales/{fr,en}/offer.json` including nested arrays (pyramid, services, levers)
+- Updated legacy routes to 301 redirect to `/${lang}/offer`
+- Updated sitemap, URL helpers, and legacy links to point to `/offer`
+- Updated component inventory and route map documentation
+- pnpm check ✅ pnpm typecheck ✅
+
+---

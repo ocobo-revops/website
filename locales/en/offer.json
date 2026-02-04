@@ -1,8 +1,317 @@
 {
   "meta.title": "Our offer",
-  "meta.description": "",
-  "hero.title": "",
-  "hero.subtitle": "",
-  "hero.description": "",
-  "hero.cta": ""
+  "meta.description": "A RevOps system to align teams, simplify operations, and drive growth.",
+  "hero.badge": "OUR OFFER",
+  "hero.title.line1": "A system.",
+  "hero.title.line2": "Not band-aids.",
+  "hero.subtitle": "Companies that scale don't rely on tool stacking. They build a clear, simple, and manageable revenue system.",
+  "hero.cta": "Book a call",
+  "hero.grid.axis": "Alignment",
+  "hero.grid.blocks": ["MARKETING", "SALES", "CUSTOMER", "FINANCE"],
+  "hero.grid.footerLabels": ["Technology", "Performance", "Enablement"],
+  "symptoms.title.line1": "When growth accelerates,",
+  "symptoms.title.line2": "complexity sets in.",
+  "symptoms.subtitle": "Across fast-moving companies, the same symptoms show up:",
+  "symptoms.cards": [
+    {
+      "title": "CEO",
+      "color": "coral",
+      "items": ["Lack of visibility on the business"]
+    },
+    {
+      "title": "Managers",
+      "color": "yellow",
+      "items": ["Unstable forecasts"]
+    },
+    {
+      "title": "Frontline teams",
+      "color": "sky",
+      "items": ["Too many tools, not enough clarity"]
+    },
+    {
+      "title": "Customers",
+      "color": "mint",
+      "items": ["Uneven experience"]
+    }
+  ],
+  "symptoms.pyramid": {
+    "ceo": {
+      "title": "CEO",
+      "items": [
+        "Lack of visibility on the business",
+        "Vision hard to translate into action"
+      ]
+    },
+    "managers": {
+      "title": "Managers",
+      "items": [
+        "Unstable forecasts",
+        "Too few insights to help teams improve",
+        "Resources poorly allocated"
+      ]
+    },
+    "teams": {
+      "title": "Frontline teams",
+      "items": [
+        "Too many tools, not enough clarity",
+        "Productivity declining",
+        "Hard to understand the strategy"
+      ]
+    },
+    "clients": {
+      "title": "Customers",
+      "items": [
+        "Uneven experience",
+        "Scattered information",
+        "Friction in the journey"
+      ]
+    }
+  },
+  "transition.title": "RevOps restores order.",
+  "transition.items": [
+    {
+      "title": "Alignment",
+      "color": "yellow",
+      "description": "Align Marketing, Sales, CS, and Finance around a shared, cross-functional view of revenue."
+    },
+    {
+      "title": "Process",
+      "color": "mint",
+      "description": "Streamline journeys and remove operational friction at every stage of the lifecycle."
+    },
+    {
+      "title": "Data",
+      "color": "coral",
+      "description": "Make data reliable to turn intuition into factual, actionable decisions."
+    },
+    {
+      "title": "Performance",
+      "color": "sky",
+      "description": "Improve conversion and revenue at each key step of the customer journey."
+    }
+  ],
+  "offersDetail.header.title": "We build and operate RevOps foundations",
+  "offersDetail.header.subtitle": "We build and operate the RevOps foundations of your organization: process, tools, data, and teams aligned for sustainable, controlled growth.",
+  "offersDetail.services": [
+    {
+      "number": 1,
+      "badge": "DESIGN",
+      "badgeColor": "yellow",
+      "subtitle": "The architecture",
+      "title": "Immersion, framing, and RevOps action plan",
+      "description": "A clear vision to know where to act.",
+      "items": [
+        {
+          "title": "Cross-functional diagnosis",
+          "description": "Deep analysis of interactions and friction between departments."
+        },
+        {
+          "title": "Process / tools / data mapping",
+          "description": "Full audit of existing infrastructure and workflows."
+        },
+        {
+          "title": "Prioritization and roadmap",
+          "description": "A quantified, prioritized attack plan for the months ahead."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "badge": "OPERATE",
+      "badgeColor": "sky",
+      "subtitle": "The build",
+      "title": "RevOps deployment (Agile)",
+      "description": "To operate and structure the revenue engine in 2-week sprints.",
+      "items": [
+        {
+          "title": "Revenue cycle architecture",
+          "description": "Unify your value chain end-to-end: from demand generation to upsell and billing."
+        },
+        {
+          "title": "Organizational design",
+          "description": "Restructure teams (roles & responsibilities) and standardize processes for flawless execution."
+        },
+        {
+          "title": "Stack & CRM deployment",
+          "description": "Integrate and connect market leaders (Salesforce, HubSpot) to become true growth engines."
+        },
+        {
+          "title": "Business intelligence",
+          "description": "Turn data into reliable, actionable dashboards to stop flying blind."
+        },
+        {
+          "title": "Compensation engineering",
+          "description": "Model clear, motivating variable plans aligned with profitability goals."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "badge": "GROW",
+      "badgeColor": "mint",
+      "subtitle": "RevOps enablement",
+      "title": "GROW (RevOps enablement)",
+      "description": "Turn your technical investment into recurring, durable revenue.",
+      "items": [
+        {
+          "title": "Operations & optimization",
+          "description": "Get the best out of what was built (fine-tuning)."
+        },
+        {
+          "title": "Data steering",
+          "description": "Keep key numbers (forecast, MRR, pipeline) accurate month after month."
+        },
+        {
+          "title": "Support & adoption",
+          "description": "Ensure sales teams actually use the tools (fight Shadow IT)."
+        },
+        {
+          "title": "Roadmap evolution",
+          "description": "Anticipate tomorrow’s needs so growth never slows."
+        },
+        {
+          "title": "RevOps culture for leaders",
+          "description": "Align the strategic vision and give decision-makers the right lenses."
+        }
+      ]
+    }
+  ],
+  "levers.header.badge": "GROWTH LEVERS",
+  "levers.header.title": "Our 3 levers of support.",
+  "levers.header.subtitle": "To put your revenue strategy in motion, we combine method, technology, and expertise.",
+  "levers.items": [
+    {
+      "key": "method",
+      "title": "Our method",
+      "badge": "The Revenue Experience System\u2122",
+      "description": "A living method, operated in sprints, built to last: team alignment, useful stack, reliable data, and autonomous teams.",
+      "tags": ["Alignment", "Technology", "Performance", "Enablement"]
+    },
+    {
+      "key": "technology",
+      "title": "Our technology",
+      "badge": "Unified Infrastructure",
+      "description": "A rationalized stack, co-designed with leaders (HubSpot, Salesforce, Modjo...). We are agnostic architects; every choice serves your strategy.",
+      "logoRows": [
+        [
+          {
+            "src": "https://www.vectorlogo.zone/logos/hubspot/hubspot-icon.svg",
+            "alt": "HubSpot"
+          },
+          {
+            "src": "https://www.vectorlogo.zone/logos/salesforce/salesforce-icon.svg",
+            "alt": "Salesforce"
+          }
+        ],
+        [
+          {
+            "src": "https://dust.tt/static/logo_icon.png",
+            "alt": "Dust"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "studio",
+      "title": "Our team",
+      "badge": "The RevOps Studio",
+      "description": "Your squad of senior experts from top scale-ups: TheFork, Qonto, Payfit, Spendesk... They think like an embedded revenue leadership team.",
+      "lines": ["TheFork \u2022 Qonto \u2022 Payfit", "Spendesk \u2022 Zenchef"]
+    }
+  ],
+  "method.title": "Our method in 4 steps",
+  "method.deliverableLabel": "Deliverables:",
+  "method.steps": [
+    {
+      "title": "Align",
+      "deliverable": "Playbooks, rituals"
+    },
+    {
+      "title": "Equip",
+      "deliverable": "Tech roadmap"
+    },
+    {
+      "title": "Steer",
+      "deliverable": "Dashboards"
+    },
+    {
+      "title": "Train",
+      "deliverable": "Training kits"
+    }
+  ],
+  "implications.title": "What this means in practice",
+  "implications.subtitle": "Concretely, here is what we operate with you:",
+  "implications.blocks": [
+    {
+      "title": "Diagnose",
+      "color": "coral",
+      "items": [
+        "Analyze Marketing/Sales/CS interactions",
+        "Process + CRM mapping",
+        "KPI, pipeline, variable analysis"
+      ]
+    },
+    {
+      "title": "Align",
+      "color": "yellow",
+      "items": [
+        "ICP & buyer journey",
+        "SLA Marketing \u2194 Sales \u2194 CS",
+        "Shared organization & rituals"
+      ]
+    },
+    {
+      "title": "Equip",
+      "color": "sky",
+      "items": [
+        "Rethink / implement CRM",
+        "Smart automations",
+        "Shared dashboards"
+      ]
+    },
+    {
+      "title": "Activate performance",
+      "color": "mint",
+      "items": ["Variable plans", "Objectives and KPIs", "Steering cockpit"]
+    },
+    {
+      "title": "Integrate AI",
+      "color": "purple",
+      "items": [
+        "AI prospecting agents",
+        "Post-call CRM automation",
+        "Predictive scoring"
+      ]
+    },
+    {
+      "title": "Train & iterate",
+      "color": "dark",
+      "items": [
+        "Pipeline review, roleplay",
+        "Playbooks and templates",
+        "Iteration roadmap"
+      ]
+    }
+  ],
+  "whyOcobo.title": "Why choose Ocobo",
+  "whyOcobo.reasons": [
+    {
+      "color": "yellow",
+      "title": "Senior profiles",
+      "description": "No juniors. We operate like an embedded Revenue leadership team."
+    },
+    {
+      "color": "coral",
+      "title": "Real impact",
+      "description": "No useless slides. We build, operate, and transfer."
+    },
+    {
+      "color": "mint",
+      "title": "Durable system",
+      "description": "We leave a structured, steerable system for your next scale."
+    }
+  ],
+  "cta.title": "Take control of your growth.",
+  "cta.subtitle": "30 minutes to assess your revenue engine. Clarity guaranteed.",
+  "cta.button": "Book a call"
 }

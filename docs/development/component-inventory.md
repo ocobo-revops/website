@@ -76,6 +76,22 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **ModularStackGrid** | `modular-stack-grid.tsx` | Tech stack grid | Reusable |
 | **DashboardIllustration** | `dashboard-illustration.tsx` | Hero illustration | Homepage-specific |
 
+### Offer Components (`app/components/offer/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | Offer hero section | Offer-specific |
+| **ArchitecturalGrid** | `architectural-grid.tsx` | Hero illustration grid | Offer-specific |
+| **SymptomsSection** | `symptoms-section.tsx` | Growth symptoms + pyramid | Offer-specific |
+| **PyramidSection** | `pyramid-section.tsx` | Symptoms pyramid graphic | Offer-specific |
+| **TransitionSection** | `transition-section.tsx` | RevOps transition highlights | Offer-specific |
+| **OffersDetailSection** | `offers-detail-section.tsx` | Offer phases + deliverables | Offer-specific |
+| **LeviersSection** | `leviers-section.tsx` | Growth levers cards | Offer-specific |
+| **MethodeSection** | `methode-section.tsx` | 4-step method overview | Offer-specific |
+| **ImplicationsSection** | `implications-section.tsx` | Concrete RevOps actions | Offer-specific |
+| **WhyOcoboSection** | `why-ocobo-section.tsx` | Reasons to choose Ocobo | Offer-specific |
+| **CtaSection** | `cta-section.tsx` | Offer CTA | Reusable with props |
+| **SectionHeader** | `section-header.tsx` | Offer section header | Reusable |
+
 ### Legacy Homepage Components (`app/components/homepage/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|

@@ -103,7 +103,7 @@ const Stronger = () => {
                 <div
                   className={css({ mt: 'auto', pt: '4', textStyle: 'small' })}
                 >
-                  <NavLink to={url.strategy} className={link()}>
+                  <NavLink to={url.offer} className={link()}>
                     {t('see_more', { ns: 'common' })}
                   </NavLink>
                 </div>
@@ -127,7 +127,7 @@ const Stronger = () => {
                 <div
                   className={css({ mt: 'auto', pt: '4', textStyle: 'small' })}
                 >
-                  <NavLink to={url.projects} className={link()}>
+                  <NavLink to={url.offer} className={link()}>
                     {t('see_more', { ns: 'common' })}
                   </NavLink>
                 </div>

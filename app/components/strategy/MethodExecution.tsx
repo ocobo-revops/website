@@ -78,7 +78,7 @@ const MethodExecution = () => {
                 <Illustration name="strategy_execution" />
               </p>
               <p className={css({ hideBelow: 'lg' })}>
-                <NavLink to={getLocalizedPath(url.projects)} className={link()}>
+                <NavLink to={getLocalizedPath(url.offer)} className={link()}>
                   {t('method.execution.cta')}
                 </NavLink>
               </p>
@@ -127,7 +127,7 @@ const MethodExecution = () => {
                 })}
             </ul>
             <p className={css({ hideFrom: 'lg', bleft: 'transparent' })}>
-              <NavLink to={getLocalizedPath(url.projects)} className={link()}>
+              <NavLink to={getLocalizedPath(url.offer)} className={link()}>
                 {t('see_more', { ns: 'common' })}
               </NavLink>
             </p>

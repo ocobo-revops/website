@@ -47,3 +47,9 @@ Don't assume all items in a dropdown share the same colour.
 - **Container sizing drift is easy to miss:** The prototype `Container` uses `maxW: 7xl` (and `5xl` for `narrow`), while the website used custom `mobile/desktop` sizes. Aligning these was required to match layout rhythm.
 - **Dot background scale affects perceived spacing:** The dot pattern size (40px/30px) meaningfully changes the visual density; parity requires matching those exact values.
 - **Feature flags should guard CTAs too:** Studio/Technology CTAs on the homepage need to respect `isPageEnabled` to avoid linking to disabled pages.
+
+### Story 9: Offer page migration learnings
+
+- **Group hover needs a `.group` parent:** `_groupHover` styles won’t trigger unless the parent has the `group` class; add it to card links.
+- **Nested i18n structures should be explicit:** Use `returnObjects: true` for arrays (`logoRows`, `tags`, `pyramid`) and model optional shapes in the component to avoid rigid layouts.
+- **Redirects should preserve locale:** Use `redirectWithLocale` then redirect to `/${lang}/offer` for legacy routes.
