@@ -144,3 +144,12 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 11: Migrate About Us page
+- Added about route `_main.($lang).about-us.tsx` with loader/meta
+- Ported about components and illustration in `app/components/about/`
+- Localized about content in `locales/{fr,en}/about.json` including manifesto structure
+- Updated `/about-us` redirect to localized route and added sitemap entry
+- Updated route map and component inventory
+- pnpm check ✅ pnpm typecheck ✅
+
+---

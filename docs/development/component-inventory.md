@@ -103,6 +103,17 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **UnifiedBowtie** | `unified-bowtie.tsx` | Revenue scope diagram | Method-specific |
 | **ScopeCard** | `scope-card.tsx` | Scope detail card | Reusable |
 
+### About Components (`app/components/about/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | About hero section | About-specific |
+| **DataIllustration** | `data-illustration.tsx` | About hero illustration | About-specific |
+| **ManifestoSection** | `manifesto-section.tsx` | Manifesto content | About-specific |
+| **TeamSection** | `team-section.tsx` | Founding team section | About-specific |
+| **TeamMemberCard** | `team-member-card.tsx` | Team profile card | Reusable |
+| **ValuesSection** | `values-section.tsx` | Values grid | About-specific |
+| **ValueCard** | `value-card.tsx` | Values card | Reusable |
+
 ### Legacy Homepage Components (`app/components/homepage/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|

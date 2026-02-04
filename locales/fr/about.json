@@ -1,8 +1,191 @@
 {
-  "meta.title": "Qui sommes-nous",
-  "meta.description": "",
-  "hero.title": "",
-  "hero.subtitle": "",
-  "hero.description": "",
-  "hero.cta": ""
+  "meta.title": "À propos",
+  "meta.description": "Notre mission : démocratiser la science du revenu et construire des architectures RevOps solides.",
+  "hero.title.line1": "Notre mission :",
+  "hero.title.line2": "démocratiser la",
+  "hero.title.highlight": "science du revenu.",
+  "hero.subtitle": "Rendre accessible à toutes les organisations B2B une discipline réservée, jusqu'ici, aux scale-ups les plus avancées.",
+  "hero.description": "Parce qu'une croissance fiable n'est jamais un hasard : c'est le résultat d'une architecture solide, d'équipes alignées, et d'un système qui respire la simplicité.",
+  "hero.illustration.title": "Transformer le bruit en signal.",
+  "hero.illustration.subtitle": "L'architecture n'est pas qu'une question de structure, c'est une question de vision. Savoir où regarder pour trouver la croissance.",
+  "manifesto.badge": "Manifeste",
+  "manifesto.intro": [
+    {
+      "text": "Nous ne sommes pas là pour configurer des outils.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Mais pour remettre, dans la croissance, de l'ordre et de la philosophie.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Le marché a transformé le RevOps en un labyrinthe de jargon, d'automatisations décoratives et de stacks toujours plus lourdes et éclatées.",
+      "tone": "muted",
+      "weight": "medium"
+    },
+    {
+      "text": "Tout le monde promet de la performance.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Très peu savent la penser et la structurer.",
+      "tone": "white",
+      "weight": "medium"
+    }
+  ],
+  "manifesto.statement": [
+    {
+      "text": "Chez Ocobo, nous refusons la confusion, le bruit, les mirages technologiques.",
+      "tone": "white",
+      "weight": "bold"
+    },
+    {
+      "text": "Pour nous, le RevOps n'est pas un métier technique.",
+      "tone": "white",
+      "weight": "bold"
+    },
+    {
+      "text": "C'est une discipline stratégique : l'architecture de votre revenu.",
+      "tone": "highlight",
+      "weight": "bold",
+      "italic": true
+    }
+  ],
+  "manifesto.actions": [
+    {
+      "text": "Aligner les équipes, réparer les silos.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Simplifier les process jusqu'à l'usage et jusqu'à la moelle s'il le faut.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Rendre la donnée fiable, lisible et actionnable.",
+      "tone": "white",
+      "weight": "medium"
+    }
+  ],
+  "manifesto.clarity": [
+    {
+      "text": "Nous existons pour appeler les choses par leur nom,",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "ramener de la clarté dans un monde de jargon",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "et offrir aux organisations un privilège rare :",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "l'expérience d'une croissance simple, saine et maîtrisée.",
+      "tone": "highlight",
+      "weight": "bold"
+    }
+  ],
+  "manifesto.invitation": {
+    "title": "Ocobo est notre invitation",
+    "items": [
+      "à regarder votre machine revenue en face,",
+      "à préférer la vérité opérationnelle aux illusions de performance,",
+      "à faire primer la stratégie sur l'urgence,",
+      "à construire votre revenu non comme un empilement,\nmais comme un système pensé, durable et vivant."
+    ]
+  },
+  "manifesto.conclusion": [
+    {
+      "text": "Nous croyons que la croissance n'est jamais un accident.",
+      "tone": "white",
+      "weight": "medium"
+    },
+    {
+      "text": "Mais le résultat d'une architecture juste, d'une mécanique revenue qui respire et d'une exigence d'alignement.",
+      "tone": "white",
+      "weight": "medium"
+    }
+  ],
+  "manifesto.signature": "La clarté au service du revenu.",
+  "team.title": "L'équipe fondatrice",
+  "team.subtitle": "Une équipe 100% senior. Issue des meilleures scale-ups. Construite pour l'impact.",
+  "team.description": "Nous ne sommes ni des juniors, ni des exécutants externes. Nous opérons comme une direction Revenue embarquée : exigeante, stratégique, opérationnelle.",
+  "team.members": [
+    {
+      "name": "Benjamin Boileux",
+      "role": "Architecte RevOps & Associé",
+      "bio": "12+ ans en Ops, CRM, Product et Revenue Operations (TheFork, Tripadvisor, Yousign). Spécialiste des systèmes et du pilotage opérationnel.",
+      "linkedInUrl": "#",
+      "color": "yellow"
+    },
+    {
+      "name": "Aude Cadiot",
+      "role": "Architecte RevOps & Associée",
+      "bio": "Référence française du Revenue Operations (TheFork, Spendesk). Experte du customer journey, des organisations GTM, du scaling d'équipes RevOps.",
+      "linkedInUrl": "#",
+      "color": "coral"
+    },
+    {
+      "name": "Corentin Guérin",
+      "role": "Analyste & Stratège Revenue, Associé",
+      "bio": "Finance, Deloitte, Business Ops (TheFork). Spécialiste du forecasting, de la performance, des rémunérations variables et du pricing.",
+      "linkedInUrl": "#",
+      "color": "sky"
+    }
+  ],
+  "team.callout": {
+    "prefix": "Trois parcours, une même conviction :",
+    "highlight": "la croissance a besoin d'architectes, pas de techniciens."
+  },
+  "team.cta": "Rencontrez le reste de l'équipe",
+  "values.title": "Ce qui nous lie",
+  "values.items": [
+    {
+      "title": "Clarté radicale",
+      "description": "Nommer les problèmes. Rendre simple ce qui était obscur.",
+      "detail": "Dire la vérité sur le revenu",
+      "color": "yellow"
+    },
+    {
+      "title": "Simplicité pragmatique",
+      "description": "Moins de complexité. Moins d'outils. Moins de bruit.",
+      "detail": "Une mécanique de précision, pas une usine à gaz",
+      "color": "mint"
+    },
+    {
+      "title": "Exigence senior",
+      "description": "Des profils qui ont vécu les enjeux, les crises, les restructurations.",
+      "detail": "Parler C-level, agir opérationnel",
+      "color": "sky"
+    },
+    {
+      "title": "Architecture avant la maçonnerie",
+      "description": "Pas d'outil sans intention. Pas d'automatisation sans vision. Il ne suffit pas de connecter les tuyaux, encore faut-il que l'eau circule.",
+      "detail": "La tech suit la stratégie, jamais l'inverse",
+      "color": "coral"
+    },
+    {
+      "title": "Expérience humaine",
+      "description": "Concevoir pour les équipes. Fluidifier leur quotidien.",
+      "detail": "Si l'usage casse, tout trépasse",
+      "color": "dark"
+    },
+    {
+      "title": "Anti-bullshit technologique",
+      "description": "Pas de promesses miracles. Pas d'IA gadget.",
+      "detail": "La technologie est un levier, pas un totem",
+      "color": "dark"
+    }
+  ],
+  "cta.title": "Parlons de votre machine revenue.",
+  "cta.subtitle": "30 minutes pour éclairer, diagnostiquer, orienter. Zéro détour. Zéro jargon. Rien que la vérité sur votre croissance et vos options.",
+  "cta.button": "Rencontrer un architecte RevOps"
 }

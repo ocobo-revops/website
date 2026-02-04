@@ -60,3 +60,8 @@ Don't assume all items in a dropdown share the same colour.
 
 - **SVG text must be localized too:** Diagram labels in SVGs are user-facing; keep them under i18n keys and pass as arrays to avoid hardcoding.
 - **Prefer grouped diagram keys:** Using a nested `scope.diagram` structure keeps the SVG text cohesive and avoids scattering translation keys across components.
+
+### Story 11: About page migration learnings
+
+- **Long-form copy benefits from structured i18n:** Store manifesto lines as arrays with tone/weight metadata to preserve visual rhythm without hardcoding styles.
+- **Multiline invitation needs `whiteSpace: pre-line`:** Using `\n` in translation strings avoids JSX `<br />` and keeps copy editable in locales.

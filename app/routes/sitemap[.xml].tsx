@@ -18,6 +18,7 @@ function generateSiteMap(
             ${getUrlElementWithDate(`${baseUrl}/fr`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/fr/offer`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/fr/method`, new Date().toISOString())}
+            ${getUrlElementWithDate(`${baseUrl}/fr/about-us`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/fr/contact`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/stories`, new Date().toISOString())}
 
