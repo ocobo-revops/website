@@ -111,7 +111,7 @@ export function useMenuItems(): NavItem[] {
       key: 'blog',
       label: t('navigation.resources.blog'),
       description: t('navigation.resources.blog.description'),
-      path: getLocalizedPath(url.blog),
+      path: url.blog,
       icon: BookOpen,
       color: 'coral',
     },
@@ -141,7 +141,7 @@ export function useMenuItems(): NavItem[] {
     {
       key: 'stories',
       label: t('navigation.stories'),
-      path: getLocalizedPath(url.stories),
+      path: url.stories,
     },
     {
       key: 'company',
