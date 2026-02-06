@@ -224,11 +224,34 @@ function Footer() {
             css({ fontSize: 'xs', color: 'gray.500' }),
           )}
         >
-          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+          <div
+            className={cx(
+              flex({ align: 'center', gap: '6' }),
+              css({ mt: { base: '4', md: '0' } }),
+            )}
+          >
+            <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
+            <span className={css({ color: 'gray.700' })}>|</span>
+            {languages.map((lng) => (
+              <NavLink
+                key={lng}
+                to={pathname.replace(`/${currentLang}`, `/${lng}`)}
+                className={css({
+                  transition: 'colors',
+                  textTransform: 'uppercase',
+                  fontWeight: currentLang === lng ? 'bold' : 'normal',
+                  color: currentLang === lng ? 'white' : 'gray.500',
+                  _hover: { color: 'white' },
+                })}
+              >
+                {lng}
+              </NavLink>
+            ))}
+          </div>
           <div
             className={cx(
               flex({ gap: '6' }),
-              css({ mt: { base: '4', md: '0' } }),
+              css({ mt: { base: '4', md: '0' }, pr: '16' }),
             )}
           >
             <NavLink
@@ -249,22 +272,6 @@ function Footer() {
             >
               {t('footer.legal.terms')}
             </NavLink>
-            <span className={css({ color: 'gray.700' })}>|</span>
-            {languages.map((lng) => (
-              <NavLink
-                key={lng}
-                to={pathname.replace(`/${currentLang}`, `/${lng}`)}
-                className={css({
-                  transition: 'colors',
-                  textTransform: 'uppercase',
-                  fontWeight: currentLang === lng ? 'bold' : 'normal',
-                  color: currentLang === lng ? 'white' : 'gray.500',
-                  _hover: { color: 'white' },
-                })}
-              >
-                {lng}
-              </NavLink>
-            ))}
           </div>
         </div>
       </div>
