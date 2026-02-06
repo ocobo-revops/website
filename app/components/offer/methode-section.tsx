@@ -1,7 +1,12 @@
 import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import { center, grid } from '@ocobo/styled-system/patterns';
+import { center, flex, grid } from '@ocobo/styled-system/patterns';
+import { button } from '@ocobo/styled-system/recipes';
+
+import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
+import { url } from '~/utils/url';
 
 import { Container } from '../ui/Container';
 import { SectionHeader } from './section-header';
@@ -13,6 +18,7 @@ type Step = {
 
 export const MethodeSection = () => {
   const { t } = useTranslation('offer');
+  const getLocalizedPath = useLocalizedPathname();
   const steps = t('method.steps', { returnObjects: true }) as Step[];
 
   return (
@@ -26,14 +32,15 @@ export const MethodeSection = () => {
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className={css({
+              className={`group ${css({
                 bg: 'white',
                 p: '8',
+                rounded: 'lg',
                 borderWidth: '1px',
                 borderColor: 'gray.100',
                 transition: 'all',
-                _hover: { shadow: 'lg' },
-              })}
+                _hover: { shadow: 'lg', borderColor: 'ocobo.yellow' },
+              })}`}
             >
               <div
                 className={`${center()} ${css({
@@ -91,6 +98,33 @@ export const MethodeSection = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div
+          className={flex({
+            direction: 'column',
+            align: 'center',
+            mt: '12',
+            gap: '6',
+          })}
+        >
+          <p
+            className={css({
+              fontSize: 'xs',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: 'gray.400',
+            })}
+          >
+            {t('method.subtitle')}
+          </p>
+          <NavLink
+            to={getLocalizedPath(url.method)}
+            className={button({ variant: 'outline', size: 'lg' })}
+          >
+            {t('method.cta')}
+          </NavLink>
         </div>
       </Container>
     </section>

@@ -202,10 +202,10 @@
         "Run pnpm check && pnpm typecheck — zero errors",
         "Test: /method shows updated company names without Payfit"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T14:30:00Z"
     },
     {
       "id": 30,
@@ -221,10 +221,10 @@
         "Test: tech section shows tool logos, button links to /technology",
         "Test: 'Notre role' text is complete and phrase font is larger"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T18:00:00Z"
     },
     {
       "id": 31,
@@ -239,10 +239,10 @@
         "Test: method cards on /offer show yellow hover effect",
         "Test: subtitle and button appear below cards, button navigates to /method"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T18:00:00Z"
     },
     {
       "id": 32,
