@@ -239,3 +239,11 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 23: Global polish — container margins, text selection, blog dropdown colour
+- Container.tsx: maxW default 7xl (1280px) → 70rem (1120px), narrow 5xl → 56rem, px → 8 (2rem fixed)
+- global-css.ts: added ::selection { backgroundColor: yellow, color: dark }
+- useMenuItems.ts: blog dropdown color coral → sky
+- pnpm check ✅ pnpm typecheck ✅
+
+---

@@ -113,7 +113,7 @@ export function useMenuItems(): NavItem[] {
       description: t('navigation.resources.blog.description'),
       path: url.blog,
       icon: BookOpen,
-      color: 'coral',
+      color: 'sky',
     },
     {
       key: 'club',

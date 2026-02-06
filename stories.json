@@ -87,10 +87,10 @@
         "Test: container width narrower on wide screens, more breathing room on sides",
         "Test: blog item in Resources dropdown shows cyan/sky color icon"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:15:00Z"
     },
     {
       "id": 24,

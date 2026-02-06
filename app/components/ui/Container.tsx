@@ -8,7 +8,7 @@ const Container: React.FunctionComponent<
     }
   >
 > = ({ children, className, isMobileFullWidth, narrow, ...props }) => {
-  const maxW = narrow ? '5xl' : '7xl';
+  const maxW = narrow ? '56rem' : '70rem';
   const maxWValue = isMobileFullWidth ? { base: 'full', md: maxW } : maxW;
 
   return (
@@ -17,7 +17,7 @@ const Container: React.FunctionComponent<
         css({
           maxW: maxWValue,
           mx: 'auto',
-          px: { base: '4', sm: '6', lg: '8' },
+          px: '8',
         }),
         className,
       )}
