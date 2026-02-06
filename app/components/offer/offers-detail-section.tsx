@@ -92,7 +92,7 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
           <span className={badge({ variant: color })}>{service.badge}</span>
           <p
             className={css({
-              fontSize: '2xs',
+              fontSize: 'sm',
               fontWeight: 'black',
               textTransform: 'uppercase',
               letterSpacing: 'widest',

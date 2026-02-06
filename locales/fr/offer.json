@@ -85,7 +85,7 @@
       "badge": "DESIGN",
       "badgeColor": "yellow",
       "subtitle": "L'architecture",
-      "title": "Immersion, cadrage et plan d'action RevOps",
+      "title": "Immersion, cadrage et plan d'action",
       "description": "La vision claire pour savoir où agir.",
       "items": [
         {
@@ -107,7 +107,7 @@
       "badge": "OPERATE",
       "badgeColor": "sky",
       "subtitle": "La construction",
-      "title": "Déploiement RevOps (Agile)",
+      "title": "Déploiement (Agile)",
       "description": "Pour opérer et structurer la machine revenue en sprints de 2 semaines.",
       "items": [
         {
@@ -136,8 +136,8 @@
       "number": 3,
       "badge": "GROW",
       "badgeColor": "mint",
-      "subtitle": "Animation RevOps",
-      "title": "Animation RevOps (RUN)",
+      "subtitle": "L'animation",
+      "title": "Animation (RUN)",
       "description": "Pour transformer votre investissement technique en revenus récurrents et durables.",
       "items": [
         {

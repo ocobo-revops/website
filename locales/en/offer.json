@@ -85,7 +85,7 @@
       "badge": "DESIGN",
       "badgeColor": "yellow",
       "subtitle": "The architecture",
-      "title": "Immersion, framing, and RevOps action plan",
+      "title": "Immersion, framing, and action plan",
       "description": "A clear vision to know where to act.",
       "items": [
         {
@@ -107,7 +107,7 @@
       "badge": "OPERATE",
       "badgeColor": "sky",
       "subtitle": "The build",
-      "title": "RevOps deployment (Agile)",
+      "title": "Deployment (Agile)",
       "description": "To operate and structure the revenue engine in 2-week sprints.",
       "items": [
         {
@@ -136,8 +136,8 @@
       "number": 3,
       "badge": "GROW",
       "badgeColor": "mint",
-      "subtitle": "RevOps enablement",
-      "title": "RevOps Enablement (RUN)",
+      "subtitle": "Enablement",
+      "title": "Enablement (RUN)",
       "description": "Turn your technical investment into recurring, durable revenue.",
       "items": [
         {
