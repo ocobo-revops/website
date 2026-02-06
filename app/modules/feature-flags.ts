@@ -23,12 +23,7 @@ const VALID_SLUGS: Set<string> = new Set<PageSlug>([
 ]);
 
 /** P2+ pages disabled by default until launched */
-export const DISABLED_PAGES_DEFAULT: PageSlug[] = [
-  'jobs',
-  'podcasts',
-  'news',
-  'tools',
-];
+export const DISABLED_PAGES_DEFAULT: PageSlug[] = ['news', 'tools'];
 
 /**
  * Returns the list of currently disabled page slugs.

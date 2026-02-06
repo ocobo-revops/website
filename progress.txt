@@ -189,3 +189,12 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 19: Enable external links in nav: 'Nous rejoindre' and 'Podcasts'
+- Removed `'jobs'` and `'podcasts'` from `DISABLED_PAGES_DEFAULT`
+- 'Nous rejoindre' link in Company dropdown → Notion page (isExternal, already wired)
+- 'Podcasts' link in Resources dropdown → Ausha page (isExternal, already wired)
+- Both links already had correct URLs, icons, colours, and isExternal flag in useMenuItems
+- Only change needed was removing feature flag entries
+- pnpm check ✅ pnpm typecheck ✅
+
+---
