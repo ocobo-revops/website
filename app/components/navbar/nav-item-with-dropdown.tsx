@@ -50,7 +50,7 @@ export function NavItemWithDropdown({
       onOpenChange={(details) => {
         setActiveDropdown(details.open ? key : null);
       }}
-      positioning={{ placement: 'bottom', gutter: 16 }}
+      positioning={{ placement: 'bottom', gutter: 28 }}
       closeOnSelect
     >
       <Menu.Trigger asChild>
@@ -70,12 +70,13 @@ export function NavItemWithDropdown({
         <Menu.Content
           className={css({
             w: '380px',
-            bg: 'white',
+            bg: 'white/95',
+            backdropFilter: 'blur(12px)',
             rounded: '3xl',
             p: '2',
             shadow: 'soft-lg',
             borderWidth: '1px',
-            borderColor: 'gray.50',
+            borderColor: 'gray.100',
             overflow: 'hidden',
             outline: 'none',
             transition: 'all 0.3s',
