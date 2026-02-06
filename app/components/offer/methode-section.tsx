@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
-import { center, flex, grid } from '@ocobo/styled-system/patterns';
+import { center, grid } from '@ocobo/styled-system/patterns';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -117,38 +117,40 @@ export const MethodeSection = () => {
           ))}
         </div>
 
+        <h3
+          className={css({
+            fontFamily: 'display',
+            fontSize: { base: '2xl', md: '3xl' },
+            fontWeight: 'bold',
+            textAlign: 'center',
+            mt: '16',
+            mb: '4',
+            maxW: '2xl',
+            mx: 'auto',
+          })}
+        >
+          <span className={css({ color: 'ocobo.yellow' })}>
+            {t('method.closing.line1')}
+          </span>
+          <br />
+          {t('method.closing.line2')}
+        </h3>
+
         <p
           className={css({
-            fontSize: 'lg',
+            fontSize: 'xs',
             fontWeight: 'bold',
-            fontStyle: 'italic',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            color: 'gray.400',
             textAlign: 'center',
-            color: 'ocobo.dark',
-            mt: '12',
+            mb: '8',
           })}
         >
-          {t('method.closing')}
+          {t('method.subtitle')}
         </p>
 
-        <div
-          className={flex({
-            direction: 'column',
-            align: 'center',
-            mt: '8',
-            gap: '6',
-          })}
-        >
-          <p
-            className={css({
-              fontSize: 'xs',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: 'gray.400',
-            })}
-          >
-            {t('method.subtitle')}
-          </p>
+        <div className={center()}>
           <ButtonLink
             to={getLocalizedPath(url.method)}
             variant="outline"

@@ -263,7 +263,8 @@
   "method.title": "Our method in 4 steps",
   "method.intro": "Growth becomes predictable when it's built on a system:",
   "method.deliverableLabel": "Deliverables:",
-  "method.closing": "You're not buying an audit. You're activating a complete system.",
+  "method.closing.line1": "You're not buying an audit.",
+  "method.closing.line2": "You're activating a complete system.",
   "method.subtitle": "THE REVENUE EXPERIENCE SYSTEM™",
   "method.cta": "Discover our method",
   "method.steps": [

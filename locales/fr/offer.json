@@ -263,7 +263,8 @@
   "method.title": "Notre méthode en 4 étapes",
   "method.intro": "La croissance devient prévisible quand elle repose sur un système :",
   "method.deliverableLabel": "Livrables :",
-  "method.closing": "Vous n'achetez pas un audit. Vous activez un système complet.",
+  "method.closing.line1": "Vous n'achetez pas un audit.",
+  "method.closing.line2": "Vous activez un système complet.",
   "method.subtitle": "THE REVENUE EXPERIENCE SYSTEM™",
   "method.cta": "Découvrir notre méthode",
   "method.steps": [
