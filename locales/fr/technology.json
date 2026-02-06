@@ -104,7 +104,7 @@
       "logo": "/images/partners/hubspot.png",
       "desc": "Plateforme complete de CRM & Marketing Automation.",
       "status": "OFFICIAL",
-      "certificationLogo": "https://27107933.fs1.hubspotusercontent-eu1.net/hubfs/27107933/hubspot-platinum-partner-badge.png"
+      "certificationLogo": "/images/partners/hubspot-badge.png"
     },
     {
       "name": "Vasco",
@@ -303,7 +303,8 @@
       ],
       "logo": "/images/partners/aircall.png",
       "desc": "Telephonie cloud integree nativement a vos outils.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "certificationLogo": "/images/partners/aircall-badge.webp"
     },
     {
       "name": "Lemlist",
@@ -316,7 +317,8 @@
       ],
       "logo": "/images/partners/lemlist.webp",
       "desc": "Prospection multicanale hautement personnalisee.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "certificationLogo": "/images/partners/lemlist-badge.png"
     },
     {
       "name": "Oneflow",
