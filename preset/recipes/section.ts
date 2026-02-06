@@ -21,7 +21,7 @@ export const section = defineRecipe({
         color: 'dark',
       },
       sky: {
-        bg: 'sky.light',
+        bg: 'sky',
       },
       mint: {
         bg: 'mint.light',

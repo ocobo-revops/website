@@ -48,7 +48,7 @@ export const ModelSection = () => {
 
       <Container className={css({ position: 'relative', zIndex: 10 })}>
         <div className={css({ maxW: '3xl', mb: '20' })}>
-          <h2 className={text({ variant: 'display-lg' })}>
+          <h2 className={text({ variant: 'display-lg', color: 'white' })}>
             {t('model.title')}
           </h2>
           <p

@@ -45,6 +45,9 @@ export default defineConfig({
         },
       },
     ],
+    recipes: {
+      section: [{ bg: ['*'], padding: ['*'] }],
+    },
   },
 
   // The output directory for your css system
