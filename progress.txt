@@ -198,3 +198,20 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+# QA P1 — QFX Progress Log
+
+Project: Website Migration — QA P1 QFX
+Source: specs/qa-plan-p1.md
+Branch: qfx-qa-p1
+Created: 2026-02-06T15:00:00Z
+
+## Initial Setup
+- Triaged ~28 QA items from client Notion export
+- Created specs/qa-plan-p1.md with 5-phase plan (bugs → polish → content → features)
+- Generated stories.json with 16 features (IDs 20-35)
+- 3 bugs (high), 5 polish (high), 2 content (high/medium), 6 features (high/medium)
+- 3 features blocked on assets (33: founder photos, 34: testimonial assets, 35: tool/team logos)
+- Ready for implementation
+
+---
