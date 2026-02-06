@@ -21,7 +21,7 @@ export const url = {
   notFound: '/404',
   podcasts: 'https://podcast.ausha.co/revenue-echoes',
   youtube: 'https://www.youtube.com/@Ocobo-Revenue',
-  modernRevenueClub: 'https://modernrevenueclub.com',
+  modernRevenueClub: 'https://www.modernrevenue.club',
 };
 
 export const getImageOgFullPath = (name: string, url: string) => {
