@@ -22,8 +22,6 @@ interface TeamMember {
   role: string;
   desc: string;
   img: string;
-  hoverBg: string;
-  hoverText: string;
   linkedin?: string;
 }
 

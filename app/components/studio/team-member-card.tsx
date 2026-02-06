@@ -3,14 +3,38 @@ import { Linkedin } from 'lucide-react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
 
+type CategoryColor = 'yellow' | 'coral' | 'mint';
+
+const categoryColorMap: Record<string, CategoryColor> = {
+  Architecte: 'yellow',
+  Builder: 'coral',
+  'Expert Engineer': 'mint',
+};
+
+const barStyles: Record<CategoryColor, string> = {
+  yellow: css({ bg: 'ocobo.yellow' }),
+  coral: css({ bg: 'ocobo.coral' }),
+  mint: css({ bg: 'ocobo.mint' }),
+};
+
+const badgeBgStyles: Record<CategoryColor, string> = {
+  yellow: css({ bg: 'ocobo.yellow.light', color: 'ocobo.yellow' }),
+  coral: css({ bg: 'ocobo.coral.light', color: 'ocobo.coral' }),
+  mint: css({ bg: 'ocobo.mint.light', color: 'ocobo.mint' }),
+};
+
+const photoBorderStyles: Record<CategoryColor, string> = {
+  yellow: css({ _groupHover: { borderColor: 'ocobo.yellow' } }),
+  coral: css({ _groupHover: { borderColor: 'ocobo.coral' } }),
+  mint: css({ _groupHover: { borderColor: 'ocobo.mint' } }),
+};
+
 interface TeamMemberCardProps {
   name: string;
   category: string;
   role: string;
   desc: string;
   img: string;
-  hoverBg: string;
-  hoverText: string;
   linkedin?: string;
   animate: boolean;
 }
@@ -24,6 +48,8 @@ export const TeamMemberCard = ({
   animate,
   linkedin,
 }: TeamMemberCardProps) => {
+  const color = categoryColorMap[category] ?? 'yellow';
+
   return (
     <div
       className={cx(
@@ -46,56 +72,61 @@ export const TeamMemberCard = ({
     >
       {/* Left colour bar */}
       <div
-        className={css({
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '1.5',
-          height: 'full',
-          bg: 'gray.50',
-          transition: 'all 300ms',
-        })}
+        className={cx(
+          css({
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '1.5',
+            height: 'full',
+            transition: 'all 300ms',
+          }),
+          barStyles[color],
+        )}
       />
 
       {/* Category badge */}
       <div
-        className={css({
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          px: '4',
-          py: '1.5',
-          roundedBottomLeft: 'xl',
-          fontFamily: 'display',
-          fontWeight: 'black',
-          fontSize: 'xs',
-          textTransform: 'uppercase',
-          letterSpacing: 'widest',
-          shadow: 'sm',
-          bg: 'gray.100',
-          color: 'gray.400',
-          transition: 'all 300ms',
-        })}
+        className={cx(
+          css({
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            px: '4',
+            py: '1.5',
+            roundedBottomLeft: 'xl',
+            fontFamily: 'display',
+            fontWeight: 'black',
+            fontSize: 'xs',
+            textTransform: 'uppercase',
+            letterSpacing: 'widest',
+            shadow: 'sm',
+            transition: 'all 300ms',
+          }),
+          badgeBgStyles[color],
+        )}
       >
         {category}
       </div>
 
       {/* Photo */}
       <div
-        className={css({
-          width: '32',
-          height: '32',
-          mx: 'auto',
-          mb: '6',
-          rounded: 'full',
-          overflow: 'hidden',
-          borderWidth: '4px',
-          borderColor: 'gray.50',
-          transition: 'all 500ms',
-          shadow: 'sm',
-          bg: 'gray.50',
-          _groupHover: { borderColor: 'ocobo.dark' },
-        })}
+        className={cx(
+          css({
+            width: '32',
+            height: '32',
+            mx: 'auto',
+            mb: '6',
+            rounded: 'full',
+            overflow: 'hidden',
+            borderWidth: '4px',
+            borderColor: 'gray.50',
+            transition: 'all 500ms',
+            shadow: 'sm',
+            bg: 'gray.50',
+          }),
+          photoBorderStyles[color],
+        )}
       >
         <img
           src={img}
