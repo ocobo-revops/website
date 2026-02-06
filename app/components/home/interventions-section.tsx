@@ -98,7 +98,7 @@ export const InterventionsSection = () => {
                   </span>
                   <p
                     className={css({
-                      fontSize: '2xs',
+                      fontSize: 'sm',
                       fontWeight: 'black',
                       textTransform: 'uppercase',
                       letterSpacing: 'widest',
