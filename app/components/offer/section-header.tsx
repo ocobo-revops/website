@@ -3,7 +3,7 @@ import type React from 'react';
 import { css } from '@ocobo/styled-system/css';
 import { badge } from '@ocobo/styled-system/recipes';
 
-type BadgeVariant = 'yellow' | 'sky' | 'mint' | 'coral' | 'dark' | 'gray';
+type BadgeVariant = 'yellow' | 'sky' | 'mint' | 'coral';
 
 interface SectionHeaderProps {
   badgeText?: string;

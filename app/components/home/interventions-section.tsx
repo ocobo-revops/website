@@ -92,7 +92,6 @@ export const InterventionsSection = () => {
                   <span
                     className={badge({
                       variant: item.badgeColor,
-                      rounded: 'full',
                     })}
                   >
                     {item.badge}

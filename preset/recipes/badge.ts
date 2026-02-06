@@ -8,40 +8,25 @@ export const badge = defineRecipe({
     fontFamily: 'display',
     fontWeight: 'black',
     textTransform: 'uppercase',
-    borderWidth: '1px',
-    borderStyle: 'solid',
+    borderRadius: 'full',
   },
   variants: {
     variant: {
       yellow: {
         color: 'dark',
-        bg: 'yellow.light',
-        borderColor: 'yellow/20',
+        bg: 'yellow',
       },
       mint: {
         color: 'dark',
-        bg: 'mint.light',
-        borderColor: 'mint/20',
+        bg: 'mint',
       },
       sky: {
-        color: 'sky',
-        bg: 'sky.light',
-        borderColor: 'sky/20',
+        color: 'dark',
+        bg: 'sky',
       },
       coral: {
-        color: 'coral',
-        bg: 'coral.light',
-        borderColor: 'coral/20',
-      },
-      dark: {
-        color: 'white',
-        bg: 'dark',
-        borderColor: 'dark/20',
-      },
-      gray: {
-        color: 'gray',
-        bg: 'gray.light',
-        borderColor: 'gray',
+        color: 'dark',
+        bg: 'coral',
       },
     },
     size: {
@@ -51,25 +36,16 @@ export const badge = defineRecipe({
         fontSize: 'xs',
         letterSpacing: '0.3em',
       },
-      md: {
+      lg: {
         px: '6',
         py: '2',
         fontSize: 'xs',
         letterSpacing: '0.3em',
       },
     },
-    rounded: {
-      sm: {
-        borderRadius: 'sm',
-      },
-      full: {
-        borderRadius: 'full',
-      },
-    },
   },
   defaultVariants: {
     variant: 'yellow',
     size: 'sm',
-    rounded: 'sm',
   },
 });
