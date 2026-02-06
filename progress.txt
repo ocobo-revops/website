@@ -215,3 +215,13 @@ Created: 2026-02-06T15:00:00Z
 - Ready for implementation
 
 ---
+
+## Feature 20: Fix navbar bugs — YouTube URL, z-index scroll, radius/gap
+- Fixed YouTube URL in app/utils/url.ts: `@ocobo` → `@Ocobo-Revenue`
+- Footer.tsx: replaced hardcoded YouTube URL with `url.youtube` reference
+- Fixed dropdown z-index in nav-item-with-dropdown.tsx: 200 → 1001 (above navbar container at 1000)
+- Increased nav items gap from 1 → 2 and CTA/toggle gap from 3 → 4 in navbar.tsx
+- Navbar rounded: '3xl' in scrolled state already correct
+- pnpm check ✅ pnpm typecheck ✅
+
+---

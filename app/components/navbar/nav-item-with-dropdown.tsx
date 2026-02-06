@@ -75,7 +75,7 @@ export function NavItemWithDropdown({
             left: '50%',
             transform: 'translateX(-50%)',
             pt: '4',
-            zIndex: 200,
+            zIndex: 1001,
           })}
         >
           <Menu.Content

@@ -20,7 +20,7 @@ export const url = {
   privacy: '/privacy',
   notFound: '/404',
   podcasts: 'https://podcast.ausha.co/revenue-echoes',
-  youtube: 'https://www.youtube.com/@ocobo',
+  youtube: 'https://www.youtube.com/@Ocobo-Revenue',
   modernRevenueClub: 'https://modernrevenueclub.com',
 };
 

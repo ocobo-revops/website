@@ -136,7 +136,7 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div
             className={cx(
-              hstack({ gap: '1' }),
+              hstack({ gap: '2' }),
               css({
                 display: { base: 'none', lg: 'flex' },
                 px: '2',
@@ -177,7 +177,7 @@ export function Navbar() {
           </div>
 
           {/* Right side: CTA + Mobile menu */}
-          <div className={hstack({ gap: '3', flexShrink: 0 })}>
+          <div className={hstack({ gap: '4', flexShrink: 0 })}>
             {items
               .filter((item) => item.isButton && item.path)
               .map((item) => (

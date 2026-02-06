@@ -154,7 +154,7 @@ function Footer() {
                 <Linkedin size={16} />
               </a>
               <a
-                href="https://www.youtube.com/@Ocobo-Revenue"
+                href={url.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={socialButtonStyles}

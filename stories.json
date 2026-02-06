@@ -34,10 +34,10 @@
         "Test: YouTube link in nav dropdown opens https://www.youtube.com/@Ocobo-Revenue",
         "Test: navbar remains clickable after scrolling past long content sections"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:00:00Z"
     },
     {
       "id": 21,
