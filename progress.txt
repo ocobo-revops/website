@@ -232,3 +232,10 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 22: Fix method page circle animation spinning off-center
+- Added `transformOrigin: '250px 250px'` to dashed circle in attio-pillars-illustration.tsx
+- Circle now spins in place around SVG center instead of orbiting around origin
+- pnpm check ✅ pnpm typecheck ✅
+
+---

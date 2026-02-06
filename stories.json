@@ -67,10 +67,10 @@
         "Run pnpm check && pnpm typecheck — zero errors",
         "Test: view /method — dashed circle rotates in place (not orbiting around the hero)"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:10:00Z"
     },
     {
       "id": 23,

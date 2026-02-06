@@ -330,7 +330,10 @@ export const AttioPillarsIllustration = ({
               stroke="currentColor"
               strokeWidth="0.5"
               strokeDasharray="2 4"
-              className={css({ animation: 'spin-slow' })}
+              className={css({
+                animation: 'spin-slow',
+                transformOrigin: '250px 250px',
+              })}
             />
           </g>
         </svg>
