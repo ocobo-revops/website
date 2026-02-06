@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
@@ -22,28 +22,36 @@ interface PillarCardProps {
   className?: string;
 }
 
-const borderColorMap: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+const borderColorStyles: Record<ThemeColor, string> = {
+  yellow: css({ borderTopColor: 'ocobo.yellow' }),
+  mint: css({ borderTopColor: 'ocobo.mint' }),
+  sky: css({ borderTopColor: 'ocobo.sky' }),
+  coral: css({ borderTopColor: 'ocobo.coral' }),
+  dark: css({ borderTopColor: 'ocobo.dark' }),
 };
 
-const iconBgMap: Record<ThemeColor, { bg: string; color: string }> = {
-  yellow: { bg: 'ocobo.yellow.light', color: 'ocobo.yellow' },
-  mint: { bg: 'ocobo.mint.light', color: 'ocobo.mint' },
-  sky: { bg: 'ocobo.sky.light', color: 'ocobo.sky' },
-  coral: { bg: 'ocobo.coral.light', color: 'ocobo.coral' },
-  dark: { bg: 'gray.200', color: 'ocobo.dark' },
+const iconBgStyles: Record<ThemeColor, string> = {
+  yellow: css({ bg: 'ocobo.yellow.light', color: 'ocobo.yellow' }),
+  mint: css({ bg: 'ocobo.mint.light', color: 'ocobo.mint' }),
+  sky: css({ bg: 'ocobo.sky.light', color: 'ocobo.sky' }),
+  coral: css({ bg: 'ocobo.coral.light', color: 'ocobo.coral' }),
+  dark: css({ bg: 'gray.200', color: 'ocobo.dark' }),
 };
 
-const bulletMap: Record<ThemeColor, { bg: string; ring: string }> = {
-  yellow: { bg: 'ocobo.yellow', ring: 'ocobo.yellow.light' },
-  mint: { bg: 'ocobo.mint', ring: 'ocobo.mint.light' },
-  sky: { bg: 'ocobo.sky', ring: 'ocobo.sky.light' },
-  coral: { bg: 'ocobo.coral', ring: 'ocobo.coral.light' },
-  dark: { bg: 'ocobo.dark', ring: 'gray.200' },
+const bulletStyles: Record<ThemeColor, string> = {
+  yellow: css({
+    bg: 'ocobo.yellow',
+    ring: '4px',
+    ringColor: 'ocobo.yellow.light',
+  }),
+  mint: css({ bg: 'ocobo.mint', ring: '4px', ringColor: 'ocobo.mint.light' }),
+  sky: css({ bg: 'ocobo.sky', ring: '4px', ringColor: 'ocobo.sky.light' }),
+  coral: css({
+    bg: 'ocobo.coral',
+    ring: '4px',
+    ringColor: 'ocobo.coral.light',
+  }),
+  dark: css({ bg: 'ocobo.dark', ring: '4px', ringColor: 'gray.200' }),
 };
 
 export const PillarCard: React.FC<PillarCardProps> = ({
@@ -56,22 +64,22 @@ export const PillarCard: React.FC<PillarCardProps> = ({
   icon: Icon,
   className = '',
 }) => {
-  const iconStyle = iconBgMap[color];
-  const bulletStyle = bulletMap[color];
-
   return (
     <div
-      className={`${css({
-        bg: 'white',
-        p: '8',
-        borderTopWidth: '8px',
-        borderTopColor: borderColorMap[color],
-        shadow: 'card',
-        transition: 'all',
-        transitionDuration: '300ms',
-        position: 'relative',
-        _hover: { shadow: 'xl', transform: 'translateY(-4px)' },
-      })} ${className}`}
+      className={cx(
+        css({
+          bg: 'white',
+          p: '8',
+          borderTopWidth: '8px',
+          shadow: 'card',
+          transition: 'all',
+          transitionDuration: '300ms',
+          position: 'relative',
+          _hover: { shadow: 'xl', transform: 'translateY(-4px)' },
+        }),
+        borderColorStyles[color],
+        className,
+      )}
     >
       <div
         className={`${flex({ justify: 'space-between', align: 'flex-start' })} ${css(
@@ -81,12 +89,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
         )}`}
       >
         <div
-          className={css({
-            p: '4',
-            rounded: 'full',
-            bg: iconStyle.bg,
-            color: iconStyle.color,
-          })}
+          className={cx(css({ p: '4', rounded: 'full' }), iconBgStyles[color])}
         >
           <Icon size={32} />
         </div>
@@ -156,16 +159,16 @@ export const PillarCard: React.FC<PillarCardProps> = ({
               className={flex({ gap: '4', align: 'flex-start' })}
             >
               <div
-                className={css({
-                  mt: '1.5',
-                  w: '2',
-                  h: '2',
-                  rounded: 'full',
-                  flexShrink: 0,
-                  bg: bulletStyle.bg,
-                  ring: '4px',
-                  ringColor: bulletStyle.ring,
-                })}
+                className={cx(
+                  css({
+                    mt: '1.5',
+                    w: '2',
+                    h: '2',
+                    rounded: 'full',
+                    flexShrink: 0,
+                  }),
+                  bulletStyles[color],
+                )}
               />
               <div>
                 <h4
