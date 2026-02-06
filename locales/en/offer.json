@@ -7,8 +7,17 @@
   "hero.subtitle": "Companies that scale don't rely on tool stacking. They build a clear, simple, and manageable revenue system.",
   "hero.cta": "Book a call",
   "hero.grid.axis": "Alignment",
-  "hero.grid.blocks": ["MARKETING", "SALES", "CUSTOMER", "FINANCE"],
-  "hero.grid.footerLabels": ["Technology", "Performance", "Enablement"],
+  "hero.grid.blocks": [
+    "MARKETING",
+    "SALES",
+    "CUSTOMER",
+    "FINANCE"
+  ],
+  "hero.grid.footerLabels": [
+    "Technology",
+    "Performance",
+    "Enablement"
+  ],
   "symptoms.title.line1": "When growth accelerates,",
   "symptoms.title.line2": "complexity sets in.",
   "symptoms.subtitle": "Across fast-moving companies, the same symptoms show up:",
@@ -16,22 +25,30 @@
     {
       "title": "CEO",
       "color": "coral",
-      "items": ["Lack of visibility on the business"]
+      "items": [
+        "Lack of visibility on the business"
+      ]
     },
     {
       "title": "Managers",
       "color": "yellow",
-      "items": ["Unstable forecasts"]
+      "items": [
+        "Unstable forecasts"
+      ]
     },
     {
       "title": "Frontline teams",
       "color": "sky",
-      "items": ["Too many tools, not enough clarity"]
+      "items": [
+        "Too many tools, not enough clarity"
+      ]
     },
     {
       "title": "Customers",
       "color": "mint",
-      "items": ["Uneven experience"]
+      "items": [
+        "Uneven experience"
+      ]
     }
   ],
   "symptoms.pyramid": {
@@ -183,9 +200,14 @@
     {
       "key": "method",
       "title": "Our method",
-      "badge": "The Revenue Experience System\u2122",
+      "badge": "The Revenue Experience System™",
       "description": "A living method, operated in sprints, built to last: team alignment, useful stack, reliable data, and autonomous teams.",
-      "tags": ["Alignment", "Technology", "Performance", "Enablement"]
+      "tags": [
+        "Alignment",
+        "Technology",
+        "Performance",
+        "Enablement"
+      ]
     },
     {
       "key": "technology",
@@ -195,18 +217,30 @@
       "logoRows": [
         [
           {
-            "src": "https://www.vectorlogo.zone/logos/hubspot/hubspot-icon.svg",
+            "src": "/images/partners/hubspot.png",
             "alt": "HubSpot"
           },
           {
-            "src": "https://www.vectorlogo.zone/logos/salesforce/salesforce-icon.svg",
+            "src": "/images/partners/salesforce.png",
             "alt": "Salesforce"
+          },
+          {
+            "src": "/images/partners/modjo.jpeg",
+            "alt": "Modjo"
           }
         ],
         [
           {
-            "src": "https://dust.tt/static/logo_icon.png",
+            "src": "/images/partners/aircall.png",
+            "alt": "Aircall"
+          },
+          {
+            "src": "/images/partners/dust.png",
             "alt": "Dust"
+          },
+          {
+            "src": "/images/partners/planhat.png",
+            "alt": "Planhat"
           }
         ]
       ]
@@ -216,7 +250,44 @@
       "title": "Our team",
       "badge": "The RevOps Studio",
       "description": "Your squad of senior experts from top scale-ups: TheFork, Qonto, Payfit, Spendesk... They think like an embedded revenue leadership team.",
-      "lines": ["TheFork \u2022 Qonto \u2022 Payfit", "Spendesk \u2022 Zenchef"]
+      "logoRows": [
+        [
+          {
+            "src": "/images/team/aude.jpg",
+            "alt": "Aude"
+          },
+          {
+            "src": "/images/team/clara.jpg",
+            "alt": "Clara"
+          },
+          {
+            "src": "/images/team/corentin.jpg",
+            "alt": "Corentin"
+          },
+          {
+            "src": "/images/team/damien.jpg",
+            "alt": "Damien"
+          }
+        ],
+        [
+          {
+            "src": "/images/team/domitille.jpeg",
+            "alt": "Domitille"
+          },
+          {
+            "src": "/images/team/dorian.jpg",
+            "alt": "Dorian"
+          },
+          {
+            "src": "/images/team/ethel.jpeg",
+            "alt": "Ethel"
+          },
+          {
+            "src": "/images/team/louis.jpg",
+            "alt": "Louis"
+          }
+        ]
+      ]
     }
   ],
   "method.title": "Our method in 4 steps",
@@ -266,7 +337,7 @@
       "deliverable": "alignment playbook",
       "items": [
         "ICP & buyer journey",
-        "SLA Marketing \u2194 Sales \u2194 CS",
+        "SLA Marketing ↔ Sales ↔ CS",
         "Shared organization & rituals"
       ]
     },
@@ -283,7 +354,11 @@
     {
       "title": "Activate performance",
       "color": "mint",
-      "items": ["Variable plans", "Objectives and KPIs", "Steering cockpit"],
+      "items": [
+        "Variable plans",
+        "Objectives and KPIs",
+        "Steering cockpit"
+      ],
       "deliverable": "complete performance system"
     },
     {

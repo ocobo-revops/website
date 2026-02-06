@@ -9,7 +9,7 @@
   "hero.cta": "Discuter avec le Studio",
   "hero.captionBadge": "La Squad Ocobo",
   "hero.photoAlt": "L'equipe Ocobo",
-  "model.title": "Le modele Studio Ocobo\u2122",
+  "model.title": "Le modele Studio Ocobo™",
   "model.subtitle": "L'agence traditionnelle est souvent trop lente et trop loin de la realite du terrain. Nous avons concu une alternative pragmatique pour scaler vraiment.",
   "model.cards": [
     {
@@ -45,7 +45,7 @@
       "category": "Architecte",
       "role": "Associe",
       "desc": "12+ ans en Ops, CRM, Product et Revenue Operations (TheFork, Tripadvisor, Yousign). Specialiste des systemes et du pilotage operationnel.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/benjamin-boileux.jpeg",
       "hoverBg": "ocobo.yellow",
       "hoverText": "ocobo.dark"
     },
@@ -54,7 +54,7 @@
       "category": "Architecte",
       "role": "Associee",
       "desc": "Reference francaise du Revenue Operations (TheFork, Spendesk). Experte du customer journey, des organisations GTM, du scaling d'equipes RevOps.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/aude.jpg",
       "hoverBg": "ocobo.yellow",
       "hoverText": "ocobo.dark"
     },
@@ -63,7 +63,7 @@
       "category": "Architecte",
       "role": "Associe",
       "desc": "Finance, Deloitte, Business Ops (TheFork). Specialiste du forecasting, de la performance, des remunerations variables et du pricing.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/corentin.jpg",
       "hoverBg": "ocobo.yellow",
       "hoverText": "ocobo.dark"
     },
@@ -81,7 +81,7 @@
       "category": "Architecte",
       "role": "Manager",
       "desc": "Specialiste de l'experience utilisateur et de l'optimisation des parcours de vente complexes.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/clara.jpg",
       "hoverBg": "ocobo.yellow",
       "hoverText": "ocobo.dark"
     },
@@ -90,7 +90,7 @@
       "category": "Expert Engineer",
       "role": "RevOps Engineer",
       "desc": "Le cerveau technique derriere nos integrations les plus poussees et nos outils proprietaires.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/louis.jpg",
       "hoverBg": "ocobo.mint",
       "hoverText": "ocobo.dark"
     },
@@ -99,7 +99,7 @@
       "category": "Builder",
       "role": "Senior RevOps Manager",
       "desc": "Maitrise les architectures CRM les plus complexes pour transformer la donnee en levier de croissance.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/domitille.jpeg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     },
@@ -108,7 +108,7 @@
       "category": "Builder",
       "role": "Senior RevOps Manager",
       "desc": "Experte en automatisation et fluidification des processus operationnels Sales & Marketing.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/ethel.jpeg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     },
@@ -117,7 +117,7 @@
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Accompagne les scale-ups dans la structuration de leur stack et l'adoption des rituels RevOps.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/dorian.jpg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     },
@@ -126,7 +126,7 @@
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Specialiste de la performance commerciale et du pilotage par la donnee fiable.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/damien.jpg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     },

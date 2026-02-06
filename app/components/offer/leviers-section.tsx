@@ -24,7 +24,6 @@ type Lever = {
   description: string;
   tags?: string[];
   logoRows?: { src: string; alt: string }[][];
-  lines?: string[];
 };
 
 const iconMap = {
@@ -192,7 +191,7 @@ export const LeviersSection = () => {
                   {lever.logoRows?.length ? (
                     <div
                       className={vstack({
-                        h: '48px',
+                        h: lever.key === 'studio' ? '96px' : '48px',
                         justify: 'flex-start',
                         gap: '3',
                         alignItems: 'flex-start',
@@ -201,48 +200,38 @@ export const LeviersSection = () => {
                       {lever.logoRows.map((row, rowIndex) => (
                         <div
                           key={`${lever.key}-row-${rowIndex}`}
-                          className={`${hstack({ gap: '4' })} ${css({
-                            filter: 'grayscale(1)',
-                            opacity: '0.4',
-                            _groupHover: {
-                              opacity: '1',
-                              filter: 'grayscale(0)',
+                          className={`${hstack({ gap: lever.key === 'studio' ? '3' : '4' })} ${css(
+                            {
+                              filter:
+                                lever.key === 'studio'
+                                  ? 'none'
+                                  : 'grayscale(1)',
+                              opacity: lever.key === 'studio' ? '0.7' : '0.4',
+                              _groupHover: {
+                                opacity: '1',
+                                filter: 'grayscale(0)',
+                              },
+                              transition: 'all',
                             },
-                            transition: 'all',
-                          })}`}
+                          )}`}
                         >
                           {row.map((logo) => (
                             <img
                               key={logo.src}
                               src={logo.src}
-                              className={css({ h: '4', w: 'auto' })}
+                              className={css(
+                                lever.key === 'studio'
+                                  ? {
+                                      h: '10',
+                                      w: '10',
+                                      rounded: 'full',
+                                      objectFit: 'cover',
+                                    }
+                                  : { h: '4', w: 'auto' },
+                              )}
                               alt={logo.alt}
                             />
                           ))}
-                        </div>
-                      ))}
-                    </div>
-                  ) : lever.lines?.length ? (
-                    <div
-                      className={vstack({
-                        h: '48px',
-                        justify: 'flex-start',
-                        alignItems: 'flex-start',
-                      })}
-                    >
-                      {lever.lines.map((line) => (
-                        <div
-                          key={line}
-                          className={css({
-                            fontSize: 'xs',
-                            fontWeight: 'black',
-                            color: 'gray.400',
-                            textTransform: 'uppercase',
-                            letterSpacing: 'widest',
-                            lineHeight: 'relaxed',
-                          })}
-                        >
-                          {line}
                         </div>
                       ))}
                     </div>
