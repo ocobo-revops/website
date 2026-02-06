@@ -70,11 +70,6 @@ export function NavItemWithDropdown({
       <Portal>
         <Menu.Positioner
           className={css({
-            position: 'absolute',
-            top: '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            pt: '4',
             zIndex: 1001,
           })}
         >

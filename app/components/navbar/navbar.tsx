@@ -82,7 +82,7 @@ export function Navbar() {
           borderWidth: scrolled ? '1px' : '0',
           borderColor: 'gray.100',
           shadow: scrolled ? 'lg' : 'none',
-          rounded: scrolled ? '3xl' : 'none',
+          rounded: scrolled ? 'full' : 'none',
           py: scrolled ? '2' : '4',
           px: scrolled ? { base: '4', lg: '6' } : { base: '4', lg: '0' },
           opacity: mobileMenuOpen ? 0 : 1,
