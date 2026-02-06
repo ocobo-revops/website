@@ -329,6 +329,69 @@
       "blocked": false,
       "blocked_reason": null,
       "completed_at": "2026-02-04T22:30:00Z"
+    },
+    {
+      "id": 17,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate Technology/Partners page",
+      "steps": [
+        "Create route _main.($lang).technology.tsx with loader + meta",
+        "Create locales/{fr,en}/technology.json with page content keys",
+        "Register technology namespace in app/localization/resources.ts",
+        "Port Technology/Partners components → app/components/technology/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Enable technology page in feature flags (remove from DISABLED_PAGES_DEFAULT)",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype Technology page",
+        "SSR hydration check — no console errors",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 18,
+      "category": "functional",
+      "priority": "high",
+      "description": "Migrate Studio page",
+      "steps": [
+        "Create route _main.($lang).studio.tsx with loader + meta",
+        "Create locales/{fr,en}/studio.json with page content keys",
+        "Register studio namespace in app/localization/resources.ts",
+        "Port Studio components → app/components/studio/",
+        "Convert styled() → recipes, hardcoded text → t()",
+        "Enable studio page in feature flags (remove from DISABLED_PAGES_DEFAULT)",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Visual comparison vs prototype Studio page",
+        "SSR hydration check — no console errors",
+        "Update docs/development/component-inventory.md"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
+    },
+    {
+      "id": 19,
+      "category": "ui",
+      "priority": "high",
+      "description": "Enable external links in nav: 'Nous rejoindre' (Notion) and 'Podcasts' (Ausha)",
+      "steps": [
+        "Remove 'jobs' and 'podcasts' from DISABLED_PAGES_DEFAULT in app/modules/feature-flags.ts",
+        "Verify 'Nous rejoindre' link appears in Company dropdown",
+        "Verify link opens Notion page: https://ocobo.notion.site/Ocobo-Nous-rejoindre-416ea4a060fb48d6a9666a8d4debfb6a",
+        "Verify 'Podcasts' link appears in Resources dropdown",
+        "Verify link opens Ausha page: https://podcast.ausha.co/revenue-echoes",
+        "Verify both links have isExternal styling (open in new tab)",
+        "Run pnpm check && pnpm typecheck — zero errors"
+      ],
+      "passes": false,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": null
     }
   ]
 }
