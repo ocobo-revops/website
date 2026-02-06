@@ -11,12 +11,6 @@ const categoryColorMap: Record<string, CategoryColor> = {
   'Expert Engineer': 'mint',
 };
 
-const barStyles: Record<CategoryColor, string> = {
-  yellow: css({ bg: 'ocobo.yellow' }),
-  coral: css({ bg: 'ocobo.coral' }),
-  mint: css({ bg: 'ocobo.mint' }),
-};
-
 const badgeBgStyles: Record<CategoryColor, string> = {
   yellow: css({ bg: 'ocobo.yellow.light', color: 'ocobo.yellow' }),
   coral: css({ bg: 'ocobo.coral.light', color: 'ocobo.coral' }),
@@ -70,21 +64,6 @@ export const TeamMemberCard = ({
           : css({ opacity: 0 }),
       )}
     >
-      {/* Left colour bar */}
-      <div
-        className={cx(
-          css({
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '1.5',
-            height: 'full',
-            transition: 'all 300ms',
-          }),
-          barStyles[color],
-        )}
-      />
-
       {/* Category badge */}
       <div
         className={cx(
