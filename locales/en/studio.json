@@ -68,15 +68,6 @@
       "hoverText": "ocobo.dark"
     },
     {
-      "name": "Tony Chalencon",
-      "category": "Architecte",
-      "role": "Senior Manager",
-      "desc": "Expert in strategic alignment and key account management. Results-oriented and operational excellence.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
-      "hoverBg": "ocobo.yellow",
-      "hoverText": "ocobo.dark"
-    },
-    {
       "name": "Clara Lecarrie",
       "category": "Architecte",
       "role": "Manager",
@@ -135,7 +126,7 @@
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Expert in Customer Success Operations and client retention optimisation.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/mariette.jpg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     },
@@ -144,7 +135,7 @@
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Focused on team enablement and creating robust execution playbooks.",
-      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "img": "/images/team/yoann.jpeg",
       "hoverBg": "ocobo.coral",
       "hoverText": "white"
     }

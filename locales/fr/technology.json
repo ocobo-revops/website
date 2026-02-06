@@ -116,7 +116,7 @@
         "Billing",
         "SaaS Ops"
       ],
-      "logo": "https://vasco.app/favicon.ico",
+      "logo": "/images/partners/vasco.webp",
       "desc": "Le systeme d'exploitation pour batir et gerer votre Vertical SaaS.",
       "status": "OFFICIAL"
     },
@@ -144,7 +144,7 @@
         "Apporteur d'affaires",
         "Quote2Cash"
       ],
-      "logo": "https://www.hyperline.co/favicon.ico",
+      "logo": "/images/partners/hyperline.svg",
       "desc": "Billing moderne pour les modeles de revenus recurrents.",
       "status": "OFFICIAL"
     },
@@ -157,7 +157,7 @@
         "Integration",
         "CRM"
       ],
-      "logo": "https://www.folk.app/apple-touch-icon.png",
+      "logo": "/images/partners/folk.jpeg",
       "desc": "Le CRM intelligent et collaboratif pour centraliser vos relations.",
       "status": "OFFICIAL"
     },
@@ -170,7 +170,7 @@
         "Integration",
         "CS Platform"
       ],
-      "logo": "https://framerusercontent.com/images/kQ9rX6H7m0m2mY3V1W1N8U.svg",
+      "logo": "/images/partners/vitally.png",
       "desc": "Customer Success Platform pour piloter la retention.",
       "status": "OFFICIAL"
     },
@@ -224,7 +224,7 @@
         "Documentation",
         "Enablement"
       ],
-      "logo": "https://www.vectorlogo.zone/logos/notionso/notionso-icon.svg",
+      "logo": "/images/partners/notion.png",
       "desc": "L'outil central pour vos playbooks et process.",
       "status": "OFFICIAL"
     },
@@ -237,7 +237,7 @@
         "Integration",
         "AI"
       ],
-      "logo": "https://framerusercontent.com/images/3m8i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "logo": "/images/partners/ago.png",
       "desc": "Intelligence Artificielle au service du Revenue.",
       "status": "OFFICIAL"
     },
@@ -250,7 +250,7 @@
         "Enrichment",
         "Sales Automation"
       ],
-      "logo": "https://framerusercontent.com/images/5r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "logo": "/images/partners/surfe.png",
       "desc": "Connectez LinkedIn a votre CRM en un clic.",
       "status": "OFFICIAL"
     },
@@ -263,7 +263,7 @@
         "Enrichment",
         "Integration"
       ],
-      "logo": "https://framerusercontent.com/images/2r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "logo": "/images/partners/fullenrich.svg",
       "desc": "Multi-enrichissement de donnees de contact.",
       "status": "OFFICIAL"
     },
@@ -276,7 +276,7 @@
         "CRM Fillings",
         "AI"
       ],
-      "logo": "https://framerusercontent.com/images/6r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "logo": "/images/partners/claap.webp",
       "desc": "Video asynchrone et enregistrement de calls.",
       "status": "OFFICIAL"
     },
@@ -288,7 +288,7 @@
       "tags": [
         "Quote2Cash"
       ],
-      "logo": "https://www.vectorlogo.zone/logos/chargebee/chargebee-icon.svg",
+      "logo": "/images/partners/chargebee.png",
       "desc": "Gestion des abonnements et facturation recurrente.",
       "status": "OFFICIAL"
     },
@@ -314,7 +314,7 @@
         "Sales Automation",
         "Enrichment"
       ],
-      "logo": "https://www.lemlist.com/hubfs/lemlist-logo-2023.svg",
+      "logo": "/images/partners/lemlist.webp",
       "desc": "Prospection multicanale hautement personnalisee.",
       "status": "OFFICIAL"
     },
@@ -326,7 +326,7 @@
       "tags": [
         "Contract Management"
       ],
-      "logo": "https://framerusercontent.com/images/1r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "logo": "/images/partners/oneflow.webp",
       "desc": "Gestion de contrats digitaux et signature.",
       "status": "OFFICIAL"
     },
@@ -383,7 +383,7 @@
         "Sales Automation",
         "AI"
       ],
-      "logo": "https://getcargo.ai/favicon.ico",
+      "logo": "/images/partners/cargo.svg",
       "desc": "L'infrastructure de revenus pour orchestrer vos workflows Sales & Marketing via l'IA.",
       "status": "EXPERTISE"
     },
@@ -397,7 +397,7 @@
         "Workflow",
         "Self-hosted"
       ],
-      "logo": "https://n8n.io/favicon.ico",
+      "logo": "/images/partners/n8n.webp",
       "desc": "Solution d'automatisation flexible et puissante pour les flux techniques.",
       "status": "EXPERTISE"
     },
@@ -411,7 +411,7 @@
         "iPaaS",
         "Workflow"
       ],
-      "logo": "https://www.make.com/favicon.ico",
+      "logo": "/images/partners/make.webp",
       "desc": "Plateforme visuelle pour connecter vos applications et automatiser vos process.",
       "status": "EXPERTISE"
     },
@@ -425,7 +425,7 @@
         "Sales Management",
         "SME"
       ],
-      "logo": "https://www.pipedrive.com/favicon.ico",
+      "logo": "/images/partners/pipedrive.png",
       "desc": "Le CRM pense par des commerciaux pour la gestion simplifiee du pipeline.",
       "status": "EXPERTISE"
     },
@@ -439,7 +439,7 @@
         "Call Center",
         "SMS"
       ],
-      "logo": "https://www.ringover.fr/favicon.ico",
+      "logo": "/images/partners/ringover.avif",
       "desc": "Solution de telephonie cloud francaise integree a vos outils metiers.",
       "status": "EXPERTISE"
     },
@@ -453,7 +453,7 @@
         "Contract automation",
         "LegalOps"
       ],
-      "logo": "https://www.tomorro.com/favicon.ico",
+      "logo": "/images/partners/tomorro.png",
       "desc": "Simplifiez la gestion et le cycle de vie de vos contrats commerciaux.",
       "status": "EXPERTISE"
     },
@@ -494,7 +494,7 @@
         "e-Signature",
         "Agreement Cloud"
       ],
-      "logo": "https://www.docusign.com/favicon.ico",
+      "logo": "/images/partners/docusign.png",
       "desc": "Leader mondial de la signature electronique et de la gestion d'accords.",
       "status": "EXPERTISE"
     }
