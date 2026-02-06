@@ -220,25 +220,31 @@
     }
   ],
   "method.title": "Our method in 4 steps",
+  "method.intro": "Growth becomes predictable when it's built on a system:",
   "method.deliverableLabel": "Deliverables:",
+  "method.closing": "You're not buying an audit. You're activating a complete system.",
   "method.subtitle": "THE REVENUE EXPERIENCE SYSTEM™",
   "method.cta": "Discover our method",
   "method.steps": [
     {
       "title": "Align",
-      "deliverable": "Playbooks, rituals"
+      "description": "Align teams, clarify roles, streamline processes and rituals.",
+      "deliverable": "playbooks, workflows, go-to-market rituals"
     },
     {
       "title": "Equip",
-      "deliverable": "Tech roadmap"
+      "description": "Structure the stack, connect tools, automate what needs to be.",
+      "deliverable": "tech roadmap, implementations, documentation"
     },
     {
       "title": "Steer",
-      "deliverable": "Dashboards"
+      "description": "Build reliable data, useful KPIs, and a steering cockpit.",
+      "deliverable": "Dashboards, variable models, review cycles"
     },
     {
       "title": "Train",
-      "deliverable": "Training kits"
+      "description": "Drive adoption, train teams, and embed practices for the long run.",
+      "deliverable": "guides, training sessions, adoption kits"
     }
   ],
   "implications.title": "What this means in practice",
@@ -248,14 +254,16 @@
       "title": "Diagnose",
       "color": "coral",
       "items": [
-        "Analyze Marketing/Sales/CS interactions",
+        "Analyze Marketing/Sales/CS/Finance interactions",
         "Process + CRM mapping",
         "KPI, pipeline, variable analysis"
-      ]
+      ],
+      "deliverable": "clear, data-backed diagnosis"
     },
     {
       "title": "Align",
       "color": "yellow",
+      "deliverable": "alignment playbook",
       "items": [
         "ICP & buyer journey",
         "SLA Marketing \u2194 Sales \u2194 CS",
@@ -263,27 +271,29 @@
       ]
     },
     {
-      "title": "Equip",
+      "title": "Equip & structure",
       "color": "sky",
       "items": [
         "Rethink / implement CRM",
         "Smart automations",
         "Shared dashboards"
-      ]
+      ],
+      "deliverable": "optimised & documented stack"
     },
     {
       "title": "Activate performance",
       "color": "mint",
-      "items": ["Variable plans", "Objectives and KPIs", "Steering cockpit"]
+      "items": ["Variable plans", "Objectives and KPIs", "Steering cockpit"],
+      "deliverable": "complete performance system"
     },
     {
       "title": "Integrate AI",
       "color": "purple",
       "items": [
-        "AI prospecting agents",
-        "Post-call CRM automation",
+        "AI prospecting agents & CRM automation",
         "Predictive scoring"
-      ]
+      ],
+      "deliverable": "Revenue AI Platform configured"
     },
     {
       "title": "Train & iterate",
@@ -292,25 +302,26 @@
         "Pipeline review, roleplay",
         "Playbooks and templates",
         "Iteration roadmap"
-      ]
+      ],
+      "deliverable": "autonomous & equipped teams"
     }
   ],
-  "whyOcobo.title": "Why choose Ocobo",
+  "whyOcobo.title": "We do what others promise.",
   "whyOcobo.reasons": [
     {
       "color": "yellow",
-      "title": "Senior profiles",
-      "description": "No juniors. We operate like an embedded Revenue leadership team."
+      "title": "No juniors, no outsourcing.",
+      "description": "Every consultant has operated in demanding scale-ups. We think like an embedded Revenue leadership team."
     },
     {
       "color": "coral",
-      "title": "Real impact",
-      "description": "No useless slides. We build, operate, and transfer."
+      "title": "No slides, just results.",
+      "description": "We build, operate, and transfer. You leave with a running system, not a report."
     },
     {
       "color": "mint",
-      "title": "Durable system",
-      "description": "We leave a structured, steerable system for your next scale."
+      "title": "A system, not a mission.",
+      "description": "We leave a structured, steerable, and durable system. Your team takes over with full autonomy."
     }
   ],
   "cta.title": "Take control of your growth.",

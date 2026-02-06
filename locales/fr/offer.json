@@ -220,25 +220,31 @@
     }
   ],
   "method.title": "Notre méthode en 4 étapes",
+  "method.intro": "La croissance devient prévisible quand elle repose sur un système :",
   "method.deliverableLabel": "Livrables :",
+  "method.closing": "Vous n'achetez pas un audit. Vous activez un système complet.",
   "method.subtitle": "THE REVENUE EXPERIENCE SYSTEM™",
   "method.cta": "Découvrir notre méthode",
   "method.steps": [
     {
       "title": "Aligner",
-      "deliverable": "Playbooks, rituels"
+      "description": "Aligner les équipes, clarifier les rôles, fluidifier les process et les rituels.",
+      "deliverable": "playbooks, workflows, rituels go to market"
     },
     {
       "title": "Outiller",
-      "deliverable": "Roadmap tech"
+      "description": "Structurer la stack, connecter les outils, automatiser ce qui doit l'être.",
+      "deliverable": "roadmap tech, implémentations, documentation"
     },
     {
       "title": "Piloter",
-      "deliverable": "Tableaux de bord"
+      "description": "Créer la donnée fiable, les KPIs utiles, le cockpit de pilotage.",
+      "deliverable": "Tableaux de bord, modèles de variable, cycles de revue"
     },
     {
       "title": "Former",
-      "deliverable": "Kits formation"
+      "description": "Assurer l'adoption, former les équipes et ancrer durablement les pratiques.",
+      "deliverable": "guides, formations, kits d'adoption"
     }
   ],
   "implications.title": "Ce que cela implique concrètement",
@@ -248,14 +254,16 @@
       "title": "Diagnostiquer",
       "color": "coral",
       "items": [
-        "Analyse interactions Mkt/Sales/CS",
+        "Analyse interactions Mkt/Sales/CS/Finance",
         "Cartographie process + CRM",
         "Analyse KPI, pipeline, variable"
-      ]
+      ],
+      "deliverable": "diagnostic clair et chiffré"
     },
     {
       "title": "Aligner",
       "color": "yellow",
+      "deliverable": "playbook d'alignement",
       "items": [
         "ICP & buyer journey",
         "SLA Marketing \u2194 Sales \u2194 CS",
@@ -263,54 +271,57 @@
       ]
     },
     {
-      "title": "Outiller",
+      "title": "Outiller & structurer",
       "color": "sky",
       "items": [
         "Repenser / implémenter CRM",
         "Automatisations intelligentes",
         "Dashboards partagés"
-      ]
+      ],
+      "deliverable": "stack optimisée & documentée"
     },
     {
       "title": "Activer la performance",
       "color": "mint",
-      "items": ["Plans de variable", "Objectifs et KPIs", "Cockpit de pilotage"]
+      "items": ["Plans de variable", "Objectifs et KPIs", "Cockpit de pilotage"],
+      "deliverable": "système de performance complet"
     },
     {
       "title": "Intégrer l'IA",
       "color": "purple",
       "items": [
-        "Agents IA prospection",
-        "Automatisation CRM after-call",
+        "Agents IA prospection & automatisation CRM",
         "Scoring prédictif"
-      ]
+      ],
+      "deliverable": "Revenue AI Platform configurée"
     },
     {
-      "title": "Former & Itérer",
+      "title": "Former & itérer",
       "color": "dark",
       "items": [
         "Pipeline review, roleplay",
         "Playbooks et templates",
         "Roadmap d'itération"
-      ]
+      ],
+      "deliverable": "équipes autonomes & outillées"
     }
   ],
-  "whyOcobo.title": "Pourquoi choisir Ocobo",
+  "whyOcobo.title": "Nous faisons ce que les autres promettent.",
   "whyOcobo.reasons": [
     {
       "color": "yellow",
-      "title": "Profils seniors",
-      "description": "Aucun junior. Nous opérons comme une direction Revenue interne embarquée."
+      "title": "Pas de juniors, pas de sous-traitance.",
+      "description": "Chaque consultant a opéré dans des scale-ups exigeantes. Nous pensons comme une direction Revenue embarquée."
     },
     {
       "color": "coral",
-      "title": "Impact réel",
-      "description": "Pas de slides inutiles. Nous construisons, opérons et transmettons."
+      "title": "Pas de slides, des résultats.",
+      "description": "Nous construisons, opérons et transmettons. Vous repartez avec un système qui tourne, pas un rapport."
     },
     {
       "color": "mint",
-      "title": "Système durable",
-      "description": "Nous laissons un système structuré et pilotable pour votre futur scale."
+      "title": "Un système, pas une mission.",
+      "description": "Nous laissons un système structuré, pilotable et durable. Votre équipe prend le relais en toute autonomie."
     }
   ],
   "cta.title": "Prenez le contrôle de votre croissance.",

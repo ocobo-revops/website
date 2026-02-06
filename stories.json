@@ -186,10 +186,10 @@
         "Test: implications section shows livrables for each item",
         "Test: 'pourquoi choisir' section shows new text"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T19:00:00Z"
     },
     {
       "id": 29,

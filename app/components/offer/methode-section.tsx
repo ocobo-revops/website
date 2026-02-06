@@ -13,6 +13,7 @@ import { SectionHeader } from './section-header';
 
 type Step = {
   title: string;
+  description: string;
   deliverable: string;
 };
 
@@ -24,10 +25,17 @@ export const MethodeSection = () => {
   return (
     <section className={css({ py: '24', bg: 'gray.50' })}>
       <Container>
-        <SectionHeader
-          title={t('method.title')}
-          className={css({ mb: '16' })}
-        />
+        <SectionHeader title={t('method.title')} className={css({ mb: '6' })} />
+        <p
+          className={css({
+            fontSize: 'lg',
+            color: 'gray.600',
+            textAlign: 'center',
+            mb: '16',
+          })}
+        >
+          {t('method.intro')}
+        </p>
         <div className={grid({ columns: { base: 1, md: 4 }, gap: '6' })}>
           {steps.map((step, index) => (
             <div
@@ -68,6 +76,16 @@ export const MethodeSection = () => {
               >
                 {step.title}
               </h3>
+              <p
+                className={css({
+                  fontSize: 'sm',
+                  color: 'gray.500',
+                  lineHeight: 'relaxed',
+                  mb: '4',
+                })}
+              >
+                {step.description}
+              </p>
               <div
                 className={css({
                   pt: '4',
@@ -100,11 +118,24 @@ export const MethodeSection = () => {
           ))}
         </div>
 
+        <p
+          className={css({
+            fontSize: 'lg',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
+            textAlign: 'center',
+            color: 'ocobo.dark',
+            mt: '12',
+          })}
+        >
+          {t('method.closing')}
+        </p>
+
         <div
           className={flex({
             direction: 'column',
             align: 'center',
-            mt: '12',
+            mt: '8',
             gap: '6',
           })}
         >

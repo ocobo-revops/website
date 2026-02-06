@@ -20,6 +20,7 @@ type Block = {
   title: string;
   color: BlockColor;
   items: string[];
+  deliverable: string;
 };
 
 const iconBgStyles: Record<BlockColor, string> = {
@@ -118,6 +119,19 @@ export const ImplicationsSection = () => {
                   </li>
                 ))}
               </ul>
+              <p
+                className={css({
+                  mt: '4',
+                  pt: '4',
+                  borderTopWidth: '1px',
+                  borderColor: 'gray.100',
+                  fontSize: 'sm',
+                  fontWeight: 'bold',
+                  color: 'ocobo.dark',
+                })}
+              >
+                → {block.deliverable}
+              </p>
             </div>
           ))}
         </div>

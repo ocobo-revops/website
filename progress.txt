@@ -284,3 +284,15 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 28: Offer page content updates — method texts, implications livrables, "pourquoi choisir"
+- GROW title rename already done in commit 6bd07fc
+- Method section: added `method.intro` + `method.closing` keys, `description` field per step, updated deliverable wording
+- methode-section.tsx: added `description` to Step type, rendered intro paragraph, step descriptions, closing quote
+- Implications section: added `deliverable` field to each block, renamed "Outiller" → "Outiller & structurer", merged AI items, added "Finance" to Diagnostiquer
+- implications-section.tsx: added `deliverable` to Block type, rendered deliverable line with → arrow after items
+- "Pourquoi choisir" rewrite: new title "Nous faisons ce que les autres promettent." + 3 new statement-style reasons
+- All changes mirrored in EN locale
+- pnpm check ✅ pnpm typecheck ✅
+
+---
