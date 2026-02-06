@@ -237,8 +237,8 @@ export const UnifiedBowtie = () => {
 
           <g
             fill="currentColor"
-            fillOpacity="0.3"
-            fontSize="10"
+            fillOpacity="0.45"
+            fontSize="13"
             fontWeight="900"
             className={css({
               fontFamily: 'display',
