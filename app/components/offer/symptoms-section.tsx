@@ -128,7 +128,7 @@ export const SymptomsSection = () => {
                   color: 'gray.600',
                 })}
               >
-                {card.items.slice(0, 1).map((item) => (
+                {card.items.map((item) => (
                   <li
                     key={item}
                     className={flex({ align: 'flex-start', gap: '2' })}

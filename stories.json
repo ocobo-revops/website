@@ -51,10 +51,10 @@
         "Run pnpm check && pnpm typecheck — zero errors",
         "Test: view /offer on mobile viewport — all bullet points visible for each persona card"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:05:00Z"
     },
     {
       "id": 22,

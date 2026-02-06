@@ -225,3 +225,10 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 21: Fix offer pyramid bullets missing on mobile
+- Removed `slice(0, 1)` from mobile card rendering in symptoms-section.tsx
+- All bullet points now visible on mobile viewport
+- pnpm check ✅ pnpm typecheck ✅
+
+---
