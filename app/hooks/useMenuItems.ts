@@ -120,7 +120,7 @@ export function useMenuItems(): NavItem[] {
       label: t('navigation.resources.club'),
       description: t('navigation.resources.club.description'),
       path: url.modernRevenueClub,
-      icon: Users,
+      imageSrc: '/images/partners/modern-revenue-club.png',
       color: 'sky',
       isExternal: true,
     },

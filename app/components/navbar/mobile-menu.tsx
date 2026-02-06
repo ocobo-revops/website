@@ -27,7 +27,15 @@ function MobileDropdownItem({
   item: DropdownItem;
   onClose: () => void;
 }) {
-  const { label, description, path, icon: Icon, color, isExternal } = item;
+  const {
+    label,
+    description,
+    path,
+    icon: Icon,
+    imageSrc,
+    color,
+    isExternal,
+  } = item;
 
   const content = (
     <>
@@ -45,7 +53,15 @@ function MobileDropdownItem({
           iconStyles[color],
         )}
       >
-        {Icon && <Icon size={18} />}
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={label}
+            className={css({ w: '5', h: '5', objectFit: 'contain' })}
+          />
+        ) : (
+          Icon && <Icon size={18} />
+        )}
       </div>
       <div>
         <span

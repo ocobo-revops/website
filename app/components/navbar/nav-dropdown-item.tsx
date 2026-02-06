@@ -18,7 +18,15 @@ export const NavDropdownItem = React.forwardRef<
   HTMLAnchorElement,
   NavDropdownItemProps
 >(function NavDropdownItem({ item, onClose, ...props }, ref) {
-  const { label, description, path, icon: Icon, color, isExternal } = item;
+  const {
+    label,
+    description,
+    path,
+    icon: Icon,
+    imageSrc,
+    color,
+    isExternal,
+  } = item;
 
   const content = (
     <>
@@ -36,7 +44,15 @@ export const NavDropdownItem = React.forwardRef<
           iconStyles[color],
         )}
       >
-        {Icon && <Icon size={16} />}
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt={label}
+            className={css({ w: '4', h: '4', objectFit: 'contain' })}
+          />
+        ) : (
+          Icon && <Icon size={16} />
+        )}
       </div>
       <div
         className={css({

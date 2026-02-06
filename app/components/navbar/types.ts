@@ -13,6 +13,7 @@ export type DropdownItem = {
   description?: string;
   path: string;
   icon?: LucideIcon;
+  imageSrc?: string;
   color: Color;
   isExternal?: boolean;
   shouldHide?: boolean;
