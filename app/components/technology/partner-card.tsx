@@ -13,6 +13,7 @@ export interface PartnerData {
   desc: string;
   status: 'OFFICIAL' | 'EXPERTISE';
   certificationLogo?: string;
+  url?: string;
 }
 
 const cardStyles = css({
@@ -225,9 +226,10 @@ interface FooterProps {
   certificationLogo?: string;
   name: string;
   status: string;
+  url?: string;
 }
 
-const Footer = ({ certificationLogo, name, status }: FooterProps) => {
+const Footer = ({ certificationLogo, name, status, url }: FooterProps) => {
   const { t } = useTranslation('technology');
 
   return (
@@ -283,7 +285,7 @@ const Footer = ({ certificationLogo, name, status }: FooterProps) => {
       </div>
 
       <a
-        href="#"
+        href={url ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
         className={`external-link ${css({
@@ -334,6 +336,7 @@ export const PartnerCardFromData = ({
         certificationLogo={partner.certificationLogo}
         name={partner.name}
         status={partner.status}
+        url={partner.url}
       />
     </PartnerCard>
   );

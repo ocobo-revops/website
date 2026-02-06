@@ -104,7 +104,8 @@
       "logo": "/images/partners/hubspot.png",
       "desc": "Plateforme complete de CRM & Marketing Automation.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/hubspot-badge.png"
+      "certificationLogo": "/images/partners/hubspot-badge.png",
+      "url": "https://www.hubspot.com"
     },
     {
       "name": "Vasco",
@@ -118,7 +119,8 @@
       ],
       "logo": "/images/partners/vasco.webp",
       "desc": "Le systeme d'exploitation pour batir et gerer votre Vertical SaaS.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.vasco.app"
     },
     {
       "name": "Qobra",
@@ -132,7 +134,8 @@
       ],
       "logo": "/images/partners/qobra.png",
       "desc": "Automatisation des commissions pour motiver vos equipes de vente.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.qobra.co"
     },
     {
       "name": "Hyperline",
@@ -146,7 +149,8 @@
       ],
       "logo": "/images/partners/hyperline.png",
       "desc": "Billing moderne pour les modeles de revenus recurrents.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.hyperline.co"
     },
     {
       "name": "Folk",
@@ -159,7 +163,8 @@
       ],
       "logo": "/images/partners/folk.jpeg",
       "desc": "Le CRM intelligent et collaboratif pour centraliser vos relations.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.folk.app"
     },
     {
       "name": "Vitally",
@@ -172,7 +177,8 @@
       ],
       "logo": "/images/partners/vitally.png",
       "desc": "Customer Success Platform pour piloter la retention.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.vitally.io"
     },
     {
       "name": "Modjo",
@@ -187,7 +193,8 @@
       ],
       "logo": "/images/partners/modjo.jpeg",
       "desc": "Analyse conversationnelle pour coacher vos equipes.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.modjo.ai"
     },
     {
       "name": "Planhat",
@@ -200,7 +207,8 @@
       ],
       "logo": "/images/partners/planhat.png",
       "desc": "Plateforme CS entreprise pour scaler l'expansion.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.planhat.com"
     },
     {
       "name": "Dust",
@@ -213,7 +221,8 @@
       ],
       "logo": "/images/partners/dust.png",
       "desc": "Moteur d'IA interne pour la productivite d'equipe.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://dust.tt"
     },
     {
       "name": "Notion",
@@ -226,7 +235,8 @@
       ],
       "logo": "/images/partners/notion.png",
       "desc": "L'outil central pour vos playbooks et process.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.notion.so"
     },
     {
       "name": "AGO",
@@ -239,7 +249,8 @@
       ],
       "logo": "/images/partners/ago.png",
       "desc": "Intelligence Artificielle au service du Revenue.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.ago.ai"
     },
     {
       "name": "Surfe",
@@ -252,7 +263,8 @@
       ],
       "logo": "/images/partners/surfe.png",
       "desc": "Connectez LinkedIn a votre CRM en un clic.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.surfe.com"
     },
     {
       "name": "Full Enrich",
@@ -265,7 +277,8 @@
       ],
       "logo": "/images/partners/fullenrich.svg",
       "desc": "Multi-enrichissement de donnees de contact.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.fullenrich.com"
     },
     {
       "name": "Claap",
@@ -278,7 +291,8 @@
       ],
       "logo": "/images/partners/claap.webp",
       "desc": "Video asynchrone et enregistrement de calls.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.claap.io"
     },
     {
       "name": "Chargebee",
@@ -290,7 +304,8 @@
       ],
       "logo": "/images/partners/chargebee.png",
       "desc": "Gestion des abonnements et facturation recurrente.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.chargebee.com"
     },
     {
       "name": "Aircall",
@@ -304,7 +319,8 @@
       "logo": "/images/partners/aircall.png",
       "desc": "Telephonie cloud integree nativement a vos outils.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/aircall-badge.webp"
+      "certificationLogo": "/images/partners/aircall-badge.webp",
+      "url": "https://www.aircall.io"
     },
     {
       "name": "Lemlist",
@@ -318,7 +334,8 @@
       "logo": "/images/partners/lemlist.webp",
       "desc": "Prospection multicanale hautement personnalisee.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/lemlist-badge.png"
+      "certificationLogo": "/images/partners/lemlist-badge.png",
+      "url": "https://www.lemlist.com"
     },
     {
       "name": "Oneflow",
@@ -330,7 +347,8 @@
       ],
       "logo": "/images/partners/oneflow.webp",
       "desc": "Gestion de contrats digitaux et signature.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.oneflow.com"
     },
     {
       "name": "Salesforce",
@@ -343,7 +361,8 @@
       ],
       "logo": "/images/partners/salesforce.png",
       "desc": "Le CRM entreprise de reference pour les stacks complexes.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.salesforce.com"
     },
     {
       "name": "Clay",
@@ -358,7 +377,8 @@
       ],
       "logo": "/images/partners/clay.png",
       "desc": "L'outil leader pour l'enrichissement de donnees et la prospection hyper-personnalisee via l'IA.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.clay.com"
     },
     {
       "name": "Attio",
@@ -370,9 +390,10 @@
         "Data-driven",
         "Relationship"
       ],
-      "logo": "https://attio.com/favicon.ico",
+      "logo": "/images/partners/attio.png",
       "desc": "Le CRM de nouvelle generation construit pour la flexibilite et la donnee.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://attio.com"
     },
     {
       "name": "Cargo",
@@ -387,7 +408,8 @@
       ],
       "logo": "/images/partners/cargo.svg",
       "desc": "L'infrastructure de revenus pour orchestrer vos workflows Sales & Marketing via l'IA.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.getcargo.io"
     },
     {
       "name": "N8N",
@@ -401,7 +423,8 @@
       ],
       "logo": "/images/partners/n8n.webp",
       "desc": "Solution d'automatisation flexible et puissante pour les flux techniques.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://n8n.io"
     },
     {
       "name": "Make",
@@ -415,7 +438,8 @@
       ],
       "logo": "/images/partners/make.webp",
       "desc": "Plateforme visuelle pour connecter vos applications et automatiser vos process.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.make.com"
     },
     {
       "name": "Pipedrive",
@@ -429,7 +453,8 @@
       ],
       "logo": "/images/partners/pipedrive.png",
       "desc": "Le CRM pense par des commerciaux pour la gestion simplifiee du pipeline.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.pipedrive.com"
     },
     {
       "name": "Ringover",
@@ -443,7 +468,8 @@
       ],
       "logo": "/images/partners/ringover.avif",
       "desc": "Solution de telephonie cloud francaise integree a vos outils metiers.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.ringover.com"
     },
     {
       "name": "Tomorro",
@@ -457,7 +483,8 @@
       ],
       "logo": "/images/partners/tomorro.png",
       "desc": "Simplifiez la gestion et le cycle de vie de vos contrats commerciaux.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.tomorro.com"
     },
     {
       "name": "Yousign",
@@ -471,7 +498,8 @@
       ],
       "logo": "/images/partners/yousign.png",
       "desc": "La solution francaise de signature electronique securisee et intuitive.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.yousign.com"
     },
     {
       "name": "Pandadoc",
@@ -483,9 +511,10 @@
         "e-Signature",
         "Quotes"
       ],
-      "logo": "https://www.pandadoc.com/favicon.ico",
+      "logo": "/images/partners/pandadoc.png",
       "desc": "Automatisation de la creation, du suivi et de la signature de documents.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.pandadoc.com"
     },
     {
       "name": "Docusign",
@@ -498,7 +527,8 @@
       ],
       "logo": "/images/partners/docusign.png",
       "desc": "Leader mondial de la signature electronique et de la gestion d'accords.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.docusign.com"
     }
   ]
 }

@@ -104,7 +104,8 @@
       "logo": "/images/partners/hubspot.png",
       "desc": "Complete CRM & Marketing Automation platform.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/hubspot-badge.png"
+      "certificationLogo": "/images/partners/hubspot-badge.png",
+      "url": "https://www.hubspot.com"
     },
     {
       "name": "Vasco",
@@ -118,7 +119,8 @@
       ],
       "logo": "/images/partners/vasco.webp",
       "desc": "The operating system to build and manage your Vertical SaaS.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.vasco.app"
     },
     {
       "name": "Qobra",
@@ -132,7 +134,8 @@
       ],
       "logo": "/images/partners/qobra.png",
       "desc": "Commission automation to motivate your sales teams.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.qobra.co"
     },
     {
       "name": "Hyperline",
@@ -146,7 +149,8 @@
       ],
       "logo": "/images/partners/hyperline.png",
       "desc": "Modern billing for recurring revenue models.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.hyperline.co"
     },
     {
       "name": "Folk",
@@ -159,7 +163,8 @@
       ],
       "logo": "/images/partners/folk.jpeg",
       "desc": "The intelligent and collaborative CRM to centralise your relationships.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.folk.app"
     },
     {
       "name": "Vitally",
@@ -172,7 +177,8 @@
       ],
       "logo": "/images/partners/vitally.png",
       "desc": "Customer Success Platform to drive retention.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.vitally.io"
     },
     {
       "name": "Modjo",
@@ -187,7 +193,8 @@
       ],
       "logo": "/images/partners/modjo.jpeg",
       "desc": "Conversational analysis to coach your teams.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.modjo.ai"
     },
     {
       "name": "Planhat",
@@ -200,7 +207,8 @@
       ],
       "logo": "/images/partners/planhat.png",
       "desc": "Enterprise CS platform to scale expansion.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.planhat.com"
     },
     {
       "name": "Dust",
@@ -213,7 +221,8 @@
       ],
       "logo": "/images/partners/dust.png",
       "desc": "Internal AI engine for team productivity.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://dust.tt"
     },
     {
       "name": "Notion",
@@ -226,7 +235,8 @@
       ],
       "logo": "/images/partners/notion.png",
       "desc": "The central tool for your playbooks and processes.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.notion.so"
     },
     {
       "name": "AGO",
@@ -239,7 +249,8 @@
       ],
       "logo": "/images/partners/ago.png",
       "desc": "Artificial Intelligence at the service of Revenue.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.ago.ai"
     },
     {
       "name": "Surfe",
@@ -252,7 +263,8 @@
       ],
       "logo": "/images/partners/surfe.png",
       "desc": "Connect LinkedIn to your CRM in one click.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.surfe.com"
     },
     {
       "name": "Full Enrich",
@@ -265,7 +277,8 @@
       ],
       "logo": "/images/partners/fullenrich.svg",
       "desc": "Multi-enrichment of contact data.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.fullenrich.com"
     },
     {
       "name": "Claap",
@@ -278,7 +291,8 @@
       ],
       "logo": "/images/partners/claap.webp",
       "desc": "Asynchronous video and call recording.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.claap.io"
     },
     {
       "name": "Chargebee",
@@ -290,7 +304,8 @@
       ],
       "logo": "/images/partners/chargebee.png",
       "desc": "Subscription management and recurring billing.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.chargebee.com"
     },
     {
       "name": "Aircall",
@@ -304,7 +319,8 @@
       "logo": "/images/partners/aircall.png",
       "desc": "Cloud telephony natively integrated with your tools.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/aircall-badge.webp"
+      "certificationLogo": "/images/partners/aircall-badge.webp",
+      "url": "https://www.aircall.io"
     },
     {
       "name": "Lemlist",
@@ -318,7 +334,8 @@
       "logo": "/images/partners/lemlist.webp",
       "desc": "Highly personalised multichannel prospecting.",
       "status": "OFFICIAL",
-      "certificationLogo": "/images/partners/lemlist-badge.png"
+      "certificationLogo": "/images/partners/lemlist-badge.png",
+      "url": "https://www.lemlist.com"
     },
     {
       "name": "Oneflow",
@@ -330,7 +347,8 @@
       ],
       "logo": "/images/partners/oneflow.webp",
       "desc": "Digital contract management and signing.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.oneflow.com"
     },
     {
       "name": "Salesforce",
@@ -343,7 +361,8 @@
       ],
       "logo": "/images/partners/salesforce.png",
       "desc": "The enterprise reference CRM for complex stacks.",
-      "status": "OFFICIAL"
+      "status": "OFFICIAL",
+      "url": "https://www.salesforce.com"
     },
     {
       "name": "Clay",
@@ -358,7 +377,8 @@
       ],
       "logo": "/images/partners/clay.png",
       "desc": "The leading tool for data enrichment and hyper-personalised AI prospecting.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.clay.com"
     },
     {
       "name": "Attio",
@@ -370,9 +390,10 @@
         "Data-driven",
         "Relationship"
       ],
-      "logo": "https://attio.com/favicon.ico",
+      "logo": "/images/partners/attio.png",
       "desc": "The next-generation CRM built for flexibility and data.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://attio.com"
     },
     {
       "name": "Cargo",
@@ -387,7 +408,8 @@
       ],
       "logo": "/images/partners/cargo.svg",
       "desc": "Revenue infrastructure to orchestrate your Sales & Marketing workflows via AI.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.getcargo.io"
     },
     {
       "name": "N8N",
@@ -401,7 +423,8 @@
       ],
       "logo": "/images/partners/n8n.webp",
       "desc": "Flexible and powerful automation solution for technical flows.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://n8n.io"
     },
     {
       "name": "Make",
@@ -415,7 +438,8 @@
       ],
       "logo": "/images/partners/make.webp",
       "desc": "Visual platform to connect your apps and automate your processes.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.make.com"
     },
     {
       "name": "Pipedrive",
@@ -429,7 +453,8 @@
       ],
       "logo": "/images/partners/pipedrive.png",
       "desc": "The CRM built by salespeople for simplified pipeline management.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.pipedrive.com"
     },
     {
       "name": "Ringover",
@@ -443,7 +468,8 @@
       ],
       "logo": "/images/partners/ringover.avif",
       "desc": "French cloud telephony solution integrated with your business tools.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.ringover.com"
     },
     {
       "name": "Tomorro",
@@ -457,7 +483,8 @@
       ],
       "logo": "/images/partners/tomorro.png",
       "desc": "Simplify your commercial contract management and lifecycle.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.tomorro.com"
     },
     {
       "name": "Yousign",
@@ -471,7 +498,8 @@
       ],
       "logo": "/images/partners/yousign.png",
       "desc": "The French secure and intuitive electronic signature solution.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.yousign.com"
     },
     {
       "name": "Pandadoc",
@@ -483,9 +511,10 @@
         "e-Signature",
         "Quotes"
       ],
-      "logo": "https://www.pandadoc.com/favicon.ico",
+      "logo": "/images/partners/pandadoc.png",
       "desc": "Automation of document creation, tracking and signing.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.pandadoc.com"
     },
     {
       "name": "Docusign",
@@ -498,7 +527,8 @@
       ],
       "logo": "/images/partners/docusign.png",
       "desc": "Global leader in electronic signature and agreement management.",
-      "status": "EXPERTISE"
+      "status": "EXPERTISE",
+      "url": "https://www.docusign.com"
     }
   ]
 }
