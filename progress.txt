@@ -266,3 +266,14 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 26: Method page polish — font sizes, card sizes, bowtie, border colours
+- pillar-card.tsx: reduced padding 10→8, deliverable title sm→base, description xs→sm
+- unified-bowtie.tsx: hidden on mobile (display none/md block), all SVG text fonts bumped +2
+- scope-section.tsx: added "Quelques exemples d'activités" title between bowtie and scope cards
+- hero-section.tsx: quote fontSize sm→base
+- Locale keys added: scope.activitiesTitle (fr/en)
+- Border top colours already correct (using borderColorMap[color])
+- pnpm check ✅ pnpm typecheck ✅
+
+---

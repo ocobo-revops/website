@@ -63,7 +63,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
     <div
       className={`${css({
         bg: 'white',
-        p: '10',
+        p: '8',
         borderTopWidth: '8px',
         borderTopColor: borderColorMap[color],
         shadow: 'card',
@@ -170,7 +170,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
               <div>
                 <h4
                   className={css({
-                    fontSize: 'sm',
+                    fontSize: 'base',
                     fontWeight: 'bold',
                     color: 'ocobo.dark',
                     mb: '1',
@@ -181,7 +181,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
                 </h4>
                 <p
                   className={css({
-                    fontSize: 'xs',
+                    fontSize: 'sm',
                     color: 'gray.500',
                     lineHeight: 'relaxed',
                   })}

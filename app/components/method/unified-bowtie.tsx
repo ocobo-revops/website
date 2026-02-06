@@ -38,6 +38,7 @@ export const UnifiedBowtie = () => {
         py: '12',
         px: '4',
         overflow: 'visible',
+        display: { base: 'none', md: 'block' },
       })}
     >
       <div
@@ -111,7 +112,7 @@ export const UnifiedBowtie = () => {
               textAnchor="middle"
               fill="currentColor"
               fillOpacity="0.15"
-              fontSize="7"
+              fontSize="9"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
@@ -137,7 +138,7 @@ export const UnifiedBowtie = () => {
               textAnchor="middle"
               fill="currentColor"
               fillOpacity="0.15"
-              fontSize="7"
+              fontSize="9"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
@@ -200,7 +201,7 @@ export const UnifiedBowtie = () => {
               y="165"
               textAnchor="middle"
               fill="white"
-              fontSize="9"
+              fontSize="11"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
@@ -215,7 +216,7 @@ export const UnifiedBowtie = () => {
               y="185"
               textAnchor="middle"
               fill="white"
-              fontSize="9"
+              fontSize="11"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
@@ -237,7 +238,7 @@ export const UnifiedBowtie = () => {
           <g
             fill="currentColor"
             fillOpacity="0.3"
-            fontSize="8"
+            fontSize="10"
             fontWeight="900"
             className={css({
               fontFamily: 'display',
@@ -268,7 +269,7 @@ export const UnifiedBowtie = () => {
 
           <g
             className={css({ fontFamily: 'display' })}
-            fontSize="11"
+            fontSize="13"
             fontWeight="900"
             fill="currentColor"
             letterSpacing="0.05em"

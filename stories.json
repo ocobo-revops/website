@@ -149,10 +149,10 @@
         "Test: bowtie hidden on mobile, visible on desktop with larger text",
         "Test: grey text throughout method page is legible"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:45:00Z"
     },
     {
       "id": 27,

@@ -110,7 +110,7 @@ export const HeroSection = () => {
               fontStyle: 'italic',
               fontWeight: 'medium',
               color: 'gray.400',
-              fontSize: 'sm',
+              fontSize: 'base',
               lineHeight: 'relaxed',
               maxW: 'md',
             })}

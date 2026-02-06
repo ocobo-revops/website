@@ -75,11 +75,24 @@ export const ScopeSection = () => {
 
         <UnifiedBowtie />
 
+        <h3
+          className={css({
+            fontFamily: 'display',
+            fontSize: { base: '2xl', md: '3xl' },
+            fontWeight: 'bold',
+            mt: '16',
+            mb: '4',
+            textAlign: 'center',
+          })}
+        >
+          {t('scope.activitiesTitle')}
+        </h3>
+
         <div
           className={`${grid({ columns: { base: 1, md: 2, lg: 3 }, gap: '8' })} ${css(
             {
               textAlign: 'left',
-              mt: '24',
+              mt: '12',
             },
           )}`}
         >
