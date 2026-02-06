@@ -166,7 +166,7 @@ export const LeviersSection = () => {
                   <p
                     className={css({
                       color: 'gray.600',
-                      fontSize: 'sm',
+                      fontSize: 'base',
                       lineHeight: 'relaxed',
                       mb: '10',
                       fontWeight: 'medium',

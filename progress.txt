@@ -258,3 +258,11 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 25: Offer page polish — hero button, font sizes, badge
+- hero-section.tsx: added ArrowRight icon to CTA button
+- Grey description fontSize sm→base: implications, leviers, offers-detail, transition sections
+- Badge already uses badge({ variant: 'yellow' }) recipe — uniform with home
+- pnpm check ✅ pnpm typecheck ✅
+
+---

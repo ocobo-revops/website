@@ -100,7 +100,7 @@ export const ImplicationsSection = () => {
               <ul
                 className={css({
                   spaceY: '3',
-                  fontSize: 'sm',
+                  fontSize: 'base',
                   color: 'gray.600',
                 })}
               >

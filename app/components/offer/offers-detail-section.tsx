@@ -164,7 +164,7 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
                   </h4>
                   <p
                     className={css({
-                      fontSize: 'sm',
+                      fontSize: 'base',
                       color: 'gray.600',
                       lineHeight: 'relaxed',
                     })}

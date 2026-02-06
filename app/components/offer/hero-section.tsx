@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
@@ -67,6 +67,7 @@ export const HeroSection = () => {
               className={button({ variant: 'cta', size: 'lg' })}
             >
               {t('hero.cta')}
+              <ArrowRight size={18} />
             </NavLink>
           </HeroSplit.Content>
           <HeroSplit.Media

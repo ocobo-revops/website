@@ -73,7 +73,7 @@ export const TransitionSection = () => {
                 </h3>
                 <p
                   className={css({
-                    fontSize: 'sm',
+                    fontSize: 'base',
                     color: 'gray.400',
                     lineHeight: 'relaxed',
                   })}
