@@ -21,10 +21,7 @@ import fr_strategy from '../../locales/fr/strategy.json';
 import fr_studio from '../../locales/fr/studio.json';
 import fr_technology from '../../locales/fr/technology.json';
 
-export const languages = [
-  'fr',
-  //'en'
-] as const;
+export const languages = ['fr', 'en'] as const;
 
 export const resources = {
   fr: {

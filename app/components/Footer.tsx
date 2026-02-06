@@ -1,6 +1,6 @@
 import { ArrowRight, Linkedin, Youtube } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useParams } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import {
@@ -13,9 +13,10 @@ import {
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { useMenuItems } from '~/hooks/useMenuItems';
+import { languages } from '~/localization/resources';
+import { getLang } from '~/utils/lang';
 import { url } from '~/utils/url';
 
-import { LanguageSwitcher } from './LanguageSwitcher';
 import { NewsletterForm } from './NewsletterForm';
 import { Logocobo } from './ui/Logocobo';
 
@@ -82,6 +83,9 @@ function Footer() {
   const { t } = useTranslation('common');
   const items = useMenuItems();
   const getLocalizedPath = useLocalizedPathname();
+  const { pathname } = useLocation();
+  const params = useParams();
+  const currentLang = getLang(params);
 
   const companyItems: FooterLinkItem[] =
     items
@@ -206,7 +210,6 @@ function Footer() {
               {t('footer.newsletter.title')}
             </h4>
             <NewsletterForm />
-            <LanguageSwitcher />
           </div>
         </div>
 
@@ -246,6 +249,22 @@ function Footer() {
             >
               {t('footer.legal.terms')}
             </NavLink>
+            <span className={css({ color: 'gray.700' })}>|</span>
+            {languages.map((lng) => (
+              <NavLink
+                key={lng}
+                to={pathname.replace(`/${currentLang}`, `/${lng}`)}
+                className={css({
+                  transition: 'colors',
+                  textTransform: 'uppercase',
+                  fontWeight: currentLang === lng ? 'bold' : 'normal',
+                  color: currentLang === lng ? 'white' : 'gray.500',
+                  _hover: { color: 'white' },
+                })}
+              >
+                {lng}
+              </NavLink>
+            ))}
           </div>
         </div>
       </div>
