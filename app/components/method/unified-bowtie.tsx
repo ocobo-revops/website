@@ -111,8 +111,8 @@ export const UnifiedBowtie = () => {
               y="45"
               textAnchor="middle"
               fill="currentColor"
-              fillOpacity="0.15"
-              fontSize="9"
+              fillOpacity="0.35"
+              fontSize="12"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
@@ -137,8 +137,8 @@ export const UnifiedBowtie = () => {
               y="45"
               textAnchor="middle"
               fill="currentColor"
-              fillOpacity="0.15"
-              fontSize="9"
+              fillOpacity="0.35"
+              fontSize="12"
               fontWeight="900"
               className={css({
                 fontFamily: 'display',
