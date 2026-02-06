@@ -7,6 +7,7 @@ import en_method from '../../locales/en/method.json';
 import en_offer from '../../locales/en/offer.json';
 import en_projects from '../../locales/en/projects.json';
 import en_strategy from '../../locales/en/strategy.json';
+import en_studio from '../../locales/en/studio.json';
 import en_technology from '../../locales/en/technology.json';
 import fr_about from '../../locales/fr/about.json';
 import fr_blog from '../../locales/fr/blog.json';
@@ -17,6 +18,7 @@ import fr_method from '../../locales/fr/method.json';
 import fr_offer from '../../locales/fr/offer.json';
 import fr_projects from '../../locales/fr/projects.json';
 import fr_strategy from '../../locales/fr/strategy.json';
+import fr_studio from '../../locales/fr/studio.json';
 import fr_technology from '../../locales/fr/technology.json';
 
 export const languages = [
@@ -34,6 +36,7 @@ export const resources = {
     contact: fr_contact,
     offer: fr_offer,
     method: fr_method,
+    studio: fr_studio,
     technology: fr_technology,
     about: fr_about,
   },
@@ -46,6 +49,7 @@ export const resources = {
     contact: en_contact,
     offer: en_offer,
     method: en_method,
+    studio: en_studio,
     technology: en_technology,
     about: en_about,
   },

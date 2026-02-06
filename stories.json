@@ -347,10 +347,10 @@
         "SSR hydration check — no console errors",
         "Update docs/development/component-inventory.md"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T10:00:00Z"
     },
     {
       "id": 18,
@@ -369,10 +369,10 @@
         "SSR hydration check — no console errors",
         "Update docs/development/component-inventory.md"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T14:00:00Z"
     },
     {
       "id": 19,

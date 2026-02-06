@@ -9,7 +9,7 @@ import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
 import { Container } from '../ui/Container';
 
-type CtaVariant = 'yellow' | 'sky' | 'dark';
+type CtaVariant = 'yellow' | 'sky' | 'dark' | 'mint';
 
 interface CtaSectionProps {
   variant?: CtaVariant;
@@ -19,10 +19,14 @@ interface CtaSectionProps {
   ctaLink: string;
 }
 
-const variantToSectionBg: Record<CtaVariant, 'yellow' | 'sky' | 'dark'> = {
+const variantToSectionBg: Record<
+  CtaVariant,
+  'yellow' | 'sky' | 'dark' | 'mint'
+> = {
   yellow: 'yellow',
   sky: 'sky',
   dark: 'dark',
+  mint: 'mint',
 };
 
 const variantStyles: Record<
@@ -40,6 +44,10 @@ const variantStyles: Record<
   dark: {
     subtitleColor: 'white/80',
     buttonVariant: 'primary',
+  },
+  mint: {
+    subtitleColor: 'ocobo.dark/70',
+    buttonVariant: 'cta',
   },
 };
 

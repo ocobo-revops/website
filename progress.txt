@@ -161,3 +161,31 @@ Created: 2026-02-01T12:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+## Feature 17: Migrate Technology/Partners page
+- Created route `_main.($lang).technology.tsx` with `createHybridLoader` + `throwIfDisabled`
+- Created 5 section components in `app/components/technology/`: hero, philosophy, ecosystem, partner-card, partner-form
+- Ported 30 partners data into `locales/{fr,en}/technology.json` under `partners` key (translatable)
+- Category filter with animation reset on filter change
+- Partner card compound component pattern (Header/Body/Separator/Footer)
+- Partner form with success state toggle
+- Reused `CtaSection`, `ModularStackGrid`, `FlexPair` from existing components
+- Converted `styled()` → `css()`, hardcoded text → `t()` calls
+- Registered `technology` namespace in `resources.ts`
+- Removed `'technology'` from `DISABLED_PAGES_DEFAULT`
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 18: Migrate Studio page
+- Created route `_main.($lang).studio.tsx` with `createHybridLoader` + `throwIfDisabled`
+- Created 5 section components in `app/components/studio/`: hero, team-photo-illustration, model, team, team-member-card
+- Ported 12 team members data into `locales/{fr,en}/studio.json` under `team.members` key (translatable)
+- Category filter with animation reset on filter change (same pattern as ecosystem-section)
+- Team member card with grayscale→colour hover, fade-in animation, conditional LinkedIn link
+- Hero section with `Trans` component for rich subtitle, floating illustration with blobs
+- Model section with dark bg, dot pattern, 3 value cards using `iconBox()` + `text()` recipes
+- Added `mint` variant to `CtaSection` component (section recipe already supported mint)
+- Registered `studio` namespace in `resources.ts`
+- Removed `'studio'` from `DISABLED_PAGES_DEFAULT`
+- pnpm check ✅ pnpm typecheck ✅
+
+---

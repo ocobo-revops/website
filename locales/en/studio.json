@@ -1,0 +1,155 @@
+{
+  "meta.title": "Studio",
+  "meta.description": "A studio of senior RevOps experts who embed within your teams to operate from the inside.",
+  "hero.badge": "REVOPS STUDIO",
+  "hero.title.line1": "A Revenue Ops direction",
+  "hero.title.highlight": "embedded.",
+  "hero.subtitle": "We are not a traditional agency. We are <bold>a studio of senior experts</bold> who embed within your teams to operate from the inside.",
+  "hero.quote": "\"We join your Slacks, your rituals, and we build the system alongside you.\"",
+  "hero.cta": "Talk to the Studio",
+  "hero.captionBadge": "The Ocobo Squad",
+  "hero.photoAlt": "The Ocobo team",
+  "model.title": "The Ocobo Studio\u2122 model",
+  "model.subtitle": "The traditional agency is often too slow and too far from the reality on the ground. We designed a pragmatic alternative to truly scale.",
+  "model.cards": [
+    {
+      "icon": "users",
+      "title": "Embedded Squad",
+      "description": "We deploy a multidisciplinary squad that joins your daily work environment.",
+      "hoverColor": "mint"
+    },
+    {
+      "icon": "zap",
+      "title": "100% Impact",
+      "description": "No lengthy theoretical reports. We deliver ready-to-use system building blocks.",
+      "hoverColor": "sky"
+    },
+    {
+      "icon": "target",
+      "title": "Zero Junior",
+      "description": "On every account, only senior profiles who have already scaled leading companies.",
+      "hoverColor": "yellow"
+    }
+  ],
+  "team.title": "Your Studio team",
+  "team.subtitle": "Senior experts accustomed to scaling complex organisations together.",
+  "team.filters": {
+    "TOUS": "All profiles",
+    "Architecte": "Architect",
+    "Builder": "Builder",
+    "Expert Engineer": "Expert Engineer"
+  },
+  "team.members": [
+    {
+      "name": "Benjamin Boileux",
+      "category": "Architecte",
+      "role": "Partner",
+      "desc": "12+ years in Ops, CRM, Product and Revenue Operations (TheFork, Tripadvisor, Yousign). Systems and operational management specialist.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.yellow",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Aude Cadiot",
+      "category": "Architecte",
+      "role": "Partner",
+      "desc": "France's Revenue Operations reference (TheFork, Spendesk). Expert in customer journey, GTM organisations, and scaling RevOps teams.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.yellow",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Corentin Guerin",
+      "category": "Architecte",
+      "role": "Partner",
+      "desc": "Finance, Deloitte, Business Ops (TheFork). Forecasting, performance, variable compensation and pricing specialist.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.yellow",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Tony Chalencon",
+      "category": "Architecte",
+      "role": "Senior Manager",
+      "desc": "Expert in strategic alignment and key account management. Results-oriented and operational excellence.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.yellow",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Clara Lecarrie",
+      "category": "Architecte",
+      "role": "Manager",
+      "desc": "Specialist in user experience and optimising complex sales journeys.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.yellow",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Louis Strauss",
+      "category": "Expert Engineer",
+      "role": "RevOps Engineer",
+      "desc": "The technical brain behind our most advanced integrations and proprietary tools.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.mint",
+      "hoverText": "ocobo.dark"
+    },
+    {
+      "name": "Domitille Raimbault",
+      "category": "Builder",
+      "role": "Senior RevOps Manager",
+      "desc": "Masters the most complex CRM architectures to turn data into a growth lever.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    },
+    {
+      "name": "Ethel Gosset",
+      "category": "Builder",
+      "role": "Senior RevOps Manager",
+      "desc": "Expert in automating and streamlining Sales & Marketing operational processes.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    },
+    {
+      "name": "Dorian Cutullic",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Supports scale-ups in structuring their stack and adopting RevOps rituals.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    },
+    {
+      "name": "Damien Robert",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Specialist in commercial performance and data-driven management.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    },
+    {
+      "name": "Mariette Baudras",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Expert in Customer Success Operations and client retention optimisation.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    },
+    {
+      "name": "Yoann Boileux",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Focused on team enablement and creating robust execution playbooks.",
+      "img": "https://placehold.co/200x200/F3F4F6/F3F4F6",
+      "hoverBg": "ocobo.coral",
+      "hoverText": "white"
+    }
+  ],
+  "cta.title": "Want a team that truly delivers?",
+  "cta.subtitle": "Let's evaluate the squad you need to reach the next level.",
+  "cta.button": "Talk to the Studio"
+}
