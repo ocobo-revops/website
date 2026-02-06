@@ -356,18 +356,18 @@
   "whyOcobo.reasons": [
     {
       "color": "yellow",
-      "title": "No juniors, no outsourcing.",
-      "description": "Every consultant has operated in demanding scale-ups. We think like an embedded Revenue leadership team."
+      "title": "We think like leaders, we act like an internal team.",
+      "description": "No juniors, no blind execution."
     },
     {
       "color": "coral",
-      "title": "No slides, just results.",
-      "description": "We build, operate, and transfer. You leave with a running system, not a report."
+      "title": "We deliver the real thing, not slides.",
+      "description": "We operate. We adjust. We transfer."
     },
     {
       "color": "mint",
-      "title": "A system, not a mission.",
-      "description": "We leave a structured, steerable, and durable system. Your team takes over with full autonomy."
+      "title": "We build a durable system.",
+      "description": "After we leave, we hand over a clean, structured, steerable system."
     }
   ],
   "cta.title": "Take control of your growth.",

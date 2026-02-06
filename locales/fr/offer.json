@@ -356,18 +356,18 @@
   "whyOcobo.reasons": [
     {
       "color": "yellow",
-      "title": "Pas de juniors, pas de sous-traitance.",
-      "description": "Chaque consultant a opéré dans des scale-ups exigeantes. Nous pensons comme une direction Revenue embarquée."
+      "title": "Nous pensons comme des dirigeants, nous agissons comme une équipe interne.",
+      "description": "Aucun junior, aucune exécution aveugle."
     },
     {
       "color": "coral",
-      "title": "Pas de slides, des résultats.",
-      "description": "Nous construisons, opérons et transmettons. Vous repartez avec un système qui tourne, pas un rapport."
+      "title": "Nous livrons du réel, pas des slides.",
+      "description": "Nous opérons. Nous ajustons. Nous transmettons."
     },
     {
       "color": "mint",
-      "title": "Un système, pas une mission.",
-      "description": "Nous laissons un système structuré, pilotable et durable. Votre équipe prend le relais en toute autonomie."
+      "title": "Nous construisons un système durable.",
+      "description": "Après notre départ, nous laissons un système propre, structuré, pilotable."
     }
   ],
   "cta.title": "Prenez le contrôle de votre croissance.",
