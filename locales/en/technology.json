@@ -1,0 +1,336 @@
+{
+  "meta.title": "Technology",
+  "meta.description": "A connected solutions ecosystem to turn your tools into a growth lever.",
+  "hero.badge": "TECHNOLOGY",
+  "hero.title.line1": "A connected",
+  "hero.title.line2": "solutions",
+  "hero.title.highlight": "ecosystem.",
+  "hero.subtitle.before": "We master the most advanced technology architectures to turn your tools into a",
+  "hero.subtitle.bold": "true growth lever.",
+  "hero.cta": "Audit my stack",
+  "philosophy.title": "The system before the tool.",
+  "philosophy.subtitle": "The tool is only a means. Our value lies in the architecture that enables these technologies to communicate and produce reliable data.",
+  "philosophy.cards": [
+    {
+      "icon": "lock",
+      "title": "Agnostic",
+      "description": "We don't force a tool. We choose the one that fairly serves your strategy.",
+      "hoverColor": "sky"
+    },
+    {
+      "icon": "link",
+      "title": "Connected",
+      "description": "Data must flow freely. We remove silos for a single source of truth.",
+      "hoverColor": "mint"
+    },
+    {
+      "icon": "shield-check",
+      "title": "Certified",
+      "description": "We are official and certified partners on the most powerful solutions on the market.",
+      "hoverColor": "yellow"
+    }
+  ],
+  "ecosystem.title": "Our Tech Ecosystem",
+  "ecosystem.subtitle": "The solutions we implement, from official partnerships to expert technical mastery.",
+  "ecosystem.filters": {
+    "TOUS": "All tools",
+    "CRM": "CRM",
+    "AI": "AI",
+    "NO-CODE": "No Code & Automation",
+    "ENABLEMENT": "Enablement",
+    "COMP": "Comp",
+    "CS": "CS",
+    "SALES": "Sales",
+    "FINANCE": "Finance",
+    "CONTRAT": "Contract"
+  },
+  "ecosystem.status.official": "Official Partner",
+  "ecosystem.status.expertise": "Technical Mastery",
+  "ecosystem.categoryLabels": {
+    "NO-CODE": "No-Code & Automation"
+  },
+  "partnerForm.badge": "CO-CONSTRUCTION",
+  "partnerForm.title.before": "Join",
+  "partnerForm.title.after": "the Ocobo",
+  "partnerForm.title.highlight": "ecosystem.",
+  "partnerForm.subtitle": "Do you develop a software solution that transforms B2B business growth? Join our architects' ecosystem.",
+  "partnerForm.benefits": [
+    {
+      "icon": "handshake",
+      "color": "sky",
+      "title": "Strategic Partnership",
+      "description": "Privileged access to our Studio for deploying your solution to our clients."
+    },
+    {
+      "icon": "sparkles",
+      "color": "yellow",
+      "title": "Co-Marketing & Events",
+      "description": "Webinars, podcasts and masterclasses together to evangelise the market."
+    },
+    {
+      "icon": "layers",
+      "color": "mint",
+      "title": "Product Expertise",
+      "description": "Operational feedback from our senior architects to optimise your integrations."
+    }
+  ],
+  "partnerForm.formTitle": "Become a partner",
+  "partnerForm.fields.solutionName": "Solution name",
+  "partnerForm.fields.solutionNamePlaceholder": "e.g. HubSpot",
+  "partnerForm.fields.website": "Website",
+  "partnerForm.fields.websitePlaceholder": "https://...",
+  "partnerForm.fields.email": "Professional email",
+  "partnerForm.fields.emailPlaceholder": "name@solution.com",
+  "partnerForm.fields.message": "Your message",
+  "partnerForm.fields.messagePlaceholder": "Tell us about your vision and partnership goals...",
+  "partnerForm.submit": "Submit my solution",
+  "partnerForm.success.title": "Request received!",
+  "partnerForm.success.message": "Our team will review your solution and get back to you within 48h.",
+  "partnerForm.success.reset": "Send another request",
+  "cta.title": "Need an architect for your stack?",
+  "cta.subtitle": "Let's evaluate your tools' interconnection together to remove silos.",
+  "cta.button": "Book a call",
+  "partners": [
+    {
+      "name": "HubSpot",
+      "category": ["CRM"],
+      "tags": ["Integration", "CRM", "Marketing Automation"],
+      "logo": "https://www.vectorlogo.zone/logos/hubspot/hubspot-icon.svg",
+      "desc": "Complete CRM & Marketing Automation platform.",
+      "status": "OFFICIAL",
+      "certificationLogo": "https://27107933.fs1.hubspotusercontent-eu1.net/hubfs/27107933/hubspot-platinum-partner-badge.png"
+    },
+    {
+      "name": "Vasco",
+      "category": ["FINANCE"],
+      "tags": ["Vertical SaaS", "Billing", "SaaS Ops"],
+      "logo": "https://vasco.app/favicon.ico",
+      "desc": "The operating system to build and manage your Vertical SaaS.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Qobra",
+      "category": ["COMP"],
+      "tags": ["Integration", "Referral", "Commission Plan"],
+      "logo": "https://qobra.co/favicon.ico",
+      "desc": "Commission automation to motivate your sales teams.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Hyperline",
+      "category": ["FINANCE"],
+      "tags": ["Integration", "Referral", "Quote2Cash"],
+      "logo": "https://www.hyperline.co/favicon.ico",
+      "desc": "Modern billing for recurring revenue models.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Folk",
+      "category": ["CRM"],
+      "tags": ["Integration", "CRM"],
+      "logo": "https://www.folk.app/apple-touch-icon.png",
+      "desc": "The intelligent and collaborative CRM to centralise your relationships.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Vitally",
+      "category": ["CS"],
+      "tags": ["Integration", "CS Platform"],
+      "logo": "https://framerusercontent.com/images/kQ9rX6H7m0m2mY3V1W1N8U.svg",
+      "desc": "Customer Success Platform to drive retention.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Modjo",
+      "category": ["SALES", "AI"],
+      "tags": ["Integration", "Enablement", "AI"],
+      "logo": "https://framerusercontent.com/images/8r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Conversational analysis to coach your teams.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Planhat",
+      "category": ["CS"],
+      "tags": ["Integration", "CS Platform"],
+      "logo": "https://www.planhat.com/static/logo-icon-bc8b2f9f8c0b5f1f9b9a6c9a9d0a9b3a.svg",
+      "desc": "Enterprise CS platform to scale expansion.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Dust",
+      "category": ["AI"],
+      "tags": ["Integration", "AI"],
+      "logo": "https://dust.tt/static/logo_icon.png",
+      "desc": "Internal AI engine for team productivity.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Notion",
+      "category": ["ENABLEMENT"],
+      "tags": ["Documentation", "Enablement"],
+      "logo": "https://www.vectorlogo.zone/logos/notionso/notionso-icon.svg",
+      "desc": "The central tool for your playbooks and processes.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "AGO",
+      "category": ["AI"],
+      "tags": ["Integration", "AI"],
+      "logo": "https://framerusercontent.com/images/3m8i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Artificial Intelligence at the service of Revenue.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Surfe",
+      "category": ["SALES"],
+      "tags": ["Enrichment", "Sales Automation"],
+      "logo": "https://framerusercontent.com/images/5r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Connect LinkedIn to your CRM in one click.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Full Enrich",
+      "category": ["SALES"],
+      "tags": ["Enrichment", "Integration"],
+      "logo": "https://framerusercontent.com/images/2r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Multi-enrichment of contact data.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Claap",
+      "category": ["SALES"],
+      "tags": ["CRM Fillings", "AI"],
+      "logo": "https://framerusercontent.com/images/6r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Asynchronous video and call recording.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Chargebee",
+      "category": ["FINANCE"],
+      "tags": ["Quote2Cash"],
+      "logo": "https://www.vectorlogo.zone/logos/chargebee/chargebee-icon.svg",
+      "desc": "Subscription management and recurring billing.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Aircall",
+      "category": ["SALES"],
+      "tags": ["Integration", "Telephony"],
+      "logo": "https://www.vectorlogo.zone/logos/aircallio/aircallio-icon.svg",
+      "desc": "Cloud telephony natively integrated with your tools.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Lemlist",
+      "category": ["SALES"],
+      "tags": ["Sales Automation", "Enrichment"],
+      "logo": "https://www.lemlist.com/hubfs/lemlist-logo-2023.svg",
+      "desc": "Highly personalised multichannel prospecting.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Oneflow",
+      "category": ["CONTRAT"],
+      "tags": ["Contract Management"],
+      "logo": "https://framerusercontent.com/images/1r0i7N1W9Tz6zY3Y3V1W1N8U.svg",
+      "desc": "Digital contract management and signing.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Salesforce",
+      "category": ["CRM"],
+      "tags": ["Integration", "CRM"],
+      "logo": "https://www.vectorlogo.zone/logos/salesforce/salesforce-icon.svg",
+      "desc": "The enterprise reference CRM for complex stacks.",
+      "status": "OFFICIAL"
+    },
+    {
+      "name": "Clay",
+      "category": ["SALES", "AI"],
+      "tags": ["Enrichment", "Prospecting", "AI"],
+      "logo": "https://www.clay.com/favicon.ico",
+      "desc": "The leading tool for data enrichment and hyper-personalised AI prospecting.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Attio",
+      "category": ["CRM"],
+      "tags": ["CRM", "Data-driven", "Relationship"],
+      "logo": "https://attio.com/favicon.ico",
+      "desc": "The next-generation CRM built for flexibility and data.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Cargo",
+      "category": ["SALES", "NO-CODE"],
+      "tags": ["Revenue Workflow", "Sales Automation", "AI"],
+      "logo": "https://getcargo.ai/favicon.ico",
+      "desc": "Revenue infrastructure to orchestrate your Sales & Marketing workflows via AI.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "N8N",
+      "category": ["NO-CODE"],
+      "tags": ["Automation", "Workflow", "Self-hosted"],
+      "logo": "https://n8n.io/favicon.ico",
+      "desc": "Flexible and powerful automation solution for technical flows.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Make",
+      "category": ["NO-CODE"],
+      "tags": ["Automation", "iPaaS", "Workflow"],
+      "logo": "https://www.make.com/favicon.ico",
+      "desc": "Visual platform to connect your apps and automate your processes.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Pipedrive",
+      "category": ["CRM"],
+      "tags": ["CRM", "Sales Management", "SME"],
+      "logo": "https://www.pipedrive.com/favicon.ico",
+      "desc": "The CRM built by salespeople for simplified pipeline management.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Ringover",
+      "category": ["SALES"],
+      "tags": ["Telephony", "Call Center", "SMS"],
+      "logo": "https://www.ringover.fr/favicon.ico",
+      "desc": "French cloud telephony solution integrated with your business tools.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Tomorro",
+      "category": ["CONTRAT"],
+      "tags": ["CLM", "Contract automation", "LegalOps"],
+      "logo": "https://www.tomorro.com/favicon.ico",
+      "desc": "Simplify your commercial contract management and lifecycle.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Yousign",
+      "category": ["CONTRAT"],
+      "tags": ["e-Signature", "Legal Compliance", "API"],
+      "logo": "https://yousign.com/favicon.ico",
+      "desc": "The French secure and intuitive electronic signature solution.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Pandadoc",
+      "category": ["CONTRAT"],
+      "tags": ["Proposal", "e-Signature", "Quotes"],
+      "logo": "https://www.pandadoc.com/favicon.ico",
+      "desc": "Automation of document creation, tracking and signing.",
+      "status": "EXPERTISE"
+    },
+    {
+      "name": "Docusign",
+      "category": ["CONTRAT"],
+      "tags": ["e-Signature", "Agreement Cloud"],
+      "logo": "https://www.docusign.com/favicon.ico",
+      "desc": "Global leader in electronic signature and agreement management.",
+      "status": "EXPERTISE"
+    }
+  ]
+}

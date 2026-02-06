@@ -24,7 +24,6 @@ const VALID_SLUGS: Set<string> = new Set<PageSlug>([
 
 /** P2+ pages disabled by default until launched */
 export const DISABLED_PAGES_DEFAULT: PageSlug[] = [
-  'technology',
   'studio',
   'jobs',
   'podcasts',
