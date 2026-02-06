@@ -1,37 +1,37 @@
 {
   "meta.title": "Technologie",
-  "meta.description": "Un ecosysteme de solutions connectees pour transformer vos outils en levier de croissance.",
+  "meta.description": "Un écosystème de solutions connectées pour transformer vos outils en levier de croissance.",
   "hero.badge": "TECHNOLOGIE",
-  "hero.title.line1": "Un ecosysteme",
+  "hero.title.line1": "Un écosystème",
   "hero.title.line2": "de solutions",
-  "hero.title.highlight": "connectees.",
-  "hero.subtitle.before": "Nous maitrisons les architectures technologiques les plus avancees pour transformer vos outils en",
-  "hero.subtitle.bold": "veritable levier de croissance.",
+  "hero.title.highlight": "connectées.",
+  "hero.subtitle.before": "Nous maîtrisons les architectures technologiques les plus avancées pour transformer vos outils en",
+  "hero.subtitle.bold": "véritable levier de croissance.",
   "hero.cta": "Auditer ma stack",
-  "philosophy.title": "Le systeme avant l'outil.",
-  "philosophy.subtitle": "L'outil n'est qu'un moyen. Notre valeur reside dans l'architecture qui permet a ces technologies de communiquer et de produire de la donnee fiable.",
+  "philosophy.title": "Le système avant l'outil.",
+  "philosophy.subtitle": "L'outil n'est qu'un moyen. Notre valeur réside dans l'architecture qui permet à ces technologies de communiquer et de produire de la donnée fiable.",
   "philosophy.cards": [
     {
       "icon": "lock",
       "title": "Agnostique",
-      "description": "On ne force pas un outil. On choisit celui qui sert votre strategie de maniere juste.",
+      "description": "On ne force pas un outil. On choisit celui qui sert votre stratégie de manière juste.",
       "hoverColor": "sky"
     },
     {
       "icon": "link",
-      "title": "Connectee",
-      "description": "La donnee doit circuler fluidement. Nous supprimons les silos pour une verite unique.",
+      "title": "Connectée",
+      "description": "La donnée doit circuler fluidement. Nous supprimons les silos pour une vérité unique.",
       "hoverColor": "mint"
     },
     {
       "icon": "shield-check",
-      "title": "Certifiee",
-      "description": "Nous sommes partenaires officiels et certifies sur les solutions les plus puissantes du marche.",
+      "title": "Certifiée",
+      "description": "Nous sommes partenaires officiels et certifiés sur les solutions les plus puissantes du marché.",
       "hoverColor": "yellow"
     }
   ],
-  "ecosystem.title": "Notre Ecosysteme Tech",
-  "ecosystem.subtitle": "Les solutions que nous implementons, des partenariats officiels aux maitrises techniques d'experts.",
+  "ecosystem.title": "Notre Écosystème Tech",
+  "ecosystem.subtitle": "Les solutions que nous implémentons, des partenariats officiels aux maîtrises techniques d'experts.",
   "ecosystem.filters": {
     "TOUS": "Tous les outils",
     "CRM": "CRM",
@@ -45,33 +45,33 @@
     "CONTRAT": "Contrat"
   },
   "ecosystem.status.official": "Partenaire Officiel",
-  "ecosystem.status.expertise": "Maitrise Technique",
+  "ecosystem.status.expertise": "Maîtrise Technique",
   "ecosystem.categoryLabels": {
     "NO-CODE": "No-Code & Automatisation"
   },
   "partnerForm.badge": "CO-CONSTRUCTION",
   "partnerForm.title.before": "Rejoignez",
-  "partnerForm.title.after": "l'ecosysteme",
+  "partnerForm.title.after": "l'écosystème",
   "partnerForm.title.highlight": "Ocobo.",
-  "partnerForm.subtitle": "Vous developpez une solution logicielle qui transforme la croissance des entreprises B2B ? Integrez notre ecosysteme d'architectes.",
+  "partnerForm.subtitle": "Vous développez une solution logicielle qui transforme la croissance des entreprises B2B ? Intégrez notre écosystème d'architectes.",
   "partnerForm.benefits": [
     {
       "icon": "handshake",
       "color": "sky",
-      "title": "Partenariat Strategique",
-      "description": "Acces privilegie a notre Studio pour le deploiement de votre solution chez nos clients."
+      "title": "Partenariat Stratégique",
+      "description": "Accès privilégié à notre Studio pour le déploiement de votre solution chez nos clients."
     },
     {
       "icon": "sparkles",
       "color": "yellow",
       "title": "Co-Marketing & Events",
-      "description": "Webinars, podcasts et masterclasses en commun pour evangeliser le marche."
+      "description": "Webinars, podcasts et masterclasses en commun pour évangéliser le marché."
     },
     {
       "icon": "layers",
       "color": "mint",
       "title": "Expertise Produit",
-      "description": "Feedback operationnel de nos architectes seniors pour optimiser vos integrations."
+      "description": "Feedback opérationnel de nos architectes seniors pour optimiser vos intégrations."
     }
   ],
   "partnerForm.formTitle": "Devenez partenaire",
@@ -84,11 +84,11 @@
   "partnerForm.fields.message": "Votre message",
   "partnerForm.fields.messagePlaceholder": "Parlez-nous de votre vision et de vos envies de partenariat...",
   "partnerForm.submit": "Soumettre ma solution",
-  "partnerForm.success.title": "Demande recue !",
-  "partnerForm.success.message": "Notre equipe etudiera votre solution et vous recontactera sous 48h.",
+  "partnerForm.success.title": "Demande reçue !",
+  "partnerForm.success.message": "Notre équipe étudiera votre solution et vous recontactera sous 48h.",
   "partnerForm.success.reset": "Envoyer une autre demande",
   "cta.title": "Besoin d'un architecte pour votre stack ?",
-  "cta.subtitle": "Evaluons ensemble l'interconnexion de vos outils pour supprimer les silos.",
+  "cta.subtitle": "Évaluons ensemble l'interconnexion de vos outils pour supprimer les silos.",
   "cta.button": "Prendre RDV",
   "partners": [
     {
@@ -97,12 +97,12 @@
         "CRM"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "CRM",
         "Marketing Automation"
       ],
       "logo": "/images/partners/hubspot.png",
-      "desc": "Plateforme complete de CRM & Marketing Automation.",
+      "desc": "Plateforme complète de CRM & Marketing Automation.",
       "status": "OFFICIAL",
       "certificationLogo": "/images/partners/hubspot-badge.png",
       "url": "https://www.hubspot.com"
@@ -118,7 +118,7 @@
         "SaaS Ops"
       ],
       "logo": "/images/partners/vasco.webp",
-      "desc": "Le systeme d'exploitation pour batir et gerer votre Vertical SaaS.",
+      "desc": "Le système d'exploitation pour bâtir et gérer votre Vertical SaaS.",
       "status": "OFFICIAL",
       "url": "https://www.vasco.app"
     },
@@ -128,12 +128,12 @@
         "COMP"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "Apporteur d'affaires",
         "Commission Plan"
       ],
       "logo": "/images/partners/qobra.png",
-      "desc": "Automatisation des commissions pour motiver vos equipes de vente.",
+      "desc": "Automatisation des commissions pour motiver vos équipes de vente.",
       "status": "OFFICIAL",
       "url": "https://www.qobra.co"
     },
@@ -143,12 +143,12 @@
         "FINANCE"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "Apporteur d'affaires",
         "Quote2Cash"
       ],
       "logo": "/images/partners/hyperline.png",
-      "desc": "Billing moderne pour les modeles de revenus recurrents.",
+      "desc": "Billing moderne pour les modèles de revenus récurrents.",
       "status": "OFFICIAL",
       "url": "https://www.hyperline.co"
     },
@@ -158,7 +158,7 @@
         "CRM"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "CRM"
       ],
       "logo": "/images/partners/folk.jpeg",
@@ -172,11 +172,11 @@
         "CS"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "CS Platform"
       ],
       "logo": "/images/partners/vitally.png",
-      "desc": "Customer Success Platform pour piloter la retention.",
+      "desc": "Customer Success Platform pour piloter la rétention.",
       "status": "OFFICIAL",
       "url": "https://www.vitally.io"
     },
@@ -187,12 +187,12 @@
         "AI"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "Enablement",
         "AI"
       ],
       "logo": "/images/partners/modjo.jpeg",
-      "desc": "Analyse conversationnelle pour coacher vos equipes.",
+      "desc": "Analyse conversationnelle pour coacher vos équipes.",
       "status": "OFFICIAL",
       "url": "https://www.modjo.ai"
     },
@@ -202,7 +202,7 @@
         "CS"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "CS Platform"
       ],
       "logo": "/images/partners/planhat.png",
@@ -216,11 +216,11 @@
         "AI"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "AI"
       ],
       "logo": "/images/partners/dust.png",
-      "desc": "Moteur d'IA interne pour la productivite d'equipe.",
+      "desc": "Moteur d'IA interne pour la productivité d'équipe.",
       "status": "OFFICIAL",
       "url": "https://dust.tt"
     },
@@ -244,7 +244,7 @@
         "AI"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "AI"
       ],
       "logo": "/images/partners/ago.png",
@@ -262,7 +262,7 @@
         "Sales Automation"
       ],
       "logo": "/images/partners/surfe.png",
-      "desc": "Connectez LinkedIn a votre CRM en un clic.",
+      "desc": "Connectez LinkedIn à votre CRM en un clic.",
       "status": "OFFICIAL",
       "url": "https://www.surfe.com"
     },
@@ -273,10 +273,10 @@
       ],
       "tags": [
         "Enrichment",
-        "Integration"
+        "Intégration"
       ],
       "logo": "/images/partners/fullenrich.svg",
-      "desc": "Multi-enrichissement de donnees de contact.",
+      "desc": "Multi-enrichissement de données de contact.",
       "status": "OFFICIAL",
       "url": "https://www.fullenrich.com"
     },
@@ -290,7 +290,7 @@
         "AI"
       ],
       "logo": "/images/partners/claap.webp",
-      "desc": "Video asynchrone et enregistrement de calls.",
+      "desc": "Vidéo asynchrone et enregistrement de calls.",
       "status": "OFFICIAL",
       "url": "https://www.claap.io"
     },
@@ -303,7 +303,7 @@
         "Quote2Cash"
       ],
       "logo": "/images/partners/chargebee.png",
-      "desc": "Gestion des abonnements et facturation recurrente.",
+      "desc": "Gestion des abonnements et facturation récurrente.",
       "status": "OFFICIAL",
       "url": "https://www.chargebee.com"
     },
@@ -313,11 +313,11 @@
         "SALES"
       ],
       "tags": [
-        "Integration",
-        "Telephonie"
+        "Intégration",
+        "Téléphonie"
       ],
       "logo": "/images/partners/aircall.png",
-      "desc": "Telephonie cloud integree nativement a vos outils.",
+      "desc": "Téléphonie cloud intégrée nativement à vos outils.",
       "status": "OFFICIAL",
       "certificationLogo": "/images/partners/aircall-badge.webp",
       "url": "https://www.aircall.io"
@@ -332,7 +332,7 @@
         "Enrichment"
       ],
       "logo": "/images/partners/lemlist.webp",
-      "desc": "Prospection multicanale hautement personnalisee.",
+      "desc": "Prospection multicanale hautement personnalisée.",
       "status": "OFFICIAL",
       "certificationLogo": "/images/partners/lemlist-badge.png",
       "url": "https://www.lemlist.com"
@@ -356,11 +356,11 @@
         "CRM"
       ],
       "tags": [
-        "Integration",
+        "Intégration",
         "CRM"
       ],
       "logo": "/images/partners/salesforce.png",
-      "desc": "Le CRM entreprise de reference pour les stacks complexes.",
+      "desc": "Le CRM entreprise de référence pour les stacks complexes.",
       "status": "OFFICIAL",
       "url": "https://www.salesforce.com"
     },
@@ -376,7 +376,7 @@
         "AI"
       ],
       "logo": "/images/partners/clay.png",
-      "desc": "L'outil leader pour l'enrichissement de donnees et la prospection hyper-personnalisee via l'IA.",
+      "desc": "L'outil leader pour l'enrichissement de données et la prospection hyper-personnalisée via l'IA.",
       "status": "EXPERTISE",
       "url": "https://www.clay.com"
     },
@@ -391,7 +391,7 @@
         "Relationship"
       ],
       "logo": "/images/partners/attio.png",
-      "desc": "Le CRM de nouvelle generation construit pour la flexibilite et la donnee.",
+      "desc": "Le CRM de nouvelle génération construit pour la flexibilité et la donnée.",
       "status": "EXPERTISE",
       "url": "https://attio.com"
     },
@@ -452,7 +452,7 @@
         "SME"
       ],
       "logo": "/images/partners/pipedrive.png",
-      "desc": "Le CRM pense par des commerciaux pour la gestion simplifiee du pipeline.",
+      "desc": "Le CRM pensé par des commerciaux pour la gestion simplifiée du pipeline.",
       "status": "EXPERTISE",
       "url": "https://www.pipedrive.com"
     },
@@ -462,12 +462,12 @@
         "SALES"
       ],
       "tags": [
-        "Telephonie",
+        "Téléphonie",
         "Call Center",
         "SMS"
       ],
       "logo": "/images/partners/ringover.avif",
-      "desc": "Solution de telephonie cloud francaise integree a vos outils metiers.",
+      "desc": "Solution de téléphonie cloud française intégrée à vos outils métiers.",
       "status": "EXPERTISE",
       "url": "https://www.ringover.com"
     },
@@ -497,7 +497,7 @@
         "API"
       ],
       "logo": "/images/partners/yousign.png",
-      "desc": "La solution francaise de signature electronique securisee et intuitive.",
+      "desc": "La solution française de signature électronique sécurisée et intuitive.",
       "status": "EXPERTISE",
       "url": "https://www.yousign.com"
     },
@@ -512,7 +512,7 @@
         "Quotes"
       ],
       "logo": "/images/partners/pandadoc.png",
-      "desc": "Automatisation de la creation, du suivi et de la signature de documents.",
+      "desc": "Automatisation de la création, du suivi et de la signature de documents.",
       "status": "EXPERTISE",
       "url": "https://www.pandadoc.com"
     },
@@ -526,7 +526,7 @@
         "Agreement Cloud"
       ],
       "logo": "/images/partners/docusign.png",
-      "desc": "Leader mondial de la signature electronique et de la gestion d'accords.",
+      "desc": "Leader mondial de la signature électronique et de la gestion d'accords.",
       "status": "EXPERTISE",
       "url": "https://www.docusign.com"
     }
