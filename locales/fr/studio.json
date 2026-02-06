@@ -45,49 +45,56 @@
       "category": "Architecte",
       "role": "Associe",
       "desc": "12+ ans en Ops, CRM, Product et Revenue Operations (TheFork, Tripadvisor, Yousign). Specialiste des systemes et du pilotage operationnel.",
-      "img": "/images/team/benjamin.jpg"
+      "img": "/images/team/benjamin.jpg",
+      "linkedin": "https://www.linkedin.com/in/benjaminboileux/"
     },
     {
       "name": "Aude Cadiot",
       "category": "Architecte",
       "role": "Associee",
       "desc": "Reference francaise du Revenue Operations (TheFork, Spendesk). Experte du customer journey, des organisations GTM, du scaling d'equipes RevOps.",
-      "img": "/images/team/aude.jpg"
+      "img": "/images/team/aude.jpg",
+      "linkedin": "https://www.linkedin.com/in/aude-cadiot-9597096b/"
     },
     {
       "name": "Corentin Guerin",
       "category": "Architecte",
       "role": "Associe",
       "desc": "Finance, Deloitte, Business Ops (TheFork). Specialiste du forecasting, de la performance, des remunerations variables et du pricing.",
-      "img": "/images/team/corentin.jpeg"
+      "img": "/images/team/corentin.jpeg",
+      "linkedin": "https://www.linkedin.com/in/corentinguerin/"
     },
     {
       "name": "Clara Lecarrie",
       "category": "Architecte",
       "role": "Manager",
       "desc": "Specialiste de l'experience utilisateur et de l'optimisation des parcours de vente complexes.",
-      "img": "/images/team/clara.jpg"
+      "img": "/images/team/clara.jpg",
+      "linkedin": "https://www.linkedin.com/in/clara-lecarrie-070595106/"
     },
     {
       "name": "Louis Strauss",
       "category": "Expert Engineer",
       "role": "RevOps Engineer",
       "desc": "Le cerveau technique derriere nos integrations les plus poussees et nos outils proprietaires.",
-      "img": "/images/team/louis.jpg"
+      "img": "/images/team/louis.jpg",
+      "linkedin": "https://www.linkedin.com/in/louis-strauss1/"
     },
     {
       "name": "Domitille Raimbault",
       "category": "Builder",
       "role": "Senior RevOps Manager",
       "desc": "Maitrise les architectures CRM les plus complexes pour transformer la donnee en levier de croissance.",
-      "img": "/images/team/domitille.jpeg"
+      "img": "/images/team/domitille.jpeg",
+      "linkedin": "https://www.linkedin.com/in/domitille-raimbault-488366107/"
     },
     {
       "name": "Ethel Gosset",
       "category": "Builder",
       "role": "Senior RevOps Manager",
       "desc": "Experte en automatisation et fluidification des processus operationnels Sales & Marketing.",
-      "img": "/images/team/ethel.jpeg"
+      "img": "/images/team/ethel.jpeg",
+      "linkedin": "https://www.linkedin.com/in/ethel-gosset-a4b295136/"
     },
     {
       "name": "Dorian Cutullic",
@@ -101,21 +108,24 @@
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Specialiste de la performance commerciale et du pilotage par la donnee fiable.",
-      "img": "/images/team/damien.jpg"
+      "img": "/images/team/damien.jpg",
+      "linkedin": "https://www.linkedin.com/in/damien-robert-b3438310a/"
     },
     {
       "name": "Mariette Baudras",
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Experte en Customer Success Operations et optimisation de la retention client.",
-      "img": "/images/team/mariette.jpg"
+      "img": "/images/team/mariette.jpg",
+      "linkedin": "https://www.linkedin.com/in/mariette-baudras-bove/"
     },
     {
       "name": "Yoann Boileux",
       "category": "Builder",
       "role": "RevOps Manager",
       "desc": "Focus sur l'enablement des equipes et la creation de playbooks d'execution robustes.",
-      "img": "/images/team/yoann.jpeg"
+      "img": "/images/team/yoann.jpeg",
+      "linkedin": "https://www.linkedin.com/in/yoann-boileux/"
     }
   ],
   "cta.title": "Envie d'une equipe qui agit vraiment ?",
