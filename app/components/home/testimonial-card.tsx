@@ -3,7 +3,7 @@ import type React from 'react';
 import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import { center, flex, vstack } from '@ocobo/styled-system/patterns';
+import { center, flex } from '@ocobo/styled-system/patterns';
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
@@ -12,6 +12,7 @@ interface TestimonialCardProps {
   authorName: string;
   authorRole: string;
   authorInitials?: string;
+  authorAvatar?: string;
   ctaText?: string;
   ctaLink?: string;
   className?: string;
@@ -22,6 +23,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   authorName,
   authorRole,
   authorInitials,
+  authorAvatar,
   ctaText,
   ctaLink,
   className = '',
@@ -53,19 +55,19 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
       <div
         className={css({
           position: 'absolute',
-          top: '12',
-          left: '10',
-          color: 'ocobo.yellow/40',
-          fontFamily: 'display',
-          fontWeight: 'black',
-          fontSize: '6xl',
-          lineHeight: 'none',
+          top: '8',
+          left: '8',
+          color: 'ocobo.yellow/15',
           userSelect: 'none',
           pointerEvents: 'none',
-          transform: 'translateY(-25%)',
+          transition: 'transform',
+          transitionDuration: '1000ms',
+          _groupHover: { transform: 'scale(1.1)' },
         })}
       >
-        "
+        <svg width="140" height="110" viewBox="0 0 140 110" fill="currentColor">
+          <path d="M35 110C15.6667 110 0 94.3333 0 75C0 55.6667 15.6667 40 35 40V0L70 40V75C70 94.3333 54.3333 110 35 110ZM105 110C85.6667 110 70 94.3333 70 75C70 55.6667 85.6667 40 105 40V0L140 40V75C140 94.3333 124.333 110 105 110Z" />
+        </svg>
       </div>
 
       <div className={css({ position: 'relative', zIndex: '10' })}>
@@ -74,7 +76,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
             color: 'white',
             fontFamily: 'display',
             fontSize: { base: 'lg', md: '2xl' },
-            fontWeight: 'medium',
+            fontWeight: 'black',
             mb: '12',
             lineHeight: 'relaxed',
             maxW: '2xl',
@@ -117,15 +119,43 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
                 fontWeight: 'black',
                 fontSize: 'xl',
                 shadow: 'xl',
+                overflow: 'hidden',
                 transform: 'rotate(3deg)',
                 transition: 'transform',
                 transitionDuration: '500ms',
                 _groupHover: { transform: 'rotate(0deg)' },
               })}`}
             >
-              {initials}
+              {authorAvatar ? (
+                <img
+                  src={authorAvatar}
+                  alt={authorName}
+                  className={css({
+                    w: 'full',
+                    h: 'full',
+                    objectFit: 'cover',
+                  })}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    if (e.currentTarget.nextSibling) {
+                      (
+                        e.currentTarget.nextSibling as HTMLElement
+                      ).style.display = '';
+                    }
+                  }}
+                />
+              ) : null}
+              <span style={authorAvatar ? { display: 'none' } : undefined}>
+                {initials}
+              </span>
             </div>
-            <div className={vstack()}>
+            <div
+              className={flex({
+                direction: 'column',
+                align: 'flex-start',
+                gap: '1',
+              })}
+            >
               <p
                 className={css({
                   color: 'white',
@@ -138,12 +168,12 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
               </p>
               <p
                 className={css({
+                  mt: '0',
                   fontSize: 'xs',
                   fontWeight: 'black',
                   color: 'ocobo.yellow',
                   textTransform: 'uppercase',
                   letterSpacing: '0.25em',
-                  opacity: '0.7',
                 })}
               >
                 {authorRole}
@@ -160,9 +190,9 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
                 color: 'white/40',
                 fontFamily: 'display',
                 fontWeight: 'black',
-                fontSize: 'xs',
+                fontSize: 'sm',
                 textTransform: 'uppercase',
-                letterSpacing: '0.3em',
+                letterSpacing: '0.2em',
                 transition: 'colors',
                 transitionDuration: '300ms',
                 _hover: { color: 'ocobo.yellow' },

@@ -1,12 +1,15 @@
 import { css } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 
+interface Client {
+  name: string;
+  logo: string;
+}
+
 interface ClientMarqueeProps {
-  clients: string[];
+  clients: Client[];
   /** Vertical padding: 'sm' = 3, 'md' = 8 */
   padding?: 'sm' | 'md';
-  /** Text size: 'sm' = base/lg, 'md' = base/xl */
-  textSize?: 'sm' | 'md';
   /** Show border-y */
   bordered?: boolean;
 }
@@ -16,15 +19,9 @@ const paddingMap = {
   md: '8',
 } as const;
 
-const textSizeMap = {
-  sm: { base: 'base', md: 'lg' },
-  md: { base: 'base', md: 'xl' },
-} as const;
-
 export const ClientMarquee = ({
   clients,
   padding = 'sm',
-  textSize = 'sm',
   bordered = false,
 }: ClientMarqueeProps) => {
   const extendedClients = [...clients, ...clients, ...clients];
@@ -75,7 +72,7 @@ export const ClientMarquee = ({
       />
 
       <div
-        className={`${flex()} ${css({
+        className={`${flex({ align: 'center' })} ${css({
           w: 'max',
           animation: 'marquee-ultra-slow',
           whiteSpace: 'nowrap',
@@ -83,26 +80,29 @@ export const ClientMarquee = ({
       >
         {extendedClients.map((client, idx) => (
           <div
-            key={`${client}-${idx}`}
+            key={`${client.name}-${idx}`}
             className={`${center()} ${css({ px: { base: '10', md: '14' } })}`}
           >
-            <span
+            <img
+              src={client.logo}
+              alt={client.name || 'Client logo'}
+              loading="lazy"
+              decoding="async"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
               className={css({
-                fontFamily: 'display',
-                fontWeight: 'black',
-                color: 'white/20',
-                fontSize: textSizeMap[textSize],
-                letterSpacing: '0.25em',
-                textTransform: 'uppercase',
-                transition: 'colors',
+                h: '8',
+                w: 'auto',
+                objectFit: 'contain',
+                opacity: '0.4',
+                transition: 'opacity',
                 transitionDuration: '300ms',
                 cursor: 'default',
                 userSelect: 'none',
-                _hover: { color: 'ocobo.yellow' },
+                _hover: { opacity: '1' },
               })}
-            >
-              {client}
-            </span>
+            />
           </div>
         ))}
       </div>

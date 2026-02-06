@@ -294,10 +294,10 @@
         "Test: testimonials section shows multiple quotes with photos and logos",
         "Test: 'Decouvrir nos stories' link is visible and links to /clients"
       ],
-      "passes": false,
-      "blocked": true,
-      "blocked_reason": "Waiting for logo/photo assets to be exported from Notion",
-      "completed_at": null
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T18:40:00Z"
     },
     {
       "id": 35,

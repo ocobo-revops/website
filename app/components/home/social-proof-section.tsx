@@ -3,15 +3,28 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@ocobo/styled-system/css';
 import { section } from '@ocobo/styled-system/recipes';
 
+import type { Testimonial } from '~/routes/_main.($lang)._index';
 import { url } from '~/utils/url';
 
 import { Container } from '../ui/Container';
 import { ClientMarquee } from './client-marquee';
 import { TestimonialCard } from './testimonial-card';
 
-export const SocialProofSection = () => {
+interface SocialProofSectionProps {
+  testimonials: Testimonial[];
+}
+
+export const SocialProofSection = ({
+  testimonials,
+}: SocialProofSectionProps) => {
   const { t } = useTranslation('home');
-  const clients = t('socialProof.clients', { returnObjects: true }) as string[];
+
+  const clients = testimonials.map((testimonial) => ({
+    name: testimonial.name,
+    logo: testimonial.logo,
+  }));
+
+  const testimonial = testimonials[0];
 
   return (
     <section
@@ -78,18 +91,23 @@ export const SocialProofSection = () => {
           </h3>
         </div>
 
-        <div className={css({ mb: '24' })}>
-          <ClientMarquee clients={clients} bordered />
-        </div>
+        {clients.length > 0 && (
+          <div className={css({ mb: '24' })}>
+            <ClientMarquee clients={clients} bordered />
+          </div>
+        )}
 
-        <TestimonialCard
-          quote={t('socialProof.testimonial.quote')}
-          authorName={t('socialProof.testimonial.authorName')}
-          authorRole={t('socialProof.testimonial.authorRole')}
-          ctaText={t('socialProof.testimonial.ctaText')}
-          ctaLink={url.stories}
-          className={css({ maxW: '4xl', mx: 'auto' })}
-        />
+        {testimonial && (
+          <TestimonialCard
+            quote={testimonial.quote}
+            authorName={testimonial.speaker}
+            authorRole={`${testimonial.role} @ ${testimonial.name}`}
+            authorAvatar={testimonial.avatar}
+            ctaText={t('socialProof.ctaText')}
+            ctaLink={url.stories}
+            className={css({ maxW: '4xl', mx: 'auto' })}
+          />
+        )}
       </Container>
     </section>
   );

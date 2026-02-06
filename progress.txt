@@ -307,6 +307,19 @@ Created: 2026-02-06T15:00:00Z
 
 ---
 
+## Feature 34: Home page — complete testimonials section
+- Loader fetches stories via `fetchStories(lang)`, shuffles with Fisher-Yates, picks random quote per story
+- Returns `testimonials` array with slug, name, speaker, role, quote, logo, avatar URLs from ASSETS_BASE_URL
+- All randomisation server-side (no SSR hydration mismatch)
+- Cache strategy changed from `'static'` to `'story'`
+- Client marquee converted from text spans to `<img>` logos (h-8, opacity 0.4 → 1 hover, onError hide)
+- Testimonial card: SVG quote illustration replacing text `"`, fontWeight black on quote, avatar image on yellow square with initials fallback
+- CTA NavLink fontSize xs→sm, letterSpacing 0.3em→0.2em
+- Author role includes company name (`${role} @ ${name}`), no p+p margin override
+- Removed hardcoded socialProof.clients and socialProof.testimonial.* from locale files, kept socialProof.ctaText
+- pnpm check ✅ pnpm typecheck ✅
+
+---
 ## Feature 33: About page — add founders photos
 - Copied 3 founder photos from qa/assets to public/images/team/ (benjamin-boileux.jpeg, aude-cadiot.jpg, corentin-guerin.jpeg)
 - Added `imageSrc` field to team.members in locales/{fr,en}/about.json
