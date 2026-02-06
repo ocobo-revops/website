@@ -194,7 +194,7 @@ export const DEFAULT_STACK_ITEMS: StackItem[] = [
   {
     type: 'logo',
     label: 'Hyperline',
-    logo: '/images/partners/hyperline.svg',
+    logo: '/images/partners/hyperline.png',
   },
   { type: 'logo', label: 'Lemlist', logo: '/images/partners/lemlist.webp' },
   { type: 'empty' },
