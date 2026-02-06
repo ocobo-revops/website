@@ -137,7 +137,7 @@ export const TeamPhotoIllustration = () => {
           })}
         >
           <img
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+            src="/images/studio.jpg"
             alt={t('hero.photoAlt')}
             className={css({
               width: 'full',
