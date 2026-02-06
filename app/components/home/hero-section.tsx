@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -122,12 +121,13 @@ export const HeroSection = () => {
                 animationFillMode: 'forwards',
               })}`}
             >
-              <NavLink
+              <ButtonLink
                 to={getLocalizedPath(url.contact)}
-                className={button({ variant: 'primary', size: 'lg' })}
+                variant="primary"
+                size="lg"
               >
                 {t('hero.cta')}
-              </NavLink>
+              </ButtonLink>
             </div>
           </HeroSplit.Content>
 

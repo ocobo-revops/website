@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -233,12 +232,13 @@ export const TeamSection = ({ showStudio }: TeamSectionProps) => {
               </span>
             </p>
             {showStudio ? (
-              <NavLink
+              <ButtonLink
                 to={getLocalizedPath(url.studio)}
-                className={button({ variant: 'primary', size: 'lg' })}
+                variant="primary"
+                size="lg"
               >
                 {t('team.cta')}
-              </NavLink>
+              </ButtonLink>
             ) : null}
           </div>
         </Container>

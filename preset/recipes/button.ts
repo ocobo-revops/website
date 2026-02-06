@@ -3,8 +3,9 @@ import { defineRecipe } from '@pandacss/dev';
 export const button = defineRecipe({
   className: 'button',
   description: 'Button component styles',
+  jsx: ['ButtonLink'],
   base: {
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     gap: '2',
@@ -118,16 +119,6 @@ export const button = defineRecipe({
         px: '8',
         py: '4',
         fontSize: 'base',
-      },
-      xl: {
-        px: '12',
-        py: '5',
-        fontSize: 'lg',
-      },
-    },
-    fullWidth: {
-      true: {
-        width: 'full',
       },
     },
   },

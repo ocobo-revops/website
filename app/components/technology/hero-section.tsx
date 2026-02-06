@@ -1,11 +1,11 @@
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { badge, button } from '@ocobo/styled-system/recipes';
+import { badge } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -94,12 +94,13 @@ export const HeroSection = () => {
         <div
           className={flex({ direction: 'column', gap: '12', align: 'center' })}
         >
-          <NavLink
+          <ButtonLink
             to={getLocalizedPath(url.contact)}
-            className={button({ variant: 'cta', size: 'xl' })}
+            variant="cta"
+            size="lg"
           >
             {t('hero.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
 
         <div

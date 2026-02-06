@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -54,9 +53,9 @@ const Aside: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
             {t('contact.meet')}
           </p>
 
-          <NavLink to={getLocalizedPath(url.contact)} className={button()}>
+          <ButtonLink to={getLocalizedPath(url.contact)}>
             {t('contact.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
       </div>
     </AsideWrapper>

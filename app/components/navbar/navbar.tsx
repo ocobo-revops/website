@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import { ArrowRight } from 'lucide-react';
 import { NavLink, useLocation, useNavigation } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex, hstack } from '@ocobo/styled-system/patterns';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
@@ -181,20 +180,18 @@ export function Navbar() {
             {items
               .filter((item) => item.isButton && item.path)
               .map((item) => (
-                <NavLink
+                <ButtonLink
                   key={item.key}
                   to={item.path!}
-                  className={cx(
-                    button({ variant: 'solid', size: 'sm' }),
-                    css({
-                      display: 'none',
-                      lg: { display: 'flex' },
-                    }),
-                  )}
+                  variant="solid"
+                  size="sm"
+                  className={css({
+                    display: 'none',
+                    lg: { display: 'flex' },
+                  })}
                 >
                   {item.label}
-                  <ArrowRight size={14} />
-                </NavLink>
+                </ButtonLink>
               ))}
 
             <MobileMenu

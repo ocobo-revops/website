@@ -1,11 +1,11 @@
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
-import { badge, button, section } from '@ocobo/styled-system/recipes';
+import { badge, section } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -171,12 +171,13 @@ export const InterventionsSection = () => {
         </div>
 
         <div className={`${flex({ justify: 'center' })} ${css({ mt: '20' })}`}>
-          <NavLink
+          <ButtonLink
             to={getLocalizedPath(url.offer)}
-            className={button({ variant: 'outline', size: 'lg' })}
+            variant="outline"
+            size="lg"
           >
             {t('interventions.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
       </Container>
     </section>

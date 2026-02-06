@@ -1,11 +1,11 @@
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
-import { badge, button } from '@ocobo/styled-system/recipes';
+import { badge } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -118,16 +118,13 @@ export const HeroSection = () => {
             {t('hero.quote')}
           </div>
 
-          <NavLink
+          <ButtonLink
             to={getLocalizedPath(url.contact)}
-            className={`${button({ variant: 'cta', size: 'xl' })} ${css({
-              textTransform: 'uppercase',
-              letterSpacing: '0.25em',
-              fontWeight: 'bold',
-            })}`}
+            variant="cta"
+            size="lg"
           >
             {t('hero.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
 
         <div

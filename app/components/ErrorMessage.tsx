@@ -1,11 +1,11 @@
 import { BombIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { Container } from '@ocobo/styled-system/jsx';
-import { button, icon } from '@ocobo/styled-system/recipes';
+import { icon } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { url } from '~/utils/url';
 
 const Message: React.FunctionComponent<
@@ -34,9 +34,9 @@ const Message: React.FunctionComponent<
       </h1>
       <p>{t('error.description')}</p>
       <p>
-        <NavLink to={url.homepage} className={button({ variant: 'solid' })}>
+        <ButtonLink to={url.homepage} variant="solid">
           {t('error.back')}
-        </NavLink>
+        </ButtonLink>
       </p>
     </div>
   );

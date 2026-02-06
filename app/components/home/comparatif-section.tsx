@@ -1,11 +1,11 @@
 import { Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
-import { button, section } from '@ocobo/styled-system/recipes';
+import { section } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -154,12 +154,13 @@ export const ComparatifSection = ({
 
         {showStudio ? (
           <div className={`${center()} ${css({ mt: '16' })}`}>
-            <NavLink
+            <ButtonLink
               to={getLocalizedPath(url.studio)}
-              className={button({ variant: 'white', size: 'lg' })}
+              variant="white"
+              size="lg"
             >
               {t('comparatif.cta')}
-            </NavLink>
+            </ButtonLink>
           </div>
         ) : null}
       </Container>

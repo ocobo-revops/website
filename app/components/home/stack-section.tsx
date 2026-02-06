@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { button, section } from '@ocobo/styled-system/recipes';
+import { section } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -53,12 +53,13 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
           className={`${flex({ direction: 'column', align: 'center' })} ${css({ mt: '8' })}`}
         >
           {showTechnology ? (
-            <NavLink
+            <ButtonLink
               to={getLocalizedPath(url.technology)}
-              className={button({ variant: 'outline', size: 'lg' })}
+              variant="outline"
+              size="lg"
             >
               {t('stack.cta')}
-            </NavLink>
+            </ButtonLink>
           ) : null}
           <p
             className={css({

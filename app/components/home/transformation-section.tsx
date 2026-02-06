@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
-import { button, section } from '@ocobo/styled-system/recipes';
+import { section } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -206,16 +206,13 @@ export const TransformationSection = () => {
               >
                 {t('transformation.method.label')}
               </p>
-              <NavLink
+              <ButtonLink
                 to={getLocalizedPath(url.method)}
-                className={button({
-                  variant: 'solid',
-                  size: 'lg',
-                  fullWidth: true,
-                })}
+                variant="solid"
+                size="lg"
               >
                 {t('transformation.method.cta')}
-              </NavLink>
+              </ButtonLink>
             </div>
           </div>
         </div>

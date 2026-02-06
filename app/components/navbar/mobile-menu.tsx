@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { Dialog } from '@ark-ui/react/dialog';
 import { Portal } from '@ark-ui/react/portal';
-import { ArrowRight, Menu as MenuIcon, X } from 'lucide-react';
+import { Menu as MenuIcon, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigation } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, hstack, vstack } from '@ocobo/styled-system/patterns';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
 import { iconStyles } from './styles';
@@ -126,16 +126,9 @@ function MobileNavItem({
   if (isButton && path) {
     return (
       <div className={css({ w: 'full', mt: '10' })}>
-        <NavLink
-          to={path}
-          onClick={onClose}
-          className={cx(
-            button({ variant: 'solid', size: 'lg', fullWidth: true }),
-          )}
-        >
+        <ButtonLink to={path} onClick={onClose} variant="solid" size="lg">
           {t('contact.cta.mobile')}
-          <ArrowRight size={18} />
-        </NavLink>
+        </ButtonLink>
       </div>
     );
   }

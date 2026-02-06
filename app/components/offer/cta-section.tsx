@@ -1,10 +1,10 @@
 import type React from 'react';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
-import { button, section } from '@ocobo/styled-system/recipes';
+import { section } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
 import { Container } from '../ui/Container';
@@ -94,12 +94,13 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
           </p>
         ) : null}
         <div className={center()}>
-          <NavLink
+          <ButtonLink
             to={getLocalizedPath(ctaLink)}
-            className={button({ variant: styles.buttonVariant, size: 'xl' })}
+            variant={styles.buttonVariant}
+            size="lg"
           >
             {ctaText}
-          </NavLink>
+          </ButtonLink>
         </div>
       </Container>
     </section>

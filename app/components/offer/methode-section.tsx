@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -150,12 +149,13 @@ export const MethodeSection = () => {
           >
             {t('method.subtitle')}
           </p>
-          <NavLink
+          <ButtonLink
             to={getLocalizedPath(url.method)}
-            className={button({ variant: 'outline', size: 'lg' })}
+            variant="outline"
+            size="lg"
           >
             {t('method.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
       </Container>
     </section>
