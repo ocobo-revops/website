@@ -77,41 +77,46 @@ export const PyramidSection = () => {
           />
         </g>
 
+        {/* Tier 1 — triangle */}
         <path
-          d="M500 150 L460 220 L540 220 Z"
+          d="M500 150 L469 220 L531 220 Z"
           fill="white"
           stroke="currentColor"
           strokeWidth="2.5"
         />
-        <path d="M540 220 L550 210 L510 140 L500 150" fill="currentColor" />
+        <path d="M531 220 L541 210 L510 140 L500 150" fill="currentColor" />
+        {/* Tier 2 */}
         <path
-          d="M455 235 L545 235 L570 305 L430 305 Z"
+          d="M462 235 L538 235 L568 305 L432 305 Z"
           fill="white"
           stroke="currentColor"
           strokeWidth="2.5"
         />
-        <path d="M570 305 L580 295 L555 225 L545 235" fill="currentColor" />
+        <path d="M568 305 L578 295 L548 225 L538 235" fill="currentColor" />
+        {/* Tier 3 */}
         <path
-          d="M425 320 L575 320 L605 390 L395 390 Z"
+          d="M425 320 L575 320 L606 390 L394 390 Z"
           fill="white"
           stroke="currentColor"
           strokeWidth="2.5"
         />
-        <path d="M605 390 L615 380 L585 310 L575 320" fill="currentColor" />
+        <path d="M606 390 L616 380 L585 310 L575 320" fill="currentColor" />
+        {/* Dashed separator */}
         <path
-          d="M380 397.5 L630 397.5"
+          d="M388 397.5 L613 397.5"
           stroke="currentColor"
           strokeWidth="1.5"
           strokeDasharray="4 4"
           opacity="0.4"
         />
+        {/* Tier 4 */}
         <path
-          d="M385 405 L615 405 L650 490 L350 490 Z"
+          d="M388 405 L612 405 L650 490 L350 490 Z"
           fill="white"
           stroke="currentColor"
           strokeWidth="2.5"
         />
-        <path d="M650 490 L660 480 L625 395 L615 405" fill="currentColor" />
+        <path d="M650 490 L660 480 L622 395 L612 405" fill="currentColor" />
 
         <path
           d="M525 180 C 560 180, 575 100, 605 100"

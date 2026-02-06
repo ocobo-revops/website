@@ -6,22 +6,25 @@ import { center, flex, hstack } from '@ocobo/styled-system/patterns';
 import { Container } from '../ui/Container';
 import { PyramidSection } from './pyramid-section';
 
-type SymptomCard = {
+type RoleKey = 'ceo' | 'managers' | 'teams' | 'clients';
+
+type RoleData = {
   title: string;
-  color: 'coral' | 'yellow' | 'sky' | 'mint';
   items: string[];
 };
 
-const colorChip = {
-  coral: 'ocobo.coral',
-  yellow: 'ocobo.yellow',
-  sky: 'ocobo.sky',
-  mint: 'ocobo.mint',
-} as const;
+type PyramidData = Record<RoleKey, RoleData>;
+
+const ROLE_ORDER: { key: RoleKey; color: string }[] = [
+  { key: 'ceo', color: 'ocobo.coral' },
+  { key: 'managers', color: 'ocobo.yellow' },
+  { key: 'teams', color: 'ocobo.sky' },
+  { key: 'clients', color: 'ocobo.mint' },
+];
 
 export const SymptomsSection = () => {
   const { t } = useTranslation('offer');
-  const cards = t('symptoms.cards', { returnObjects: true }) as SymptomCard[];
+  const pyramid = t('symptoms.pyramid', { returnObjects: true }) as PyramidData;
 
   return (
     <section
@@ -68,77 +71,80 @@ export const SymptomsSection = () => {
             pb: '12',
           })}
         >
-          {cards.map((card, index) => (
-            <div
-              key={card.title}
-              className={css({
-                bg: 'gray.50',
-                p: '6',
-                rounded: '2xl',
-                borderWidth: '1px',
-                borderColor: 'gray.100',
-                position: 'relative',
-                overflow: 'hidden',
-              })}
-            >
+          {ROLE_ORDER.map(({ key, color }, index) => {
+            const role = pyramid[key];
+            return (
               <div
+                key={key}
                 className={css({
-                  position: 'absolute',
-                  top: '0',
-                  right: '0',
-                  w: '20',
-                  h: '20',
-                  bg: colorChip[card.color],
-                  opacity: '0.1',
-                  roundedBottomLeft: 'full',
-                })}
-              />
-              <div className={`${hstack({ gap: '4' })} ${css({ mb: '4' })}`}>
-                <div
-                  className={`${center()} ${css({
-                    w: '10',
-                    h: '10',
-                    bg: 'white',
-                    borderWidth: '1px',
-                    borderColor: 'ocobo.dark',
-                    rounded: 'full',
-                    fontFamily: 'display',
-                    fontWeight: 'bold',
-                    fontSize: 'lg',
-                    shadow: 'sm',
-                  })}`}
-                >
-                  {index + 1}
-                </div>
-                <h3
-                  className={css({
-                    fontFamily: 'display',
-                    fontSize: 'xl',
-                    fontWeight: 'bold',
-                    color: 'ocobo.dark',
-                  })}
-                >
-                  {card.title}
-                </h3>
-              </div>
-              <ul
-                className={css({
-                  spaceY: '2',
-                  fontSize: 'sm',
-                  color: 'gray.600',
+                  bg: 'gray.50',
+                  p: '6',
+                  rounded: '2xl',
+                  borderWidth: '1px',
+                  borderColor: 'gray.100',
+                  position: 'relative',
+                  overflow: 'hidden',
                 })}
               >
-                {card.items.map((item) => (
-                  <li
-                    key={item}
-                    className={flex({ align: 'flex-start', gap: '2' })}
+                <div
+                  className={css({
+                    position: 'absolute',
+                    top: '0',
+                    right: '0',
+                    w: '20',
+                    h: '20',
+                    bg: color,
+                    opacity: '0.1',
+                    roundedBottomLeft: 'full',
+                  })}
+                />
+                <div className={`${hstack({ gap: '4' })} ${css({ mb: '4' })}`}>
+                  <div
+                    className={`${center()} ${css({
+                      w: '10',
+                      h: '10',
+                      bg: 'white',
+                      borderWidth: '1px',
+                      borderColor: 'ocobo.dark',
+                      rounded: 'full',
+                      fontFamily: 'display',
+                      fontWeight: 'bold',
+                      fontSize: 'lg',
+                      shadow: 'sm',
+                    })}`}
                   >
-                    • {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                    {index + 1}
+                  </div>
+                  <h3
+                    className={css({
+                      fontFamily: 'display',
+                      fontSize: 'xl',
+                      fontWeight: 'bold',
+                      color: 'ocobo.dark',
+                    })}
+                  >
+                    {role.title}
+                  </h3>
+                </div>
+                <ul
+                  className={css({
+                    spaceY: '2',
+                    fontSize: 'sm',
+                    color: 'gray.600',
+                  })}
+                >
+                  {role.items.map((item) => (
+                    <li
+                      key={item}
+                      className={flex({ align: 'flex-start', gap: '2' })}
+                    >
+                      • {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
 
         <div className={css({ display: { base: 'none', md: 'block' } })}>

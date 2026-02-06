@@ -21,36 +21,6 @@
   "symptoms.title.line1": "Quand la croissance s'accélère,",
   "symptoms.title.line2": "la complexité arrive.",
   "symptoms.subtitle": "Dans toutes les entreprises en mouvement, les mêmes symptômes sont légion :",
-  "symptoms.cards": [
-    {
-      "title": "CEO",
-      "color": "coral",
-      "items": [
-        "Manque de visibilité sur le business"
-      ]
-    },
-    {
-      "title": "Managers",
-      "color": "yellow",
-      "items": [
-        "Prévisions instables"
-      ]
-    },
-    {
-      "title": "Équipes terrain",
-      "color": "sky",
-      "items": [
-        "Trop d'outils, pas assez de clarté"
-      ]
-    },
-    {
-      "title": "Clients",
-      "color": "mint",
-      "items": [
-        "Expérience inégale"
-      ]
-    }
-  ],
   "symptoms.pyramid": {
     "ceo": {
       "title": "CEO",

@@ -21,36 +21,6 @@
   "symptoms.title.line1": "When growth accelerates,",
   "symptoms.title.line2": "complexity sets in.",
   "symptoms.subtitle": "Across fast-moving companies, the same symptoms show up:",
-  "symptoms.cards": [
-    {
-      "title": "CEO",
-      "color": "coral",
-      "items": [
-        "Lack of visibility on the business"
-      ]
-    },
-    {
-      "title": "Managers",
-      "color": "yellow",
-      "items": [
-        "Unstable forecasts"
-      ]
-    },
-    {
-      "title": "Frontline teams",
-      "color": "sky",
-      "items": [
-        "Too many tools, not enough clarity"
-      ]
-    },
-    {
-      "title": "Customers",
-      "color": "mint",
-      "items": [
-        "Uneven experience"
-      ]
-    }
-  ],
   "symptoms.pyramid": {
     "ceo": {
       "title": "CEO",
