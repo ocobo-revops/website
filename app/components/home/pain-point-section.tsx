@@ -142,8 +142,8 @@ export const PainPointSection = () => {
             display: 'inline-block',
             px: '5',
             py: '2',
-            bg: 'ocobo.mint.light',
-            color: 'ocobo.mint',
+            bg: 'ocobo.mint',
+            color: 'ocobo.dark',
             fontFamily: 'display',
             fontWeight: 'black',
             textTransform: 'uppercase',
@@ -151,8 +151,6 @@ export const PainPointSection = () => {
             fontSize: 'xs',
             mb: '8',
             rounded: 'full',
-            borderWidth: '1px',
-            borderColor: 'ocobo.mint/20',
           })}
         >
           {t('painPoint.mission.label')}

@@ -107,10 +107,10 @@
         "Test: badges look uniform across mission and offer blocks",
         "Test: Studio CTA button appears and links to /studio"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T16:25:00Z"
     },
     {
       "id": 25,

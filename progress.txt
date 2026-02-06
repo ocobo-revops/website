@@ -247,3 +247,14 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 24: Home page polish — font sizes, badges, CTA
+- transformation-section.tsx: description fontSize sm→base, method items xs→sm
+- interventions-section.tsx: card description sm→base, card title 2xl→3xl
+- feature-card.tsx: label xs→sm, description xs→sm
+- stack-section.tsx: tagline xs→sm
+- pain-point-section.tsx: "Notre mission" badge now solid mint bg + dark text
+- Studio CTA already present in comparatif-section (label correct)
+- pnpm check ✅ pnpm typecheck ✅
+
+---

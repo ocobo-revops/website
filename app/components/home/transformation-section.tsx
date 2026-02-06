@@ -122,7 +122,9 @@ export const TransformationSection = () => {
                       >
                         {item.title}
                       </h4>
-                      <p className={css({ fontSize: 'sm', color: 'gray.600' })}>
+                      <p
+                        className={css({ fontSize: 'base', color: 'gray.600' })}
+                      >
                         {item.description}
                       </p>
                     </FlexPair.Content>
@@ -184,7 +186,7 @@ export const TransformationSection = () => {
                     >
                       {item.title}
                     </span>
-                    <p className={css({ fontSize: 'xs', color: 'gray.600' })}>
+                    <p className={css({ fontSize: 'sm', color: 'gray.600' })}>
                       {item.description}
                     </p>
                   </div>

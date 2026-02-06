@@ -84,7 +84,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
             fontFamily: 'display',
             fontWeight: 'black',
             color: 'ocobo.dark/30',
-            fontSize: 'xs',
+            fontSize: 'sm',
             textTransform: 'uppercase',
             letterSpacing: '0.5em',
             mb: '4',
@@ -114,7 +114,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
         className={css({
           color: 'gray.400',
           fontWeight: 'bold',
-          fontSize: 'xs',
+          fontSize: 'sm',
           textTransform: 'uppercase',
           letterSpacing: '0.2em',
         })}

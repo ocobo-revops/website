@@ -115,7 +115,7 @@ export const InterventionsSection = () => {
                 <h3
                   className={css({
                     fontFamily: 'display',
-                    fontSize: '2xl',
+                    fontSize: '3xl',
                     fontWeight: 'bold',
                     mb: '6',
                     color: 'ocobo.dark',
@@ -129,7 +129,7 @@ export const InterventionsSection = () => {
                 <p
                   className={css({
                     color: 'gray.600',
-                    fontSize: 'sm',
+                    fontSize: 'base',
                     lineHeight: 'relaxed',
                     flex: '1',
                     fontWeight: 'medium',

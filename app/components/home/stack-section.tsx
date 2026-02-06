@@ -64,7 +64,7 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
             className={css({
               mt: '6',
               color: 'gray.400',
-              fontSize: 'xs',
+              fontSize: 'sm',
               fontWeight: 'bold',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
