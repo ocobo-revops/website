@@ -185,7 +185,17 @@
       "color": "dark"
     }
   ],
-  "cta.title": "Let’s talk about your revenue machine.",
+  "reassurance.title": "Why choose us?",
+  "reassurance.subtitle": "Because we don't sell projects. We build a revenue system that stands the test of time.",
+  "reassurance.items": [
+    "A senior team that observes AND operates",
+    "A proprietary method: The Revenue Experience System™",
+    "An agnostic, interoperable technology architecture",
+    "Concrete steering: useful KPIs, clean data, motivating variable plans",
+    "Growth made readable, fluid, and steerable at last",
+    "A system that stays performant even after we leave"
+  ],
+  "cta.title": "Let's talk about your revenue machine.",
   "cta.subtitle": "30 minutes to illuminate, diagnose, and orient. No detours. No jargon. Just the truth about your growth and options.",
   "cta.button": "Meet a RevOps architect"
 }

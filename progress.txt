@@ -296,3 +296,13 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 32: About page — add "Pourquoi nous choisir" reassurance block
+- Created reassurance-section.tsx in app/components/about/ with 2-col grid of checkmark items
+- Content from QA doc: title, subtitle, 6 checkmark items (senior team, proprietary method, agnostic tech, concrete KPIs, readable growth, durable system)
+- Added reassurance.* locale keys in locales/{fr,en}/about.json
+- Integrated in about-us route between ValuesSection and CtaSection
+- Yellow CheckCircle2 icons, white cards with hover shadow, gray.50 section bg
+- pnpm check ✅ pnpm typecheck ✅
+
+---

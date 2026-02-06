@@ -7,6 +7,7 @@ import {
 
 import { HeroSection } from '~/components/about/hero-section';
 import { ManifestoSection } from '~/components/about/manifesto-section';
+import { ReassuranceSection } from '~/components/about/reassurance-section';
 import { TeamSection } from '~/components/about/team-section';
 import { ValuesSection } from '~/components/about/values-section';
 import { CtaSection } from '~/components/offer/cta-section';
@@ -52,6 +53,7 @@ export default function AboutPage() {
       <ManifestoSection />
       <TeamSection showStudio={showStudio} />
       <ValuesSection />
+      <ReassuranceSection />
       <CtaSection
         variant="yellow"
         title={t('cta.title')}

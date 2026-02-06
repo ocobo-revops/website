@@ -185,6 +185,16 @@
       "color": "dark"
     }
   ],
+  "reassurance.title": "Pourquoi nous choisir ?",
+  "reassurance.subtitle": "Parce que nous ne vendons pas des projets. Nous construisons un système revenue qui tient dans le temps.",
+  "reassurance.items": [
+    "Une équipe senior qui observe ET qui opère",
+    "Une méthode propriétaire : The Revenue Experience System™",
+    "Une architecture technologique agnostique et interopérable",
+    "Un pilotage concret : KPI utiles, donnée propre, variable motivante",
+    "Une croissance rendue enfin lisible, fluide et pilotable",
+    "Un système qui reste performant même après notre départ"
+  ],
   "cta.title": "Parlons de votre machine revenue.",
   "cta.subtitle": "30 minutes pour éclairer, diagnostiquer, orienter. Zéro détour. Zéro jargon. Rien que la vérité sur votre croissance et vos options.",
   "cta.button": "Rencontrer un architecte RevOps"

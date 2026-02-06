@@ -259,10 +259,10 @@
         "Test: reassurance block appears on /about-us with scroll animation",
         "Test: all 6 items render with checkmarks"
       ],
-      "passes": false,
+      "passes": true,
       "blocked": false,
       "blocked_reason": null,
-      "completed_at": null
+      "completed_at": "2026-02-06T19:30:00Z"
     },
     {
       "id": 33,
