@@ -174,56 +174,28 @@ export const ModularStackGrid = ({
 };
 
 export const DEFAULT_STACK_ITEMS: StackItem[] = [
-  {
-    type: 'logo',
-    label: 'HubSpot',
-    logo: 'https://www.vectorlogo.zone/logos/hubspot/hubspot-icon.svg',
-  },
-  { type: 'logo', label: 'Clay', logo: 'https://www.clay.com/favicon.ico' },
+  { type: 'logo', label: 'HubSpot', logo: '/images/partners/hubspot.png' },
+  { type: 'logo', label: 'Clay', logo: '/images/partners/clay.png' },
   {
     type: 'logo',
     label: 'Salesforce',
-    logo: 'https://www.vectorlogo.zone/logos/salesforce/salesforce-icon.svg',
+    logo: '/images/partners/salesforce.png',
   },
-  {
-    type: 'logo',
-    label: 'Notion',
-    logo: 'https://www.vectorlogo.zone/logos/notionso/notionso-icon.svg',
-  },
-  { type: 'logo', label: 'Vasco', logo: 'https://vasco.app/favicon.ico' },
-  {
-    type: 'logo',
-    label: 'Aircall',
-    logo: 'https://www.vectorlogo.zone/logos/aircallio/aircallio-icon.svg',
-  },
+  { type: 'logo', label: 'Notion', logo: '/images/partners/notion.png' },
+  { type: 'logo', label: 'Vasco', logo: '/images/partners/vasco.webp' },
+  { type: 'logo', label: 'Aircall', logo: '/images/partners/aircall.png' },
   { type: 'empty' },
-  { type: 'logo', label: 'Qobra', logo: 'https://qobra.co/favicon.ico' },
-  {
-    type: 'logo',
-    label: 'Modjo',
-    logo: 'https://framerusercontent.com/images/8r0i7N1W9Tz6zY3Y3V1W1N8U.svg',
-  },
+  { type: 'logo', label: 'Qobra', logo: '/images/partners/qobra.png' },
+  { type: 'logo', label: 'Modjo', logo: '/images/partners/modjo.jpeg' },
   { type: 'empty' },
-  {
-    type: 'logo',
-    label: 'Planhat',
-    logo: 'https://www.planhat.com/static/logo-icon-bc8b2f9f8c0b5f1f9b9a6c9a9d0a9b3a.svg',
-  },
-  {
-    type: 'logo',
-    label: 'Dust',
-    logo: 'https://dust.tt/static/logo_icon.png',
-  },
+  { type: 'logo', label: 'Planhat', logo: '/images/partners/planhat.png' },
+  { type: 'logo', label: 'Dust', logo: '/images/partners/dust.png' },
   { type: 'empty' },
   {
     type: 'logo',
     label: 'Hyperline',
-    logo: 'https://www.hyperline.co/favicon.ico',
+    logo: '/images/partners/hyperline.svg',
   },
-  {
-    type: 'logo',
-    label: 'Lemlist',
-    logo: 'https://www.lemlist.com/hubfs/lemlist-logo-2023.svg',
-  },
+  { type: 'logo', label: 'Lemlist', logo: '/images/partners/lemlist.webp' },
   { type: 'empty' },
 ];
