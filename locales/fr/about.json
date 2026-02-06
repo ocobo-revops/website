@@ -123,6 +123,7 @@
       "name": "Benjamin Boileux",
       "role": "Architecte RevOps & Associé",
       "bio": "12+ ans en Ops, CRM, Product et Revenue Operations (TheFork, Tripadvisor, Yousign). Spécialiste des systèmes et du pilotage opérationnel.",
+      "imageSrc": "/images/team/benjamin-boileux.jpeg",
       "linkedInUrl": "#",
       "color": "yellow"
     },
@@ -130,6 +131,7 @@
       "name": "Aude Cadiot",
       "role": "Architecte RevOps & Associée",
       "bio": "Référence française du Revenue Operations (TheFork, Spendesk). Experte du customer journey, des organisations GTM, du scaling d'équipes RevOps.",
+      "imageSrc": "/images/team/aude-cadiot.jpg",
       "linkedInUrl": "#",
       "color": "coral"
     },
@@ -137,6 +139,7 @@
       "name": "Corentin Guérin",
       "role": "Analyste & Stratège Revenue, Associé",
       "bio": "Finance, Deloitte, Business Ops (TheFork). Spécialiste du forecasting, de la performance, des rémunérations variables et du pricing.",
+      "imageSrc": "/images/team/corentin-guerin.jpeg",
       "linkedInUrl": "#",
       "color": "sky"
     }

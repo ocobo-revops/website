@@ -17,6 +17,7 @@ type TeamMember = {
   name: string;
   role: string;
   bio: string;
+  imageSrc?: string;
   linkedInUrl?: string;
   color: ThemeColor;
 };
@@ -210,6 +211,7 @@ export const TeamSection = ({ showStudio }: TeamSectionProps) => {
                 name={member.name}
                 role={member.role}
                 bio={member.bio}
+                imageSrc={member.imageSrc}
                 linkedInUrl={member.linkedInUrl}
                 color={member.color}
               />

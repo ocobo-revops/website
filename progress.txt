@@ -306,3 +306,12 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 33: About page — add founders photos
+- Copied 3 founder photos from qa/assets to public/images/team/ (benjamin-boileux.jpeg, aude-cadiot.jpg, corentin-guerin.jpeg)
+- Added `imageSrc` field to team.members in locales/{fr,en}/about.json
+- Added `imageSrc` to TeamMember type in team-section.tsx, passed through to TeamMemberCard
+- TeamMemberCard already supported imageSrc prop with circular display + coloured border
+- pnpm check ✅ pnpm typecheck ✅
+
+---

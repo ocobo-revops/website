@@ -275,10 +275,10 @@
         "Run pnpm check && pnpm typecheck — zero errors",
         "Test: founder photos visible on /about-us team section"
       ],
-      "passes": false,
-      "blocked": true,
-      "blocked_reason": "Waiting for photo assets to be provided",
-      "completed_at": null
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T20:00:00Z"
     },
     {
       "id": 34,
