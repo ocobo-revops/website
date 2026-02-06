@@ -277,3 +277,10 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature 27: About page polish — h3 font sizes, CTA yellow background
+- manifesto-section.tsx: all h3-level text fontSize xl/3xl → 2xl/4xl (8 occurrences)
+- about-us route: CtaSection variant sky → yellow
+- pnpm check ✅ pnpm typecheck ✅
+
+---

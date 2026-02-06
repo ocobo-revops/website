@@ -151,7 +151,7 @@ export const ManifestoSection = () => {
               <p
                 key={`intro-${index}`}
                 className={css({
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   fontWeight: line.weight ?? 'medium',
                   color: toneColorMap[line.tone],
                   lineHeight: 'tight',
@@ -176,7 +176,7 @@ export const ManifestoSection = () => {
               <p
                 key={`statement-${index}`}
                 className={css({
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   fontWeight: line.weight ?? 'bold',
                   color: toneColorMap[line.tone],
                   lineHeight: 'tight',
@@ -193,7 +193,7 @@ export const ManifestoSection = () => {
               <p
                 key={`actions-${index}`}
                 className={css({
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   fontWeight: line.weight ?? 'medium',
                   color: toneColorMap[line.tone],
                   lineHeight: 'tight',
@@ -210,7 +210,7 @@ export const ManifestoSection = () => {
               <p
                 key={`clarity-${index}`}
                 className={css({
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   fontWeight: line.weight ?? 'medium',
                   color: toneColorMap[line.tone],
                   lineHeight: 'tight',
@@ -252,7 +252,7 @@ export const ManifestoSection = () => {
 
             <p
               className={css({
-                fontSize: { base: 'xl', md: '3xl' },
+                fontSize: { base: '2xl', md: '4xl' },
                 fontWeight: 'bold',
                 color: 'white',
                 lineHeight: 'tight',
@@ -282,7 +282,7 @@ export const ManifestoSection = () => {
                   <FlexPair.Content>
                     <p
                       className={css({
-                        fontSize: { base: 'xl', md: '3xl' },
+                        fontSize: { base: '2xl', md: '4xl' },
                         fontWeight: 'medium',
                         color: 'gray.300',
                         lineHeight: 'tight',
@@ -302,7 +302,7 @@ export const ManifestoSection = () => {
               <p
                 key={`conclusion-${index}`}
                 className={css({
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   fontWeight: line.weight ?? 'medium',
                   color: toneColorMap[line.tone],
                   lineHeight: 'tight',
@@ -334,7 +334,7 @@ export const ManifestoSection = () => {
               <p
                 className={css({
                   fontFamily: 'display',
-                  fontSize: { base: 'xl', md: '3xl' },
+                  fontSize: { base: '2xl', md: '4xl' },
                   color: 'ocobo.yellow',
                   textTransform: 'uppercase',
                   letterSpacing: '0.3em',

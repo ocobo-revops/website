@@ -53,7 +53,7 @@ export default function AboutPage() {
       <TeamSection showStudio={showStudio} />
       <ValuesSection />
       <CtaSection
-        variant="sky"
+        variant="yellow"
         title={t('cta.title')}
         subtitle={t('cta.subtitle')}
         ctaText={t('cta.button')}
