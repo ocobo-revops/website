@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
@@ -86,8 +87,13 @@ export const InterventionsSection = () => {
         >
           {items.map((item) => {
             const color = COLOR_MAP[item.badgeColor];
+            const anchor = item.badge.toLowerCase();
             return (
-              <div key={item.badge} className={`group ${cardStyle}`}>
+              <NavLink
+                key={item.badge}
+                to={getLocalizedPath(`${url.offer}#${anchor}`)}
+                className={`group ${cardStyle} ${css({ textDecoration: 'none', color: 'inherit' })}`}
+              >
                 <div className={css({ mb: '8' })}>
                   <span
                     className={badge({
@@ -165,7 +171,7 @@ export const InterventionsSection = () => {
                   </span>
                   <ArrowRight size={16} />
                 </div>
-              </div>
+              </NavLink>
             );
           })}
         </div>

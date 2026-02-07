@@ -56,6 +56,7 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
 
   return (
     <div
+      id={service.badge.toLowerCase()}
       className={flex({
         direction: { base: 'column', md: 'row' },
         gap: { base: '12', md: '24' },
