@@ -73,7 +73,7 @@ export function useMenuItems(): NavItem[] {
       description: t('navigation.company.about.description'),
       path: getLocalizedPath(url.aboutUs),
       icon: Users,
-      color: 'coral',
+      color: 'yellow',
     },
     {
       key: 'jobs',

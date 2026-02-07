@@ -24,10 +24,10 @@ export const section = defineRecipe({
         bg: 'sky',
       },
       mint: {
-        bg: 'mint.light',
+        bg: 'mint',
       },
       coral: {
-        bg: 'coral.light',
+        bg: 'coral',
       },
     },
     padding: {

@@ -46,7 +46,7 @@ export default function StudioPage() {
       <ModelSection />
       <TeamSection />
       <CtaSection
-        variant="sky"
+        variant="mint"
         title={t('cta.title')}
         subtitle={t('cta.subtitle')}
         ctaText={t('cta.button')}
