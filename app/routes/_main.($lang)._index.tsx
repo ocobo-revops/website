@@ -45,7 +45,12 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   const lang = getLang(args.params);
   const t = await i18nServer.getFixedT(lang, 'home');
 
-  const [status, _state, storiesData] = await fetchStories(lang);
+  let [status, _state, storiesData] = await fetchStories(lang);
+
+  // Stories only exist in French — fall back to French quotes for other languages
+  if (status !== 200 && lang !== 'fr') {
+    [status, _state, storiesData] = await fetchStories('fr');
+  }
 
   let testimonials: Testimonial[] = [];
 
