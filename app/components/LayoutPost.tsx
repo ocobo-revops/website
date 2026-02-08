@@ -14,7 +14,7 @@ const mobileTemplateAreas = '"main" "aside"';
 const Root = styled('article', {
   base: {
     display: 'grid',
-    gridTemplateColumns: { base: '1', lg: 'repeat(12, 1fr)' },
+    gridTemplateColumns: { base: '1fr', lg: 'repeat(12, 1fr)' },
     gap: '4',
     gridTemplateAreas: {
       base: mobileTemplateAreas,

@@ -41,7 +41,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
           className={css({
             py: { base: 6, lg: 12 },
             display: 'grid',
-            gridTemplateColumns: { base: '1', lg: 'repeat(2, 1fr)' },
+            gridTemplateColumns: { base: '1fr', lg: 'repeat(2, 1fr)' },
             gap: 10,
             alignItems: 'stretch',
           })}
