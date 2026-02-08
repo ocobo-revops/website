@@ -27,4 +27,9 @@ export const globalCss = defineGlobalStyles({
     color: 'inherit',
     textDecoration: 'none',
   },
+
+  '::selection': {
+    backgroundColor: 'yellow',
+    color: 'dark',
+  },
 });

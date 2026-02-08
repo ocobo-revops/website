@@ -38,9 +38,22 @@ const StorySpeaker: React.FunctionComponent<StorySpeakerProps> = ({
         />
       </div>
       <div>
-        <div className={css({ textStyle: 'heading3' })}>{item.speaker}</div>
-        <div className={css({ fontStyle: 'italic' })}>{item.role}</div>
-        <div className={css({})}>{item.description}</div>
+        <div
+          className={css({
+            fontFamily: 'display',
+            fontSize: { base: 'xl', md: '2xl' },
+            fontWeight: 'bold',
+            color: 'ocobo.dark',
+          })}
+        >
+          {item.speaker}
+        </div>
+        <div className={css({ fontStyle: 'italic', color: 'gray.600' })}>
+          {item.role}
+        </div>
+        <div className={css({ color: 'gray.700', mt: 2 })}>
+          {item.description}
+        </div>
       </div>
     </div>
   );

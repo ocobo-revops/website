@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import { flex } from '@ocobo/styled-system/patterns';
+import { flex, vstack } from '@ocobo/styled-system/patterns';
 import { icon, link } from '@ocobo/styled-system/recipes';
 
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
@@ -21,31 +21,53 @@ interface BlogItemProps {
 
 const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
   ({ item, slug }) => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('blog');
 
     return (
       <article
-        className={flex({
-          direction: 'column',
-          gap: 4,
+        className={`${vstack({ alignItems: 'stretch', gap: '5' })} ${css({
           position: 'relative',
           height: 'full',
-        })}
+          bg: 'white',
+          borderWidth: '1px',
+          borderColor: 'gray.100',
+          rounded: '2xl',
+          shadow: 'sm',
+          transition: 'all',
+          overflow: 'hidden',
+          _hover: { shadow: '2xl', transform: 'translateY(-4px)' },
+        })}`}
       >
-        <NavLink to={`${url.blog}/${slug}`}>
-          <img
-            src={item.image}
-            alt={item.title}
-            loading="lazy"
-            decoding="async"
-            className={css({ borderRadius: '8' })}
-          />
+        <NavLink
+          to={`${url.blog}/${slug}`}
+          className={css({ display: 'block' })}
+        >
+          <div
+            className={css({
+              position: 'relative',
+              overflow: 'hidden',
+              aspectRatio: '16/9',
+              bg: 'gray.50',
+            })}
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              loading="lazy"
+              decoding="async"
+              className={css({ w: 'full', h: 'full', objectFit: 'cover' })}
+            />
+          </div>
         </NavLink>
 
-        <div className={css({})}>
+        <div className={css({ px: '6', pb: '6' })}>
           <h2
             className={css({
-              textStyle: 'heading2',
+              fontFamily: 'display',
+              fontSize: { base: '2xl', md: '3xl' },
+              fontWeight: 'bold',
+              color: 'ocobo.dark',
+              mb: '3',
             })}
           >
             {item.title}
@@ -57,7 +79,8 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
               gap: '2',
               alignItems: 'center',
               my: 4,
-              textStyle: 'small',
+              fontSize: 'sm',
+              color: 'gray.500',
             })}
           >
             <PenToolIcon className={icon({ size: 'md' })} />
@@ -81,6 +104,9 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
             className={css({
               hideBelow: 'lg',
               lineClamp: 4,
+              color: 'gray.600',
+              fontSize: 'sm',
+              lineHeight: 'relaxed',
             })}
           >
             {item.description}
@@ -88,12 +114,14 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
         </div>
         <p
           className={css({
-            textStyle: 'small',
+            fontSize: 'sm',
+            px: '6',
+            pb: '6',
             mt: 'auto',
           })}
         >
           <NavLink to={`${url.blog}/${slug}`} className={link()}>
-            {t('see_more')}
+            {t('see_more', { ns: 'common' })}
           </NavLink>
         </p>
       </article>

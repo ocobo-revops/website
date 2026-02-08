@@ -1,0 +1,169 @@
+{
+  "meta.title": "Notre méthode",
+  "meta.description": "Un framework RevOps en 4 piliers pour construire une architecture revenue solide et durable.",
+  "hero.badge": "NOTRE MÉTHODE",
+  "hero.title.line1": "4 piliers pour",
+  "hero.title.line2": "une architecture",
+  "hero.title.highlight": "solide.",
+  "hero.subtitle.bold": "The Revenue Experience System™",
+  "hero.subtitle.rest": "est notre framework propriétaire conçu pour transformer le chaos opérationnel en une machine de revenu pilotable.",
+  "hero.quote": "\"Une croissance saine n'est jamais le fruit du hasard, c'est le résultat d'un système pensé pour durer et pour favoriser l'usage.\"",
+  "hero.cta": "Auditer mon système",
+  "hero.illustration.labels": ["Alignement", "Technologie", "Performance", "Enablement"],
+  "pillars.title": "The Revenue Experience System™",
+  "pillars.subtitle": "Nous n'intervenons jamais au hasard. Nous suivons un ordre logique pour garantir la stabilité de l'édifice.",
+  "pillars.deliverablesLabel": "LIVRABLES CLÉS",
+  "pillars.items": [
+    {
+      "number": "01",
+      "title": "Alignement",
+      "description": "Avant de toucher aux outils, nous alignons les hommes. Nous cassons les silos entre Marketing, Sales et CS pour créer une seule équipe Revenue avec des objectifs communs.",
+      "color": "yellow",
+      "icon": "layout",
+      "deliverables": [
+        {
+          "title": "Cartographie du cycle de vie (Lifecycle Map)",
+          "description": "Visualisation précise du parcours client et des points de friction."
+        },
+        {
+          "title": "Protocoles de \"Handover\" & SLAs",
+          "description": "Règles strictes de passage de relais entre équipes (fini les zones grises)."
+        },
+        {
+          "title": "Dictionnaire de données (KPIS clés)",
+          "description": "Définitions partagées par toute l'entreprise pour garantir l'intégrité de la donnée."
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Technologie",
+      "description": "Nous construisons une stack connectée et épurée. Pas d'usine à gaz. Juste les bons outils, connectés au bon moment, pour servir les process.",
+      "color": "sky",
+      "icon": "sliders",
+      "deliverables": [
+        {
+          "title": "Audit & assainissement de la Stack",
+          "description": "Nettoyage des dettes techniques et suppression des outils redondants."
+        },
+        {
+          "title": "Architecture de données scalable (Core Model)",
+          "description": "Structure CRM prête pour le multi-segment et l'hyper-croissance."
+        },
+        {
+          "title": "Flux d'enrichissement & routage automatisé",
+          "description": "Mécanismes pour livrer la bonne info au bon commercial, au bon moment."
+        }
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Performance",
+      "description": "On ne pilote pas ce qu'on ne mesure pas. Nous alignons les indicateurs et les incitations (rémunération) sur vos objectifs stratégiques.",
+      "color": "mint",
+      "icon": "lineChart",
+      "deliverables": [
+        {
+          "title": "Dashboards COMEX & Investisseurs",
+          "description": "Vues macro pour le pilotage stratégique (CAC, LTV, Churn) et reporting financier."
+        },
+        {
+          "title": "Plans de commissionnement (Comp Plans)",
+          "description": "Modèles de variable qui orientent les comportements vers la valeur réelle."
+        },
+        {
+          "title": "Fiabilisation du Forecast",
+          "description": "Routines pour passer de la \"devinette\" à une prévision fiable (+/- 10%)."
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "title": "Enablement",
+      "description": "Le meilleur système ne vaut rien s'il n'est pas utilisé. Nous formons, coachons et documentons pour assurer l'adoption durable.",
+      "color": "coral",
+      "icon": "graduationCap",
+      "deliverables": [
+        {
+          "title": "Playbooks d'exécution",
+          "description": "Guides pratiques (Sales & Ops) pour standardiser les méthodes de travail."
+        },
+        {
+          "title": "Documentation technique pérenne",
+          "description": "Wiki complet pour ne plus dépendre de la connaissance individuelle."
+        },
+        {
+          "title": "Routines d'onboarding CRM",
+          "description": "Parcours de formation pour rendre les nouveaux entrants opérationnels vite."
+        }
+      ]
+    }
+  ],
+  "scope.title": "Notre périmètre d'action",
+  "scope.subtitle": "Nous intervenons sur l'intégralité de la chaîne de valeur du revenu.",
+  "scope.activitiesTitle": "Quelques exemples d'activités",
+  "scope.items": [
+    {
+      "title": "Génération de Revenu",
+      "color": "yellow",
+      "icon": "target",
+      "items": ["Lead Gen & Scoring", "Pipeline Management", "Account Based Marketing"]
+    },
+    {
+      "title": "Architecture & Data",
+      "color": "sky",
+      "icon": "database",
+      "items": ["CRM Setup (HubSpot/SFDC)", "Data Quality & Enrichment", "Integrations & Stack"]
+    },
+    {
+      "title": "Pilotage & Performance",
+      "color": "mint",
+      "icon": "barChart3",
+      "items": ["Forecasting & Reporting", "Plan de Commissionnement", "Territory Planning"]
+    },
+    {
+      "title": "Customer Success & Expansion",
+      "color": "coral",
+      "icon": "refreshCw",
+      "items": ["Churn Management & Health Score", "Upsell & Cross-sell Routines", "Onboarding & CS Ops Strategy"]
+    },
+    {
+      "title": "Sales Enablement",
+      "color": "yellow",
+      "icon": "graduationCap",
+      "items": ["Playbooks & Sales Methodology", "Onboarding & Continuous Training", "Sales Content & Tool Adoption"]
+    },
+    {
+      "title": "Gouvernance & Stratégie",
+      "color": "sky",
+      "icon": "layers",
+      "items": ["Go-to-Market Strategy Review", "Revenue Planning & Board Reporting", "Revenue Management & Leadership"]
+    }
+  ],
+  "scope.diagram": {
+    "loops": {
+      "acquisition": "Acquisition",
+      "expansion": "Expansion"
+    },
+    "center": {
+      "line1": "Nouveau",
+      "line2": "Client"
+    },
+    "flow": {
+      "left": ["MQL", "SQL", "SQO"],
+      "right": ["ACTIF", "UPSELL", "CROSSELL"]
+    },
+    "stages": [
+      "GÉNÉRATION",
+      "DE DEMANDE",
+      "QUALIFICATION",
+      "NÉGOCIATION",
+      "ONBOARDING",
+      "ADOPTION",
+      "IMPACT"
+    ]
+  },
+  "cta.title": "Prêt à sortir du bricolage ?",
+  "cta.subtitle": "Notre méthode est le fruit de 10 ans d'expérience dans les scale-ups les plus performantes (TheFork, Spendesk, Yousign, Qonto, etc.).",
+  "cta.button": "Bâtir mon architecture"
+}

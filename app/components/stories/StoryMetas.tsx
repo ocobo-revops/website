@@ -40,6 +40,7 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
                 key={item}
                 className={css({
                   fontWeight: 'bold',
+                  color: 'ocobo.dark',
                 })}
               >
                 {item}

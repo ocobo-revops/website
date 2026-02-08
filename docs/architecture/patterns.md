@@ -16,7 +16,7 @@ OCOBO website is a React Router v7 (formerly Remix) application with internation
 | **Language** | TypeScript | ^5.9.2 | Type safety, better DX, modern JavaScript features |
 | **Runtime** | Node.js | >=22.0.0 | Latest LTS, required for React Router v7 features |
 | **Package Manager** | pnpm | latest | Fast, efficient, disk space optimization |
-| **Styling** | Panda CSS | ^0.37.2 | CSS-in-JS with atomic CSS generation, type-safe |
+| **Styling** | Panda CSS | ^1.8.1 | CSS-in-JS with atomic CSS generation, type-safe |
 | **UI Components** | Ark UI | ^5.30.0 | Accessible, unstyled component primitives (migrated from Radix) |
 | **Content** | Markdoc | ^0.5.4 | Markdown processing for blog/content pages |
 | **Internationalization** | React i18next | ^15.6.1 | French/English support with SSR compatibility |

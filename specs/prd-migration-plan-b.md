@@ -1,18 +1,17 @@
-# PRD: Website migration — P2–P4 + Cleanup
+# PRD: Website migration — P2 + Cleanup
 
 ## Problem statement
 
-Plan A delivers the foundation: upgraded deps, design system, layout, P1 pages, feature flags, and localisation pattern. Plan B completes the migration with remaining pages (P2–P4), then cleans up dependencies, components, localisation structure, and documentation.
+Plan A delivers the foundation: upgraded deps, design system, layout, P1 pages (including Technology/Partners and Studio), feature flags, and localisation pattern. Plan B completes the migration with remaining P2 pages, redesigns existing pages, then cleans up dependencies, components, localisation structure, and documentation.
 
 ## Goals
 
-1. Migrate P2 pages: Technology, Studio.
-2. Redesign existing pages (Blog, Stories, Contact) to fully match prototype.
-3. Migrate P3–P4 pages: Jobs, Podcasts (replacing external links).
-4. Split localisation into per-page namespace files.
-5. Clean dependencies and remove unused components.
-6. Complete EN translations.
-7. Add E2E tests and finalise documentation.
+1. Redesign existing pages (Blog, Stories, Contact) to fully match prototype.
+2. Migrate P2 pages: Jobs/Nous rejoindre (replaces Notion link), Podcasts (replaces Ausha link).
+3. Add P2 localisation namespaces, remove legacy ones, complete EN translations.
+4. Clean dependencies and remove unused components.
+5. Complete EN translations.
+6. Add E2E tests and finalise documentation.
 
 ## Non-goals
 
@@ -22,24 +21,13 @@ Plan A delivers the foundation: upgraded deps, design system, layout, P1 pages, 
 
 ## Dependencies
 
-- **Plan A completed**: deps upgraded, design system ported, layout migrated, P1 pages live, feature flags operational.
+- **Plan A completed**: deps upgraded, design system ported, layout migrated, P1 pages live (incl. Technology/Partners, Studio), feature flags operational.
 
 ---
 
 ## Implementation steps
 
-### Step 1: P2 new pages
-
-| Page | Route file |
-|------|-----------|
-| Technology/Partners | `_main.($lang).technology.tsx` |
-| Studio | `_main.($lang).studio.tsx` |
-
-Follow per-page template from Plan A. Enable via feature flags.
-
-**Doc update**: `docs/development/component-inventory.md`, `app/utils/url.ts`.
-
-### Step 2: P2 existing pages redesign
+### Step 1: Existing pages redesign
 
 Full prototype-matching redesign of:
 - Blog (listing + article detail)
@@ -50,24 +38,24 @@ Port prototype section components, match visual design exactly.
 
 **Doc update**: `docs/development/component-inventory.md`.
 
-### Step 3: P3–P4
+### Step 2: P2 new pages
 
-- **P3**: Jobs — `_main.($lang).jobs.tsx`. Replaces external Notion link. Remove Notion URL from `url.ts` and nav.
-- **P4**: Podcasts — `_main.($lang).podcasts.tsx`. Replaces external Ausha link.
+- Jobs/Nous rejoindre — `_main.($lang).jobs.tsx`. Replaces external Notion link enabled in Plan A. Remove Notion URL from `url.ts` and nav.
+- Podcasts — `_main.($lang).podcasts.tsx`. Replaces external Ausha link.
 
 **Doc update**: `app/utils/url.ts`, `useMenuItems.ts`.
 
-### Step 4: Localisation cleanup
+### Step 3: Localisation — add P2 namespaces and clean up
 
-Split `locales/fr/common.json` → per-page namespace files:
-- `locales/fr/home.json`, `locales/fr/offer.json`, `locales/fr/method.json`, `locales/fr/about.json`, `locales/fr/technology.json`, `locales/fr/studio.json`, `locales/fr/jobs.json`, `locales/fr/podcasts.json`.
-- Same for `locales/en/`.
-- Update components: `useTranslation('offer')` + shorter keys `t('hero.title')`.
-- Keep `common.json` for shared strings (nav, footer, common UI).
+Per-page namespace pattern already in place from Plan A (`home.json`, `offer.json`, `method.json`, `about.json`, `technology.json`, `studio.json` + `common.json` for shared nav/footer keys). This step:
+- Create namespace files for P2 pages: `locales/{fr,en}/jobs.json`, `podcasts.json`.
+- Register new namespaces in `app/localization/resources.ts`.
+- Remove legacy `strategy.json` and `projects.json` (replaced by `offer.json` in story 9).
+- Complete EN translations for all namespace files.
 
 **Doc update**: `docs/architecture/patterns.md` (namespace convention).
 
-### Step 5: Dependencies & components cleaning
+### Step 4: Dependencies & components cleaning
 
 1. Audit and remove unused production components replaced by prototype equivalents.
 2. Remove Radix UI deps once NavigationMenu fully on Ark UI.
@@ -77,7 +65,7 @@ Split `locales/fr/common.json` → per-page namespace files:
 
 **Doc update**: `docs/development/component-inventory.md`, `package.json`.
 
-### Step 6: Feature & content cleanup
+### Step 5: Feature & content cleanup
 
 1. Remove feature flags and `app/modules/feature-flags.ts` once all pages live.
 2. Complete EN translations for all namespace files.
@@ -85,13 +73,13 @@ Split `locales/fr/common.json` → per-page namespace files:
 
 **Doc update**: `docs/development/getting-started.md` (remove feature flag env vars), `docs/architecture/patterns.md`.
 
-### Step 7: Quality
+### Step 6: Quality
 
 1. Add Playwright E2E tests for critical user flows (navigation, contact form, page rendering).
 2. Continue compound component rationalisation (align with prototype specs).
 3. Full Biome/typecheck audit of all migrated code.
 
-### Step 8: Final documentation pass
+### Step 7: Final documentation pass
 
 1. Full audit of all docs against code reality.
 2. Update component inventory with final state (removed, added, changed).
@@ -99,15 +87,24 @@ Split `locales/fr/common.json` → per-page namespace files:
 4. Update `AGENTS.md` constraints and navigation if changed.
 5. Archive or remove obsolete prototype specs that no longer apply.
 
+### Continuous: Migration notes
+
+After each step, update `docs/migration-notes.md` with:
+- **Deferred issues** — bugs or tech debt spotted but out of scope for this step.
+- **Learnings** — patterns discovered, gotchas, decisions made and why.
+- **Ideas / future refactors** — improvements to revisit later.
+
+Delete this file after the migration is fully complete.
+
 ---
 
 ## External links kept until migrated
 
 | Link | Current target | Migrated in |
 |------|---------------|-------------|
-| Podcasts | Ausha | P4 |
+| Podcasts | Ausha | P2 |
 | Webinars | GetContrast | Evaluate separately |
-| Jobs | Notion | P3 |
+| Jobs/Nous rejoindre | Notion (enabled as external link in Plan A) | P2 |
 
 ## Verification
 
@@ -122,7 +119,7 @@ Split `locales/fr/common.json` → per-page namespace files:
 
 - All prototype pages live in production.
 - No external Notion/Ausha links for migrated pages.
-- Localisation split into per-page namespaces, EN complete.
+- All per-page namespaces populated, legacy `strategy`/`projects` removed, EN complete.
 - No unused components or dependencies.
 - E2E tests passing for critical flows.
 - Documentation fully up to date.

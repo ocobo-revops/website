@@ -39,7 +39,11 @@ export function H1({
     <h1
       {...props}
       className={css({
-        textStyle: 'heading1',
+        fontFamily: 'display',
+        fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
+        fontWeight: 'black',
+        letterSpacing: 'tight',
+        color: 'ocobo.dark',
       })}
     >
       {children}
@@ -53,7 +57,11 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h1
         {...props}
         className={css({
-          textStyle: 'heading1',
+          fontFamily: 'display',
+          fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
+          fontWeight: 'black',
+          letterSpacing: 'tight',
+          color: 'ocobo.dark',
         })}
       >
         {children}
@@ -65,7 +73,11 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h2
         {...props}
         className={css({
-          textStyle: 'heading2',
+          fontFamily: 'display',
+          fontSize: { base: '2xl', md: '3xl' },
+          fontWeight: 'bold',
+          letterSpacing: 'tight',
+          color: 'ocobo.dark',
         })}
       >
         {children}
@@ -77,7 +89,10 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h3
         {...props}
         className={css({
-          textStyle: 'heading3',
+          fontFamily: 'display',
+          fontSize: { base: 'xl', md: '2xl' },
+          fontWeight: 'bold',
+          color: 'ocobo.dark',
         })}
       >
         {children}
@@ -89,7 +104,9 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h4
         {...props}
         className={css({
-          textStyle: 'large',
+          fontSize: 'lg',
+          fontWeight: 'semibold',
+          color: 'ocobo.dark',
         })}
       >
         {children}
@@ -100,8 +117,9 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
     <h5
       {...props}
       className={css({
-        textStyle: 'medium',
+        fontSize: 'md',
         fontWeight: 'bold',
+        color: 'ocobo.dark',
       })}
     >
       {children}

@@ -15,16 +15,17 @@ Key gaps between prototype and production:
 
 1. Upgrade production deps to match prototype (Panda CSS v1.8, Ark UI v5.30).
 2. Port design system tokens, recipes, and layout components.
-3. Migrate P1 pages: Home, Offer, Method, About us.
+3. Migrate P1 pages: Home, Offer, Method, About us, Technology/Partners, Studio.
 4. Adapt existing pages (Blog, Stories, Contact, Legal) to new design system.
 5. Establish localisation pattern (single `common.json` with structured keys).
-6. Feature-flag unreleased pages (P2+).
-7. Keep documentation in sync with code after every step.
+6. Enable external links in nav: "Nous rejoindre" (Notion) and "Podcasts" (Ausha) — to be replaced by real pages in Plan B.
+7. Feature-flag unreleased pages (P2+).
+8. Keep documentation in sync with code after every step.
 
 ## Non-goals
 
 - Full EN translations (deferred to Plan B).
-- P2–P4 pages (Technology, Studio, Jobs, Podcasts).
+- P2 pages as real routes (Jobs, Podcasts — kept as external links for now).
 - Panda CSS v1 migration guide for external contributors.
 - E2E test suite (deferred to Plan B).
 
@@ -53,9 +54,12 @@ Key gaps between prototype and production:
 
 - Port prototype tokens (colours, shadows, animations) → `preset/tokens/`.
 - Port new recipes (text, badge, iconBox, section) → `preset/recipes/`.
+- Move legacy recipes to `preset/recipes/_legacy/` (button, icon, icon-button, input, link, subtitle, typography). Import paths updated in `preset/recipes/index.ts`.
 - Convert prototype `styled()` wrappers → `css()` or recipe variants.
+- When a story replaces a legacy recipe and usage drops to 0, delete from `_legacy/`.
+- Post-migration: delete `_legacy/` directory entirely.
 
-**Doc update**: `docs/architecture/patterns.md` (new recipes), `docs/development/component-inventory.md`.
+**Doc update**: `docs/architecture/patterns.md` (new recipes, `_legacy/` convention), `docs/development/component-inventory.md`.
 
 ### Step 3: Feature flags
 
@@ -99,6 +103,10 @@ about.team.title, ...
 | Offer | `_main.($lang).offer.tsx` | `/strategies-revenue-operations` + `/projets-revops` |
 | Method | `_main.($lang).method.tsx` | New page |
 | About us | `_main.($lang).about-us.tsx` | External Notion link |
+| Technology/Partners | `_main.($lang).technology.tsx` | New page |
+| Studio | `_main.($lang).studio.tsx` | New page |
+| Nous rejoindre | N/A (external link) | Enables existing Notion link in Company dropdown |
+| Podcasts | N/A (external link) | Enables existing Ausha link in Resources dropdown |
 
 **Offer route consolidation**: remove old strategy/projects routes, add 301 redirects → `/offer`.
 
@@ -129,6 +137,15 @@ After **each step above**, update relevant docs:
 
 **Rule**: No step is complete until its doc impact is assessed and updated.
 
+### Continuous: Migration notes
+
+After each step, update `docs/migration-notes.md` with:
+- **Deferred issues** — bugs or tech debt spotted but out of scope for this step.
+- **Learnings** — patterns discovered, gotchas, decisions made and why.
+- **Ideas / future refactors** — improvements to revisit in Plan B or later.
+
+Delete this file after the migration branch merges.
+
 ---
 
 ## Verification
@@ -142,8 +159,9 @@ After **each step above**, update relevant docs:
 
 ## Success criteria
 
-- All P1 pages render identically to prototype (FR).
+- All P1 pages render identically to prototype (FR): Home, Offer, Method, About us, Technology/Partners, Studio.
 - Existing pages (Blog, Stories, Contact, Legal) render with new design system.
 - No regressions on `pnpm check && pnpm typecheck`.
-- P2+ pages return 404 when feature-flagged off.
+- "Nous rejoindre" link visible in Company dropdown, pointing to Notion.
+- "Podcasts" link visible in Resources dropdown, pointing to Ausha.
 - Documentation is up to date.

@@ -16,8 +16,9 @@ function generateSiteMap(
   return `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
             ${getUrlElementWithDate(`${baseUrl}/fr`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/strategies-revenue-operations`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/projets-revops`, new Date().toISOString())}
+            ${getUrlElementWithDate(`${baseUrl}/fr/offer`, new Date().toISOString())}
+            ${getUrlElementWithDate(`${baseUrl}/fr/method`, new Date().toISOString())}
+            ${getUrlElementWithDate(`${baseUrl}/fr/about-us`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/fr/contact`, new Date().toISOString())}
             ${getUrlElementWithDate(`${baseUrl}/stories`, new Date().toISOString())}
 

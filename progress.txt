@@ -1,0 +1,330 @@
+## Codebase Patterns
+<!--
+Reusable patterns discovered during implementation.
+Add new patterns here as you learn them.
+Read this section FIRST on each iteration.
+-->
+- Use pnpm, not npm
+- Run `pnpm check && pnpm typecheck` after every change
+- Content source: CONTENT_SOURCE=locale for local dev (reads from ~/projects/ocobo-posts/)
+- i18n: remix-i18next with useTranslation('common') + t('page.section.key')
+- Routes follow ($lang) prefix pattern: _main.($lang).<page>.tsx
+- Panda CSS recipes in preset/recipes/, tokens in preset/tokens/
+- Legacy recipes live in preset/recipes/_legacy/ — delete dir when migration complete
+- New/prototype recipes go in preset/recipes/ (standard path)
+- When a legacy recipe reaches 0 usage, delete from _legacy/
+- Named exports only, kebab-case filenames, no barrel files
+- Navbar uses ocobo.* token namespace (ocobo.yellow, ocobo.dark, etc.) to match prototype
+- Desktop vs mobile CTA: contact.cta (short) vs contact.cta.mobile (long)
+- WebKit browsers need explicit hstack() pattern, not just display: flex
+- Font token for headings is 'display' (Bermia), not 'heading'
+
+---
+
+# Progress Log
+
+Project: Website Migration — Plan A (Prep + P1)
+Source: specs/prd-migration-plan-a.md
+Branch: migration-plan-a
+Created: 2026-02-01T12:00:00Z
+
+## Initial Setup
+- Created stories.json with 16 features
+- High priority: 11 features (deps, design system, flags, i18n, layout, P1 pages)
+- Medium priority: 5 features (existing page adaptations, final doc sync)
+- Low priority: 0 features
+- Ready for implementation
+
+---
+
+## Feature 1: Upgrade Panda CSS v0.37 → v1.8 and Ark UI to v5.30
+- Upgraded @pandacss/dev, @pandacss/preset-base, @pandacss/preset-panda, @pandacss/types from ^0.37.2 → ^1.8.1
+- Ark UI already at ^5.30.0, no change needed
+- Removed unused @shadow-panda/preset devDependency
+- Fixed: definePreset now requires `name` property (added 'ocobo-preset')
+- Fixed: carousel pattern `display: 'auto'` → `display: 'block'` (stricter types in v1)
+- Kept @shadow-panda/style-context (still used by NavigationMenu.tsx)
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests ✅ (2 pre-existing failures unrelated)
+
+---
+
+## Feature 2: Port design system tokens from prototype
+- Colours: updated light variants to match prototype (mint.light #EBFDF5, sky.light #F0F9FB, gray.light #F5F5F5)
+- Shadows: added soft, soft-md, soft-lg, dark, card, ring, offset from prototype
+- Animations: added 17 animation tokens + keyframes (float, fade, bounce, spin, marquee, entry)
+- Typography: added sans/display font aliases, custom lineHeights per size, fixed 2xl fontSize (1.375rem)
+- Radii: added 2xl (1rem), 3xl (1.5rem) from prototype
+- Fonts now reference names directly (Bornia/Bermia) instead of CSS vars
+- Removed unused --font-header/--font-body CSS vars from index.css
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
+
+---
+
+## Feature 3: Port design system recipes from prototype
+- Added text recipe (display-xl/lg/md, subtitle, body, label + colour variants)
+- Added badge recipe (yellow/mint/sky/coral/dark/gray, sm/md sizes, sm/full rounded)
+- Added iconBox recipe (sm/md/lg sizes, solid/outline/ghost variants, colour compoundVariants)
+- Updated section recipe (added bg variants: white/gray/dark/yellow/sky/mint/coral + padding sm/md/lg)
+- Existing section() calls unaffected — defaults to bg:'white', padding:'lg' (same py:24 as before)
+- Adapted prototype ocobo.* colour refs → flat token names (dark, yellow, mint, etc.)
+- pnpm check ✅ pnpm typecheck ✅ codegen ✅ tests 133/133 ✅
+
+---
+
+## Feature 4: Create feature flag system for unreleased pages
+- Created app/modules/feature-flags.ts with DISABLED_PAGES env var
+- Added shouldHide to useMenuItems for nav filtering
+- Feature-flagged pages: technology, studio, jobs, podcasts
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 5: Set up localisation with structured keys in common.json
+- Added nav.*, footer.* keys to locales/{fr,en}/common.json
+- Added i18n namespace skeletons for offer, method, about pages
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 6: Migrate Navbar from prototype (Ark UI Menu, responsive drawer, scroll behaviour)
+- Replaced Radix NavigationMenu with Ark UI Menu (desktop) + Dialog (mobile)
+- Created app/components/navbar/: navbar.tsx, mobile-menu.tsx, nav-dropdown-item.tsx, nav-item-with-dropdown.tsx, types.ts, use-navbar-scroll.ts
+- Ported morphing scroll behaviour (transparent → rounded pill with blur, logo scales)
+- Rich dropdown items with icon + label + description + colour variants
+- Full-screen mobile menu with accordion-style sections
+- Added ocobo.* namespace tokens to match prototype (ocobo.yellow, ocobo.dark, etc.)
+- Renamed types to match prototype: label/path/color/dropdown (not title/url/variant/subItems)
+- Separate CTA labels: contact.cta (desktop), contact.cta.mobile (mobile)
+- Fixed WebKit/Orion browser compat with explicit hstack() pattern
+- Fixed font token: fontFamily: 'display' not 'heading'
+- Updated useMenuItems with correct dropdown colours (yellow/coral/coral/sky for resources)
+- Deleted old files: Header.tsx, MainMenu.tsx, MainMobileMenu.tsx, MobileMenu.tsx, SubMenu.tsx, NavigationMenu.tsx, navigation-menu.ts slot recipe
+- Learnings documented in docs/migration-notes.md
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 7: Migrate Footer from prototype
+- Replaced old Footer with prototype design (4-column grid, darker bg, border separator)
+- Uses Lucide icons (Linkedin, Youtube) in circular buttons with hover effects
+- Outline CTA button matching prototype style (border, uppercase, arrow icon)
+- Yellow link hover colour matching prototype (_hover: { color: 'ocobo.yellow' })
+- Reuses Logocobo SVG component with white colour
+- Keeps production components: NewsletterForm (HubSpot), LanguageSwitcher
+- Dynamic menu items from useMenuItems (company, method dropdowns)
+- All strings localised via t() using footer.* keys
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 8: Migrate Home page (redesign)
+- Rebuilt Home route to match prototype section order and layout
+- Added new home section components + shared layout pieces in app/components/home/
+- Added Home i18n keys in locales/{fr,en}/home.json based on prototype content
+- Synced dot-pattern backgrounds and other minor visual parity adjustments
+- Aligned container sizing with prototype and set global font base styles
+- Ensured CTA visibility respects feature flags (studio/technology)
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 9: Migrate Offer page + route consolidation with redirects
+- Created offer route `_main.($lang).offer.tsx` with loader/meta
+- Added offer sections in `app/components/offer/` including hero, symptoms, levers, method, implications, and CTA
+- Localized offer content in `locales/{fr,en}/offer.json` including nested arrays (pyramid, services, levers)
+- Updated legacy routes to 301 redirect to `/${lang}/offer`
+- Updated sitemap, URL helpers, and legacy links to point to `/offer`
+- Updated component inventory and route map documentation
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 10: Migrate Method page
+- Added method route `_main.($lang).method.tsx` with loader/meta
+- Ported method components and illustrations in `app/components/method/`
+- Localized method content in `locales/{fr,en}/method.json` including diagram text
+- Updated sitemap and docs route map + component inventory
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 11: Migrate About Us page
+- Added about route `_main.($lang).about-us.tsx` with loader/meta
+- Ported about components and illustration in `app/components/about/`
+- Localized about content in `locales/{fr,en}/about.json` including manifesto structure
+- Updated `/about-us` redirect to localized route and added sitemap entry
+- Updated route map and component inventory
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 12: Adapt Blog pages to new design system
+- Refreshed blog list cards to match new typography, spacing, and card treatments
+- Updated blog article header styles and metadata presentation
+- Localized blog empty state and back label via `blog` namespace
+- Added blog i18n resources to localization registry
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 17: Migrate Technology/Partners page
+- Created route `_main.($lang).technology.tsx` with `createHybridLoader` + `throwIfDisabled`
+- Created 5 section components in `app/components/technology/`: hero, philosophy, ecosystem, partner-card, partner-form
+- Ported 30 partners data into `locales/{fr,en}/technology.json` under `partners` key (translatable)
+- Category filter with animation reset on filter change
+- Partner card compound component pattern (Header/Body/Separator/Footer)
+- Partner form with success state toggle
+- Reused `CtaSection`, `ModularStackGrid`, `FlexPair` from existing components
+- Converted `styled()` → `css()`, hardcoded text → `t()` calls
+- Registered `technology` namespace in `resources.ts`
+- Removed `'technology'` from `DISABLED_PAGES_DEFAULT`
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 18: Migrate Studio page
+- Created route `_main.($lang).studio.tsx` with `createHybridLoader` + `throwIfDisabled`
+- Created 5 section components in `app/components/studio/`: hero, team-photo-illustration, model, team, team-member-card
+- Ported 12 team members data into `locales/{fr,en}/studio.json` under `team.members` key (translatable)
+- Category filter with animation reset on filter change (same pattern as ecosystem-section)
+- Team member card with grayscale→colour hover, fade-in animation, conditional LinkedIn link
+- Hero section with `Trans` component for rich subtitle, floating illustration with blobs
+- Model section with dark bg, dot pattern, 3 value cards using `iconBox()` + `text()` recipes
+- Added `mint` variant to `CtaSection` component (section recipe already supported mint)
+- Registered `studio` namespace in `resources.ts`
+- Removed `'studio'` from `DISABLED_PAGES_DEFAULT`
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 19: Enable external links in nav: 'Nous rejoindre' and 'Podcasts'
+- Removed `'jobs'` and `'podcasts'` from `DISABLED_PAGES_DEFAULT`
+- 'Nous rejoindre' link in Company dropdown → Notion page (isExternal, already wired)
+- 'Podcasts' link in Resources dropdown → Ausha page (isExternal, already wired)
+- Both links already had correct URLs, icons, colours, and isExternal flag in useMenuItems
+- Only change needed was removing feature flag entries
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+# QA P1 — QFX Progress Log
+
+Project: Website Migration — QA P1 QFX
+Source: specs/qa-plan-p1.md
+Branch: qfx-qa-p1
+Created: 2026-02-06T15:00:00Z
+
+## Initial Setup
+- Triaged ~28 QA items from client Notion export
+- Created specs/qa-plan-p1.md with 5-phase plan (bugs → polish → content → features)
+- Generated stories.json with 16 features (IDs 20-35)
+- 3 bugs (high), 5 polish (high), 2 content (high/medium), 6 features (high/medium)
+- 3 features blocked on assets (33: founder photos, 34: testimonial assets, 35: tool/team logos)
+- Ready for implementation
+
+---
+
+## Feature 20: Fix navbar bugs — YouTube URL, z-index scroll, radius/gap
+- Fixed YouTube URL in app/utils/url.ts: `@ocobo` → `@Ocobo-Revenue`
+- Footer.tsx: replaced hardcoded YouTube URL with `url.youtube` reference
+- Fixed dropdown z-index in nav-item-with-dropdown.tsx: 200 → 1001 (above navbar container at 1000)
+- Increased nav items gap from 1 → 2 and CTA/toggle gap from 3 → 4 in navbar.tsx
+- Navbar rounded: '3xl' in scrolled state already correct
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 21: Fix offer pyramid bullets missing on mobile
+- Removed `slice(0, 1)` from mobile card rendering in symptoms-section.tsx
+- All bullet points now visible on mobile viewport
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 22: Fix method page circle animation spinning off-center
+- Added `transformOrigin: '250px 250px'` to dashed circle in attio-pillars-illustration.tsx
+- Circle now spins in place around SVG center instead of orbiting around origin
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 23: Global polish — container margins, text selection, blog dropdown colour
+- Container.tsx: maxW default 7xl (1280px) → 70rem (1120px), narrow 5xl → 56rem, px → 8 (2rem fixed)
+- global-css.ts: added ::selection { backgroundColor: yellow, color: dark }
+- useMenuItems.ts: blog dropdown color coral → sky
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 24: Home page polish — font sizes, badges, CTA
+- transformation-section.tsx: description fontSize sm→base, method items xs→sm
+- interventions-section.tsx: card description sm→base, card title 2xl→3xl
+- feature-card.tsx: label xs→sm, description xs→sm
+- stack-section.tsx: tagline xs→sm
+- pain-point-section.tsx: "Notre mission" badge now solid mint bg + dark text
+- Studio CTA already present in comparatif-section (label correct)
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 25: Offer page polish — hero button, font sizes, badge
+- hero-section.tsx: added ArrowRight icon to CTA button
+- Grey description fontSize sm→base: implications, leviers, offers-detail, transition sections
+- Badge already uses badge({ variant: 'yellow' }) recipe — uniform with home
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 26: Method page polish — font sizes, card sizes, bowtie, border colours
+- pillar-card.tsx: reduced padding 10→8, deliverable title sm→base, description xs→sm
+- unified-bowtie.tsx: hidden on mobile (display none/md block), all SVG text fonts bumped +2
+- scope-section.tsx: added "Quelques exemples d'activités" title between bowtie and scope cards
+- hero-section.tsx: quote fontSize sm→base
+- Locale keys added: scope.activitiesTitle (fr/en)
+- Border top colours already correct (using borderColorMap[color])
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 27: About page polish — h3 font sizes, CTA yellow background
+- manifesto-section.tsx: all h3-level text fontSize xl/3xl → 2xl/4xl (8 occurrences)
+- about-us route: CtaSection variant sky → yellow
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 28: Offer page content updates — method texts, implications livrables, "pourquoi choisir"
+- GROW title rename already done in commit 6bd07fc
+- Method section: added `method.intro` + `method.closing` keys, `description` field per step, updated deliverable wording
+- methode-section.tsx: added `description` to Step type, rendered intro paragraph, step descriptions, closing quote
+- Implications section: added `deliverable` field to each block, renamed "Outiller" → "Outiller & structurer", merged AI items, added "Finance" to Diagnostiquer
+- implications-section.tsx: added `deliverable` to Block type, rendered deliverable line with → arrow after items
+- "Pourquoi choisir" rewrite: new title "Nous faisons ce que les autres promettent." + 3 new statement-style reasons
+- All changes mirrored in EN locale
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 32: About page — add "Pourquoi nous choisir" reassurance block
+- Created reassurance-section.tsx in app/components/about/ with 2-col grid of checkmark items
+- Content from QA doc: title, subtitle, 6 checkmark items (senior team, proprietary method, agnostic tech, concrete KPIs, readable growth, durable system)
+- Added reassurance.* locale keys in locales/{fr,en}/about.json
+- Integrated in about-us route between ValuesSection and CtaSection
+- Yellow CheckCircle2 icons, white cards with hover shadow, gray.50 section bg
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature 34: Home page — complete testimonials section
+- Loader fetches stories via `fetchStories(lang)`, shuffles with Fisher-Yates, picks random quote per story
+- Returns `testimonials` array with slug, name, speaker, role, quote, logo, avatar URLs from ASSETS_BASE_URL
+- All randomisation server-side (no SSR hydration mismatch)
+- Cache strategy changed from `'static'` to `'story'`
+- Client marquee converted from text spans to `<img>` logos (h-8, opacity 0.4 → 1 hover, onError hide)
+- Testimonial card: SVG quote illustration replacing text `"`, fontWeight black on quote, avatar image on yellow square with initials fallback
+- CTA NavLink fontSize xs→sm, letterSpacing 0.3em→0.2em
+- Author role includes company name (`${role} @ ${name}`), no p+p margin override
+- Removed hardcoded socialProof.clients and socialProof.testimonial.* from locale files, kept socialProof.ctaText
+- pnpm check ✅ pnpm typecheck ✅
+
+---
+## Feature 33: About page — add founders photos
+- Copied 3 founder photos from qa/assets to public/images/team/ (benjamin-boileux.jpeg, aude-cadiot.jpg, corentin-guerin.jpeg)
+- Added `imageSrc` field to team.members in locales/{fr,en}/about.json
+- Added `imageSrc` to TeamMember type in team-section.tsx, passed through to TeamMemberCard
+- TeamMemberCard already supported imageSrc prop with circular display + coloured border
+- pnpm check ✅ pnpm typecheck ✅
+
+---

@@ -1,0 +1,134 @@
+{
+  "meta.title": "Studio",
+  "meta.description": "Un studio d'experts seniors RevOps qui s'intègrent à vos équipes pour opérer de l'intérieur.",
+  "hero.badge": "REVOPS STUDIO",
+  "hero.title.line1": "Une direction Revenue Ops",
+  "hero.title.highlight": "embarquée.",
+  "hero.subtitle": "Nous ne sommes pas une agence classique. Nous sommes <bold>un studio d'experts seniors</bold> qui s'intègrent à vos équipes pour opérer de l'intérieur.",
+  "hero.quote": "\"Nous rejoignons vos Slacks, vos rituels et nous construisons le système à vos côtés.\"",
+  "hero.cta": "Discuter avec le Studio",
+  "hero.captionBadge": "La Squad Ocobo",
+  "hero.photoAlt": "L'équipe Ocobo",
+  "model.title": "Le modèle Studio Ocobo™",
+  "model.subtitle": "L'agence traditionnelle est souvent trop lente et trop loin de la réalité du terrain. Nous avons conçu une alternative pragmatique pour scaler vraiment.",
+  "model.cards": [
+    {
+      "icon": "users",
+      "title": "Squad Immergée",
+      "description": "Nous déployons une squad pluridisciplinaire qui rejoint votre environnement de travail quotidien.",
+      "hoverColor": "mint"
+    },
+    {
+      "icon": "zap",
+      "title": "100% Impact",
+      "description": "Pas de grands rapports théoriques. Nous délivrons des briques de système prêtes à l'emploi.",
+      "hoverColor": "sky"
+    },
+    {
+      "icon": "target",
+      "title": "Zéro Junior",
+      "description": "Sur chaque compte, uniquement des profils seniors ayant déjà scalé des entreprises leaders.",
+      "hoverColor": "yellow"
+    }
+  ],
+  "team.title": "Votre équipe Studio",
+  "team.subtitle": "Des experts seniors habitués à scaler ensemble des organisations complexes.",
+  "team.filters": {
+    "TOUS": "Tous les profils",
+    "Architecte": "Architecte",
+    "Builder": "Builder",
+    "Expert Engineer": "Expert Engineer"
+  },
+  "team.members": [
+    {
+      "name": "Benjamin Boileux",
+      "category": "Architecte",
+      "role": "Associé",
+      "desc": "12+ ans en Ops, CRM, Product et Revenue Operations (TheFork, Tripadvisor, Yousign). Spécialiste des systèmes et du pilotage opérationnel.",
+      "img": "/images/team/benjamin.jpg",
+      "linkedin": "https://www.linkedin.com/in/benjaminboileux/"
+    },
+    {
+      "name": "Aude Cadiot",
+      "category": "Architecte",
+      "role": "Associée",
+      "desc": "Référence française du Revenue Operations (TheFork, Spendesk). Experte du customer journey, des organisations GTM, du scaling d'équipes RevOps.",
+      "img": "/images/team/aude.jpg",
+      "linkedin": "https://www.linkedin.com/in/aude-cadiot-9597096b/"
+    },
+    {
+      "name": "Corentin Guérin",
+      "category": "Architecte",
+      "role": "Associé",
+      "desc": "Finance, Deloitte, Business Ops (TheFork). Spécialiste du forecasting, de la performance, des rémunérations variables et du pricing.",
+      "img": "/images/team/corentin.jpeg",
+      "linkedin": "https://www.linkedin.com/in/corentinguerin/"
+    },
+    {
+      "name": "Clara Lecarrié",
+      "category": "Architecte",
+      "role": "Manager",
+      "desc": "Spécialiste de l'expérience utilisateur et de l'optimisation des parcours de vente complexes.",
+      "img": "/images/team/clara.jpg",
+      "linkedin": "https://www.linkedin.com/in/clara-lecarrie-070595106/"
+    },
+    {
+      "name": "Louis Strauss",
+      "category": "Expert Engineer",
+      "role": "RevOps Engineer",
+      "desc": "Le cerveau technique derrière nos intégrations les plus poussées et nos outils propriétaires.",
+      "img": "/images/team/louis.jpg",
+      "linkedin": "https://www.linkedin.com/in/louis-strauss1/"
+    },
+    {
+      "name": "Domitille Raimbault",
+      "category": "Builder",
+      "role": "Senior RevOps Manager",
+      "desc": "Maîtrise les architectures CRM les plus complexes pour transformer la donnée en levier de croissance.",
+      "img": "/images/team/domitille.jpeg",
+      "linkedin": "https://www.linkedin.com/in/domitille-raimbault-488366107/"
+    },
+    {
+      "name": "Ethel Gosset",
+      "category": "Builder",
+      "role": "Senior RevOps Manager",
+      "desc": "Experte en automatisation et fluidification des processus opérationnels Sales & Marketing.",
+      "img": "/images/team/ethel.jpeg",
+      "linkedin": "https://www.linkedin.com/in/ethel-gosset-a4b295136/"
+    },
+    {
+      "name": "Dorian Cutullic",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Accompagne les scale-ups dans la structuration de leur stack et l'adoption des rituels RevOps.",
+      "img": "/images/team/dorian.jpg"
+    },
+    {
+      "name": "Damien Robert",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Spécialiste de la performance commerciale et du pilotage par la donnée fiable.",
+      "img": "/images/team/damien.jpg",
+      "linkedin": "https://www.linkedin.com/in/damien-robert-b3438310a/"
+    },
+    {
+      "name": "Mariette Baudras",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Experte en Customer Success Operations et optimisation de la rétention client.",
+      "img": "/images/team/mariette.jpg",
+      "linkedin": "https://www.linkedin.com/in/mariette-baudras-bove/"
+    },
+    {
+      "name": "Yoann Boileux",
+      "category": "Builder",
+      "role": "RevOps Manager",
+      "desc": "Focus sur l'enablement des équipes et la création de playbooks d'exécution robustes.",
+      "img": "/images/team/yoann.jpeg",
+      "linkedin": "https://www.linkedin.com/in/yoann-boileux/"
+    }
+  ],
+  "cta.title": "Envie d'une équipe qui agit vraiment ?",
+  "cta.subtitle": "Évaluons ensemble la squad dont vous avez besoin pour passer au niveau supérieur.",
+  "cta.button": "Discuter avec le Studio"
+}

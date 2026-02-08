@@ -3,34 +3,32 @@ import * as React from 'react';
 import { css } from '@ocobo/styled-system/css';
 
 import { Footer } from '~/components/Footer';
-import { Header } from '~/components/Header';
-import { MainMobileMenu } from '~/components/MainMobileMenu';
-import { MobileMenuProvider } from '~/components/MobileMenu';
+import { Navbar } from '~/components/navbar/navbar';
 
 import { Loader } from './ui/Loader';
 
-const LayoutMain: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+type LayoutMainProps = React.PropsWithChildren<unknown>;
+
+export function LayoutMain({ children }: LayoutMainProps) {
   return (
-    <MobileMenuProvider>
-      <MainMobileMenu />
+    <div
+      className={css({
+        color: 'foreground',
+        bg: 'background',
+        textStyle: 'medium',
+      })}
+    >
+      <Navbar />
       <div
         className={css({
-          color: 'foreground',
-          bg: 'background',
-          textStyle: 'medium',
+          pt: { base: '24', md: '28', lg: '32' },
         })}
       >
-        <Header />
         <React.Suspense fallback={<Loader className={css({ h: '300px' })} />}>
           {children}
         </React.Suspense>
-
-        <Footer />
       </div>
-    </MobileMenuProvider>
+      <Footer />
+    </div>
   );
-};
-
-export { LayoutMain };
+}

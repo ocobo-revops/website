@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
-import { button } from '@ocobo/styled-system/recipes';
 
+import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -15,7 +14,7 @@ const mobileTemplateAreas = '"main" "aside"';
 const Root = styled('article', {
   base: {
     display: 'grid',
-    gridTemplateColumns: { base: '1', lg: 'repeat(12, 1fr)' },
+    gridTemplateColumns: { base: '1fr', lg: 'repeat(12, 1fr)' },
     gap: '4',
     gridTemplateAreas: {
       base: mobileTemplateAreas,
@@ -54,9 +53,9 @@ const Aside: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
             {t('contact.meet')}
           </p>
 
-          <NavLink to={getLocalizedPath(url.contact)} className={button()}>
+          <ButtonLink to={getLocalizedPath(url.contact)}>
             {t('contact.cta')}
-          </NavLink>
+          </ButtonLink>
         </div>
       </div>
     </AsideWrapper>

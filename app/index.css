@@ -15,7 +15,8 @@
       url("/fonts/bermia/Bermia-Black.ttf") format("truetype");
     /* Safari, Android, iOS */
     font-style: normal;
-    font-weight: normal;
+    font-weight: 900;
+    font-display: swap;
     text-rendering: optimizeLegibility;
   }
 
@@ -24,6 +25,7 @@
     src: url("/fonts/bornia/Bornia-Regular.otf");
     font-style: normal;
     font-weight: 400;
+    font-display: swap;
     text-rendering: optimizeLegibility;
   }
 
@@ -32,6 +34,7 @@
     src: url("/fonts/bornia/Bornia-RegularItalic.otf");
     font-style: italic;
     font-weight: 400;
+    font-display: swap;
     text-rendering: optimizeLegibility;
   }
 
@@ -40,6 +43,7 @@
     src: url("/fonts/bornia/Bornia-Bold.otf");
     font-style: normal;
     font-weight: 700;
+    font-display: swap;
     text-rendering: optimizeLegibility;
   }
 
@@ -48,11 +52,28 @@
     src: url("/fonts/bornia/Bornia-BoldItalic.otf");
     font-style: italic;
     font-weight: 700;
+    font-display: swap;
     text-rendering: optimizeLegibility;
   }
+}
 
-  :root {
-    --font-header: "Bermia", sans-serif;
-    --font-body: "Bornia", sans-serif;
+@layer base {
+  body {
+    font-family: "Bornia", "Inter", sans-serif;
+    background-color: white;
+    color: #212323;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bermia", "Inter", sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.025em;
   }
 }

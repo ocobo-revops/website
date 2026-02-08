@@ -57,17 +57,74 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 
 ## Feature-Specific Components
 
-### Homepage Components (`app/components/homepage/`)
+### Homepage Components (`app/components/home/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
-| **Hero** | `Hero.tsx` | Homepage hero section | Homepage-specific |
-| **Better** | `Better.tsx` | "Better" value proposition | Homepage-specific |
-| **Faster** | `Faster.tsx` | "Faster" value proposition | Homepage-specific |
-| **Stronger** | `Stronger.tsx` | "Stronger" value proposition | Homepage-specific |
-| **Aligned** | `Aligned.tsx` | "Aligned" value proposition | Homepage-specific |
-| **Contact** | `Contact.tsx` | Contact CTA section | Reusable with props |
-| **Stories** | `Stories.tsx` | Client stories showcase | Reusable |
-| **Tools** | `Tools.tsx` | Tools/integrations display | Reusable |
+| **HeroSection** | `hero-section.tsx` | Homepage hero section | Homepage-specific |
+| **SocialProofSection** | `social-proof-section.tsx` | Client marquee + testimonial | Homepage-specific |
+| **PainPointSection** | `pain-point-section.tsx` | RevOps pain point + mission | Homepage-specific |
+| **TransformationSection** | `transformation-section.tsx` | System vs tools + method summary | Homepage-specific |
+| **InterventionsSection** | `interventions-section.tsx` | Interventions cards | Homepage-specific |
+| **ComparatifSection** | `comparatif-section.tsx` | Ocobo vs others comparison | Homepage-specific |
+| **StackSection** | `stack-section.tsx` | Partner stack grid | Homepage-specific |
+| **CtaSection** | `cta-section.tsx` | Bottom CTA | Reusable with props |
+| **ClientMarquee** | `client-marquee.tsx` | Animated client list | Homepage-specific |
+| **TestimonialCard** | `testimonial-card.tsx` | Testimonial block | Homepage-specific |
+| **FeatureCard** | `feature-card.tsx` | Icon + label cards | Reusable |
+| **HeroSplit** | `hero-split.tsx` | Hero layout split | Reusable |
+| **FlexPair** | `flex-pair.tsx` | Icon + content rows | Reusable |
+| **ModularStackGrid** | `modular-stack-grid.tsx` | Tech stack grid | Reusable |
+| **DashboardIllustration** | `dashboard-illustration.tsx` | Hero illustration | Homepage-specific |
+
+### Offer Components (`app/components/offer/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | Offer hero section | Offer-specific |
+| **ArchitecturalGrid** | `architectural-grid.tsx` | Hero illustration grid | Offer-specific |
+| **SymptomsSection** | `symptoms-section.tsx` | Growth symptoms + pyramid | Offer-specific |
+| **PyramidSection** | `pyramid-section.tsx` | Symptoms pyramid graphic | Offer-specific |
+| **TransitionSection** | `transition-section.tsx` | RevOps transition highlights | Offer-specific |
+| **OffersDetailSection** | `offers-detail-section.tsx` | Offer phases + deliverables | Offer-specific |
+| **LeviersSection** | `leviers-section.tsx` | Growth levers cards | Offer-specific |
+| **MethodeSection** | `methode-section.tsx` | 4-step method overview | Offer-specific |
+| **ImplicationsSection** | `implications-section.tsx` | Concrete RevOps actions | Offer-specific |
+| **WhyOcoboSection** | `why-ocobo-section.tsx` | Reasons to choose Ocobo | Offer-specific |
+| **CtaSection** | `cta-section.tsx` | Offer CTA | Reusable with props |
+| **SectionHeader** | `section-header.tsx` | Offer section header | Reusable |
+
+### Method Components (`app/components/method/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | Method hero section | Method-specific |
+| **AttioPillarsIllustration** | `attio-pillars-illustration.tsx` | Method hero illustration | Method-specific |
+| **PillarsSection** | `pillars-section.tsx` | 4 pillars overview | Method-specific |
+| **PillarCard** | `pillar-card.tsx` | Pillar detail card | Reusable |
+| **ScopeSection** | `scope-section.tsx` | Scope + diagram | Method-specific |
+| **UnifiedBowtie** | `unified-bowtie.tsx` | Revenue scope diagram | Method-specific |
+| **ScopeCard** | `scope-card.tsx` | Scope detail card | Reusable |
+
+### About Components (`app/components/about/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | About hero section | About-specific |
+| **DataIllustration** | `data-illustration.tsx` | About hero illustration | About-specific |
+| **ManifestoSection** | `manifesto-section.tsx` | Manifesto content | About-specific |
+| **TeamSection** | `team-section.tsx` | Founding team section | About-specific |
+| **TeamMemberCard** | `team-member-card.tsx` | Team profile card | Reusable |
+| **ValuesSection** | `values-section.tsx` | Values grid | About-specific |
+| **ValueCard** | `value-card.tsx` | Values card | Reusable |
+
+### Legacy Homepage Components (`app/components/homepage/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **Hero** | `Hero.tsx` | Legacy homepage hero section | Deprecated |
+| **Better** | `Better.tsx` | Legacy "Better" value proposition | Deprecated |
+| **Faster** | `Faster.tsx` | Legacy "Faster" value proposition | Deprecated |
+| **Stronger** | `Stronger.tsx` | Legacy "Stronger" value proposition | Deprecated |
+| **Aligned** | `Aligned.tsx` | Legacy "Aligned" value proposition | Deprecated |
+| **Contact** | `Contact.tsx` | Legacy contact CTA section | Deprecated |
+| **Stories** | `Stories.tsx` | Legacy client stories showcase | Deprecated |
+| **Tools** | `Tools.tsx` | Legacy tools/integrations display | Deprecated |
 
 ### Blog Components (`app/components/blog/`)
 | Component | File | Purpose | Reusability |
@@ -79,16 +136,19 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **PostMetas** | `PostMetas.tsx` | Article metadata display | Reusable for content |
 
 ### Client Stories Components (`app/components/stories/`)
+
+*Updated 2026-02-04: Migrated to new design system with card styling, `fontFamily: 'display'` headings, and i18n empty states.*
+
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
-| **Hero** | `Hero.tsx` | Stories page hero | Stories-specific |
-| **StoryList** | `StoryList.tsx` | Client stories listing | Stories-specific |
-| **StoryItem** | `StoryItem.tsx` | Story card component | Reusable |
+| **Hero** | `Hero.tsx` | Stories page hero with display font | Stories-specific |
+| **StoryList** | `StoryList.tsx` | Client stories grid with i18n empty state | Stories-specific |
+| **StoryItem** | `StoryItem.tsx` | Story card with shadow, rounded corners, hover | Reusable |
 | **StoryArticle** | `StoryArticle.tsx` | Full story display | Stories-specific |
-| **StoryHeader** | `StoryHeader.tsx` | Story header section | Reusable for content |
-| **StoryMetas** | `StoryMetas.tsx` | Story metadata | Reusable for content |
+| **StoryHeader** | `StoryHeader.tsx` | Story header with display font | Reusable for content |
+| **StoryMetas** | `StoryMetas.tsx` | Story metadata in AsideCard | Reusable for content |
 | **StoryDeliverables** | `StoryDeliverables.tsx` | Deliverables section | Stories-specific |
-| **StorySpeaker** | `StorySpeaker.tsx` | Speaker/testimonial | Reusable |
+| **StorySpeaker** | `StorySpeaker.tsx` | Speaker with display font | Reusable |
 | **StoryMarkdownContainer** | `StoryMarkdownContainer.tsx` | Content wrapper | Reusable |
 
 ### Projects Components (`app/components/projects/`)

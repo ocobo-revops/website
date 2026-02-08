@@ -41,7 +41,16 @@ const Hero = () => {
                 mb: '4',
               })}
             />
-            <h1 className={css({ textStyle: 'heading1', mb: '4' })}>
+            <h1
+              className={css({
+                fontFamily: 'display',
+                fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
+                fontWeight: 'black',
+                letterSpacing: 'tight',
+                color: 'ocobo.dark',
+                mb: '4',
+              })}
+            >
               {t('clients.title')}
             </h1>
             <div

@@ -1,4 +1,5 @@
 import { ChevronLeftCircleIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
@@ -22,6 +23,8 @@ interface BlogArticleProps {
 const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
   article,
 }) => {
+  const { t } = useTranslation('blog');
+
   return (
     <LayoutPost.Root>
       <LayoutPost.Aside>
@@ -29,10 +32,10 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
       </LayoutPost.Aside>
 
       <LayoutPost.Main>
-        <p className={css({ mb: '4', textStyle: 'small' })}>
+        <p className={css({ mb: '4', fontSize: 'sm', color: 'gray.500' })}>
           <NavLink to={url.blog} className={flex({ align: 'center', gap: 2 })}>
             <ChevronLeftCircleIcon className={icon({ size: 'md' })} />
-            Le blog
+            {t('back')}
           </NavLink>
         </p>
         <PostHeader item={article.frontmatter} />

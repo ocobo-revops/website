@@ -1,0 +1,321 @@
+{
+  "project": {
+    "name": "Website Migration — QA P1 QFX",
+    "branch": "qfx-qa-p1"
+  },
+  "source_prd": "specs/qa-plan-p1.md",
+  "created_at": "2026-02-06T15:00:00Z",
+  "rules": [
+    "Work on ONE feature at a time",
+    "Read ## Codebase Patterns section FIRST each iteration",
+    "Only modify 'passes', 'blocked', 'blocked_reason', 'completed_at' fields",
+    "Never edit or remove feature definitions",
+    "Test end-to-end before marking passes: true",
+    "Commit after each completed feature",
+    "Add reusable patterns to TOP of progress.txt",
+    "Append feature log to BOTTOM of progress.txt",
+    "Update AGENTS.md if you learn module-specific patterns",
+    "QA text content comes from QA/migration-p1/P1 2fe3e6cbc84580f496fce06a422d4a43.md"
+  ],
+  "features": [
+    {
+      "id": 20,
+      "category": "bug",
+      "priority": "high",
+      "description": "Fix navbar bugs: YouTube URL, z-index scroll, radius/gap",
+      "steps": [
+        "Fix YouTube URL in app/utils/url.ts:23 — change @ocobo to @Ocobo-Revenue",
+        "Update app/components/Footer.tsx to use url.youtube instead of hardcoded URL",
+        "Fix dropdown z-index in app/components/navbar/nav-item-with-dropdown.tsx — raise from 200 to 1001",
+        "Verify navbar stays above page content when scrolled",
+        "Review navbar border-radius uniformity in scrolled state (navbar.tsx rounded: '3xl')",
+        "Adjust gap between nav items and CTA/toggle in navbar.tsx",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: YouTube link in nav dropdown opens https://www.youtube.com/@Ocobo-Revenue",
+        "Test: navbar remains clickable after scrolling past long content sections"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:00:00Z"
+    },
+    {
+      "id": 21,
+      "category": "bug",
+      "priority": "high",
+      "description": "Fix offer pyramid bullets missing on mobile",
+      "steps": [
+        "Read app/components/offer/symptoms-section.tsx — identify mobile card rendering",
+        "Fix slice(0, 1) that only shows first bullet in mobile view — show all bullets",
+        "Verify pyramid section displays correctly on desktop (no regression)",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: view /offer on mobile viewport — all bullet points visible for each persona card"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:05:00Z"
+    },
+    {
+      "id": 22,
+      "category": "bug",
+      "priority": "high",
+      "description": "Fix method page circle animation spinning off-center",
+      "steps": [
+        "Read app/components/method/attio-pillars-illustration.tsx — find circle element with spin-slow animation",
+        "Add transformOrigin: 'center' or '250px 250px' to the circle CSS so it spins in place",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: view /method — dashed circle rotates in place (not orbiting around the hero)"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:10:00Z"
+    },
+    {
+      "id": 23,
+      "category": "polish",
+      "priority": "high",
+      "description": "Global polish: container margins, text selection, blog dropdown color",
+      "steps": [
+        "Update app/components/ui/Container.tsx — maxW default from 7xl (1280px) to 70rem (1120px), px to 8 (2rem)",
+        "Adjust narrow maxW proportionally if needed",
+        "Add ::selection { backgroundColor: yellow, color: dark } in preset/global-css.ts",
+        "Change blog dropdown color from 'coral' to 'sky' in app/hooks/useMenuItems.ts (line ~115)",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: select text anywhere — yellow highlight visible",
+        "Test: container width narrower on wide screens, more breathing room on sides",
+        "Test: blog item in Resources dropdown shows cyan/sky color icon"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:15:00Z"
+    },
+    {
+      "id": 24,
+      "category": "polish",
+      "priority": "high",
+      "description": "Home page polish: font sizes, badges, missing CTA buttons",
+      "steps": [
+        "Audit app/components/home/ for fontSize 'sm' or 'xs' on grey text — increase to 'base' or 'lg'",
+        "Uniformise 'Notre mission' badge — use badge({ variant: 'mint' }) with solid bg and dark text",
+        "Rationalise DESIGN/OPERATE/GROW badges — uniform style, increase coloured title font size",
+        "Add 'Decouvrez le RevOps Studio' NavLink button below comparison blocks",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: all grey text on home page is legible (no xs/sm on descriptions)",
+        "Test: badges look uniform across mission and offer blocks",
+        "Test: Studio CTA button appears and links to /studio"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:25:00Z"
+    },
+    {
+      "id": 25,
+      "category": "polish",
+      "priority": "high",
+      "description": "Offer page polish: hero button, font sizes, badge uniformity",
+      "steps": [
+        "Fix offer hero badge to match uniform style (same as home)",
+        "Reduce CTA button width (remove full-width, use auto width) and add ArrowRight icon",
+        "Audit app/components/offer/ for small grey text — increase fontSize",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: hero badge matches home page badges",
+        "Test: CTA button is narrower with arrow icon",
+        "Test: grey descriptions are legible"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:35:00Z"
+    },
+    {
+      "id": 26,
+      "category": "polish",
+      "priority": "high",
+      "description": "Method page polish: font sizes, card sizes, bowtie, border colors",
+      "steps": [
+        "Increase grey text fontSize in app/components/method/ descriptions",
+        "Reduce phase card padding/max-width to match prototype proportions",
+        "Increase key deliverables fontSize in phase cards",
+        "Fix borderTop color on each phase card to match phase color",
+        "Increase all bowtie SVG text font sizes in bowtie component",
+        "Add display: { base: 'none', md: 'block' } on bowtie container (hide mobile)",
+        "Add 'Quelques exemples d activites' title below bowtie",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: phase cards are smaller with correct top border colors",
+        "Test: bowtie hidden on mobile, visible on desktop with larger text",
+        "Test: grey text throughout method page is legible"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:45:00Z"
+    },
+    {
+      "id": 27,
+      "category": "polish",
+      "priority": "high",
+      "description": "About page polish: h3 font sizes, CTA yellow background",
+      "steps": [
+        "Increase h3 fontSize in app/components/about/ manifesto or content sections",
+        "Change CtaSection variant to 'yellow' in app/routes/_main.($lang).about-us.tsx",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: h3 headings on about page are larger and legible",
+        "Test: CTA section at bottom has yellow background"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T16:50:00Z"
+    },
+    {
+      "id": 28,
+      "category": "content",
+      "priority": "high",
+      "description": "Offer page content updates: method texts, GROW title, implications livrables, 'pourquoi choisir'",
+      "steps": [
+        "Change 3rd phase title GROW to 'Animation RevOps (RUN)' in locales/fr/offer.json",
+        "Rewrite method bloc texts (intro, card contents, text below cards) per QA doc copy",
+        "Add livrables to each item in 'Ce que ca implique' section — update locale + adapt component",
+        "Rewrite 'Pourquoi choisir' bloc text per QA doc copy in locales/fr/offer.json",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: /offer shows updated method bloc with new texts",
+        "Test: implications section shows livrables for each item",
+        "Test: 'pourquoi choisir' section shows new text"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T19:00:00Z"
+    },
+    {
+      "id": 29,
+      "category": "content",
+      "priority": "medium",
+      "description": "Method page content: remove Payfit, update company names",
+      "steps": [
+        "Update locales/fr/method.json — change company names in parentheses to (TheFork, Spendesk, Yousign, Qonto, etc.)",
+        "Remove 'Payfit' from the list",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: /method shows updated company names without Payfit"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T14:30:00Z"
+    },
+    {
+      "id": 30,
+      "category": "feature",
+      "priority": "high",
+      "description": "Home page: tech section logos, button, and text completion",
+      "steps": [
+        "Add tool logos to the tech/stack section in app/components/home/",
+        "Increase font size of the phrase below the stack illustration",
+        "Add 'Nos solutions partenaires' outline button linking to /technology",
+        "Complete the 'Notre role' sentence per QA doc",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: tech section shows tool logos, button links to /technology",
+        "Test: 'Notre role' text is complete and phrase font is larger"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T18:00:00Z"
+    },
+    {
+      "id": 31,
+      "category": "feature",
+      "priority": "high",
+      "description": "Offer page: hover jaune cards methode + lien methode",
+      "steps": [
+        "Add yellow hover effect on method cards in offer page",
+        "Add subtitle 'THE REVENUE EXPERIENCE SYSTEM' below method cards section",
+        "Add 'Decouvrir' button linking to /method",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: method cards on /offer show yellow hover effect",
+        "Test: subtitle and button appear below cards, button navigates to /method"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T18:00:00Z"
+    },
+    {
+      "id": 32,
+      "category": "feature",
+      "priority": "high",
+      "description": "About page: add reassurance block 'Pourquoi nous choisir'",
+      "steps": [
+        "Create new reassurance component in app/components/about/",
+        "Add scroll-triggered animation (same pattern as offer 3-blocks)",
+        "Add content from QA doc: title, subtitle, 6 checkmark items",
+        "Add locale keys in locales/{fr,en}/about.json",
+        "Integrate component in about-us route before CTA section",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: reassurance block appears on /about-us with scroll animation",
+        "Test: all 6 items render with checkmarks"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T19:30:00Z"
+    },
+    {
+      "id": 33,
+      "category": "feature",
+      "priority": "medium",
+      "description": "About page: add founders photos",
+      "steps": [
+        "Add founder photos to app/components/about/ team section",
+        "Ensure photos display correctly (rounded, proper sizing)",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: founder photos visible on /about-us team section"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T20:00:00Z"
+    },
+    {
+      "id": 34,
+      "category": "feature",
+      "priority": "medium",
+      "description": "Home page: complete testimonials section with all citations, logos, and photos",
+      "steps": [
+        "Add all current client testimonials to the citations section",
+        "Add client logos, partner logos, Ocobo member photos",
+        "Redesign 'quote jaune' to match prototype",
+        "Increase 'DECOUVRIR NOS STORIES' font size",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: testimonials section shows multiple quotes with photos and logos",
+        "Test: 'Decouvrir nos stories' link is visible and links to /clients"
+      ],
+      "passes": true,
+      "blocked": false,
+      "blocked_reason": null,
+      "completed_at": "2026-02-06T18:40:00Z"
+    },
+    {
+      "id": 35,
+      "category": "feature",
+      "priority": "medium",
+      "description": "Offer page: add tool logos and team logos replacing company names",
+      "steps": [
+        "Increase grey subtitle font sizes in offer sections",
+        "Add tool logos in relevant offer sections",
+        "Replace company name text with team member logos in 'Notre equipe' section",
+        "Run pnpm check && pnpm typecheck — zero errors",
+        "Test: tool logos appear in offer page sections",
+        "Test: team section shows logos instead of text names"
+      ],
+      "passes": false,
+      "blocked": true,
+      "blocked_reason": "Waiting for logo/photo assets to be exported from Notion",
+      "completed_at": null
+    }
+  ]
+}
