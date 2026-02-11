@@ -117,7 +117,7 @@
   "scope.labels.lifecycle": "CYCLE DE VIE & EQUIPE",
   "scope.labels.kpi": "INDICATEUR (KPI)",
   "scope.labels.crm": "ARCHITECTURE CRM",
-  "scope.labels.projects": "PROJETS PRIORITAIRES",
+  "scope.labels.projects": "NOS INTERVENTIONS",
   "scope.labels.territories": "TERRITOIRES",
   "scope.kpis": [
     { "items": ["# MQL", "€ CAC"], "color": "sky" },
@@ -138,12 +138,12 @@
     { "name": "Deal Upsell", "icon": "star" }
   ],
   "scope.projects": [
-    { "phase": "Demande", "text": "Définition ICP & persona, conception scoring MQL/SQL", "color": "sky", "icon": "target" },
-    { "phase": "Prosp. & Qualif.", "text": "Qualification (BANT, SPICED), règles de gestion des SQL (segmentation)", "color": "yellow", "icon": "userCheck" },
-    { "phase": "Négo. & Closing", "text": "Méthodologie Sales (MEDDICC), passation SQL/AE (SQO), nurturing", "color": "coral", "icon": "zap" },
-    { "phase": "Activation", "text": "Segmentation client, touchpoints, Value Framework Ocobo", "color": "sky", "icon": "rocket" },
-    { "phase": "Transformation", "text": "Adoption score, health score, rituels de renouvellement automatisés", "color": "mint", "icon": "repeat" },
-    { "phase": "Expansion", "text": "Identification upsell / x-sell, méthodologie d'Account Planning", "color": "yellow", "icon": "trendingUp" }
+    { "phase": "Génération de demande", "text": "Identifier vos clients idéaux et construire un scoring qui alimente un pipeline de qualité.", "color": "sky", "icon": "target" },
+    { "phase": "Qualification", "text": "Structurer la qualification pour que vos commerciaux se concentrent sur les bons deals.", "color": "yellow", "icon": "userCheck" },
+    { "phase": "Closing", "text": "Équiper vos équipes d'une méthodologie de vente pour raccourcir les cycles et augmenter les taux de conversion.", "color": "coral", "icon": "zap" },
+    { "phase": "Onboarding", "text": "Créer un parcours d'onboarding qui accélère la montée en valeur de chaque nouveau client.", "color": "sky", "icon": "rocket" },
+    { "phase": "Rétention", "text": "Mettre en place les indicateurs et rituels qui préviennent le churn avant qu'il n'arrive.", "color": "mint", "icon": "repeat" },
+    { "phase": "Expansion", "text": "Identifier les opportunités de croissance dans votre base client existante.", "color": "yellow", "icon": "trendingUp" }
   ],
   "scope.territories": [
     { "title": "Acquisition", "items": ["Inbound", "Outbound", "Partenariats"], "color": "yellow" },

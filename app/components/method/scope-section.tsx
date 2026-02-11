@@ -14,11 +14,8 @@ import { section } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { BowtieLifecycle } from './revenue-model/bowtie-lifecycle';
-import { CrmArchitecture } from './revenue-model/crm-architecture';
-import { KpiGrid } from './revenue-model/kpi-grid';
 import { PriorityProjects } from './revenue-model/priority-projects';
 import { StageHeaders } from './revenue-model/stage-headers';
-import { TerritoriesGrid } from './revenue-model/territories-grid';
 import { ScopeCard } from './scope-card';
 
 type ScopeColor = 'yellow' | 'sky' | 'mint' | 'coral' | 'dark';
@@ -78,12 +75,8 @@ export const ScopeSection = () => {
           {t('scope.subtitle')}
         </p>
 
-        {/* Revenue model — 6 strates */}
-        <div
-          className={flex({
-            direction: 'column',
-          })}
-        >
+        {/* Revenue model — headers + bowtie + interventions */}
+        <div className={flex({ direction: 'column' })}>
           <div
             className={css({
               borderWidth: '1px',
@@ -96,10 +89,7 @@ export const ScopeSection = () => {
           >
             <StageHeaders />
             <BowtieLifecycle />
-            <KpiGrid />
-            <CrmArchitecture />
             <PriorityProjects />
-            <TerritoriesGrid />
           </div>
         </div>
 
