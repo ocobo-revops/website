@@ -1,14 +1,6 @@
-import {
-  BarChart3,
-  Database,
-  GraduationCap,
-  Layers,
-  RefreshCw,
-  Target,
-} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 import { section } from '@ocobo/styled-system/recipes';
 
@@ -19,35 +11,80 @@ import { KpiGrid } from './revenue-model/kpi-grid';
 import { PriorityProjects } from './revenue-model/priority-projects';
 import { StageHeaders } from './revenue-model/stage-headers';
 import { TerritoriesGrid } from './revenue-model/territories-grid';
-import { ScopeCard } from './scope-card';
 
-type ScopeColor = 'yellow' | 'sky' | 'mint' | 'coral' | 'dark';
+type ThemeColor = 'yellow' | 'sky' | 'mint' | 'coral';
 
-type ScopeData = {
+type ActivityItem = {
+  number: string;
   title: string;
-  color: ScopeColor;
-  icon:
-    | 'target'
-    | 'database'
-    | 'barChart3'
-    | 'refreshCw'
-    | 'graduationCap'
-    | 'layers';
-  items: string[];
+  description: string;
+  color: ThemeColor;
 };
 
-const iconMap = {
-  target: Target,
-  database: Database,
-  barChart3: BarChart3,
-  refreshCw: RefreshCw,
-  graduationCap: GraduationCap,
-  layers: Layers,
-} as const;
+/* Pre-computed colour maps for Panda CSS static analysis */
+const accentStyles: Record<ThemeColor, string> = {
+  yellow: css({
+    _before: { bg: 'ocobo.yellow' },
+  }),
+  sky: css({
+    _before: { bg: 'ocobo.sky' },
+  }),
+  mint: css({
+    _before: { bg: 'ocobo.mint' },
+  }),
+  coral: css({
+    _before: { bg: 'ocobo.coral' },
+  }),
+};
+
+const numberStyles: Record<ThemeColor, string> = {
+  yellow: css({ color: 'ocobo.yellow/15' }),
+  sky: css({ color: 'ocobo.sky/15' }),
+  mint: css({ color: 'ocobo.mint/15' }),
+  coral: css({ color: 'ocobo.coral/15' }),
+};
+
+const tileBase = css({
+  position: 'relative',
+  p: '8',
+  pt: '10',
+  textAlign: 'left',
+  transition: 'all',
+  transitionDuration: '300ms',
+  overflow: 'hidden',
+  _before: {
+    content: '""',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    h: '3px',
+    transition: 'height',
+    transitionDuration: '300ms',
+  },
+  _hover: {
+    transform: 'translateY(-2px)',
+    shadow: 'lg',
+    _before: { h: '5px' },
+  },
+});
+
+const numberBase = css({
+  position: 'absolute',
+  top: '3',
+  right: '6',
+  fontFamily: 'display',
+  fontSize: '5xl',
+  fontWeight: 'black',
+  lineHeight: '1',
+  userSelect: 'none',
+});
 
 export const ScopeSection = () => {
   const { t } = useTranslation('method');
-  const scopes = t('scope.items', { returnObjects: true }) as ScopeData[];
+  const activities = t('scope.activities', {
+    returnObjects: true,
+  }) as ActivityItem[];
 
   return (
     <section
@@ -79,11 +116,7 @@ export const ScopeSection = () => {
         </p>
 
         {/* Revenue model — 6 strates */}
-        <div
-          className={flex({
-            direction: 'column',
-          })}
-        >
+        <div className={flex({ direction: 'column' })}>
           <div
             className={css({
               borderWidth: '1px',
@@ -103,6 +136,7 @@ export const ScopeSection = () => {
           </div>
         </div>
 
+        {/* Activities */}
         <h3
           className={css({
             fontFamily: 'display',
@@ -115,27 +149,57 @@ export const ScopeSection = () => {
         >
           {t('scope.activitiesTitle')}
         </h3>
+        <p
+          className={css({
+            fontSize: 'lg',
+            color: 'gray.400',
+            mb: '12',
+            maxW: 'xl',
+            mx: 'auto',
+          })}
+        >
+          {t('scope.activitiesSubtitle')}
+        </p>
 
         <div
-          className={`${grid({ columns: { base: 1, md: 2, lg: 3 }, gap: '8' })} ${css(
-            {
-              textAlign: 'left',
-              mt: '12',
-            },
-          )}`}
-        >
-          {scopes.map((scope) => {
-            const Icon = iconMap[scope.icon];
-            return (
-              <ScopeCard
-                key={scope.title}
-                title={scope.title}
-                items={scope.items}
-                color={scope.color}
-                icon={Icon}
-              />
-            );
+          className={grid({
+            columns: { base: 1, md: 2, lg: 3 },
+            gap: '0',
           })}
+        >
+          {activities.map((item) => (
+            <div
+              key={item.number}
+              className={cx(tileBase, accentStyles[item.color])}
+            >
+              <span className={cx(numberBase, numberStyles[item.color])}>
+                {item.number}
+              </span>
+              <h4
+                className={css({
+                  fontFamily: 'display',
+                  fontSize: 'lg',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  mb: '3',
+                  position: 'relative',
+                })}
+              >
+                {item.title}
+              </h4>
+              <p
+                className={css({
+                  fontSize: 'sm',
+                  color: 'gray.500',
+                  lineHeight: 'relaxed',
+                  position: 'relative',
+                })}
+              >
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </Container>
     </section>

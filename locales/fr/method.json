@@ -101,7 +101,8 @@
   ],
   "scope.title": "Notre périmètre d'action",
   "scope.subtitle": "Nous intervenons sur l'intégralité de la chaîne de valeur du revenu.",
-  "scope.activitiesTitle": "Quelques exemples d'activités",
+  "scope.activitiesTitle": "Ce que nous faisons, concrètement",
+  "scope.activitiesSubtitle": "Six leviers pour transformer votre machine revenue.",
   "scope.stages": ["Demande", "Prosp. & Qualif.", "Négo. & Closing", "Activation", "Transformation", "Expansion"],
   "scope.teams": ["MARKETING", "SDR / AE", "AE", "AE / AM / CSM", "AM / KAM / CSM", "AM / KAM / CSM"],
   "scope.phases": ["MQL", "SQL", "SQO", "CLIENT", "CLIENT TRANSFORMÉ", "CLIENT MAXIMISÉ"],
@@ -151,42 +152,42 @@
     { "title": "Marchés", "items": ["Public", "Privé", "SaaS"], "color": "mint" },
     { "title": "Segments", "items": ["SMB", "Mid market", "Enterprise"], "color": "coral" }
   ],
-  "scope.items": [
+  "scope.activities": [
     {
-      "title": "Génération de Revenu",
-      "color": "yellow",
-      "icon": "target",
-      "items": ["Lead Gen & Scoring", "Pipeline Management", "Account Based Marketing"]
+      "number": "01",
+      "title": "Acquisition",
+      "description": "Attirer les bons prospects, qualifier les opportunités et alimenter un pipeline prévisible.",
+      "color": "yellow"
     },
     {
-      "title": "Architecture & Data",
-      "color": "sky",
-      "icon": "database",
-      "items": ["CRM Setup (HubSpot/SFDC)", "Data Quality & Enrichment", "Integrations & Stack"]
+      "number": "02",
+      "title": "Données & outils",
+      "description": "Structurer le CRM, connecter la stack technique et fiabiliser la donnée à chaque étape.",
+      "color": "sky"
     },
     {
-      "title": "Pilotage & Performance",
-      "color": "mint",
-      "icon": "barChart3",
-      "items": ["Forecasting & Reporting", "Plan de Commissionnement", "Territory Planning"]
+      "number": "03",
+      "title": "Pilotage",
+      "description": "Construire les tableaux de bord, fiabiliser les prévisions et aligner la rémunération variable.",
+      "color": "mint"
     },
     {
-      "title": "Customer Success & Expansion",
-      "color": "coral",
-      "icon": "refreshCw",
-      "items": ["Churn Management & Health Score", "Upsell & Cross-sell Routines", "Onboarding & CS Ops Strategy"]
+      "number": "04",
+      "title": "Fidélisation",
+      "description": "Réduire le churn, développer les comptes existants et maximiser la valeur client dans le temps.",
+      "color": "coral"
     },
     {
-      "title": "Sales Enablement",
-      "color": "yellow",
-      "icon": "graduationCap",
-      "items": ["Playbooks & Sales Methodology", "Onboarding & Continuous Training", "Sales Content & Tool Adoption"]
+      "number": "05",
+      "title": "Enablement",
+      "description": "Former les équipes, documenter les process et accélérer l'onboarding des nouveaux collaborateurs.",
+      "color": "yellow"
     },
     {
-      "title": "Gouvernance & Stratégie",
-      "color": "sky",
-      "icon": "layers",
-      "items": ["Go-to-Market Strategy Review", "Revenue Planning & Board Reporting", "Revenue Management & Leadership"]
+      "number": "06",
+      "title": "Stratégie",
+      "description": "Définir le go-to-market, planifier le revenu et structurer la gouvernance de la croissance.",
+      "color": "sky"
     }
   ],
   "cta.title": "Prêt à sortir du bricolage ?",
