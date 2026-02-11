@@ -101,8 +101,7 @@
   ],
   "scope.title": "Our scope",
   "scope.subtitle": "We operate across the full revenue value chain.",
-  "scope.activitiesTitle": "What we actually do",
-  "scope.activitiesSubtitle": "Six levers to transform your revenue engine.",
+  "scope.activitiesTitle": "Some examples of activities",
   "scope.stages": ["Demand", "Prosp. & Qualif.", "Nego. & Closing", "Activation", "Transformation", "Expansion"],
   "scope.teams": ["MARKETING", "SDR / AE", "AE", "AE / AM / CSM", "AM / KAM / CSM", "AM / KAM / CSM"],
   "scope.phases": ["MQL", "SQL", "SQO", "CUSTOMER", "TRANSFORMED", "MAXIMISED"],
@@ -152,42 +151,42 @@
     { "title": "Markets", "items": ["Public", "Private", "SaaS"], "color": "mint" },
     { "title": "Segments", "items": ["SMB", "Mid-market", "Enterprise"], "color": "coral" }
   ],
-  "scope.activities": [
+  "scope.items": [
     {
-      "number": "01",
-      "title": "Acquisition",
-      "description": "Attract the right prospects, qualify opportunities and fuel a predictable pipeline.",
-      "color": "yellow"
+      "title": "Revenue generation",
+      "color": "yellow",
+      "icon": "target",
+      "items": ["Lead gen & scoring", "Pipeline management", "Account-based marketing"]
     },
     {
-      "number": "02",
-      "title": "Data & tools",
-      "description": "Structure your CRM, connect the tech stack and ensure data integrity at every stage.",
-      "color": "sky"
+      "title": "Architecture & data",
+      "color": "sky",
+      "icon": "database",
+      "items": ["CRM setup (HubSpot/SFDC)", "Data quality & enrichment", "Integrations & stack"]
     },
     {
-      "number": "03",
-      "title": "Steering",
-      "description": "Build dashboards, make forecasts reliable and align variable compensation with targets.",
-      "color": "mint"
+      "title": "Steering & performance",
+      "color": "mint",
+      "icon": "barChart3",
+      "items": ["Forecasting & reporting", "Comp plan", "Territory planning"]
     },
     {
-      "number": "04",
-      "title": "Retention",
-      "description": "Reduce churn, grow existing accounts and maximise customer value over time.",
-      "color": "coral"
+      "title": "Customer success & expansion",
+      "color": "coral",
+      "icon": "refreshCw",
+      "items": ["Churn management & health score", "Upsell & cross-sell routines", "Onboarding & CS Ops strategy"]
     },
     {
-      "number": "05",
-      "title": "Enablement",
-      "description": "Train teams, document processes and accelerate onboarding for new hires.",
-      "color": "yellow"
+      "title": "Sales enablement",
+      "color": "yellow",
+      "icon": "graduationCap",
+      "items": ["Playbooks & sales methodology", "Onboarding & continuous training", "Sales content & tool adoption"]
     },
     {
-      "number": "06",
-      "title": "Strategy",
-      "description": "Define go-to-market, plan revenue and structure growth governance.",
-      "color": "sky"
+      "title": "Governance & strategy",
+      "color": "sky",
+      "icon": "layers",
+      "items": ["Go-to-market strategy review", "Revenue planning & board reporting", "Revenue management & leadership"]
     }
   ],
   "cta.title": "Ready to stop the patchwork?",
