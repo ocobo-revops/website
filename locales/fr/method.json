@@ -102,6 +102,55 @@
   "scope.title": "Notre périmètre d'action",
   "scope.subtitle": "Nous intervenons sur l'intégralité de la chaîne de valeur du revenu.",
   "scope.activitiesTitle": "Quelques exemples d'activités",
+  "scope.stages": ["Demande", "Prosp. & Qualif.", "Négo. & Closing", "Activation", "Transformation", "Expansion"],
+  "scope.teams": ["MARKETING", "SDR / AE", "AE", "AE / AM / CSM", "AM / KAM / CSM", "AM / KAM / CSM"],
+  "scope.phases": ["MQL", "SQL", "SQO", "CLIENT", "CLIENT TRANSFORMÉ", "CLIENT MAXIMISÉ"],
+  "scope.conversions": [
+    { "label": "% MQL/SQL", "w": 105 },
+    { "label": "% SQL/SQO", "w": 105 },
+    { "label": "% WIN RATE", "w": 105 },
+    { "label": "% LIVE", "w": 85 },
+    { "label": "% RENEW", "w": 100 },
+    { "label": "% UPSELL", "w": 100 }
+  ],
+  "scope.center": { "line1": "NOUVEAU", "line2": "CLIENT" },
+  "scope.labels.lifecycle": "CYCLE DE VIE & EQUIPE",
+  "scope.labels.kpi": "INDICATEUR (KPI)",
+  "scope.labels.crm": "ARCHITECTURE CRM",
+  "scope.labels.projects": "PROJETS PRIORITAIRES",
+  "scope.labels.territories": "TERRITOIRES",
+  "scope.kpis": [
+    { "items": ["# MQL", "€ CAC"], "color": "sky" },
+    { "items": ["# SQL", "% Disqualif.", "Cycle de vente"], "color": "yellow" },
+    { "items": ["# SQO", "€ Pipe généré", "Sales Velocity"], "color": "coral" },
+    { "items": ["# Deals Won", "€ TCV/ACV", "% adoption"], "color": "sky" },
+    { "items": ["% Churn", "€ Panier moy."], "color": "mint" },
+    { "items": ["NRR", "€ Upsell/X-sell", "LTV"], "color": "yellow" }
+  ],
+  "scope.crm.entities": [
+    { "name": "Lead", "icon": "userCheck" },
+    { "name": "Deal (New Biz)", "icon": "zap" },
+    { "name": "Projet", "icon": "layers" },
+    { "name": "Entreprise", "icon": "building2" }
+  ],
+  "scope.crm.branches": [
+    { "name": "Deal Renewal", "icon": "repeat" },
+    { "name": "Deal Upsell", "icon": "star" }
+  ],
+  "scope.projects": [
+    { "phase": "Demande", "text": "Définition ICP & persona, conception scoring MQL/SQL", "color": "sky", "icon": "target" },
+    { "phase": "Prosp. & Qualif.", "text": "Qualification (BANT, SPICED), règles de gestion des SQL (segmentation)", "color": "yellow", "icon": "userCheck" },
+    { "phase": "Négo. & Closing", "text": "Méthodologie Sales (MEDDICC), passation SQL/AE (SQO), nurturing", "color": "coral", "icon": "zap" },
+    { "phase": "Activation", "text": "Segmentation client, touchpoints, Value Framework Ocobo", "color": "sky", "icon": "rocket" },
+    { "phase": "Transformation", "text": "Adoption score, health score, rituels de renouvellement automatisés", "color": "mint", "icon": "repeat" },
+    { "phase": "Expansion", "text": "Identification upsell / x-sell, méthodologie d'Account Planning", "color": "yellow", "icon": "trendingUp" }
+  ],
+  "scope.territories": [
+    { "title": "Acquisition", "items": ["Inbound", "Outbound", "Partenariats"], "color": "yellow" },
+    { "title": "Motions", "items": ["High-touch", "Medium", "Low-touch"], "color": "sky" },
+    { "title": "Marchés", "items": ["Public", "Privé", "SaaS"], "color": "mint" },
+    { "title": "Segments", "items": ["SMB", "Mid market", "Enterprise"], "color": "coral" }
+  ],
   "scope.items": [
     {
       "title": "Génération de Revenu",
@@ -140,29 +189,6 @@
       "items": ["Go-to-Market Strategy Review", "Revenue Planning & Board Reporting", "Revenue Management & Leadership"]
     }
   ],
-  "scope.diagram": {
-    "loops": {
-      "acquisition": "Acquisition",
-      "expansion": "Expansion"
-    },
-    "center": {
-      "line1": "Nouveau",
-      "line2": "Client"
-    },
-    "flow": {
-      "left": ["MQL", "SQL", "SQO"],
-      "right": ["ACTIF", "UPSELL", "CROSSELL"]
-    },
-    "stages": [
-      "GÉNÉRATION",
-      "DE DEMANDE",
-      "QUALIFICATION",
-      "NÉGOCIATION",
-      "ONBOARDING",
-      "ADOPTION",
-      "IMPACT"
-    ]
-  },
   "cta.title": "Prêt à sortir du bricolage ?",
   "cta.subtitle": "Notre méthode est le fruit de 10 ans d'expérience dans les scale-ups les plus performantes (TheFork, Spendesk, Yousign, Qonto, etc.).",
   "cta.button": "Bâtir mon architecture"
