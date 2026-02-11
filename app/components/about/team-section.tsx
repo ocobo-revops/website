@@ -8,6 +8,7 @@ import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
 import { Container } from '../ui/Container';
+import { ExperienceLogos } from './experience-logos';
 import { TeamMemberCard } from './team-member-card';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
@@ -216,6 +217,8 @@ export const TeamSection = ({ showStudio }: TeamSectionProps) => {
               />
             ))}
           </div>
+
+          <ExperienceLogos />
 
           <div
             className={`${flex({ direction: 'column', align: 'center', gap: '8' })} ${css(
