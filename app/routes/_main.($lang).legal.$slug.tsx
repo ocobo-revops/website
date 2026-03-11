@@ -12,9 +12,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const { slug } = params;
 
   if (!slug) {
-    // we know we can't render the component
-    // so throw immediately to stop executing code
-    // and show the not found page
     throw new Response('Not Found', { status: 404 });
   }
 
@@ -42,7 +39,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   });
 };
 
-export default function Index() {
+export default function LegalPage() {
   const { page } = useLoaderData<typeof loader>();
   return (
     <article
