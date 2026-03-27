@@ -59,7 +59,7 @@
     {
       "number": "03",
       "title": "Performance",
-      "description": "You can’t steer what you don’t measure. We align indicators and incentives (comp) with your strategic goals.",
+      "description": "You can't steer what you don't measure. We align indicators and incentives (comp) with your strategic goals.",
       "color": "mint",
       "icon": "lineChart",
       "deliverables": [
@@ -80,7 +80,7 @@
     {
       "number": "04",
       "title": "Enablement",
-      "description": "The best system is useless if it isn’t used. We train, coach, and document to ensure lasting adoption.",
+      "description": "The best system is useless if it isn't used. We train, coach, and document to ensure lasting adoption.",
       "color": "coral",
       "icon": "graduationCap",
       "deliverables": [
@@ -90,7 +90,7 @@
         },
         {
           "title": "Sustainable technical documentation",
-          "description": "A complete wiki so knowledge isn’t trapped in individuals."
+          "description": "A complete wiki so knowledge isn't trapped in individuals."
         },
         {
           "title": "CRM onboarding routines",
@@ -102,6 +102,55 @@
   "scope.title": "Our scope",
   "scope.subtitle": "We operate across the full revenue value chain.",
   "scope.activitiesTitle": "Some examples of activities",
+  "scope.stages": ["Demand", "Prosp. & Qualif.", "Nego. & Closing", "Activation", "Transformation", "Expansion"],
+  "scope.teams": ["MARKETING", "SDR / AE", "AE", "AE / AM / CSM", "AM / KAM / CSM", "AM / KAM / CSM"],
+  "scope.phases": ["MQL", "SQL", "SQO", "CUSTOMER", "TRANSFORMED", "MAXIMISED"],
+  "scope.conversions": [
+    { "label": "% MQL/SQL", "w": 105 },
+    { "label": "% SQL/SQO", "w": 105 },
+    { "label": "% WIN RATE", "w": 105 },
+    { "label": "% LIVE", "w": 85 },
+    { "label": "% RENEW", "w": 100 },
+    { "label": "% UPSELL", "w": 100 }
+  ],
+  "scope.center": { "line1": "NEW", "line2": "CUSTOMER" },
+  "scope.labels.lifecycle": "LIFECYCLE & TEAM",
+  "scope.labels.kpi": "INDICATOR (KPI)",
+  "scope.labels.crm": "CRM ARCHITECTURE",
+  "scope.labels.projects": "OUR INTERVENTIONS",
+  "scope.labels.territories": "TERRITORIES",
+  "scope.kpis": [
+    { "items": ["# MQL", "€ CAC"], "color": "sky" },
+    { "items": ["# SQL", "% Disqualif.", "Sales cycle"], "color": "yellow" },
+    { "items": ["# SQO", "€ Pipe generated", "Sales Velocity"], "color": "coral" },
+    { "items": ["# Deals Won", "€ TCV/ACV", "% adoption"], "color": "sky" },
+    { "items": ["% Churn", "€ Avg. basket"], "color": "mint" },
+    { "items": ["NRR", "€ Upsell/X-sell", "LTV"], "color": "yellow" }
+  ],
+  "scope.crm.entities": [
+    { "name": "Lead", "icon": "userCheck" },
+    { "name": "Deal (New Biz)", "icon": "zap" },
+    { "name": "Project", "icon": "layers" },
+    { "name": "Company", "icon": "building2" }
+  ],
+  "scope.crm.branches": [
+    { "name": "Deal Renewal", "icon": "repeat" },
+    { "name": "Deal Upsell", "icon": "star" }
+  ],
+  "scope.projects": [
+    { "phase": "Demand generation", "text": "Identify your ideal customers and build scoring that fuels a quality pipeline.", "color": "sky", "icon": "target" },
+    { "phase": "Qualification", "text": "Structure qualification so your reps focus on the right deals.", "color": "yellow", "icon": "userCheck" },
+    { "phase": "Closing", "text": "Equip your team with a proven sales methodology to shorten cycles and boost win rates.", "color": "coral", "icon": "zap" },
+    { "phase": "Onboarding", "text": "Create an onboarding journey that accelerates time-to-value for every customer.", "color": "sky", "icon": "rocket" },
+    { "phase": "Retention", "text": "Set up the indicators and rituals that prevent churn before it happens.", "color": "mint", "icon": "repeat" },
+    { "phase": "Expansion", "text": "Spot growth opportunities within your existing customer base.", "color": "yellow", "icon": "trendingUp" }
+  ],
+  "scope.territories": [
+    { "title": "Acquisition", "items": ["Inbound", "Outbound", "Partnerships"], "color": "yellow" },
+    { "title": "Motions", "items": ["High-touch", "Medium", "Low-touch"], "color": "sky" },
+    { "title": "Markets", "items": ["Public", "Private", "SaaS"], "color": "mint" },
+    { "title": "Segments", "items": ["SMB", "Mid-market", "Enterprise"], "color": "coral" }
+  ],
   "scope.items": [
     {
       "title": "Revenue generation",
@@ -140,29 +189,6 @@
       "items": ["Go-to-market strategy review", "Revenue planning & board reporting", "Revenue management & leadership"]
     }
   ],
-  "scope.diagram": {
-    "loops": {
-      "acquisition": "Acquisition",
-      "expansion": "Expansion"
-    },
-    "center": {
-      "line1": "New",
-      "line2": "Customer"
-    },
-    "flow": {
-      "left": ["MQL", "SQL", "SQO"],
-      "right": ["ACTIVE", "UPSELL", "CROSS-SELL"]
-    },
-    "stages": [
-      "DEMAND",
-      "GENERATION",
-      "QUALIFICATION",
-      "NEGOTIATION",
-      "ONBOARDING",
-      "ADOPTION",
-      "IMPACT"
-    ]
-  },
   "cta.title": "Ready to stop the patchwork?",
   "cta.subtitle": "Our method is the result of 10 years of experience in top-performing scale-ups (TheFork, Spendesk, Yousign, Qonto, etc.).",
   "cta.button": "Build my architecture"

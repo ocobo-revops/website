@@ -9,12 +9,14 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
-import { grid } from '@ocobo/styled-system/patterns';
+import { flex, grid } from '@ocobo/styled-system/patterns';
 import { section } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
+import { BowtieLifecycle } from './revenue-model/bowtie-lifecycle';
+import { PriorityProjects } from './revenue-model/priority-projects';
+import { StageHeaders } from './revenue-model/stage-headers';
 import { ScopeCard } from './scope-card';
-import { UnifiedBowtie } from './unified-bowtie';
 
 type ScopeColor = 'yellow' | 'sky' | 'mint' | 'coral' | 'dark';
 
@@ -73,7 +75,23 @@ export const ScopeSection = () => {
           {t('scope.subtitle')}
         </p>
 
-        <UnifiedBowtie />
+        {/* Revenue model — headers + bowtie + interventions */}
+        <div className={flex({ direction: 'column' })}>
+          <div
+            className={css({
+              borderWidth: '1px',
+              borderColor: 'gray.200',
+              rounded: 'lg',
+              overflow: 'hidden',
+              shadow: 'sm',
+              textAlign: 'left',
+            })}
+          >
+            <StageHeaders />
+            <BowtieLifecycle />
+            <PriorityProjects />
+          </div>
+        </div>
 
         <h3
           className={css({
