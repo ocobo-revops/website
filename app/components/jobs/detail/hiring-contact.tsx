@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { css } from '@ocobo/styled-system/css';
 import { circle } from '@ocobo/styled-system/patterns';
 
@@ -20,6 +22,7 @@ function getInitials(name: string) {
 export function HiringContact({ contact }: HiringContactProps) {
   const photoUrl = `${ASSETS_BASE_URL}/team/${contact.photo}`;
   const initials = getInitials(contact.name);
+  const [imgFailed, setImgFailed] = React.useState(false);
 
   return (
     <div
@@ -60,21 +63,21 @@ export function HiringContact({ contact }: HiringContactProps) {
           >
             {initials}
           </div>
-          <img
-            src={photoUrl}
-            alt={contact.name}
-            width={100}
-            height={100}
-            className={`${circle({ size: '100px' })} ${css({
-              objectFit: 'cover',
-              filter: 'grayscale(100%)',
-              position: 'relative',
-              zIndex: 1,
-            })}`}
-            onError={(e) => {
-              e.currentTarget.style.opacity = '0';
-            }}
-          />
+          {!imgFailed && (
+            <img
+              src={photoUrl}
+              alt={contact.name}
+              width={100}
+              height={100}
+              className={`${circle({ size: '100px' })} ${css({
+                objectFit: 'cover',
+                filter: 'grayscale(100%)',
+                position: 'relative',
+                zIndex: 1,
+              })}`}
+              onError={() => setImgFailed(true)}
+            />
+          )}
         </div>
 
         {/* Content */}

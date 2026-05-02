@@ -35,7 +35,7 @@ export function ScrollspyToc() {
             <a
               key={id}
               href={`#${id}`}
-              aria-current={isActive ? 'location' : undefined}
+              aria-current={isActive ? 'true' : undefined}
               className={cx(
                 hstack({ justify: 'space-between' }),
                 css({
