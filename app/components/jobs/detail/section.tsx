@@ -20,7 +20,8 @@ function ShiftedHeading({
   level = 2,
   ...props
 }: React.ComponentProps<typeof Heading>) {
-  return <Heading level={Math.max(1, level - 1)} {...props} />;
+  // Clamp at h2 — h1 is reserved for the job title in the page header
+  return <Heading level={Math.max(2, level - 1)} {...props} />;
 }
 
 type JobCalloutProps = React.HTMLAttributes<HTMLDivElement> & {

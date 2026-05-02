@@ -24,7 +24,7 @@ export const loader = createHybridLoader(
 
     if (status !== 200 || !jobsData) {
       console.error(`Failed to fetch jobs: ${state}`);
-      return { jobs: [], isError: true };
+      return { jobs: [], lang, isError: true };
     }
 
     const jobs = (jobsData as MarkdocFile<JobFrontmatter>[])
@@ -35,7 +35,7 @@ export const loader = createHybridLoader(
           new Date(a.frontmatter.publishedAt).getTime(),
       );
 
-    return { jobs, isError: false };
+    return { jobs, lang, isError: false };
   },
   'job',
 );
@@ -53,13 +53,13 @@ export const meta: MetaFunction<typeof loader> = ({ params }) => {
 };
 
 export default function JobsIndex() {
-  const { jobs } = useLoaderData<typeof loader>();
+  const { jobs, lang } = useLoaderData<typeof loader>();
 
   return (
     <div className={css({ width: 'full', pt: '32', pb: '24', bg: 'white' })}>
       <HeroSection />
       <ValuesSection />
-      <JobList jobs={jobs} />
+      <JobList jobs={jobs} lang={lang} />
       <ProcessSection />
       <OfficesSection />
     </div>

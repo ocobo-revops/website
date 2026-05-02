@@ -18,9 +18,10 @@ const highlightBarClasses = [
 
 type JobListProps = {
   jobs: MarkdocFile<JobFrontmatter>[];
+  lang: string;
 };
 
-export function JobList({ jobs }: JobListProps) {
+export function JobList({ jobs, lang }: JobListProps) {
   const { t } = useTranslation('jobs');
 
   if (jobs.length === 0) {
@@ -86,7 +87,7 @@ export function JobList({ jobs }: JobListProps) {
         {jobs.map((job, index) => (
           <li key={job.slug}>
             <Link
-              to={`/jobs/${job.slug}`}
+              to={`/${lang}/jobs/${job.slug}`}
               className={css({
                 display: 'block',
                 '& .arrow-box': {
