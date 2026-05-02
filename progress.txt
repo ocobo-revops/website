@@ -328,3 +328,57 @@ Created: 2026-02-06T15:00:00Z
 - pnpm check ✅ pnpm typecheck ✅
 
 ---
+
+## Feature: Jobs page — Pocock branch (Plan B Step 2)
+
+Issues: #64 (PRD), #65–72 (sub-issues) — github.com/ocobo-revops/website
+Branch: feature/jobs-pocock (website) + feature/jobs (ocobo-posts)
+
+### Key decisions
+- Content source: ocobo-posts repo, jobs/ dir — Markdoc files with YAML frontmatter
+- Schema: JobFrontmatter (title, contractType, seniority, location, startDate, hiringContact, applyEmail, status, publishedAt, intro)
+- HiringContact registry: jobs/_contacts.yml (ref by slug, photo → ASSETS_BASE_URL/team/)
+- Section IDs: mission / responsabilites / profil (matched to content headings via {% #id %})
+- Photos: static local public/images/jobs/ (not Vercel blob — same pattern as public/images/team/)
+- Heading shift: Markdoc h3→renders as h2, h4→h3 (ShiftedHeading in section.tsx)
+- Callout: job-specific JobCallout (gray.50 bg, neutral border) with title attr → badge(mint)
+- Buttons: button recipe (primary/white) via cx() on <a> tags for mailto links
+
+### Commits (website repo)
+- e693f1d feat: job schema, fetchJobs/fetchJob, cache strategy
+- 6276a97 feat: minimal jobs list route + JobList + i18n namespace
+- 4170ced feat: extractJobSections parser
+- b67e2bb feat: detail route, section renderer, header
+- 78c3458 feat: hiring contact registry I/O + block component
+- b5cb8be feat: scroll-spy TOC on detail page
+- d34502c feat: list page chrome (hero, values, process, about, job cards)
+- e128c50 feat: detail page chrome (intro, apply CTA, sidebar)
+- e354ae5 fix: align list/detail with prototype feedback (8 issues from QA)
+- d832f5b feat: replace placeholder photos with real Ocobo Notion photos
+- 7e16d25 feat: photos to public/images/jobs/ (static, not blob)
+- c87a861 fix: spacing, DS buttons, Aude avatar (aude.jpeg)
+- f2f8ca5 fix: heading hierarchy h3→h2, h4→h3
+- d1d4e39 feat: bigger HiringContact card + branded callouts
+- 20cff6d feat: callout title as badge (mint DS recipe), neutral bg
+
+### Issues status
+- #65 foundation ✅ — #66 detail route ✅ — #67 hiring contact ✅ — #68 scroll-spy ✅
+- #69 list page HITL ✅ — #70 detail page HITL ✅
+- #71 SEO (JSON-LD, OG, sitemap) ✅ — 0855377
+- #72 nav switch (internal route + Notion cleanup) ✅ — 18f9fa9
+- #58 Plan B: remaining steps after jobs PR merge ⏭️ NEXT
+
+### #71 SEO — 0855377
+- Files: app/modules/content/job-posting-ld.ts (+test), app/routes/_main.($lang).jobs.$slug.tsx, sitemap[.xml].tsx, content/index.ts
+- buildJobPostingLd: CDI→FULL_TIME, CDD→CONTRACTOR, Stage→INTERN, Alternance→OTHER; validThrough=+90d; hiringOrg+jobLocation+applicantReqs
+- JSON-LD injected as inline <script dangerouslySetInnerHTML> (reliable, Google supports in body)
+- meta locale was hardcoded 'fr' — now uses loader lang
+- Sitemap: /fr/jobs listing + per-offer URLs, published only, lastmod=publishedAt
+- 177 tests ✅ (8 new, 1 snapshot)
+
+### #72 Nav switch — 18f9fa9
+- Files: app/utils/url.ts, app/hooks/useMenuItems.ts
+- url.careers (Notion) removed → url.jobs = '/jobs'
+- useMenuItems jobs entry: getLocalizedPath(url.jobs), no isExternal
+- grep confirms 0 remaining Notion URL refs in app/
+- 177 tests ✅
