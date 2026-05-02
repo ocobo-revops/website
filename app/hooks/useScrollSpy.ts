@@ -6,13 +6,19 @@ export function useScrollSpy(ids: readonly string[]): string | null {
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        }
+        const intersecting = entries.filter((e) => e.isIntersecting);
+        // Don't update when scrolling between sections (nothing in range)
+        if (intersecting.length === 0) return;
+        // Pick the topmost visible section when multiple enter at once
+        const top = intersecting.reduce((prev, curr) =>
+          curr.boundingClientRect.top < prev.boundingClientRect.top
+            ? curr
+            : prev,
+        );
+        setActiveId(top.target.id);
       },
-      { rootMargin: '0px 0px -60% 0px', threshold: 0 },
+      // Tight window: only the top ~20% of the viewport triggers
+      { rootMargin: '0px 0px -80% 0px', threshold: 0 },
     );
 
     for (const id of ids) {
