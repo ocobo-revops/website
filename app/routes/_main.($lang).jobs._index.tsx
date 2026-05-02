@@ -1,6 +1,8 @@
 import { type LoaderFunctionArgs, type MetaFunction } from 'react-router';
 import { useLoaderData } from 'react-router';
 
+import { css } from '@ocobo/styled-system/css';
+
 import type { Language } from '~/localization/resources';
 import { createHybridLoader } from '~/modules/cache';
 import { fetchJobs } from '~/modules/content';
@@ -9,7 +11,11 @@ import type { MarkdocFile } from '~/types';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
+import { AboutOcoboSection } from '~/components/jobs/about-ocobo-section';
+import { HeroSection } from '~/components/jobs/hero-section';
 import { JobList } from '~/components/jobs/job-list';
+import { ProcessSection } from '~/components/jobs/process-section';
+import { ValuesSection } from '~/components/jobs/values-section';
 
 export const loader = createHybridLoader(
   async ({ params }: LoaderFunctionArgs) => {
@@ -49,5 +55,22 @@ export const meta: MetaFunction<typeof loader> = ({ params }) => {
 export default function JobsIndex() {
   const { jobs } = useLoaderData<typeof loader>();
 
-  return <JobList jobs={jobs} />;
+  return (
+    <div className={css({ width: 'full', pt: '32', pb: '24', bg: 'white' })}>
+      <HeroSection />
+      <ValuesSection />
+      <JobList jobs={jobs} />
+      <ProcessSection />
+      <div
+        className={css({
+          maxW: '7xl',
+          mx: 'auto',
+          px: { base: '4', sm: '6', lg: '8' },
+          mb: '24',
+        })}
+      >
+        <AboutOcoboSection />
+      </div>
+    </div>
+  );
 }
