@@ -89,7 +89,9 @@ export const config: Config = {
     },
     callout: {
       render: 'Callout',
-      attributes: {},
+      attributes: {
+        title: { type: String },
+      },
     },
     aushaPlayer: {
       render: 'AushaPlayer',

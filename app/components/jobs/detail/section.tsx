@@ -4,6 +4,7 @@ import type { RenderableTreeNode } from '@markdoc/markdoc';
 import Markdoc from '@markdoc/markdoc';
 
 import { css } from '@ocobo/styled-system/css';
+import { badge } from '@ocobo/styled-system/recipes';
 
 import {
   Heading,
@@ -22,32 +23,29 @@ function ShiftedHeading({
   return <Heading level={Math.max(1, level - 1)} {...props} />;
 }
 
-// Larger, Ocobo-branded callout for job descriptions
-function JobCallout({
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+type JobCalloutProps = React.HTMLAttributes<HTMLDivElement> & {
+  title?: string;
+};
+
+function JobCallout({ children, title, ...props }: JobCalloutProps) {
   return (
     <div
       className={css({
         p: '6',
         borderRadius: 'xl',
-        bg: 'ocobo.yellow/10',
+        bg: 'gray.50',
         borderWidth: '1px',
-        borderColor: 'ocobo.yellow/30',
-        '& p': {
-          fontWeight: 'semibold',
-          color: 'ocobo.dark',
-          fontSize: 'base',
-        },
-        '& ul': { mt: '3', pl: '0', listStyleType: 'none' },
+        borderColor: 'gray.200',
+        '& ul': { pl: '0', listStyleType: 'none' },
         '& li': {
           color: 'gray.700',
           fontSize: 'base',
+          lineHeight: 'relaxed',
           display: 'flex',
           alignItems: 'flex-start',
           gap: '2',
           mb: '2',
+          _last: { mb: '0' },
         },
         '& li::before': {
           content: '"→"',
@@ -59,6 +57,13 @@ function JobCallout({
       })}
       {...props}
     >
+      {title && (
+        <span
+          className={`${badge({ variant: 'mint', size: 'sm' })} ${css({ mb: '4', display: 'inline-block' })}`}
+        >
+          {title}
+        </span>
+      )}
       {children}
     </div>
   );
