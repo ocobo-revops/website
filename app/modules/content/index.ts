@@ -56,7 +56,7 @@ export {
 export { extractJobSections } from './job-sections';
 export type { JobSections } from './job-sections';
 
-export { buildJobPostingLd } from './job-posting-ld';
+export { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
 
 export {
   loadContactRegistry,

@@ -22,6 +22,7 @@ import {
   fetchJob,
   loadContactRegistry,
   resolveContact,
+  serializeJsonLd,
 } from '~/modules/content';
 import type { HiringContact as HiringContactType } from '~/modules/schemas';
 import { getLang } from '~/utils/lang';
@@ -51,7 +52,9 @@ export const loader = createHybridLoader(
     const registry = await loadContactRegistry();
     const contact = resolveContact(job.frontmatter.hiringContact, registry);
     const { origin } = new URL(request.url);
-    const ld = buildJobPostingLd(job.frontmatter, contact, origin, slug, lang);
+    const ld = serializeJsonLd(
+      buildJobPostingLd(job.frontmatter, contact, origin, slug, lang),
+    );
 
     return { job, sections, contact, lang, slug, ld };
   },
@@ -83,7 +86,7 @@ export default function JobDetail() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        dangerouslySetInnerHTML={{ __html: ld }}
       />
       <div
         className={css({

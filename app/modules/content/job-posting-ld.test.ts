@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { HiringContact, JobFrontmatter } from '~/modules/schemas';
 
-import { buildJobPostingLd } from './job-posting-ld';
+import { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
 
 const BASE_FRONTMATTER: JobFrontmatter = {
   title: 'Revenue Operations Manager',
@@ -56,8 +56,7 @@ describe('buildJobPostingLd', () => {
       'fr',
     );
     const datePosted = new Date('2024-01-15');
-    const expected = new Date(datePosted);
-    expected.setDate(expected.getDate() + 90);
+    const expected = new Date(datePosted.getTime() + 90 * 86_400_000);
 
     expect(result.validThrough).toBe(expected.toISOString());
   });
@@ -139,5 +138,25 @@ describe('buildJobPostingLd', () => {
       'fr',
     );
     expect(result).toMatchSnapshot();
+  });
+});
+
+describe('serializeJsonLd', () => {
+  it('escapes </script> to prevent XSS breakout', () => {
+    const ld = { title: 'Hack</script><script>alert(1)</script>' };
+    const serialized = serializeJsonLd(ld);
+    expect(serialized).not.toContain('</script>');
+    expect(serialized).toContain('\\u003c/script>');
+  });
+
+  it('produces valid JSON', () => {
+    const ld = buildJobPostingLd(
+      BASE_FRONTMATTER,
+      null,
+      ORIGIN,
+      'revenue-ops-manager',
+      'fr',
+    );
+    expect(() => JSON.parse(serializeJsonLd(ld))).not.toThrow();
   });
 });
