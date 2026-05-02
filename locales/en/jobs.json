@@ -13,6 +13,7 @@
     "empty": "No openings available at the moment."
   },
   "toc": {
+    "navLabel": "Navigation",
     "mission": "The Mission",
     "responsabilites": "Responsibilities",
     "profil": "Candidate profile"
@@ -24,7 +25,9 @@
     "quote": "No \"juniors sold as seniors\" here. We seek operational excellence and the ability to understand our clients' deep business challenges.",
     "quoteSub": "A unique opportunity to learn the best RevOps methodologies and shape the future of the discipline in France.",
     "cardLabel": "Collective Intelligence",
-    "cardStat": "100%\nImpact"
+    "cardStat": "100%\nImpact",
+    "seminaireAlt": "The Ocobo team at a seminar",
+    "cafetAlt": "Ocobo office"
   },
   "values": {
     "badge": "OUR DNA",

@@ -114,7 +114,7 @@ export function HeroSection() {
               </div>
               <img
                 src="/images/jobs/seminaire.jpeg"
-                alt="Équipe Ocobo"
+                alt={t('hero.seminaireAlt')}
                 className={css({
                   w: 'full',
                   aspectRatio: '1',
@@ -128,7 +128,7 @@ export function HeroSection() {
             <div className={vstack({ gap: '6', alignItems: 'stretch' })}>
               <img
                 src="/images/jobs/cafet.jpeg"
-                alt="Bureaux Ocobo"
+                alt={t('hero.cafetAlt')}
                 className={css({
                   w: 'full',
                   aspectRatio: '1',

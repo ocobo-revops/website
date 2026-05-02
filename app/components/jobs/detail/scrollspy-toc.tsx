@@ -13,8 +13,10 @@ export function ScrollspyToc() {
   const { t } = useTranslation('jobs');
   const activeId = useScrollSpy(SECTION_IDS);
 
+  const navLabel = t('toc.navLabel');
+
   return (
-    <nav aria-label="Navigation">
+    <nav aria-label={navLabel}>
       <h4
         className={css({
           fontFamily: 'display',
@@ -26,7 +28,7 @@ export function ScrollspyToc() {
           mb: '8',
         })}
       >
-        Navigation
+        {navLabel}
       </h4>
       <div className={vstack({ gap: '4', alignItems: 'stretch' })}>
         {SECTION_IDS.map((id) => {

@@ -13,6 +13,7 @@
     "empty": "Aucune offre disponible pour le moment."
   },
   "toc": {
+    "navLabel": "Navigation",
     "mission": "La Mission",
     "responsabilites": "Responsabilités",
     "profil": "Profil recherché"
@@ -24,7 +25,9 @@
     "quote": "Ici, pas de « juniors vendus comme des seniors ». Nous cherchons l'excellence opérationnelle et la capacité à comprendre les enjeux business profonds de nos clients.",
     "quoteSub": "C'est une occasion unique d'apprendre les meilleures méthodologies RevOps et de façonner le futur de la discipline en France.",
     "cardLabel": "Intelligence Collective",
-    "cardStat": "100%\nImpact"
+    "cardStat": "100%\nImpact",
+    "seminaireAlt": "L'équipe Ocobo en séminaire",
+    "cafetAlt": "Les bureaux Ocobo"
   },
   "values": {
     "badge": "NOTRE ADN",
