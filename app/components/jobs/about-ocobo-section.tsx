@@ -1,8 +1,9 @@
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, vstack } from '@ocobo/styled-system/patterns';
+import { button } from '@ocobo/styled-system/recipes';
 
 type AboutOcoboSectionProps = {
   applyEmail?: string;
@@ -89,21 +90,10 @@ export function AboutOcoboSection({
         </ul>
         <a
           href={ctaHref}
-          className={css({
-            display: 'block',
-            w: 'full',
-            py: '3',
-            bg: 'ocobo.yellow',
-            color: 'ocobo.dark',
-            fontWeight: 'black',
-            fontSize: 'xs',
-            textTransform: 'uppercase',
-            letterSpacing: 'widest',
-            rounded: 'lg',
-            transition: 'colors',
-            textAlign: 'center',
-            _hover: { bg: 'white' },
-          })}
+          className={cx(
+            button({ variant: 'white', size: 'sm' }),
+            css({ w: 'full', justifyContent: 'center' }),
+          )}
         >
           {t('about.cta')}
         </a>

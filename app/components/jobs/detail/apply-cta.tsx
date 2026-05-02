@@ -1,8 +1,9 @@
 import { Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { cx } from '@ocobo/styled-system/css';
 import { css } from '@ocobo/styled-system/css';
-import { center } from '@ocobo/styled-system/patterns';
+import { button } from '@ocobo/styled-system/recipes';
 
 type ApplyCtaProps = {
   applyEmail: string;
@@ -55,21 +56,7 @@ export function ApplyCta({ applyEmail, jobTitle }: ApplyCtaProps) {
         </p>
         <a
           href={`mailto:${applyEmail}?subject=${subject}`}
-          className={`${center({ gap: '3' })} ${css({
-            display: 'inline-flex',
-            px: '8',
-            py: '5',
-            bg: 'ocobo.dark',
-            color: 'white',
-            fontWeight: 'black',
-            textTransform: 'uppercase',
-            letterSpacing: '0.4em',
-            fontSize: 'xs',
-            rounded: 'xl',
-            transition: 'all',
-            shadow: 'xl',
-            _hover: { bg: 'black' },
-          })}`}
+          className={cx(button({ variant: 'primary', size: 'lg' }))}
         >
           <Send size={14} />
           {t('apply.cta')}
