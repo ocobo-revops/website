@@ -9,6 +9,7 @@ import { css } from '@ocobo/styled-system/css';
 
 import { Header } from '~/components/jobs/detail/header';
 import { HiringContact } from '~/components/jobs/detail/hiring-contact';
+import { ScrollspyToc } from '~/components/jobs/detail/scrollspy-toc';
 import { Section } from '~/components/jobs/detail/section';
 import { createHybridLoader } from '~/modules/cache';
 import {
@@ -64,29 +65,44 @@ export default function JobDetail() {
   const { frontmatter } = job;
 
   return (
-    <div className={css({ maxW: '4xl', mx: 'auto', px: '4', py: '8' })}>
+    <div className={css({ maxW: '6xl', mx: 'auto', px: '4', py: '8' })}>
       <Header frontmatter={frontmatter} />
       <div className={css({ mt: '8' })}>
         <p>{frontmatter.intro}</p>
       </div>
-      <div id="mission" className={css({ mt: '12' })}>
-        <Section nodes={sections.mission} />
-      </div>
-      <div id="competences" className={css({ mt: '12' })}>
-        <Section nodes={sections.competences} />
-      </div>
-      <div id="pourquoi" className={css({ mt: '12' })}>
-        <Section nodes={sections.pourquoi} />
-      </div>
-      {contact && (
-        <div className={css({ mt: '12' })}>
-          <HiringContact
-            contact={contact as HiringContactType}
-            applyEmail={frontmatter.applyEmail}
-            jobTitle={frontmatter.title}
-          />
+      <div
+        className={css({
+          display: 'grid',
+          gridTemplateColumns: { base: '1fr', lg: '1fr 200px' },
+          gap: '12',
+          mt: '12',
+          alignItems: 'start',
+        })}
+      >
+        <div>
+          <div id="mission">
+            <Section nodes={sections.mission} />
+          </div>
+          <div id="competences" className={css({ mt: '12' })}>
+            <Section nodes={sections.competences} />
+          </div>
+          <div id="pourquoi" className={css({ mt: '12' })}>
+            <Section nodes={sections.pourquoi} />
+          </div>
+          {contact && (
+            <div className={css({ mt: '12' })}>
+              <HiringContact
+                contact={contact as HiringContactType}
+                applyEmail={frontmatter.applyEmail}
+                jobTitle={frontmatter.title}
+              />
+            </div>
+          )}
         </div>
-      )}
+        <div className={css({ display: { base: 'none', lg: 'block' } })}>
+          <ScrollspyToc />
+        </div>
+      </div>
     </div>
   );
 }

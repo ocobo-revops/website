@@ -11,5 +11,10 @@
   "list": {
     "badge": "HIRING",
     "empty": "No openings available at the moment."
+  },
+  "toc": {
+    "mission": "Mission",
+    "competences": "Skills",
+    "pourquoi": "Why Ocobo"
   }
 }

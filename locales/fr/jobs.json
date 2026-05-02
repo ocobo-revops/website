@@ -11,5 +11,10 @@
   "list": {
     "badge": "RECRUTEMENT",
     "empty": "Aucune offre disponible pour le moment."
+  },
+  "toc": {
+    "mission": "Mission",
+    "competences": "Compétences",
+    "pourquoi": "Pourquoi Ocobo"
   }
 }
