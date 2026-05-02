@@ -45,7 +45,12 @@ vi.mock('./sources/github', () => ({
 }));
 
 // Import after mocking
-import { ContentValidators, GenericContentFetcher } from './api';
+import {
+  ContentValidators,
+  GenericContentFetcher,
+  fetchJob,
+  fetchJobs,
+} from './api';
 
 // Mock content source for testing
 const mockContentSource: ContentSource = {
@@ -183,5 +188,28 @@ describe('GenericContentFetcher', () => {
 
       expect(ContentValidators.story.isValid(invalidStoryData)).toBe(false);
     });
+
+    it('should have a job validator', () => {
+      expect(ContentValidators.job).toBeDefined();
+      expect(ContentValidators.job.typeName).toBe('Job');
+    });
+  });
+});
+
+describe('fetchJobs', () => {
+  it('should return an array of jobs', async () => {
+    const [status, state, data] = await fetchJobs('fr');
+    expect(status).toBe(200);
+    expect(state).toBe('success');
+    expect(Array.isArray(data)).toBe(true);
+  });
+});
+
+describe('fetchJob', () => {
+  it('should return not_found for an unknown slug', async () => {
+    const [status, state, data] = await fetchJob('unknown-job', 'fr');
+    expect(status).toBe(404);
+    expect(state).toBe('not_found');
+    expect(data).toBeUndefined();
   });
 });

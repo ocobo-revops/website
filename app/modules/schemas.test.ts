@@ -5,6 +5,10 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
+  type HiringContact,
+  HiringContactSchema,
+  type JobFrontmatter,
+  JobFrontmatterSchema,
   type PageFrontmatter,
   PageFrontmatterSchema,
   type StoryFrontmatter,
@@ -402,5 +406,102 @@ describe('Zod Schemas Validation', () => {
         expect(result.success).toBe(true);
       }
     });
+  });
+});
+
+describe('JobFrontmatterSchema', () => {
+  const validJobData: JobFrontmatter = {
+    title: 'Revenue Operations Manager',
+    icon: '🧘',
+    contractType: 'CDI',
+    seniority: '3-5 ans',
+    location: 'Paris (On site)',
+    startDate: '2026-06-01',
+    hiringContact: 'aude',
+    applyEmail: 'recrutement@ocobo.co',
+    status: 'published',
+    publishedAt: '2026-04-26',
+    intro: 'La mission du Revenue Operations Manager est de définir...',
+  };
+
+  it('should validate a complete job frontmatter', () => {
+    const result = JobFrontmatterSchema.safeParse(validJobData);
+    expect(result.success).toBe(true);
+  });
+
+  it('should reject when required fields are missing', () => {
+    const requiredFields: Array<keyof JobFrontmatter> = [
+      'title',
+      'icon',
+      'hiringContact',
+      'applyEmail',
+      'status',
+      'publishedAt',
+      'intro',
+    ];
+
+    for (const field of requiredFields) {
+      const invalid = { ...validJobData };
+      delete (invalid as any)[field];
+      const result = JobFrontmatterSchema.safeParse(invalid);
+      expect(result.success).toBe(false);
+    }
+  });
+
+  it('should validate the status enum', () => {
+    for (const status of ['draft', 'published', 'closed'] as const) {
+      const result = JobFrontmatterSchema.safeParse({
+        ...validJobData,
+        status,
+      });
+      expect(result.success).toBe(true);
+    }
+
+    const invalid = JobFrontmatterSchema.safeParse({
+      ...validJobData,
+      status: 'unknown',
+    });
+    expect(invalid.success).toBe(false);
+  });
+
+  it('should default contractType to CDI when absent', () => {
+    const withoutContract = { ...validJobData };
+    delete (withoutContract as any).contractType;
+    const result = JobFrontmatterSchema.safeParse(withoutContract);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.contractType).toBe('CDI');
+    }
+  });
+});
+
+describe('HiringContactSchema', () => {
+  const validContact: HiringContact = {
+    name: 'Aude Cadiot',
+    role: 'Co-fondatrice',
+    photo: 'aude-cadiot.jpg',
+    shortBio: 'Référence française du Revenue Operations.',
+  };
+
+  it('should validate a complete hiring contact', () => {
+    const result = HiringContactSchema.safeParse(validContact);
+    expect(result.success).toBe(true);
+  });
+
+  it('should reject when name is missing', () => {
+    const invalid = { ...validContact };
+    delete (invalid as any).name;
+    const result = HiringContactSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('should allow optional shortBio and applyEmail', () => {
+    const minimal = {
+      name: 'Aude Cadiot',
+      role: 'Co-fondatrice',
+      photo: 'aude.jpg',
+    };
+    const result = HiringContactSchema.safeParse(minimal);
+    expect(result.success).toBe(true);
   });
 });

@@ -12,7 +12,7 @@ import { getPrivateEnvVars } from './env.server';
 /**
  * Cache strategy types for different content
  */
-export type CacheStrategy = 'blogPost' | 'story' | 'static';
+export type CacheStrategy = 'blogPost' | 'story' | 'static' | 'job';
 
 /**
  * Cache configuration for each strategy type
@@ -20,6 +20,7 @@ export type CacheStrategy = 'blogPost' | 'story' | 'static';
 const CACHE_CONFIG = {
   blogPost: { maxAge: 3600, staleWhileRevalidate: 86400 }, // 1h + 24h
   story: { maxAge: 3600, staleWhileRevalidate: 86400 }, // 1h + 24h
+  job: { maxAge: 3600, staleWhileRevalidate: 86400 }, // 1h + 24h
   static: { maxAge: 86400, staleWhileRevalidate: 604800 }, // 24h + 7d
 } as const;
 

@@ -130,12 +130,48 @@ export const PageFrontmatterSchema = z.object({
 });
 
 /**
+ * Hiring contact schema — referenced by slug from _contacts.yml
+ */
+export const HiringContactSchema = z.object({
+  name: CommonSchemas.nonEmptyString,
+  role: CommonSchemas.nonEmptyString,
+  photo: CommonSchemas.nonEmptyString,
+  shortBio: z.string().optional(),
+  applyEmail: z.string().email().optional(),
+});
+
+/**
+ * Contacts registry schema — validates _contacts.yml
+ */
+export const ContactsRecordSchema = z.record(z.string(), HiringContactSchema);
+
+/**
+ * Job offer frontmatter schema
+ */
+export const JobFrontmatterSchema = z.object({
+  title: CommonSchemas.nonEmptyString,
+  icon: CommonSchemas.nonEmptyString,
+  contractType: z.enum(['CDI', 'CDD', 'Stage', 'Alternance']).default('CDI'),
+  seniority: CommonSchemas.nonEmptyString,
+  location: CommonSchemas.nonEmptyString,
+  startDate: CommonSchemas.dateString.optional(),
+  hiringContact: CommonSchemas.nonEmptyString,
+  applyEmail: z.string().email(),
+  status: z.enum(['draft', 'published', 'closed']),
+  publishedAt: CommonSchemas.dateString,
+  intro: CommonSchemas.nonEmptyString,
+});
+
+/**
  * Inferred TypeScript types from Zod schemas
  * These replace the manually defined types
  */
 export type StoryFrontmatter = z.infer<typeof StoryFrontmatterSchema>;
 export type BlogpostFrontmatter = z.infer<typeof BlogpostFrontmatterSchema>;
 export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
+export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
+export type HiringContact = z.infer<typeof HiringContactSchema>;
+export type ContactsRecord = z.infer<typeof ContactsRecordSchema>;
 
 /**
  * Union type for all frontmatter types
