@@ -10,8 +10,7 @@ export const url = {
   aboutUs: '/about-us',
   about:
     'https://ocobo.notion.site/Ocobo-Qui-sommes-nous-b94fb96269cb4d6294cdf21569ebd479',
-  careers:
-    'https://ocobo.notion.site/Ocobo-Nous-rejoindre-416ea4a060fb48d6a9666a8d4debfb6a',
+  jobs: '/jobs',
   news: '/news',
   webinars: '/webinars',
   blog: '/blog',
