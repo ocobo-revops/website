@@ -11,26 +11,21 @@ function parseAndTransform(markdown: string) {
 }
 
 const VALID_FIXTURE = `
-### Mission {% #mission %}
+### La Mission {% #mission %}
 
 La mission principale du poste.
+
+### Responsabilités {% #responsabilites %}
 
 #### 1. Sous-section opérationnelle
 
 - Bullet 1
 - Bullet 2
 
-### Compétences recherchées {% #competences %}
+### Profil recherché {% #profil %}
 
 - Bac+4/5
 - 3 à 5 ans d'expérience
-
-### Pourquoi nous rejoindre {% #pourquoi %}
-
-#### Ce que nous valorisons
-
-- Esprit d'équipe
-- Impact mesurable
 `;
 
 describe('extractJobSections', () => {
@@ -39,11 +34,11 @@ describe('extractJobSections', () => {
     const sections = extractJobSections(content);
 
     expect(sections.mission).toBeDefined();
-    expect(sections.competences).toBeDefined();
-    expect(sections.pourquoi).toBeDefined();
+    expect(sections.responsabilites).toBeDefined();
+    expect(sections.profil).toBeDefined();
     expect(sections.mission.length).toBeGreaterThan(0);
-    expect(sections.competences.length).toBeGreaterThan(0);
-    expect(sections.pourquoi.length).toBeGreaterThan(0);
+    expect(sections.responsabilites.length).toBeGreaterThan(0);
+    expect(sections.profil.length).toBeGreaterThan(0);
   });
 
   it('should include the h3 heading node as the first item in each section', () => {
@@ -63,45 +58,43 @@ describe('extractJobSections', () => {
   it('should not bleed content from one section into the next', () => {
     const { Tag } = Markdoc;
     const content = parseAndTransform(VALID_FIXTURE);
-    const { mission, competences } = extractJobSections(content);
+    const { mission, responsabilites } = extractJobSections(content);
 
-    // mission should not contain a heading with id="competences"
     const leakedHeading = mission.find(
       (node) =>
         node instanceof Tag &&
         node.name === 'Heading' &&
-        node.attributes.id === 'competences',
+        node.attributes.id === 'responsabilites',
     );
     expect(leakedHeading).toBeUndefined();
 
-    // competences first node should be the competences h3
-    const compHeading = competences[0];
-    expect(compHeading).toBeInstanceOf(Tag);
-    if (compHeading instanceof Tag) {
-      expect(compHeading.attributes.id).toBe('competences');
+    const respHeading = responsabilites[0];
+    expect(respHeading).toBeInstanceOf(Tag);
+    if (respHeading instanceof Tag) {
+      expect(respHeading.attributes.id).toBe('responsabilites');
     }
   });
 
   it('should throw when a required section is missing', () => {
     const missingSection = `
-### Mission {% #mission %}
+### La Mission {% #mission %}
 
 Contenu mission.
 
-### Pourquoi nous rejoindre {% #pourquoi %}
+### Profil recherché {% #profil %}
 
-Contenu pourquoi.
+Contenu profil.
 `;
     const content = parseAndTransform(missingSection);
-    expect(() => extractJobSections(content)).toThrow(/competences/);
+    expect(() => extractJobSections(content)).toThrow(/responsabilites/);
   });
 
   it('should handle extra h4 sub-sections inside a section without splitting', () => {
     const content = parseAndTransform(VALID_FIXTURE);
-    const { mission } = extractJobSections(content);
+    const { responsabilites } = extractJobSections(content);
 
     const { Tag } = Markdoc;
-    const h4Nodes = mission.filter(
+    const h4Nodes = responsabilites.filter(
       (node) =>
         node instanceof Tag &&
         node.name === 'Heading' &&

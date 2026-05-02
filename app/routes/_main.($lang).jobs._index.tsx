@@ -11,9 +11,9 @@ import type { MarkdocFile } from '~/types';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
-import { AboutOcoboSection } from '~/components/jobs/about-ocobo-section';
 import { HeroSection } from '~/components/jobs/hero-section';
 import { JobList } from '~/components/jobs/job-list';
+import { OfficesSection } from '~/components/jobs/offices-section';
 import { ProcessSection } from '~/components/jobs/process-section';
 import { ValuesSection } from '~/components/jobs/values-section';
 
@@ -61,16 +61,7 @@ export default function JobsIndex() {
       <ValuesSection />
       <JobList jobs={jobs} />
       <ProcessSection />
-      <div
-        className={css({
-          maxW: '7xl',
-          mx: 'auto',
-          px: { base: '4', sm: '6', lg: '8' },
-          mb: '24',
-        })}
-      >
-        <AboutOcoboSection />
-      </div>
+      <OfficesSection />
     </div>
   );
 }

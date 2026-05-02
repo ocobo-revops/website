@@ -13,9 +13,9 @@
     "empty": "No openings available at the moment."
   },
   "toc": {
-    "mission": "Mission",
-    "competences": "Skills",
-    "pourquoi": "Why Ocobo"
+    "mission": "The Mission",
+    "responsabilites": "Responsibilities",
+    "profil": "Candidate profile"
   },
   "hero": {
     "badge": "HIRING",
@@ -99,6 +99,11 @@
     "title": "Ready for impact?",
     "desc": "Send us your profile. We're not looking for executors, but architects of revenue.",
     "cta": "Apply now"
+  },
+  "offices": {
+    "title": "Our offices",
+    "subtitle": "9th arrondissement, Paris.",
+    "mapsLink": "See on Maps"
   },
   "about": {
     "title": "Why join us?",

@@ -27,7 +27,7 @@ export function HeroSection() {
         {/* Left — text */}
         <div className={css({ lg: { w: '1/2' } })}>
           <span
-            className={`${badge({ variant: 'mint' })} ${css({ mb: '10', display: 'block' })}`}
+            className={`${badge({ variant: 'mint' })} ${css({ mb: '10', display: 'inline-block' })}`}
           >
             {t('hero.badge')}
           </span>

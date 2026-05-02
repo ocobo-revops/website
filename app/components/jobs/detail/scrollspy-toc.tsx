@@ -6,7 +6,7 @@ import { hstack, vstack } from '@ocobo/styled-system/patterns';
 
 import { useScrollSpy } from '~/hooks/useScrollSpy';
 
-const SECTION_IDS = ['mission', 'competences', 'pourquoi'] as const;
+const SECTION_IDS = ['mission', 'responsabilites', 'profil'] as const;
 type SectionId = (typeof SECTION_IDS)[number];
 
 export function ScrollspyToc() {

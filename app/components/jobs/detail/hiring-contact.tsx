@@ -1,25 +1,14 @@
 import { css } from '@ocobo/styled-system/css';
-import { useTranslation } from 'react-i18next';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { HiringContact as HiringContactData } from '~/modules/schemas';
 
 type HiringContactProps = {
   contact: HiringContactData;
-  applyEmail: string;
-  jobTitle: string;
 };
 
-export function HiringContact({
-  contact,
-  applyEmail,
-  jobTitle,
-}: HiringContactProps) {
-  const { t } = useTranslation('jobs');
+export function HiringContact({ contact }: HiringContactProps) {
   const photoUrl = `${ASSETS_BASE_URL}/team/${contact.photo}`;
-  const mailtoSubject = encodeURIComponent(
-    t('cta.applySubject', { title: jobTitle }),
-  );
 
   return (
     <div
@@ -78,26 +67,6 @@ export function HiringContact({
           </p>
         )}
       </div>
-      <a
-        href={`mailto:${applyEmail}?subject=${mailtoSubject}`}
-        className={css({
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          px: '6',
-          py: '3',
-          borderRadius: 'lg',
-          bg: 'ocobo.dark',
-          color: 'white',
-          fontWeight: 'semibold',
-          fontSize: 'sm',
-          flexShrink: 0,
-          _hover: { bg: 'ocobo.dark/80' },
-          transition: 'background 0.15s',
-        })}
-      >
-        {t('cta.apply')}
-      </a>
     </div>
   );
 }

@@ -13,9 +13,9 @@
     "empty": "Aucune offre disponible pour le moment."
   },
   "toc": {
-    "mission": "Mission",
-    "competences": "Compétences",
-    "pourquoi": "Pourquoi Ocobo"
+    "mission": "La Mission",
+    "responsabilites": "Responsabilités",
+    "profil": "Profil recherché"
   },
   "hero": {
     "badge": "RECRUTEMENT",
@@ -99,6 +99,11 @@
     "title": "Prêt(e) pour l'impact ?",
     "desc": "Envoie-nous ton profil. On ne cherche pas des exécutants, mais des architectes du revenu.",
     "cta": "Postuler maintenant"
+  },
+  "offices": {
+    "title": "Nos bureaux",
+    "subtitle": "9ème arrondissement, Paris.",
+    "mapsLink": "Voir sur Maps"
   },
   "about": {
     "title": "Pourquoi nous rejoindre ?",

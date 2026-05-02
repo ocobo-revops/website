@@ -95,7 +95,10 @@ export default function JobDetail() {
             <div className={css({ position: 'sticky', top: '32' })}>
               <ScrollspyToc />
               <div className={css({ mt: '8' })}>
-                <AboutOcoboSection applyHref="#apply" />
+                <AboutOcoboSection
+                  applyEmail={frontmatter.applyEmail}
+                  jobTitle={frontmatter.title}
+                />
               </div>
             </div>
           </aside>
@@ -114,11 +117,14 @@ export default function JobDetail() {
               <div id="mission" className={css({ scrollMarginTop: '40' })}>
                 <Section nodes={sections.mission} />
               </div>
-              <div id="competences" className={css({ scrollMarginTop: '40' })}>
-                <Section nodes={sections.competences} />
+              <div
+                id="responsabilites"
+                className={css({ scrollMarginTop: '40' })}
+              >
+                <Section nodes={sections.responsabilites} />
               </div>
-              <div id="pourquoi" className={css({ scrollMarginTop: '40' })}>
-                <Section nodes={sections.pourquoi} />
+              <div id="profil" className={css({ scrollMarginTop: '40' })}>
+                <Section nodes={sections.profil} />
               </div>
             </div>
 
@@ -131,11 +137,7 @@ export default function JobDetail() {
                   borderColor: 'gray.100',
                 })}
               >
-                <HiringContact
-                  contact={contact as HiringContactType}
-                  applyEmail={frontmatter.applyEmail}
-                  jobTitle={frontmatter.title}
-                />
+                <HiringContact contact={contact as HiringContactType} />
               </div>
             )}
 
