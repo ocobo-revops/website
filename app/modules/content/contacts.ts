@@ -26,6 +26,10 @@ export function resolveContact(
   return registry[ref] ?? null;
 }
 
+// Process-level cache — invalidated on redeploy (new worker instance)
+let _cachedRegistry: ContactsRecord | null = null;
+let _cacheKey: string | null = null;
+
 export async function loadContactRegistry(): Promise<ContactsRecord> {
   const {
     readContentFrom,
@@ -34,6 +38,9 @@ export async function loadContactRegistry(): Promise<ContactsRecord> {
     githubAccessToken,
     githubBranch,
   } = getPrivateEnvVars();
+
+  const cacheKey = `${readContentFrom}:${githubBranch ?? 'local'}`;
+  if (_cachedRegistry && _cacheKey === cacheKey) return _cachedRegistry;
 
   let raw: string;
 
@@ -57,5 +64,7 @@ export async function loadContactRegistry(): Promise<ContactsRecord> {
     raw = await readFile(`${localeRepoAPIUrl}/jobs/_contacts.yml`, 'utf8');
   }
 
-  return parseContactsYaml(raw);
+  _cachedRegistry = parseContactsYaml(raw);
+  _cacheKey = cacheKey;
+  return _cachedRegistry;
 }
