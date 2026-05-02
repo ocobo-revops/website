@@ -15,9 +15,17 @@ import {
   Quote,
 } from '~/components/PageMarkdownContainer';
 
+// Shift headings up one level so h3→h2 (bigger section titles) and h4→h3
+function ShiftedHeading({
+  level = 2,
+  ...props
+}: React.ComponentProps<typeof Heading>) {
+  return <Heading level={Math.max(1, level - 1)} {...props} />;
+}
+
 const components = {
   Callout,
-  Heading,
+  Heading: ShiftedHeading,
   Link,
   List,
   ListItem,
@@ -40,23 +48,16 @@ export function Section({ nodes }: SectionProps) {
         // Top-level flow spacing
         '& > * + *': { mt: '5' },
 
-        // Section title (h3) is always the first child — give it breathing room below
-        '& > h3': { mb: '6' },
-        '& > h3 + *': { mt: '0' },
+        // Section title (h2, was h3): first child — breathing room below
+        '& > h2': { mb: '6' },
+        '& > h2 + *': { mt: '0' },
 
-        // Subsection heading (h4): large gap above, medium below
-        '& > h4': { mt: '10' },
-        '& > h4:first-child': { mt: '0' },
-        '& > h4 + *': { mt: '3' },
+        // Subsection heading (h3, was h4): large gap above, medium below
+        '& > h3': { mt: '10' },
+        '& > h3:first-child': { mt: '0' },
+        '& > h3 + *': { mt: '3' },
 
-        // H4 visual accent (yellow left border)
-        '& h4': {
-          borderLeftWidth: '3px',
-          borderColor: 'ocobo.yellow',
-          pl: '4',
-        },
-
-        // Callout internal spacing (p → ul/ol inside the callout div)
+        // Callout internal spacing
         '& > div > * + *': { mt: '3' },
       })}
     >
