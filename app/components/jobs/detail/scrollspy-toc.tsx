@@ -1,5 +1,8 @@
-import { css, cx } from '@ocobo/styled-system/css';
+import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
+import { css, cx } from '@ocobo/styled-system/css';
+import { hstack, vstack } from '@ocobo/styled-system/patterns';
 
 import { useScrollSpy } from '~/hooks/useScrollSpy';
 
@@ -11,46 +14,82 @@ export function ScrollspyToc() {
   const activeId = useScrollSpy(SECTION_IDS);
 
   return (
-    <nav
-      aria-label={t('toc.mission')}
-      className={css({
-        position: 'sticky',
-        top: '8',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2',
-      })}
-    >
-      {SECTION_IDS.map((id) => (
+    <nav aria-label="Navigation">
+      <h4
+        className={css({
+          fontFamily: 'display',
+          fontWeight: 'black',
+          fontSize: 'xs',
+          textTransform: 'uppercase',
+          letterSpacing: '0.4em',
+          color: 'ocobo.dark',
+          mb: '8',
+        })}
+      >
+        Navigation
+      </h4>
+      <div className={vstack({ gap: '4', alignItems: 'stretch' })}>
+        {SECTION_IDS.map((id) => {
+          const isActive = activeId === id;
+          return (
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-current={isActive ? 'location' : undefined}
+              className={cx(
+                hstack({ justify: 'space-between' }),
+                css({
+                  py: '2',
+                  pl: '6',
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.3em',
+                  transition: 'all',
+                  borderLeftWidth: '2px',
+                  _hover: { color: 'ocobo.dark' },
+                }),
+                isActive
+                  ? css({
+                      borderColor: 'ocobo.yellow',
+                      color: 'ocobo.dark',
+                      transform: 'translateX(8px)',
+                    })
+                  : css({ borderColor: 'gray.50', color: 'gray.300' }),
+              )}
+            >
+              {t(`toc.${id as SectionId}`)}
+              {isActive && (
+                <ChevronRight
+                  size={14}
+                  className={css({ color: 'ocobo.yellow' })}
+                />
+              )}
+            </a>
+          );
+        })}
         <a
-          key={id}
-          href={`#${id}`}
-          aria-current={activeId === id ? 'location' : undefined}
+          href="#apply"
           className={cx(
+            hstack({ justify: 'space-between' }),
             css({
-              fontSize: 'sm',
-              fontWeight: 'medium',
-              px: '3',
               py: '2',
-              borderRadius: 'md',
-              borderLeft: '2px solid',
-              borderLeftColor: 'transparent',
-              color: 'ocobo.dark/60',
-              transition: 'all 0.15s',
+              pl: '6',
+              fontSize: 'xs',
+              fontWeight: 'black',
+              textTransform: 'uppercase',
+              letterSpacing: '0.3em',
+              transition: 'all',
+              borderLeftWidth: '2px',
+              borderColor: activeId === null ? 'gray.50' : 'gray.50',
+              color: 'ocobo.yellow',
               _hover: { color: 'ocobo.dark' },
             }),
-            activeId === id
-              ? css({
-                  borderLeftColor: 'ocobo.dark',
-                  color: 'ocobo.dark',
-                  bg: 'gray.50',
-                })
-              : '',
           )}
         >
-          {t(`toc.${id as SectionId}`)}
+          {t('cta.apply')}
         </a>
-      ))}
+      </div>
     </nav>
   );
 }

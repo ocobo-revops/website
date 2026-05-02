@@ -6,9 +6,13 @@ import {
 import { useLoaderData } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
+import { flex } from '@ocobo/styled-system/patterns';
 
+import { AboutOcoboSection } from '~/components/jobs/about-ocobo-section';
+import { ApplyCta } from '~/components/jobs/detail/apply-cta';
 import { Header } from '~/components/jobs/detail/header';
 import { HiringContact } from '~/components/jobs/detail/hiring-contact';
+import { Intro } from '~/components/jobs/detail/intro';
 import { ScrollspyToc } from '~/components/jobs/detail/scrollspy-toc';
 import { Section } from '~/components/jobs/detail/section';
 import { createHybridLoader } from '~/modules/cache';
@@ -46,7 +50,7 @@ export const loader = createHybridLoader(
     const registry = await loadContactRegistry();
     const contact = resolveContact(job.frontmatter.hiringContact, registry);
 
-    return { job, sections, contact };
+    return { job, sections, contact, lang };
   },
   'job',
 );
@@ -61,46 +65,85 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function JobDetail() {
-  const { job, sections, contact } = useLoaderData<typeof loader>();
+  const { job, sections, contact, lang } = useLoaderData<typeof loader>();
   const { frontmatter } = job;
 
   return (
-    <div className={css({ maxW: '6xl', mx: 'auto', px: '4', py: '8' })}>
-      <Header frontmatter={frontmatter} />
-      <div className={css({ mt: '8' })}>
-        <p>{frontmatter.intro}</p>
-      </div>
+    <div
+      className={css({
+        width: 'full',
+        bg: 'white',
+        pt: '32',
+        pb: '24',
+      })}
+    >
       <div
         className={css({
-          display: 'grid',
-          gridTemplateColumns: { base: '1fr', lg: '1fr 200px' },
-          gap: '12',
-          mt: '12',
-          alignItems: 'start',
+          maxW: '7xl',
+          mx: 'auto',
+          px: { base: '4', sm: '6', lg: '8' },
         })}
       >
-        <div>
-          <div id="mission">
-            <Section nodes={sections.mission} />
-          </div>
-          <div id="competences" className={css({ mt: '12' })}>
-            <Section nodes={sections.competences} />
-          </div>
-          <div id="pourquoi" className={css({ mt: '12' })}>
-            <Section nodes={sections.pourquoi} />
-          </div>
-          {contact && (
-            <div className={css({ mt: '12' })}>
-              <HiringContact
-                contact={contact as HiringContactType}
-                applyEmail={frontmatter.applyEmail}
-                jobTitle={frontmatter.title}
-              />
+        <Header frontmatter={frontmatter} lang={lang} />
+
+        {/* Main layout: sidebar LEFT + content RIGHT */}
+        <div
+          className={`${flex({ direction: { base: 'column', lg: 'row' }, gap: '16' })} ${css({ position: 'relative' })}`}
+        >
+          {/* Sidebar */}
+          <aside className={css({ lg: { w: '1/4' } })}>
+            <div className={css({ position: 'sticky', top: '32' })}>
+              <ScrollspyToc />
+              <div className={css({ mt: '8' })}>
+                <AboutOcoboSection applyHref="#apply" />
+              </div>
             </div>
-          )}
-        </div>
-        <div className={css({ display: { base: 'none', lg: 'block' } })}>
-          <ScrollspyToc />
+          </aside>
+
+          {/* Content */}
+          <article className={css({ lg: { w: '3/4' }, maxW: '3xl' })}>
+            <Intro text={frontmatter.intro} />
+
+            <div
+              className={css({
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '24',
+              })}
+            >
+              <div id="mission" className={css({ scrollMarginTop: '40' })}>
+                <Section nodes={sections.mission} />
+              </div>
+              <div id="competences" className={css({ scrollMarginTop: '40' })}>
+                <Section nodes={sections.competences} />
+              </div>
+              <div id="pourquoi" className={css({ scrollMarginTop: '40' })}>
+                <Section nodes={sections.pourquoi} />
+              </div>
+            </div>
+
+            {contact && (
+              <div
+                className={css({
+                  mt: '24',
+                  pt: '12',
+                  borderTopWidth: '1px',
+                  borderColor: 'gray.100',
+                })}
+              >
+                <HiringContact
+                  contact={contact as HiringContactType}
+                  applyEmail={frontmatter.applyEmail}
+                  jobTitle={frontmatter.title}
+                />
+              </div>
+            )}
+
+            <ApplyCta
+              applyEmail={frontmatter.applyEmail}
+              jobTitle={frontmatter.title}
+            />
+          </article>
         </div>
       </div>
     </div>

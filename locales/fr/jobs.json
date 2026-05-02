@@ -91,6 +91,15 @@
       }
     ]
   },
+  "detail": {
+    "breadcrumb": "Retour aux offres",
+    "category": "Recrutement"
+  },
+  "apply": {
+    "title": "Prêt(e) pour l'impact ?",
+    "desc": "Envoie-nous ton profil. On ne cherche pas des exécutants, mais des architectes du revenu.",
+    "cta": "Postuler maintenant"
+  },
   "about": {
     "title": "Pourquoi nous rejoindre ?",
     "benefits": [
