@@ -6,17 +6,14 @@ import { grid, hstack } from '@ocobo/styled-system/patterns';
 
 const OFFICE_PHOTOS = [
   {
-    src: 'https://ocobo.notion.site/image/attachment%3Adb312e67-298e-4876-8626-903ffc82f480%3AIMG_1081.jpeg?table=block&id=20f3e6cb-c845-8016-ad4f-f1c4f9745781&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
+    src: '/images/jobs/bureau-1.jpeg',
     alt: 'Bureaux Ocobo — espace de travail',
   },
   {
-    src: 'https://ocobo.notion.site/image/attachment%3Ae0e520b7-e1cb-4501-a4a0-c0c66670428a%3AIMG_1083.jpeg?table=block&id=20f3e6cb-c845-8038-afa1-e52f285de4da&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
+    src: '/images/jobs/bureau-2.jpeg',
     alt: 'Bureaux Ocobo — salle de réunion',
   },
-  {
-    src: 'https://ocobo.notion.site/image/attachment%3A29c60272-e6f6-4203-a581-88165d1c1fdd%3AIMG_1082.jpeg?table=block&id=20f3e6cb-c845-80e6-bbb7-e838ca5e27b5&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
-    alt: 'Bureaux Ocobo — espace commun',
-  },
+  { src: '/images/jobs/bureau-3.jpeg', alt: 'Bureaux Ocobo — espace commun' },
 ];
 
 const MAPS_URL = 'https://maps.google.com/?q=Cadet,+Paris+9';
@@ -112,7 +109,7 @@ export function OfficesSection() {
         })}`}
       >
         <img
-          src="https://ocobo.notion.site/image/attachment%3A4434f27a-8380-47d2-b912-63560172de73%3Arooftop.jpeg?table=block&id=20f3e6cb-c845-8083-9ab0-dfbbda80b43a&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2"
+          src="/images/jobs/rooftop.jpeg"
           alt="Bureaux Ocobo — rooftop"
           className={css({
             w: 'full',
