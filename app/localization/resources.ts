@@ -3,6 +3,7 @@ import en_blog from '../../locales/en/blog.json';
 import en_common from '../../locales/en/common.json';
 import en_contact from '../../locales/en/contact.json';
 import en_home from '../../locales/en/home.json';
+import en_jobs from '../../locales/en/jobs.json';
 import en_method from '../../locales/en/method.json';
 import en_offer from '../../locales/en/offer.json';
 import en_projects from '../../locales/en/projects.json';
@@ -14,6 +15,7 @@ import fr_blog from '../../locales/fr/blog.json';
 import fr_common from '../../locales/fr/common.json';
 import fr_contact from '../../locales/fr/contact.json';
 import fr_home from '../../locales/fr/home.json';
+import fr_jobs from '../../locales/fr/jobs.json';
 import fr_method from '../../locales/fr/method.json';
 import fr_offer from '../../locales/fr/offer.json';
 import fr_projects from '../../locales/fr/projects.json';
@@ -28,6 +30,7 @@ export const resources = {
     common: fr_common,
     home: fr_home,
     blog: fr_blog,
+    jobs: fr_jobs,
     strategy: fr_strategy,
     projects: fr_projects,
     contact: fr_contact,
@@ -41,6 +44,7 @@ export const resources = {
     common: en_common,
     home: en_home,
     blog: en_blog,
+    jobs: en_jobs,
     strategy: en_strategy,
     projects: en_projects,
     contact: en_contact,

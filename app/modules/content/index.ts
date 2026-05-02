@@ -31,6 +31,8 @@ export {
   fetchPages,
   fetchContent,
   fetchContents,
+  fetchJob,
+  fetchJobs,
   ContentValidators,
 } from './api';
 

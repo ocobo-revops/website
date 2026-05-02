@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "title": "Join us — Ocobo",
+    "description": "Join Ocobo, France's leading Revenue Operations consultancy. Explore our job openings."
+  },
+  "cta": {
+    "apply": "Apply",
+    "applySubject": "Application - {{title}}",
+    "seeOffer": "View offer"
+  },
+  "list": {
+    "badge": "HIRING",
+    "empty": "No openings available at the moment."
+  }
+}

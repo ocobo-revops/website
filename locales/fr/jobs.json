@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "title": "Nous rejoindre — Ocobo",
+    "description": "Rejoignez Ocobo, référence française du Revenue Operations. Découvrez nos offres d'emploi."
+  },
+  "cta": {
+    "apply": "Postuler",
+    "applySubject": "Candidature - {{title}}",
+    "seeOffer": "Voir l'offre"
+  },
+  "list": {
+    "badge": "RECRUTEMENT",
+    "empty": "Aucune offre disponible pour le moment."
+  }
+}
