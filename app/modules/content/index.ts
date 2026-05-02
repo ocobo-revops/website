@@ -56,6 +56,12 @@ export {
 export { extractJobSections } from './job-sections';
 export type { JobSections } from './job-sections';
 
+export {
+  loadContactRegistry,
+  parseContactsYaml,
+  resolveContact,
+} from './contacts';
+
 // Type exports
 export type {
   ContentFetchState,

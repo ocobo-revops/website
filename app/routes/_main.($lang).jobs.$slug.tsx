@@ -8,9 +8,16 @@ import { useLoaderData } from 'react-router';
 import { css } from '@ocobo/styled-system/css';
 
 import { Header } from '~/components/jobs/detail/header';
+import { HiringContact } from '~/components/jobs/detail/hiring-contact';
 import { Section } from '~/components/jobs/detail/section';
 import { createHybridLoader } from '~/modules/cache';
-import { extractJobSections, fetchJob } from '~/modules/content';
+import {
+  extractJobSections,
+  fetchJob,
+  loadContactRegistry,
+  resolveContact,
+} from '~/modules/content';
+import type { HiringContact as HiringContactType } from '~/modules/schemas';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -35,7 +42,10 @@ export const loader = createHybridLoader(
 
     const sections = extractJobSections(job.content);
 
-    return { job, sections };
+    const registry = await loadContactRegistry();
+    const contact = resolveContact(job.frontmatter.hiringContact, registry);
+
+    return { job, sections, contact };
   },
   'job',
 );
@@ -50,7 +60,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function JobDetail() {
-  const { job, sections } = useLoaderData<typeof loader>();
+  const { job, sections, contact } = useLoaderData<typeof loader>();
   const { frontmatter } = job;
 
   return (
@@ -68,6 +78,15 @@ export default function JobDetail() {
       <div id="pourquoi" className={css({ mt: '12' })}>
         <Section nodes={sections.pourquoi} />
       </div>
+      {contact && (
+        <div className={css({ mt: '12' })}>
+          <HiringContact
+            contact={contact as HiringContactType}
+            applyEmail={frontmatter.applyEmail}
+            jobTitle={frontmatter.title}
+          />
+        </div>
+      )}
     </div>
   );
 }

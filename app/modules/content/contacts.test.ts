@@ -1,5 +1,23 @@
-import { describe, expect, it } from 'vitest';
-import { parseContactsYaml, resolveContact } from './contacts';
+import { readFile } from 'fs/promises';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { getPrivateEnvVars } from '../env.server';
+import {
+  loadContactRegistry,
+  parseContactsYaml,
+  resolveContact,
+} from './contacts';
+
+vi.mock('fs/promises', () => ({
+  default: { readFile: vi.fn() },
+  readFile: vi.fn(),
+}));
+
+vi.mock('../env.server', () => ({
+  getPrivateEnvVars: vi.fn(),
+}));
+
+const mockGetPrivateEnvVars = vi.mocked(getPrivateEnvVars);
+const mockReadFile = vi.mocked(readFile);
 
 const validYaml = `
 aude:
@@ -45,5 +63,76 @@ describe('resolveContact', () => {
     const registry = parseContactsYaml(validYaml);
     const contact = resolveContact('unknown-person', registry);
     expect(contact).toBeNull();
+  });
+});
+
+describe('loadContactRegistry', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('reads _contacts.yml from filesystem when source is locale', async () => {
+    mockGetPrivateEnvVars.mockReturnValue({
+      readContentFrom: 'locale',
+      localeRepoAPIUrl: '/fake/posts',
+      githubRepoAPIUrl: '',
+      githubAccessToken: '',
+      githubBranch: 'main',
+      env: 'development',
+    });
+    mockReadFile.mockResolvedValue(validYaml as any);
+
+    const registry = await loadContactRegistry();
+
+    expect(mockReadFile).toHaveBeenCalledWith(
+      '/fake/posts/jobs/_contacts.yml',
+      'utf8',
+    );
+    expect(registry['aude'].name).toBe('Aude Cadiot');
+  });
+
+  it('reads _contacts.yml from GitHub when source is github', async () => {
+    mockGetPrivateEnvVars.mockReturnValue({
+      readContentFrom: 'github',
+      localeRepoAPIUrl: '',
+      githubRepoAPIUrl: 'https://api.github.com/repos/org/posts/contents',
+      githubAccessToken: 'ghp_test',
+      githubBranch: 'feature/jobs',
+      env: 'production',
+    });
+
+    const mockFetch = vi.fn().mockResolvedValue({
+      ok: true,
+      text: async () => validYaml,
+    });
+    vi.stubGlobal('fetch', mockFetch);
+
+    const registry = await loadContactRegistry();
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining('jobs/_contacts.yml'),
+      expect.objectContaining({
+        headers: expect.objectContaining({ Authorization: 'token ghp_test' }),
+      }),
+    );
+    expect(registry['aude'].name).toBe('Aude Cadiot');
+  });
+
+  it('throws when GitHub returns a non-ok response', async () => {
+    mockGetPrivateEnvVars.mockReturnValue({
+      readContentFrom: 'github',
+      localeRepoAPIUrl: '',
+      githubRepoAPIUrl: 'https://api.github.com/repos/org/posts/contents',
+      githubAccessToken: 'ghp_test',
+      githubBranch: 'main',
+      env: 'production',
+    });
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 404 }),
+    );
+
+    await expect(loadContactRegistry()).rejects.toThrow('404');
   });
 });

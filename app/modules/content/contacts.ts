@@ -1,4 +1,6 @@
+import { readFile } from 'fs/promises';
 import yaml from 'js-yaml';
+import { getPrivateEnvVars } from '../env.server';
 import {
   type ContactsRecord,
   ContactsRecordSchema,
@@ -22,4 +24,38 @@ export function resolveContact(
   registry: ContactsRecord,
 ): HiringContact | null {
   return registry[ref] ?? null;
+}
+
+export async function loadContactRegistry(): Promise<ContactsRecord> {
+  const {
+    readContentFrom,
+    localeRepoAPIUrl,
+    githubRepoAPIUrl,
+    githubAccessToken,
+    githubBranch,
+  } = getPrivateEnvVars();
+
+  let raw: string;
+
+  if (readContentFrom === 'github') {
+    const url = new URL(`${githubRepoAPIUrl}/jobs/_contacts.yml`);
+    url.searchParams.set('ref', githubBranch);
+    const response = await fetch(url.toString(), {
+      headers: {
+        Accept: 'application/vnd.github.v3.raw',
+        Authorization: `token ${githubAccessToken}`,
+        'User-Agent': 'ocobo-content-fetcher',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch _contacts.yml from GitHub: ${response.status}`,
+      );
+    }
+    raw = await response.text();
+  } else {
+    raw = await readFile(`${localeRepoAPIUrl}/jobs/_contacts.yml`, 'utf8');
+  }
+
+  return parseContactsYaml(raw);
 }
