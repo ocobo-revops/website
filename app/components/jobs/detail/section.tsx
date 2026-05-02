@@ -6,7 +6,6 @@ import Markdoc from '@markdoc/markdoc';
 import { css } from '@ocobo/styled-system/css';
 
 import {
-  Callout,
   Heading,
   Link,
   List,
@@ -15,7 +14,7 @@ import {
   Quote,
 } from '~/components/PageMarkdownContainer';
 
-// Shift headings up one level so h3→h2 (bigger section titles) and h4→h3
+// Shift headings up one level: h3→h2 (section titles), h4→h3 (subsections)
 function ShiftedHeading({
   level = 2,
   ...props
@@ -23,8 +22,50 @@ function ShiftedHeading({
   return <Heading level={Math.max(1, level - 1)} {...props} />;
 }
 
+// Larger, Ocobo-branded callout for job descriptions
+function JobCallout({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={css({
+        p: '6',
+        borderRadius: 'xl',
+        bg: 'ocobo.yellow/10',
+        borderWidth: '1px',
+        borderColor: 'ocobo.yellow/30',
+        '& p': {
+          fontWeight: 'semibold',
+          color: 'ocobo.dark',
+          fontSize: 'base',
+        },
+        '& ul': { mt: '3', pl: '0', listStyleType: 'none' },
+        '& li': {
+          color: 'gray.700',
+          fontSize: 'base',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '2',
+          mb: '2',
+        },
+        '& li::before': {
+          content: '"→"',
+          color: 'ocobo.dark',
+          fontWeight: 'bold',
+          flexShrink: 0,
+          mt: '0.5',
+        },
+      })}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
 const components = {
-  Callout,
+  Callout: JobCallout,
   Heading: ShiftedHeading,
   Link,
   List,
@@ -48,11 +89,11 @@ export function Section({ nodes }: SectionProps) {
         // Top-level flow spacing
         '& > * + *': { mt: '5' },
 
-        // Section title (h2, was h3): first child — breathing room below
+        // Section title (h2): first child — breathing room below
         '& > h2': { mb: '6' },
         '& > h2 + *': { mt: '0' },
 
-        // Subsection heading (h3, was h4): large gap above, medium below
+        // Subsection heading (h3): large gap above, medium below
         '& > h3': { mt: '10' },
         '& > h3:first-child': { mt: '0' },
         '& > h3 + *': { mt: '3' },
