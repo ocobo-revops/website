@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildJobPostingLd > matches snapshot 1`] = `
+{
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "France",
+  },
+  "applicationContact": {
+    "@type": "ContactPoint",
+    "contactType": "HR",
+    "email": "aude@ocobo.co",
+  },
+  "datePosted": "2024-01-15T00:00:00.000Z",
+  "description": "Rejoignez notre équipe RevOps.",
+  "employmentType": "FULL_TIME",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "Ocobo",
+    "sameAs": "https://www.ocobo.co",
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "FR",
+      "addressLocality": "Paris",
+    },
+  },
+  "title": "Revenue Operations Manager",
+  "url": "https://www.ocobo.co/fr/jobs/revenue-ops-manager",
+  "validThrough": "2024-04-13T23:00:00.000Z",
+}
+`;
