@@ -17,6 +17,7 @@ import { ScrollspyToc } from '~/components/jobs/detail/scrollspy-toc';
 import { Section } from '~/components/jobs/detail/section';
 import { createHybridLoader } from '~/modules/cache';
 import {
+  buildJobPostingLd,
   extractJobSections,
   fetchJob,
   loadContactRegistry,
@@ -27,7 +28,7 @@ import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
 export const loader = createHybridLoader(
-  async ({ params }: LoaderFunctionArgs) => {
+  async ({ params, request }: LoaderFunctionArgs) => {
     const lang = getLang(params);
     const { slug } = params;
 
@@ -49,8 +50,10 @@ export const loader = createHybridLoader(
 
     const registry = await loadContactRegistry();
     const contact = resolveContact(job.frontmatter.hiringContact, registry);
+    const { origin } = new URL(request.url);
+    const ld = buildJobPostingLd(job.frontmatter, contact, origin, slug, lang);
 
-    return { job, sections, contact, lang };
+    return { job, sections, contact, lang, slug, ld };
   },
   'job',
 );
@@ -60,12 +63,13 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return getMetaTags({
     title: data.job.frontmatter.title,
     description: data.job.frontmatter.intro,
-    locale: 'fr',
+    locale: data.lang as 'fr' | 'en',
+    type: 'website',
   });
 };
 
 export default function JobDetail() {
-  const { job, sections, contact, lang } = useLoaderData<typeof loader>();
+  const { job, sections, contact, lang, ld } = useLoaderData<typeof loader>();
   const { frontmatter } = job;
 
   return (
@@ -77,6 +81,10 @@ export default function JobDetail() {
         pb: '24',
       })}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+      />
       <div
         className={css({
           maxW: '7xl',
