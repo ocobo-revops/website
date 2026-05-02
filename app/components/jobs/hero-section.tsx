@@ -113,8 +113,8 @@ export function HeroSection() {
                 </span>
               </div>
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80"
-                alt="Team collaboration"
+                src="https://ocobo.notion.site/image/attachment%3Ab4f348eb-d762-4550-8208-621603236432%3AOcobo-seminaire.jpeg?table=block&id=2be3e6cb-c845-807a-8e5a-cb84e2d72329&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=620&userId=&cache=v2"
+                alt="Équipe Ocobo"
                 className={css({
                   w: 'full',
                   aspectRatio: '1',
@@ -127,8 +127,8 @@ export function HeroSection() {
             {/* Right column */}
             <div className={vstack({ gap: '6', alignItems: 'stretch' })}>
               <img
-                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=400&q=80"
-                alt="Team meeting"
+                src="https://ocobo.notion.site/image/attachment%3A0bb6704d-50ac-4296-9131-cd6e64b98c54%3ACafet.jpeg?table=block&id=20f3e6cb-c845-80b0-8b34-eb0125928d76&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2"
+                alt="Bureaux Ocobo"
                 className={css({
                   w: 'full',
                   aspectRatio: '1',

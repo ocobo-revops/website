@@ -6,20 +6,20 @@ import { grid, hstack } from '@ocobo/styled-system/patterns';
 
 const OFFICE_PHOTOS = [
   {
-    src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
-    alt: 'Bureau Ocobo — espace de travail',
+    src: 'https://ocobo.notion.site/image/attachment%3Adb312e67-298e-4876-8626-903ffc82f480%3AIMG_1081.jpeg?table=block&id=20f3e6cb-c845-8016-ad4f-f1c4f9745781&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
+    alt: 'Bureaux Ocobo — espace de travail',
   },
   {
-    src: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80',
-    alt: 'Bureau Ocobo — salle de réunion',
+    src: 'https://ocobo.notion.site/image/attachment%3Ae0e520b7-e1cb-4501-a4a0-c0c66670428a%3AIMG_1083.jpeg?table=block&id=20f3e6cb-c845-8038-afa1-e52f285de4da&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
+    alt: 'Bureaux Ocobo — salle de réunion',
   },
   {
-    src: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
-    alt: 'Bureau Ocobo — espace commun',
+    src: 'https://ocobo.notion.site/image/attachment%3A29c60272-e6f6-4203-a581-88165d1c1fdd%3AIMG_1082.jpeg?table=block&id=20f3e6cb-c845-80e6-bbb7-e838ca5e27b5&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2',
+    alt: 'Bureaux Ocobo — espace commun',
   },
 ];
 
-const MAPS_URL = 'https://maps.google.com/?q=9ème+arrondissement+Paris';
+const MAPS_URL = 'https://maps.google.com/?q=Cadet,+Paris+9';
 
 export function OfficesSection() {
   const { t } = useTranslation('jobs');
@@ -112,8 +112,8 @@ export function OfficesSection() {
         })}`}
       >
         <img
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80"
-          alt="Bureaux Ocobo"
+          src="https://ocobo.notion.site/image/attachment%3A4434f27a-8380-47d2-b912-63560172de73%3Arooftop.jpeg?table=block&id=20f3e6cb-c845-8083-9ab0-dfbbda80b43a&spaceId=4e81b96a-f81b-4af5-bdaa-63b1b40bfa58&width=550&userId=&cache=v2"
+          alt="Bureaux Ocobo — rooftop"
           className={css({
             w: 'full',
             h: { base: '48', md: 'full' },
