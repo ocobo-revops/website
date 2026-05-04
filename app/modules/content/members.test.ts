@@ -10,6 +10,7 @@ import {
   getFeaturedAboutMembers,
   getMembersByTrack,
   loadMemberRegistry,
+  resolveAuthor,
   resolveMember,
 } from './members';
 
@@ -252,6 +253,47 @@ describe('loadMemberRegistry', () => {
 
     expect(Object.keys(second)).toEqual(['feature-x']);
     expect(mockFetchContents).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('resolveAuthor', () => {
+  const registry: MemberRegistry = {
+    'benjamin-boileux': member({
+      slug: 'benjamin-boileux',
+      name: 'Benjamin Boileux',
+      avatar: 'https://blob/benjamin.jpg',
+      linkedin: 'https://linkedin.com/in/benjaminboileux',
+      active: true,
+    }),
+    'ethel-gosset': member({
+      slug: 'ethel-gosset',
+      name: 'Ethel Gosset',
+      avatar: 'https://blob/ethel.jpg',
+      linkedin: 'https://linkedin.com/in/ethelgosset',
+      active: false,
+    }),
+  };
+
+  it('resolves a known active member', () => {
+    const result = resolveAuthor('benjamin-boileux', registry);
+    expect(result).toEqual({
+      name: 'Benjamin Boileux',
+      avatar: 'https://blob/benjamin.jpg',
+      linkedin: 'https://linkedin.com/in/benjaminboileux',
+    });
+  });
+
+  it('resolves a known inactive member (historical attribution)', () => {
+    const result = resolveAuthor('ethel-gosset', registry);
+    expect(result.name).toBe('Ethel Gosset');
+    expect(result.avatar).toBe('https://blob/ethel.jpg');
+  });
+
+  it('falls back to slug as name for unknown slug', () => {
+    const result = resolveAuthor('unknown-author', registry);
+    expect(result).toEqual({ name: 'unknown-author' });
+    expect(result.avatar).toBeUndefined();
+    expect(result.linkedin).toBeUndefined();
   });
 });
 

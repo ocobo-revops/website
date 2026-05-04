@@ -9,7 +9,11 @@ import { BlogList } from '~/components/blog';
 import { Container } from '~/components/ui/Container';
 import { Loader } from '~/components/ui/Loader';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchBlogposts } from '~/modules/content';
+import {
+  fetchBlogposts,
+  loadMemberRegistry,
+  resolveAuthor,
+} from '~/modules/content';
 import { getMetaTags } from '~/utils/metatags';
 
 export const loader = createHybridLoader(
@@ -17,7 +21,10 @@ export const loader = createHybridLoader(
     const url = new URL(request.url);
     const tag = url.searchParams.get('tag');
 
-    const [status, state, blogData] = await fetchBlogposts();
+    const [[status, state, blogData], registry] = await Promise.all([
+      fetchBlogposts(),
+      loadMemberRegistry(),
+    ]);
 
     // Handle errors gracefully
     if (status !== 200 || !blogData) {
@@ -33,6 +40,7 @@ export const loader = createHybridLoader(
     const posts = filteredPosts
       .map((entry) => ({
         ...entry,
+        resolvedAuthor: resolveAuthor(entry.frontmatter.author, registry),
         _sortDate: new Date(entry.frontmatter.date).getTime(),
       }))
       .sort((a, b) => b._sortDate - a._sortDate)

@@ -20,6 +20,12 @@ export type StudioMember = {
   linkedin?: string;
 };
 
+export type ResolvedAuthor = {
+  name: string;
+  avatar?: string;
+  linkedin?: string;
+};
+
 const memberValidator = createValidator<MemberFrontmatter>(
   MemberFrontmatterSchema,
   'Member',
@@ -34,6 +40,19 @@ export function resolveMember(
   registry: MemberRegistry,
 ): Member | null {
   return registry[slug] ?? null;
+}
+
+export function resolveAuthor(
+  slug: string,
+  registry: MemberRegistry,
+): ResolvedAuthor {
+  const member = registry[slug];
+  if (!member) return { name: slug };
+  return {
+    name: member.name,
+    avatar: member.avatar,
+    linkedin: member.linkedin,
+  };
 }
 
 const byDisplayOrder = (a: Member, b: Member) =>

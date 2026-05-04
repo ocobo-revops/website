@@ -6,6 +6,7 @@ import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 import { icon } from '@ocobo/styled-system/recipes';
 
+import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
 
@@ -18,17 +19,19 @@ import { PlayerYoutube } from '../PlayerYoutube';
 
 interface BlogArticleProps {
   article: MarkdocFile<BlogpostFrontmatter>;
+  resolvedAuthor: ResolvedAuthor;
 }
 
 const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
   article,
+  resolvedAuthor,
 }) => {
   const { t } = useTranslation('blog');
 
   return (
     <LayoutPost.Root>
       <LayoutPost.Aside>
-        <PostMetas item={article.frontmatter} />
+        <PostMetas item={article.frontmatter} resolvedAuthor={resolvedAuthor} />
       </LayoutPost.Aside>
 
       <LayoutPost.Main>

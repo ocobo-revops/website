@@ -70,9 +70,15 @@ export {
   getFeaturedAboutMembers,
   getMembersByTrack,
   loadMemberRegistry,
+  resolveAuthor,
   resolveMember,
 } from './members';
-export type { Member, MemberRegistry, StudioMember } from './members';
+export type {
+  Member,
+  MemberRegistry,
+  StudioMember,
+  ResolvedAuthor,
+} from './members';
 
 // Type exports
 export type {
