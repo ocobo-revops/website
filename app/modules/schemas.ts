@@ -154,6 +154,14 @@ export const MemberTrackSchema = z.enum([
   'expert-engineer',
 ]);
 
+export const MemberColorSchema = z.enum([
+  'yellow',
+  'mint',
+  'sky',
+  'coral',
+  'dark',
+]);
+
 export type MemberTrack = z.infer<typeof MemberTrackSchema>;
 
 /**
@@ -176,6 +184,7 @@ export const MemberFrontmatterSchema = z.object({
   }),
   applyEmail: z.string().email().optional(),
   featuredOnAboutUs: z.boolean().default(false),
+  color: MemberColorSchema.optional(),
 });
 
 /**
@@ -210,6 +219,7 @@ export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
 export type HiringContact = z.infer<typeof HiringContactSchema>;
 export type ContactsRecord = z.infer<typeof ContactsRecordSchema>;
 export type MemberFrontmatter = z.infer<typeof MemberFrontmatterSchema>;
+export type MemberColor = z.infer<typeof MemberColorSchema>;
 
 /**
  * Union type for all frontmatter types

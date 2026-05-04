@@ -621,4 +621,31 @@ describe('MemberFrontmatterSchema', () => {
       expect(result.success).toBe(true);
     }
   });
+
+  it('accepts a valid color override', () => {
+    for (const color of ['yellow', 'mint', 'sky', 'coral', 'dark'] as const) {
+      const result = MemberFrontmatterSchema.safeParse({
+        ...validMember,
+        color,
+      });
+      expect(result.success).toBe(true);
+    }
+  });
+
+  it('rejects an invalid color value', () => {
+    const result = MemberFrontmatterSchema.safeParse({
+      ...validMember,
+      color: 'purple',
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it('allows color to be omitted', () => {
+    const { color, ...rest } = { ...validMember, color: 'yellow' as const };
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.color).toBeUndefined();
+    }
+  });
 });

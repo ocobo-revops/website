@@ -44,7 +44,7 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
       bio: m.bio[lang],
       imageSrc: m.avatar,
       linkedInUrl: m.linkedin,
-      color: trackToColor[m.track],
+      color: m.color ?? trackToColor[m.track],
     }),
   );
 
