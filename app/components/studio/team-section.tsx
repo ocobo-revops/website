@@ -4,36 +4,39 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 
+import type { Member } from '~/modules/content/members';
+import { type MemberTrack, MemberTrackSchema } from '~/modules/schemas';
+
 import { Container } from '../ui/Container';
 import { TeamMemberCard } from './team-member-card';
 
-const CATEGORIES = [
-  'TOUS',
-  'Architecte',
-  'Builder',
-  'Expert Engineer',
-] as const;
+type Filter = MemberTrack | 'all';
 
-type Category = (typeof CATEGORIES)[number];
+const FILTERS = [
+  'all',
+  ...MemberTrackSchema.options,
+] as const satisfies readonly Filter[];
 
-interface TeamMember {
-  name: string;
-  category: string;
-  role: string;
-  desc: string;
-  img: string;
-  linkedin?: string;
+const TRACK_LABEL_FALLBACKS: Record<MemberTrack, string> = {
+  architect: 'Architect',
+  builder: 'Builder',
+  'expert-engineer': 'Expert Engineer',
+};
+
+interface TeamSectionProps {
+  members: Member[];
+  lang: 'fr' | 'en';
 }
 
-export const TeamSection = () => {
+export const TeamSection = ({ members, lang }: TeamSectionProps) => {
   const { t } = useTranslation('studio');
-  const [filter, setFilter] = useState<Category>('TOUS');
+  const [filter, setFilter] = useState<Filter>('all');
   const [animate, setAnimate] = useState(false);
 
-  const members = t('team.members', { returnObjects: true }) as TeamMember[];
-  const filters = t('team.filters', {
-    returnObjects: true,
-  }) as Record<string, string>;
+  const filters = t('team.filters', { returnObjects: true }) as Record<
+    string,
+    string
+  >;
 
   useEffect(() => {
     setAnimate(false);
@@ -42,7 +45,7 @@ export const TeamSection = () => {
   }, [filter]);
 
   const filtered =
-    filter === 'TOUS' ? members : members.filter((m) => m.category === filter);
+    filter === 'all' ? members : members.filter((m) => m.track === filter);
 
   return (
     <section className={css({ py: '24', bg: 'white' })}>
@@ -74,11 +77,11 @@ export const TeamSection = () => {
           </div>
 
           <div className={flex({ wrap: 'wrap', gap: '2' })}>
-            {CATEGORIES.map((cat) => (
+            {FILTERS.map((f) => (
               <button
                 type="button"
-                key={cat}
-                onClick={() => setFilter(cat)}
+                key={f}
+                onClick={() => setFilter(f)}
                 className={css({
                   px: '6',
                   py: '2.5',
@@ -90,14 +93,16 @@ export const TeamSection = () => {
                   transition: 'all',
                   borderWidth: '1px',
                   cursor: 'pointer',
-                  bg: filter === cat ? 'ocobo.dark' : 'gray.50',
-                  color: filter === cat ? 'white' : 'gray.500',
-                  borderColor: filter === cat ? 'ocobo.dark' : 'gray.100',
-                  shadow: filter === cat ? 'lg' : 'none',
-                  _hover: filter !== cat ? { borderColor: 'ocobo.dark' } : {},
+                  bg: filter === f ? 'ocobo.dark' : 'gray.50',
+                  color: filter === f ? 'white' : 'gray.500',
+                  borderColor: filter === f ? 'ocobo.dark' : 'gray.100',
+                  shadow: filter === f ? 'lg' : 'none',
+                  _hover: filter !== f ? { borderColor: 'ocobo.dark' } : {},
                 })}
               >
-                {filters[cat] ?? cat}
+                {f === 'all'
+                  ? (filters[f] ?? f)
+                  : (filters[f] ?? TRACK_LABEL_FALLBACKS[f])}
               </button>
             ))}
           </div>
@@ -111,8 +116,16 @@ export const TeamSection = () => {
         >
           {filtered.map((member) => (
             <TeamMemberCard
-              key={`${member.name}-${filter}`}
-              {...member}
+              key={`${member.slug}-${filter}`}
+              name={member.name}
+              track={member.track}
+              trackLabel={
+                filters[member.track] ?? TRACK_LABEL_FALLBACKS[member.track]
+              }
+              role={member.role[lang]}
+              bio={member.bio[lang]}
+              avatar={member.avatar}
+              linkedin={member.linkedin}
               animate={animate}
             />
           ))}

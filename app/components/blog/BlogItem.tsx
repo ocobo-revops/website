@@ -4,23 +4,26 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import { flex, vstack } from '@ocobo/styled-system/patterns';
+import { circle, flex, vstack } from '@ocobo/styled-system/patterns';
 import { icon, link } from '@ocobo/styled-system/recipes';
 
+import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
-import { getAuthor, getTag } from '~/utils/labels';
+import { getTag } from '~/utils/labels';
 import { url } from '~/utils/url';
 
+import { Avatar } from '../ui/Avatar';
 import { Tag } from '../ui/Tag';
 
 interface BlogItemProps {
   item: MarkdocFile<BlogpostFrontmatter>['frontmatter'];
   slug: string;
   index: number;
+  resolvedAuthor: ResolvedAuthor;
 }
 
 const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
-  ({ item, slug }) => {
+  ({ item, slug, resolvedAuthor }) => {
     const { t } = useTranslation('blog');
 
     return (
@@ -83,8 +86,16 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
               color: 'gray.500',
             })}
           >
-            <PenToolIcon className={icon({ size: 'md' })} />
-            {getAuthor(item.author)}
+            {resolvedAuthor.avatar ? (
+              <Avatar
+                src={resolvedAuthor.avatar}
+                alt=""
+                className={circle({ size: '20px' })}
+              />
+            ) : (
+              <PenToolIcon className={icon({ size: 'md' })} />
+            )}
+            {resolvedAuthor.name}
             <DotIcon className={icon({ size: 'md' })} />
             <CoffeeIcon className={icon({ size: 'md' })} />
             {item.read}

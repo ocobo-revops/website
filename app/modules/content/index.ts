@@ -59,10 +59,20 @@ export type { JobSections } from './job-sections';
 export { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
 
 export {
-  loadContactRegistry,
-  parseContactsYaml,
-  resolveContact,
-} from './contacts';
+  fetchMembers,
+  getActiveMembers,
+  getFeaturedAboutMembers,
+  getMembersByTrack,
+  getTrackColor,
+  loadMemberRegistry,
+  resolveAuthor,
+  resolveMember,
+} from './members';
+export type {
+  Member,
+  MemberRegistry,
+  ResolvedAuthor,
+} from './members';
 
 // Type exports
 export type {

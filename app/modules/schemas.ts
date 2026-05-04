@@ -130,20 +130,45 @@ export const PageFrontmatterSchema = z.object({
 });
 
 /**
- * Hiring contact schema — referenced by slug from _contacts.yml
+ * Track enum — drives the colored top badge and studio filter
  */
-export const HiringContactSchema = z.object({
-  name: CommonSchemas.nonEmptyString,
-  role: CommonSchemas.nonEmptyString,
-  photo: CommonSchemas.nonEmptyString,
-  shortBio: z.string().optional(),
-  applyEmail: z.string().email().optional(),
-});
+export const MemberTrackSchema = z.enum([
+  'architect',
+  'builder',
+  'expert-engineer',
+]);
+
+export const MemberColorSchema = z.enum([
+  'yellow',
+  'mint',
+  'sky',
+  'coral',
+  'dark',
+]);
+
+export type MemberTrack = z.infer<typeof MemberTrackSchema>;
 
 /**
- * Contacts registry schema — validates _contacts.yml
+ * Team member frontmatter schema — one file per person in `team/<slug>.md`
  */
-export const ContactsRecordSchema = z.record(z.string(), HiringContactSchema);
+export const MemberFrontmatterSchema = z.object({
+  name: CommonSchemas.nonEmptyString,
+  role: z.object({
+    fr: CommonSchemas.nonEmptyString,
+    en: CommonSchemas.nonEmptyString,
+  }),
+  track: MemberTrackSchema,
+  linkedin: z.string().url().optional(),
+  avatar: z.string().url(),
+  displayOrder: z.number().int(),
+  active: z.boolean().default(true),
+  bio: z.object({
+    fr: CommonSchemas.nonEmptyString,
+    en: CommonSchemas.nonEmptyString,
+  }),
+  featuredOnAboutUs: z.boolean().default(false),
+  color: MemberColorSchema.optional(),
+});
 
 /**
  * Job offer frontmatter schema
@@ -174,8 +199,8 @@ export type StoryFrontmatter = z.infer<typeof StoryFrontmatterSchema>;
 export type BlogpostFrontmatter = z.infer<typeof BlogpostFrontmatterSchema>;
 export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
 export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
-export type HiringContact = z.infer<typeof HiringContactSchema>;
-export type ContactsRecord = z.infer<typeof ContactsRecordSchema>;
+export type MemberFrontmatter = z.infer<typeof MemberFrontmatterSchema>;
+export type MemberColor = z.infer<typeof MemberColorSchema>;
 
 /**
  * Union type for all frontmatter types

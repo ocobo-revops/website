@@ -1,10 +1,3 @@
-const authors = {
-  benjamin: 'Benjamin Boileux',
-  aude: 'Aude Cadiot',
-  corentin: 'Corentin Guérin',
-  ethel: 'Ethel Gosset',
-};
-
 const tags = {
   organisation: 'Organisation',
   strategy: 'Stratégie',
@@ -19,12 +12,8 @@ const tags = {
   podcast: 'Podcast',
 };
 
-const getAuthor = (slug: string) => {
-  return authors[slug as keyof typeof authors] ?? slug;
-};
-
 const getTag = (slug: string) => {
   return tags[slug as keyof typeof tags] ?? slug;
 };
 
-export { getAuthor, getTag };
+export { getTag };

@@ -2,12 +2,17 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 
+import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 
 import { BlogItem } from './BlogItem';
 
+type BlogListItem = MarkdocFile<BlogpostFrontmatter> & {
+  resolvedAuthor: ResolvedAuthor;
+};
+
 interface BlogListProps {
-  items: MarkdocFile<BlogpostFrontmatter>[];
+  items: BlogListItem[];
 }
 
 const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
@@ -53,7 +58,12 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
                 position: 'relative',
               })}
             >
-              <BlogItem slug={entry.slug} item={entry.frontmatter} index={i} />
+              <BlogItem
+                slug={entry.slug}
+                item={entry.frontmatter}
+                index={i}
+                resolvedAuthor={entry.resolvedAuthor}
+              />
             </li>
           ))}
         </ul>

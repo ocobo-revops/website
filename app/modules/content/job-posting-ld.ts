@@ -1,4 +1,4 @@
-import type { HiringContact, JobFrontmatter } from '~/modules/schemas';
+import type { JobFrontmatter } from '~/modules/schemas';
 
 const EMPLOYMENT_TYPE: Record<JobFrontmatter['contractType'], string> = {
   CDI: 'FULL_TIME',
@@ -21,7 +21,6 @@ export function serializeJsonLd(ld: Record<string, unknown>): string {
 
 export function buildJobPostingLd(
   frontmatter: JobFrontmatter,
-  contact: HiringContact | null,
   origin: string,
   slug: string,
   lang: string,
@@ -55,12 +54,10 @@ export function buildJobPostingLd(
       '@type': 'Country',
       name: 'France',
     },
-    ...(contact?.applyEmail && {
-      applicationContact: {
-        '@type': 'ContactPoint',
-        email: contact.applyEmail,
-        contactType: 'HR',
-      },
-    }),
+    applicationContact: {
+      '@type': 'ContactPoint',
+      email: frontmatter.applyEmail,
+      contactType: 'HR',
+    },
   };
 }

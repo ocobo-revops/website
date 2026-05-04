@@ -11,7 +11,7 @@ exports[`buildJobPostingLd > matches snapshot 1`] = `
   "applicationContact": {
     "@type": "ContactPoint",
     "contactType": "HR",
-    "email": "aude@ocobo.co",
+    "email": "jobs@ocobo.co",
   },
   "datePosted": "2024-01-15T00:00:00.000Z",
   "description": "Rejoignez notre équipe RevOps.",

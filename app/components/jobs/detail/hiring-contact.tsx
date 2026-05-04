@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { circle } from '@ocobo/styled-system/patterns';
+import { Linkedin } from 'lucide-react';
 
-import type { HiringContact as HiringContactData } from '~/modules/schemas';
+import type { Member } from '~/modules/content/members';
 
 type HiringContactProps = {
-  contact: HiringContactData;
+  contact: Member;
 };
 
 function getInitials(name: string) {
@@ -19,7 +21,8 @@ function getInitials(name: string) {
 }
 
 export function HiringContact({ contact }: HiringContactProps) {
-  const photoUrl = `/images/team/${contact.photo}`;
+  const { i18n } = useTranslation();
+  const lang: 'fr' | 'en' = i18n.language.startsWith('en') ? 'en' : 'fr';
   const initials = getInitials(contact.name);
   const [imgFailed, setImgFailed] = React.useState(false);
 
@@ -42,11 +45,10 @@ export function HiringContact({ contact }: HiringContactProps) {
           alignItems: { sm: 'flex-start' },
         })}
       >
-        {/* Avatar with initials fallback */}
+        {/* Avatar */}
         <div
           className={cx('group', css({ position: 'relative', flexShrink: 0 }))}
         >
-          {/* Initials fallback layer */}
           <div
             aria-hidden="true"
             className={`${circle({ size: '100px' })} ${css({
@@ -66,7 +68,7 @@ export function HiringContact({ contact }: HiringContactProps) {
           </div>
           {!imgFailed && (
             <img
-              src={photoUrl}
+              src={contact.avatar}
               alt={contact.name}
               width={100}
               height={100}
@@ -107,20 +109,34 @@ export function HiringContact({ contact }: HiringContactProps) {
               mt: '2',
             })}
           >
-            {contact.role} @ Ocobo
+            {contact.role[lang]} @ Ocobo
           </div>
-          {contact.shortBio && (
-            <p
-              className={css({
-                fontSize: 'base',
-                color: 'gray.600',
-                lineHeight: 'relaxed',
-                mt: '4',
-                maxW: 'lg',
-              })}
-            >
-              {contact.shortBio}
-            </p>
+          <p
+            className={css({
+              fontSize: 'base',
+              color: 'gray.600',
+              lineHeight: 'relaxed',
+              mt: '4',
+              maxW: 'lg',
+            })}
+          >
+            {contact.bio[lang]}
+          </p>
+          {contact.linkedin && (
+            <div className={css({ display: 'flex', gap: '3', mt: '4' })}>
+              <a
+                href={contact.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${contact.name} LinkedIn`}
+                className={css({
+                  color: 'gray.400',
+                  _hover: { color: 'ocobo.dark' },
+                })}
+              >
+                <Linkedin size={18} aria-hidden="true" />
+              </a>
+            </div>
           )}
         </div>
       </div>

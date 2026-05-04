@@ -7,7 +7,11 @@ import { BlogArticle } from '~/components/blog';
 import { Container } from '~/components/ui/Container';
 import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchBlogpost } from '~/modules/content';
+import {
+  fetchBlogpost,
+  loadMemberRegistry,
+  resolveAuthor,
+} from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -23,14 +27,19 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchBlogpost(slug);
+    const [[status, _state, article], registry] = await Promise.all([
+      fetchBlogpost(slug),
+      loadMemberRegistry(),
+    ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
     }
 
+    const resolvedAuthor = resolveAuthor(article.frontmatter.author, registry);
+
     return data(
-      { article },
+      { article, resolvedAuthor },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -52,7 +61,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article } = useLoaderData<typeof loader>();
+  const { article, resolvedAuthor } = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -62,7 +71,7 @@ export default function Index() {
     >
       <ScrollProgressBar variant="sky" />
       <Container>
-        <BlogArticle article={article} />
+        <BlogArticle article={article} resolvedAuthor={resolvedAuthor} />
       </Container>
     </div>
   );

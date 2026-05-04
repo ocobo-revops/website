@@ -5,10 +5,10 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
-  type HiringContact,
-  HiringContactSchema,
   type JobFrontmatter,
   JobFrontmatterSchema,
+  type MemberFrontmatter,
+  MemberFrontmatterSchema,
   type PageFrontmatter,
   PageFrontmatterSchema,
   type StoryFrontmatter,
@@ -475,33 +475,137 @@ describe('JobFrontmatterSchema', () => {
   });
 });
 
-describe('HiringContactSchema', () => {
-  const validContact: HiringContact = {
-    name: 'Aude Cadiot',
-    role: 'Co-fondatrice',
-    photo: 'aude-cadiot.jpg',
-    shortBio: 'Référence française du Revenue Operations.',
+describe('MemberFrontmatterSchema', () => {
+  const validMember: MemberFrontmatter = {
+    name: 'Benjamin Boileux',
+    role: { fr: 'Associé', en: 'Partner' },
+    track: 'architect',
+    linkedin: 'https://www.linkedin.com/in/benjamin-boileux/',
+    avatar: 'https://blob.vercel-storage.com/team/benjamin-boileux.jpg',
+    displayOrder: 1,
+    active: true,
+    bio: {
+      fr: 'Spécialiste des systèmes et du pilotage opérationnel.',
+      en: 'Systems and operational steering specialist.',
+    },
+    featuredOnAboutUs: true,
   };
 
-  it('should validate a complete hiring contact', () => {
-    const result = HiringContactSchema.safeParse(validContact);
+  it('validates a complete member', () => {
+    const result = MemberFrontmatterSchema.safeParse(validMember);
     expect(result.success).toBe(true);
   });
 
-  it('should reject when name is missing', () => {
-    const invalid = { ...validContact };
-    delete (invalid as any).name;
-    const result = HiringContactSchema.safeParse(invalid);
+  it.each(['name', 'role', 'track', 'avatar', 'displayOrder', 'bio'] as const)(
+    'rejects when required field %s is missing',
+    (field) => {
+      const invalid = { ...validMember };
+      delete (invalid as any)[field];
+      const result = MemberFrontmatterSchema.safeParse(invalid);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const paths = result.error.issues.map((i) => i.path[0]);
+        expect(paths).toContain(field);
+      }
+    },
+  );
+
+  it('rejects a track value outside the enum', () => {
+    const invalid = { ...validMember, track: 'wizard' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
     expect(result.success).toBe(false);
   });
 
-  it('should allow optional shortBio and applyEmail', () => {
-    const minimal = {
-      name: 'Aude Cadiot',
-      role: 'Co-fondatrice',
-      photo: 'aude.jpg',
-    };
-    const result = HiringContactSchema.safeParse(minimal);
+  it.each(['fr', 'en'] as const)('requires bio.%s', (lang) => {
+    const invalid = { ...validMember, bio: { ...validMember.bio } };
+    delete (invalid.bio as any)[lang];
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it.each(['fr', 'en'] as const)('requires role.%s', (lang) => {
+    const invalid = { ...validMember, role: { ...validMember.role } };
+    delete (invalid.role as any)[lang];
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects a non-URL linkedin value', () => {
+    const invalid = { ...validMember, linkedin: 'not a url' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('accepts when linkedin is omitted', () => {
+    const { linkedin, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
     expect(result.success).toBe(true);
+  });
+
+  it('rejects a non-URL avatar value', () => {
+    const invalid = { ...validMember, avatar: 'not-a-url' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('defaults active to true when omitted', () => {
+    const { active, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.active).toBe(true);
+    }
+  });
+
+  it('defaults featuredOnAboutUs to false when omitted', () => {
+    const { featuredOnAboutUs, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.featuredOnAboutUs).toBe(false);
+    }
+  });
+
+  it('rejects a non-integer displayOrder', () => {
+    const invalid = { ...validMember, displayOrder: 1.5 };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('accepts each track enum value', () => {
+    for (const track of ['architect', 'builder', 'expert-engineer'] as const) {
+      const result = MemberFrontmatterSchema.safeParse({
+        ...validMember,
+        track,
+      });
+      expect(result.success).toBe(true);
+    }
+  });
+
+  it('accepts a valid color override', () => {
+    for (const color of ['yellow', 'mint', 'sky', 'coral', 'dark'] as const) {
+      const result = MemberFrontmatterSchema.safeParse({
+        ...validMember,
+        color,
+      });
+      expect(result.success).toBe(true);
+    }
+  });
+
+  it('rejects an invalid color value', () => {
+    const result = MemberFrontmatterSchema.safeParse({
+      ...validMember,
+      color: 'purple',
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it('allows color to be omitted', () => {
+    const { color, ...rest } = { ...validMember, color: 'yellow' as const };
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.color).toBeUndefined();
+    }
   });
 });
