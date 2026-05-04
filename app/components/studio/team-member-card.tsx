@@ -3,21 +3,23 @@ import { Linkedin } from 'lucide-react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
 
-type CategoryColor = 'yellow' | 'coral' | 'mint';
+import type { MemberTrack } from '~/modules/schemas';
 
-const categoryColorMap: Record<string, CategoryColor> = {
-  Architecte: 'yellow',
-  Builder: 'coral',
-  'Expert Engineer': 'mint',
+type TrackColor = 'yellow' | 'coral' | 'mint';
+
+const trackColorMap: Record<MemberTrack, TrackColor> = {
+  architect: 'yellow',
+  builder: 'coral',
+  'expert-engineer': 'mint',
 };
 
-const badgeBgStyles: Record<CategoryColor, string> = {
+const badgeBgStyles: Record<TrackColor, string> = {
   yellow: css({ bg: 'ocobo.yellow.light', color: 'ocobo.yellow' }),
   coral: css({ bg: 'ocobo.coral.light', color: 'ocobo.coral' }),
   mint: css({ bg: 'ocobo.mint.light', color: 'ocobo.mint' }),
 };
 
-const photoBorderStyles: Record<CategoryColor, string> = {
+const photoBorderStyles: Record<TrackColor, string> = {
   yellow: css({ _groupHover: { borderColor: 'ocobo.yellow' } }),
   coral: css({ _groupHover: { borderColor: 'ocobo.coral' } }),
   mint: css({ _groupHover: { borderColor: 'ocobo.mint' } }),
@@ -25,24 +27,26 @@ const photoBorderStyles: Record<CategoryColor, string> = {
 
 interface TeamMemberCardProps {
   name: string;
-  category: string;
+  track: MemberTrack;
+  trackLabel: string;
   role: string;
-  desc: string;
-  img: string;
+  bio: string;
+  avatar: string;
   linkedin?: string;
   animate: boolean;
 }
 
 export const TeamMemberCard = ({
   name,
-  category,
+  track,
+  trackLabel,
   role,
-  desc,
-  img,
+  bio,
+  avatar,
   animate,
   linkedin,
 }: TeamMemberCardProps) => {
-  const color = categoryColorMap[category] ?? 'yellow';
+  const color = trackColorMap[track];
 
   return (
     <div
@@ -64,7 +68,7 @@ export const TeamMemberCard = ({
           : css({ opacity: 0 }),
       )}
     >
-      {/* Category badge */}
+      {/* Track badge */}
       <div
         className={cx(
           css({
@@ -85,7 +89,7 @@ export const TeamMemberCard = ({
           badgeBgStyles[color],
         )}
       >
-        {category}
+        {trackLabel}
       </div>
 
       {/* Photo */}
@@ -108,7 +112,7 @@ export const TeamMemberCard = ({
         )}
       >
         <img
-          src={img}
+          src={avatar}
           alt={name}
           className={css({
             width: 'full',
@@ -158,7 +162,7 @@ export const TeamMemberCard = ({
             fontWeight: 'medium',
           })}
         >
-          {desc}
+          {bio}
         </p>
 
         {linkedin ? (
