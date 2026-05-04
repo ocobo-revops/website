@@ -17,6 +17,12 @@ const FILTERS = [
   ...MemberTrackSchema.options,
 ] as const satisfies readonly Filter[];
 
+const TRACK_LABEL_FALLBACKS: Record<MemberTrack, string> = {
+  architect: 'Architect',
+  builder: 'Builder',
+  'expert-engineer': 'Expert Engineer',
+};
+
 interface TeamSectionProps {
   members: StudioMember[];
 }
@@ -93,7 +99,9 @@ export const TeamSection = ({ members }: TeamSectionProps) => {
                   _hover: filter !== f ? { borderColor: 'ocobo.dark' } : {},
                 })}
               >
-                {filters[f] ?? f}
+                {f === 'all'
+                  ? (filters[f] ?? f)
+                  : (filters[f] ?? TRACK_LABEL_FALLBACKS[f])}
               </button>
             ))}
           </div>
@@ -110,7 +118,9 @@ export const TeamSection = ({ members }: TeamSectionProps) => {
               key={`${member.slug}-${filter}`}
               name={member.name}
               track={member.track}
-              trackLabel={filters[member.track] ?? member.track}
+              trackLabel={
+                filters[member.track] ?? TRACK_LABEL_FALLBACKS[member.track]
+              }
               role={member.role}
               bio={member.bio}
               avatar={member.avatar}
