@@ -9,6 +9,8 @@ import {
   HiringContactSchema,
   type JobFrontmatter,
   JobFrontmatterSchema,
+  type MemberFrontmatter,
+  MemberFrontmatterSchema,
   type PageFrontmatter,
   PageFrontmatterSchema,
   type StoryFrontmatter,
@@ -503,5 +505,113 @@ describe('HiringContactSchema', () => {
     };
     const result = HiringContactSchema.safeParse(minimal);
     expect(result.success).toBe(true);
+  });
+});
+
+describe('MemberFrontmatterSchema', () => {
+  const validMember: MemberFrontmatter = {
+    name: 'Benjamin Boileux',
+    role: 'Architecte RevOps & Associé',
+    track: 'architecte',
+    linkedin: 'https://www.linkedin.com/in/benjamin-boileux/',
+    avatar: 'https://blob.vercel-storage.com/team/benjamin-boileux.jpg',
+    displayOrder: 1,
+    active: true,
+    bio: {
+      fr: 'Spécialiste des systèmes et du pilotage opérationnel.',
+      en: 'Systems and operational steering specialist.',
+    },
+    applyEmail: 'benjamin@ocobo.co',
+    featuredOnAboutUs: true,
+  };
+
+  it('validates a complete member', () => {
+    const result = MemberFrontmatterSchema.safeParse(validMember);
+    expect(result.success).toBe(true);
+  });
+
+  it.each(['name', 'role', 'track', 'avatar', 'displayOrder', 'bio'] as const)(
+    'rejects when required field %s is missing',
+    (field) => {
+      const invalid = { ...validMember };
+      delete (invalid as any)[field];
+      const result = MemberFrontmatterSchema.safeParse(invalid);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const paths = result.error.issues.map((i) => i.path[0]);
+        expect(paths).toContain(field);
+      }
+    },
+  );
+
+  it('rejects a track value outside the enum', () => {
+    const invalid = { ...validMember, track: 'wizard' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it.each(['fr', 'en'] as const)('requires bio.%s', (lang) => {
+    const invalid = { ...validMember, bio: { ...validMember.bio } };
+    delete (invalid.bio as any)[lang];
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects a non-URL linkedin value', () => {
+    const invalid = { ...validMember, linkedin: 'not a url' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('accepts when linkedin is omitted', () => {
+    const { linkedin, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+  });
+
+  it('rejects a non-email applyEmail value', () => {
+    const invalid = { ...validMember, applyEmail: 'not-an-email' };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('accepts when applyEmail is omitted', () => {
+    const { applyEmail, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+  });
+
+  it('defaults active to true when omitted', () => {
+    const { active, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.active).toBe(true);
+    }
+  });
+
+  it('defaults featuredOnAboutUs to false when omitted', () => {
+    const { featuredOnAboutUs, ...rest } = validMember;
+    const result = MemberFrontmatterSchema.safeParse(rest);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.featuredOnAboutUs).toBe(false);
+    }
+  });
+
+  it('rejects a non-integer displayOrder', () => {
+    const invalid = { ...validMember, displayOrder: 1.5 };
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it('accepts each track enum value', () => {
+    for (const track of ['architecte', 'builder', 'expert-engineer'] as const) {
+      const result = MemberFrontmatterSchema.safeParse({
+        ...validMember,
+        track,
+      });
+      expect(result.success).toBe(true);
+    }
   });
 });

@@ -146,6 +146,36 @@ export const HiringContactSchema = z.object({
 export const ContactsRecordSchema = z.record(z.string(), HiringContactSchema);
 
 /**
+ * Track enum — drives the colored top badge and studio filter
+ */
+export const MemberTrackSchema = z.enum([
+  'architecte',
+  'builder',
+  'expert-engineer',
+]);
+
+export type MemberTrack = z.infer<typeof MemberTrackSchema>;
+
+/**
+ * Team member frontmatter schema — one file per person in `team/<slug>.md`
+ */
+export const MemberFrontmatterSchema = z.object({
+  name: CommonSchemas.nonEmptyString,
+  role: CommonSchemas.nonEmptyString,
+  track: MemberTrackSchema,
+  linkedin: z.string().url().optional(),
+  avatar: CommonSchemas.nonEmptyString,
+  displayOrder: z.number().int(),
+  active: z.boolean().default(true),
+  bio: z.object({
+    fr: CommonSchemas.nonEmptyString,
+    en: CommonSchemas.nonEmptyString,
+  }),
+  applyEmail: z.string().email().optional(),
+  featuredOnAboutUs: z.boolean().default(false),
+});
+
+/**
  * Job offer frontmatter schema
  */
 export const JobFrontmatterSchema = z.object({
@@ -176,6 +206,7 @@ export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
 export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
 export type HiringContact = z.infer<typeof HiringContactSchema>;
 export type ContactsRecord = z.infer<typeof ContactsRecordSchema>;
+export type MemberFrontmatter = z.infer<typeof MemberFrontmatterSchema>;
 
 /**
  * Union type for all frontmatter types
