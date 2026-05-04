@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 
-import type { StudioMember } from '~/modules/content/members';
+import type { Member } from '~/modules/content/members';
 import { type MemberTrack, MemberTrackSchema } from '~/modules/schemas';
 
 import { Container } from '../ui/Container';
@@ -24,10 +24,11 @@ const TRACK_LABEL_FALLBACKS: Record<MemberTrack, string> = {
 };
 
 interface TeamSectionProps {
-  members: StudioMember[];
+  members: Member[];
+  lang: 'fr' | 'en';
 }
 
-export const TeamSection = ({ members }: TeamSectionProps) => {
+export const TeamSection = ({ members, lang }: TeamSectionProps) => {
   const { t } = useTranslation('studio');
   const [filter, setFilter] = useState<Filter>('all');
   const [animate, setAnimate] = useState(false);
@@ -121,8 +122,8 @@ export const TeamSection = ({ members }: TeamSectionProps) => {
               trackLabel={
                 filters[member.track] ?? TRACK_LABEL_FALLBACKS[member.track]
               }
-              role={member.role}
-              bio={member.bio}
+              role={member.role[lang]}
+              bio={member.bio[lang]}
               avatar={member.avatar}
               linkedin={member.linkedin}
               animate={animate}

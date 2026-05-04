@@ -11,16 +11,6 @@ import { createValidator } from './processor';
 export type Member = MemberFrontmatter & { slug: string };
 export type MemberRegistry = Record<string, Member>;
 
-export type StudioMember = {
-  slug: string;
-  name: string;
-  track: MemberTrack;
-  role: string;
-  bio: string;
-  avatar: string;
-  linkedin?: string;
-};
-
 export type ResolvedAuthor = {
   name: string;
   avatar?: string;

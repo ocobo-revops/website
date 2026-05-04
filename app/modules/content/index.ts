@@ -71,7 +71,6 @@ export {
 export type {
   Member,
   MemberRegistry,
-  StudioMember,
   ResolvedAuthor,
 } from './members';
 

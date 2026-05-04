@@ -12,7 +12,6 @@ import { TeamSection } from '~/components/studio/team-section';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import {
-  type StudioMember,
   getActiveMembers,
   loadMemberRegistry,
 } from '~/modules/content/members';
@@ -22,8 +21,6 @@ import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
 import { url, getImageOgFullPath } from '~/utils/url';
 
-export type { StudioMember };
-
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
   throwIfDisabled('studio');
@@ -31,21 +28,13 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   const t = await i18nServer.getFixedT(lang, 'studio');
 
   const registry = await loadMemberRegistry();
-  const members: StudioMember[] = getActiveMembers(registry).map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    track: m.track,
-    role: m.role[lang],
-    bio: m.bio[lang],
-    avatar: m.avatar,
-    linkedin: m.linkedin,
-  }));
 
   return {
     title: t('meta.title'),
     description: t('meta.description'),
     ogImageSrc: getImageOgFullPath('studio', args.request.url),
-    members,
+    members: getActiveMembers(registry),
+    lang,
   };
 }, 'static');
 
@@ -63,13 +52,13 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 
 export default function StudioPage() {
   const { t } = useTranslation('studio');
-  const { members } = useLoaderData<typeof loader>();
+  const { members, lang } = useLoaderData<typeof loader>();
 
   return (
     <div>
       <HeroSection />
       <ModelSection />
-      <TeamSection members={members} />
+      <TeamSection members={members} lang={lang} />
       <CtaSection
         variant="mint"
         title={t('cta.title')}
