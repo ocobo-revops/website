@@ -64,6 +64,16 @@ export {
   resolveContact,
 } from './contacts';
 
+export {
+  fetchMembers,
+  getActiveMembers,
+  getFeaturedAboutMembers,
+  getMembersByTrack,
+  loadMemberRegistry,
+  resolveMember,
+} from './members';
+export type { Member, MemberRegistry } from './members';
+
 // Type exports
 export type {
   ContentFetchState,
