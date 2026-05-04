@@ -16,19 +16,16 @@ import { ValuesSection } from '~/components/about/values-section';
 import { CtaSection } from '~/components/offer/cta-section';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
-import { getFeaturedAboutMembers, loadMemberRegistry } from '~/modules/content';
+import {
+  getFeaturedAboutMembers,
+  getTrackColor,
+  loadMemberRegistry,
+} from '~/modules/content';
 import { isPageEnabled } from '~/modules/feature-flags';
-import type { MemberTrack } from '~/modules/schemas';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
 import { url, getImageOgFullPath } from '~/utils/url';
-
-const trackToColor: Record<MemberTrack, TeamSectionMember['color']> = {
-  architect: 'yellow',
-  builder: 'mint',
-  'expert-engineer': 'sky',
-};
 
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
@@ -44,7 +41,7 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
       bio: m.bio[lang],
       imageSrc: m.avatar,
       linkedInUrl: m.linkedin,
-      color: m.color ?? trackToColor[m.track],
+      color: m.color ?? getTrackColor(m.track),
     }),
   );
 

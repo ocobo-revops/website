@@ -63,6 +63,7 @@ export {
   getActiveMembers,
   getFeaturedAboutMembers,
   getMembersByTrack,
+  getTrackColor,
   loadMemberRegistry,
   resolveAuthor,
   resolveMember,

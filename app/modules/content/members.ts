@@ -1,5 +1,6 @@
 import { getPrivateEnvVars } from '../env.server';
 import {
+  type MemberColor,
   type MemberFrontmatter,
   MemberFrontmatterSchema,
   type MemberTrack,
@@ -53,6 +54,16 @@ export function resolveAuthor(
     avatar: member.avatar,
     linkedin: member.linkedin,
   };
+}
+
+const TRACK_COLOR: Record<MemberTrack, MemberColor> = {
+  architect: 'yellow',
+  builder: 'mint',
+  'expert-engineer': 'sky',
+};
+
+export function getTrackColor(track: MemberTrack): MemberColor {
+  return TRACK_COLOR[track];
 }
 
 const byDisplayOrder = (a: Member, b: Member) =>
