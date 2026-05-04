@@ -54,8 +54,8 @@
   "jobs": {
     "sectionTitle": "Open positions",
     "sectionSubtitle": "We are looking for architects passionate about data and systems.",
-    "opportunitiesCount": "{{count}} OPPORTUNITY AVAILABLE",
-    "opportunitiesCount_plural": "{{count}} OPPORTUNITIES AVAILABLE"
+    "opportunitiesCount_one": "{{count}} OPPORTUNITY AVAILABLE",
+    "opportunitiesCount_other": "{{count}} OPPORTUNITIES AVAILABLE"
   },
   "process": {
     "badge": "TRANSPARENCY",

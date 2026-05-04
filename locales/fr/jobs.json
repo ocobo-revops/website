@@ -54,8 +54,8 @@
   "jobs": {
     "sectionTitle": "Postes ouverts",
     "sectionSubtitle": "Nous recherchons des architectes passionnés par la donnée et les systèmes.",
-    "opportunitiesCount": "{{count}} OPPORTUNITÉ DISPONIBLE",
-    "opportunitiesCount_plural": "{{count}} OPPORTUNITÉS DISPONIBLES"
+    "opportunitiesCount_one": "{{count}} OPPORTUNITÉ DISPONIBLE",
+    "opportunitiesCount_other": "{{count}} OPPORTUNITÉS DISPONIBLES"
   },
   "process": {
     "badge": "TRANSPARENCE",
