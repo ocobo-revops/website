@@ -22,7 +22,7 @@ function getInitials(name: string) {
 
 export function HiringContact({ contact }: HiringContactProps) {
   const { i18n } = useTranslation();
-  const lang = i18n.language as 'fr' | 'en';
+  const lang: 'fr' | 'en' = i18n.language.startsWith('en') ? 'en' : 'fr';
   const initials = getInitials(contact.name);
   const [imgFailed, setImgFailed] = React.useState(false);
 
