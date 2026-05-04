@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import type { HiringContact, JobFrontmatter } from '~/modules/schemas';
+import type { JobFrontmatter } from '~/modules/schemas';
 
 import { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
+import type { Member } from './members';
 
 const BASE_FRONTMATTER: JobFrontmatter = {
   title: 'Revenue Operations Manager',
@@ -17,11 +18,17 @@ const BASE_FRONTMATTER: JobFrontmatter = {
   intro: 'Rejoignez notre équipe RevOps.',
 };
 
-const CONTACT: HiringContact = {
+const CONTACT: Member = {
+  slug: 'aude-cadiot',
   name: 'Aude Cadiot',
-  role: 'Head of RevOps',
-  photo: 'aude.jpeg',
+  role: { fr: 'Head of RevOps', en: 'Head of RevOps' },
+  track: 'architect',
+  avatar: 'https://blob.vercel-storage.com/team/aude-cadiot.jpg',
+  displayOrder: 2,
+  active: true,
+  bio: { fr: 'Experte RevOps.', en: 'RevOps expert.' },
   applyEmail: 'aude@ocobo.co',
+  featuredOnAboutUs: false,
 };
 
 const ORIGIN = 'https://www.ocobo.co';

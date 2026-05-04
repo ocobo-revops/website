@@ -1,4 +1,5 @@
-import type { HiringContact, JobFrontmatter } from '~/modules/schemas';
+import type { Member } from '~/modules/content/members';
+import type { JobFrontmatter } from '~/modules/schemas';
 
 const EMPLOYMENT_TYPE: Record<JobFrontmatter['contractType'], string> = {
   CDI: 'FULL_TIME',
@@ -21,7 +22,7 @@ export function serializeJsonLd(ld: Record<string, unknown>): string {
 
 export function buildJobPostingLd(
   frontmatter: JobFrontmatter,
-  contact: HiringContact | null,
+  contact: Member | null,
   origin: string,
   slug: string,
   lang: string,

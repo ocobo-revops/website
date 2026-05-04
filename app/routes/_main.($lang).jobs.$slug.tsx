@@ -20,11 +20,10 @@ import {
   buildJobPostingLd,
   extractJobSections,
   fetchJob,
-  loadContactRegistry,
-  resolveContact,
+  loadMemberRegistry,
+  resolveMember,
   serializeJsonLd,
 } from '~/modules/content';
-import type { HiringContact as HiringContactType } from '~/modules/schemas';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -37,7 +36,10 @@ export const loader = createHybridLoader(
       return redirect(`/${lang}/jobs`);
     }
 
-    const [status, , job] = await fetchJob(slug, lang);
+    const [[status, , job], registry] = await Promise.all([
+      fetchJob(slug, lang),
+      loadMemberRegistry(),
+    ]);
 
     if (status !== 200 || !job) {
       return redirect(`/${lang}/jobs`);
@@ -48,9 +50,7 @@ export const loader = createHybridLoader(
     }
 
     const sections = extractJobSections(job.content);
-
-    const registry = await loadContactRegistry();
-    const contact = resolveContact(job.frontmatter.hiringContact, registry);
+    const contact = resolveMember(job.frontmatter.hiringContact, registry);
     const { origin } = new URL(request.url);
     const ld = serializeJsonLd(
       buildJobPostingLd(job.frontmatter, contact, origin, slug, lang),
@@ -145,7 +145,7 @@ export default function JobDetail() {
                   borderColor: 'gray.100',
                 })}
               >
-                <HiringContact contact={contact as HiringContactType} />
+                <HiringContact contact={contact} />
               </div>
             )}
 

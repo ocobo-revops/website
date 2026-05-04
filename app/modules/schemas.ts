@@ -130,22 +130,6 @@ export const PageFrontmatterSchema = z.object({
 });
 
 /**
- * Hiring contact schema — referenced by slug from _contacts.yml
- */
-export const HiringContactSchema = z.object({
-  name: CommonSchemas.nonEmptyString,
-  role: CommonSchemas.nonEmptyString,
-  photo: CommonSchemas.nonEmptyString,
-  shortBio: z.string().optional(),
-  applyEmail: z.string().email().optional(),
-});
-
-/**
- * Contacts registry schema — validates _contacts.yml
- */
-export const ContactsRecordSchema = z.record(z.string(), HiringContactSchema);
-
-/**
  * Track enum — drives the colored top badge and studio filter
  */
 export const MemberTrackSchema = z.enum([
@@ -216,8 +200,6 @@ export type StoryFrontmatter = z.infer<typeof StoryFrontmatterSchema>;
 export type BlogpostFrontmatter = z.infer<typeof BlogpostFrontmatterSchema>;
 export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
 export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
-export type HiringContact = z.infer<typeof HiringContactSchema>;
-export type ContactsRecord = z.infer<typeof ContactsRecordSchema>;
 export type MemberFrontmatter = z.infer<typeof MemberFrontmatterSchema>;
 export type MemberColor = z.infer<typeof MemberColorSchema>;
 

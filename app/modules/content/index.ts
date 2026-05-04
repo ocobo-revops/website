@@ -59,12 +59,6 @@ export type { JobSections } from './job-sections';
 export { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
 
 export {
-  loadContactRegistry,
-  parseContactsYaml,
-  resolveContact,
-} from './contacts';
-
-export {
   fetchMembers,
   getActiveMembers,
   getFeaturedAboutMembers,

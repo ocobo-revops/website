@@ -5,8 +5,6 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
-  type HiringContact,
-  HiringContactSchema,
   type JobFrontmatter,
   JobFrontmatterSchema,
   type MemberFrontmatter,
@@ -474,37 +472,6 @@ describe('JobFrontmatterSchema', () => {
     if (result.success) {
       expect(result.data.contractType).toBe('CDI');
     }
-  });
-});
-
-describe('HiringContactSchema', () => {
-  const validContact: HiringContact = {
-    name: 'Aude Cadiot',
-    role: 'Co-fondatrice',
-    photo: 'aude-cadiot.jpg',
-    shortBio: 'Référence française du Revenue Operations.',
-  };
-
-  it('should validate a complete hiring contact', () => {
-    const result = HiringContactSchema.safeParse(validContact);
-    expect(result.success).toBe(true);
-  });
-
-  it('should reject when name is missing', () => {
-    const invalid = { ...validContact };
-    delete (invalid as any).name;
-    const result = HiringContactSchema.safeParse(invalid);
-    expect(result.success).toBe(false);
-  });
-
-  it('should allow optional shortBio and applyEmail', () => {
-    const minimal = {
-      name: 'Aude Cadiot',
-      role: 'Co-fondatrice',
-      photo: 'aude.jpg',
-    };
-    const result = HiringContactSchema.safeParse(minimal);
-    expect(result.success).toBe(true);
   });
 });
 
