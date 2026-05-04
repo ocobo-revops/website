@@ -42,7 +42,7 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
           {resolvedAuthor.avatar && (
             <Avatar
               src={resolvedAuthor.avatar}
-              alt={resolvedAuthor.name}
+              alt=""
               className={circle({ size: '32px' })}
             />
           )}

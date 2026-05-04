@@ -89,7 +89,7 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
             {resolvedAuthor.avatar ? (
               <Avatar
                 src={resolvedAuthor.avatar}
-                alt={resolvedAuthor.name}
+                alt=""
                 className={circle({ size: '20px' })}
               />
             ) : (

@@ -111,19 +111,17 @@ export function HiringContact({ contact }: HiringContactProps) {
           >
             {contact.role[lang]} @ Ocobo
           </div>
-          {contact.bio[lang] && (
-            <p
-              className={css({
-                fontSize: 'base',
-                color: 'gray.600',
-                lineHeight: 'relaxed',
-                mt: '4',
-                maxW: 'lg',
-              })}
-            >
-              {contact.bio[lang]}
-            </p>
-          )}
+          <p
+            className={css({
+              fontSize: 'base',
+              color: 'gray.600',
+              lineHeight: 'relaxed',
+              mt: '4',
+              maxW: 'lg',
+            })}
+          >
+            {contact.bio[lang]}
+          </p>
           {contact.linkedin && (
             <div className={css({ display: 'flex', gap: '3', mt: '4' })}>
               <a
