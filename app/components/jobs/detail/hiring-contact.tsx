@@ -3,7 +3,6 @@ import * as React from 'react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { circle } from '@ocobo/styled-system/patterns';
 
-import { ASSETS_BASE_URL } from '~/config/assets';
 import type { HiringContact as HiringContactData } from '~/modules/schemas';
 
 type HiringContactProps = {
@@ -20,7 +19,7 @@ function getInitials(name: string) {
 }
 
 export function HiringContact({ contact }: HiringContactProps) {
-  const photoUrl = `${ASSETS_BASE_URL}/team/${contact.photo}`;
+  const photoUrl = `/images/team/${contact.photo}`;
   const initials = getInitials(contact.name);
   const [imgFailed, setImgFailed] = React.useState(false);
 
