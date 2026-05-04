@@ -41,7 +41,6 @@ const member = (overrides: Partial<Member>): Member => ({
   bio: overrides.bio ?? { fr: 'fr bio', en: 'en bio' },
   featuredOnAboutUs: overrides.featuredOnAboutUs ?? false,
   linkedin: overrides.linkedin,
-  applyEmail: overrides.applyEmail,
 });
 
 const asMarkdocFiles = (members: Member[]) =>

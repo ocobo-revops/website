@@ -488,7 +488,6 @@ describe('MemberFrontmatterSchema', () => {
       fr: 'Spécialiste des systèmes et du pilotage opérationnel.',
       en: 'Systems and operational steering specialist.',
     },
-    applyEmail: 'benjamin@ocobo.co',
     featuredOnAboutUs: true,
   };
 
@@ -543,16 +542,10 @@ describe('MemberFrontmatterSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('rejects a non-email applyEmail value', () => {
-    const invalid = { ...validMember, applyEmail: 'not-an-email' };
+  it('rejects a non-URL avatar value', () => {
+    const invalid = { ...validMember, avatar: 'not-a-url' };
     const result = MemberFrontmatterSchema.safeParse(invalid);
     expect(result.success).toBe(false);
-  });
-
-  it('accepts when applyEmail is omitted', () => {
-    const { applyEmail, ...rest } = validMember;
-    const result = MemberFrontmatterSchema.safeParse(rest);
-    expect(result.success).toBe(true);
   });
 
   it('defaults active to true when omitted', () => {

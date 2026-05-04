@@ -53,7 +53,7 @@ export const loader = createHybridLoader(
     const contact = resolveMember(job.frontmatter.hiringContact, registry);
     const { origin } = new URL(request.url);
     const ld = serializeJsonLd(
-      buildJobPostingLd(job.frontmatter, contact, origin, slug, lang),
+      buildJobPostingLd(job.frontmatter, origin, slug, lang),
     );
 
     return { job, sections, contact, lang, slug, ld };

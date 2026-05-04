@@ -159,14 +159,13 @@ export const MemberFrontmatterSchema = z.object({
   }),
   track: MemberTrackSchema,
   linkedin: z.string().url().optional(),
-  avatar: CommonSchemas.nonEmptyString,
+  avatar: z.string().url(),
   displayOrder: z.number().int(),
   active: z.boolean().default(true),
   bio: z.object({
     fr: CommonSchemas.nonEmptyString,
     en: CommonSchemas.nonEmptyString,
   }),
-  applyEmail: z.string().email().optional(),
   featuredOnAboutUs: z.boolean().default(false),
   color: MemberColorSchema.optional(),
 });

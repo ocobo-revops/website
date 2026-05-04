@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import type { JobFrontmatter } from '~/modules/schemas';
 
 import { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
-import type { Member } from './members';
 
 const BASE_FRONTMATTER: JobFrontmatter = {
   title: 'Revenue Operations Manager',
@@ -11,24 +10,11 @@ const BASE_FRONTMATTER: JobFrontmatter = {
   contractType: 'CDI',
   seniority: 'Senior',
   location: 'Paris',
-  hiringContact: 'aude',
+  hiringContact: 'aude-cadiot',
   applyEmail: 'jobs@ocobo.co',
   status: 'published',
   publishedAt: '2024-01-15',
   intro: 'Rejoignez notre équipe RevOps.',
-};
-
-const CONTACT: Member = {
-  slug: 'aude-cadiot',
-  name: 'Aude Cadiot',
-  role: { fr: 'Head of RevOps', en: 'Head of RevOps' },
-  track: 'architect',
-  avatar: 'https://blob.vercel-storage.com/team/aude-cadiot.jpg',
-  displayOrder: 2,
-  active: true,
-  bio: { fr: 'Experte RevOps.', en: 'RevOps expert.' },
-  applyEmail: 'aude@ocobo.co',
-  featuredOnAboutUs: false,
 };
 
 const ORIGIN = 'https://www.ocobo.co';
@@ -45,7 +31,6 @@ describe('buildJobPostingLd', () => {
     for (const [contractType, expected] of cases) {
       const result = buildJobPostingLd(
         { ...BASE_FRONTMATTER, contractType },
-        null,
         ORIGIN,
         'revenue-ops-manager',
         'fr',
@@ -57,7 +42,6 @@ describe('buildJobPostingLd', () => {
   it('derives validThrough as publishedAt + 90 days', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      null,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
@@ -71,7 +55,6 @@ describe('buildJobPostingLd', () => {
   it('sets hiringOrganization to Ocobo', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      null,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
@@ -87,7 +70,6 @@ describe('buildJobPostingLd', () => {
   it('sets jobLocation with addressLocality from frontmatter', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      null,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
@@ -101,7 +83,6 @@ describe('buildJobPostingLd', () => {
   it('sets applicantLocationRequirements to France', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      null,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
@@ -111,35 +92,22 @@ describe('buildJobPostingLd', () => {
     ).toBe('France');
   });
 
-  it('includes contact email when contact has applyEmail', () => {
+  it('includes applicationContact email from job frontmatter', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      CONTACT,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
     );
     expect(result.applicationContact).toBeDefined();
     expect((result.applicationContact as Record<string, unknown>).email).toBe(
-      'aude@ocobo.co',
+      'jobs@ocobo.co',
     );
-  });
-
-  it('omits applicationContact when contact has no email', () => {
-    const result = buildJobPostingLd(
-      BASE_FRONTMATTER,
-      { ...CONTACT, applyEmail: undefined },
-      ORIGIN,
-      'revenue-ops-manager',
-      'fr',
-    );
-    expect(result.applicationContact).toBeUndefined();
   });
 
   it('matches snapshot', () => {
     const result = buildJobPostingLd(
       BASE_FRONTMATTER,
-      CONTACT,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
@@ -159,7 +127,6 @@ describe('serializeJsonLd', () => {
   it('produces valid JSON', () => {
     const ld = buildJobPostingLd(
       BASE_FRONTMATTER,
-      null,
       ORIGIN,
       'revenue-ops-manager',
       'fr',
