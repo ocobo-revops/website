@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { circle } from '@ocobo/styled-system/patterns';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
@@ -44,7 +44,9 @@ export function HiringContact({ contact }: HiringContactProps) {
         })}
       >
         {/* Avatar with initials fallback */}
-        <div className={css({ position: 'relative', flexShrink: 0 })}>
+        <div
+          className={cx('group', css({ position: 'relative', flexShrink: 0 }))}
+        >
           {/* Initials fallback layer */}
           <div
             aria-hidden="true"
@@ -74,6 +76,8 @@ export function HiringContact({ contact }: HiringContactProps) {
                 filter: 'grayscale(100%)',
                 position: 'relative',
                 zIndex: 1,
+                transition: 'all 500ms',
+                _groupHover: { filter: 'grayscale(0)' },
               })}`}
               onError={() => setImgFailed(true)}
             />

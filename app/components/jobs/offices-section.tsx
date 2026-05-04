@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid, hstack } from '@ocobo/styled-system/patterns';
 
 const OFFICE_PHOTOS = [
@@ -82,31 +82,40 @@ export function OfficesSection() {
       {/* Photos grid */}
       <div className={grid({ columns: 3, gap: '4' })}>
         {OFFICE_PHOTOS.map((photo) => (
-          <img
+          <div
             key={photo.src}
-            src={photo.src}
-            alt={photo.alt}
-            className={css({
-              w: 'full',
-              aspectRatio: '4/3',
-              objectFit: 'cover',
-              rounded: '2xl',
-              filter: 'grayscale(100%)',
-            })}
-          />
+            className={cx('group', css({ rounded: '2xl', overflow: 'hidden' }))}
+          >
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              className={css({
+                w: 'full',
+                aspectRatio: '4/3',
+                objectFit: 'cover',
+                rounded: '2xl',
+                filter: 'grayscale(100%)',
+                transition: 'all 500ms',
+                _groupHover: { filter: 'grayscale(0)' },
+              })}
+            />
+          </div>
         ))}
       </div>
 
       {/* Coffee CTA */}
       <div
-        className={`${css({
-          display: 'grid',
-          gridTemplateColumns: { base: '1fr', md: '3fr 2fr' },
-          gap: '0',
-          mt: '4',
-          rounded: '2xl',
-          overflow: 'hidden',
-        })}`}
+        className={cx(
+          'group',
+          css({
+            display: 'grid',
+            gridTemplateColumns: { base: '1fr', md: '3fr 2fr' },
+            gap: '0',
+            mt: '4',
+            rounded: '2xl',
+            overflow: 'hidden',
+          }),
+        )}
       >
         <img
           src="/images/jobs/rooftop.jpeg"
@@ -117,6 +126,8 @@ export function OfficesSection() {
             objectFit: 'cover',
             filter: 'grayscale(100%)',
             display: { base: 'none', md: 'block' },
+            transition: 'all 500ms',
+            _groupHover: { filter: 'grayscale(0)' },
           })}
         />
         <div

@@ -1,7 +1,7 @@
 import { Lightbulb } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid, vstack } from '@ocobo/styled-system/patterns';
 import { badge } from '@ocobo/styled-system/recipes';
 
@@ -67,7 +67,7 @@ export function HeroSection() {
             })}
           >
             <p className={css({ fontWeight: 'medium' })}>{t('hero.quote')}</p>
-            <p className={css({ color: 'gray.400', fontSize: 'sm', mt: '4' })}>
+            <p className={css({ fontWeight: 'medium' })}>
               {t('hero.quoteSub')}
             </p>
           </div>
@@ -112,31 +112,49 @@ export function HeroSection() {
                   {t('hero.cardLabel')}
                 </span>
               </div>
-              <img
-                src="/images/jobs/seminaire.jpeg"
-                alt={t('hero.seminaireAlt')}
-                className={css({
-                  w: 'full',
-                  aspectRatio: '1',
-                  objectFit: 'cover',
-                  rounded: '3xl',
-                  filter: 'grayscale(100%)',
-                })}
-              />
+              <div
+                className={cx(
+                  'group',
+                  css({ rounded: '3xl', overflow: 'hidden' }),
+                )}
+              >
+                <img
+                  src="/images/jobs/seminaire.jpeg"
+                  alt={t('hero.seminaireAlt')}
+                  className={css({
+                    w: 'full',
+                    aspectRatio: '1',
+                    objectFit: 'cover',
+                    rounded: '3xl',
+                    filter: 'grayscale(100%)',
+                    transition: 'all 500ms',
+                    _groupHover: { filter: 'grayscale(0)' },
+                  })}
+                />
+              </div>
             </div>
             {/* Right column */}
             <div className={vstack({ gap: '6', alignItems: 'stretch' })}>
-              <img
-                src="/images/jobs/cafet.jpeg"
-                alt={t('hero.cafetAlt')}
-                className={css({
-                  w: 'full',
-                  aspectRatio: '1',
-                  objectFit: 'cover',
-                  rounded: '3xl',
-                  filter: 'grayscale(100%)',
-                })}
-              />
+              <div
+                className={cx(
+                  'group',
+                  css({ rounded: '3xl', overflow: 'hidden' }),
+                )}
+              >
+                <img
+                  src="/images/jobs/cafet.jpeg"
+                  alt={t('hero.cafetAlt')}
+                  className={css({
+                    w: 'full',
+                    aspectRatio: '1',
+                    objectFit: 'cover',
+                    rounded: '3xl',
+                    filter: 'grayscale(100%)',
+                    transition: 'all 500ms',
+                    _groupHover: { filter: 'grayscale(0)' },
+                  })}
+                />
+              </div>
               <div
                 className={`${vstack({ justify: 'space-between', alignItems: 'stretch' })} ${css(
                   {
