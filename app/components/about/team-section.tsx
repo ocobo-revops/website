@@ -13,7 +13,8 @@ import { TeamMemberCard } from './team-member-card';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
-type TeamMember = {
+export type TeamSectionMember = {
+  slug: string;
   name: string;
   role: string;
   bio: string;
@@ -159,12 +160,12 @@ const IconSeparator = () => {
 
 type TeamSectionProps = {
   showStudio: boolean;
+  members: TeamSectionMember[];
 };
 
-export const TeamSection = ({ showStudio }: TeamSectionProps) => {
+export const TeamSection = ({ showStudio, members }: TeamSectionProps) => {
   const { t } = useTranslation('about');
   const getLocalizedPath = useLocalizedPathname();
-  const members = t('team.members', { returnObjects: true }) as TeamMember[];
 
   return (
     <>
@@ -207,7 +208,7 @@ export const TeamSection = ({ showStudio }: TeamSectionProps) => {
           <div className={grid({ columns: { base: 1, md: 3 }, gap: '8' })}>
             {members.map((member) => (
               <TeamMemberCard
-                key={member.name}
+                key={member.slug}
                 name={member.name}
                 role={member.role}
                 bio={member.bio}
