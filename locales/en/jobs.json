@@ -101,7 +101,8 @@
   "apply": {
     "title": "Ready for impact?",
     "desc": "Send us your profile. We're not looking for executors, but architects of revenue.",
-    "cta": "Apply now"
+    "cta": "Apply now",
+    "formTitle": "Application form — {{title}}"
   },
   "offices": {
     "title": "Our offices",

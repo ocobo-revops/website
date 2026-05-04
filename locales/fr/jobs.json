@@ -101,7 +101,8 @@
   "apply": {
     "title": "Prêt(e) pour l'impact ?",
     "desc": "Envoie-nous ton profil. On ne cherche pas des exécutants, mais des architectes du revenu.",
-    "cta": "Postuler maintenant"
+    "cta": "Postuler maintenant",
+    "formTitle": "Formulaire de candidature — {{title}}"
   },
   "offices": {
     "title": "Nos bureaux",

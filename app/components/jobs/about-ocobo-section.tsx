@@ -5,23 +5,10 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { flex, vstack } from '@ocobo/styled-system/patterns';
 import { button } from '@ocobo/styled-system/recipes';
 
-type AboutOcoboSectionProps = {
-  applyEmail?: string;
-  jobTitle?: string;
-};
-
-export function AboutOcoboSection({
-  applyEmail,
-  jobTitle,
-}: AboutOcoboSectionProps) {
+export function AboutOcoboSection() {
   const { t } = useTranslation('jobs');
   const benefits = t('about.benefits', { returnObjects: true }) as string[];
-  const subject = applyEmail
-    ? encodeURIComponent(t('cta.applySubject', { title: jobTitle ?? '' }))
-    : undefined;
-  const ctaHref = applyEmail
-    ? `mailto:${applyEmail}?subject=${subject}`
-    : '#apply';
+  const ctaHref = '#apply';
 
   return (
     <div

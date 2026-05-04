@@ -157,6 +157,10 @@ export const JobFrontmatterSchema = z.object({
   startDate: CommonSchemas.dateString.optional(),
   hiringContact: CommonSchemas.nonEmptyString,
   applyEmail: z.string().email(),
+  tallyFormId: z
+    .string()
+    .regex(/^[A-Za-z0-9]+$/)
+    .optional(),
   status: z.enum(['draft', 'published', 'closed']),
   publishedAt: CommonSchemas.dateString,
   intro: CommonSchemas.nonEmptyString,

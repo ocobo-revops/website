@@ -106,10 +106,7 @@ export default function JobDetail() {
             <div className={css({ position: 'sticky', top: '32' })}>
               <ScrollspyToc />
               <div className={css({ mt: '8' })}>
-                <AboutOcoboSection
-                  applyEmail={frontmatter.applyEmail}
-                  jobTitle={frontmatter.title}
-                />
+                <AboutOcoboSection />
               </div>
             </div>
           </aside>
@@ -155,6 +152,7 @@ export default function JobDetail() {
             <ApplyCta
               applyEmail={frontmatter.applyEmail}
               jobTitle={frontmatter.title}
+              tallyFormId={frontmatter.tallyFormId}
             />
           </article>
         </div>

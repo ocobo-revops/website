@@ -1,4 +1,5 @@
 import { Send } from 'lucide-react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
@@ -7,13 +8,50 @@ import { button } from '@ocobo/styled-system/recipes';
 type ApplyCtaProps = {
   applyEmail: string;
   jobTitle: string;
+  tallyFormId?: string;
 };
 
-export function ApplyCta({ applyEmail, jobTitle }: ApplyCtaProps) {
+const TALLY_SCRIPT_SRC = 'https://tally.so/widgets/embed.js';
+
+declare global {
+  interface Window {
+    Tally?: { loadEmbeds: () => void };
+  }
+}
+
+function loadTallyEmbeds() {
+  if (typeof window === 'undefined') return;
+  if (window.Tally) {
+    window.Tally.loadEmbeds();
+    return;
+  }
+  const existing = document.querySelector<HTMLScriptElement>(
+    `script[src="${TALLY_SCRIPT_SRC}"]`,
+  );
+  if (existing) {
+    existing.addEventListener('load', () => window.Tally?.loadEmbeds());
+    return;
+  }
+  const script = document.createElement('script');
+  script.src = TALLY_SCRIPT_SRC;
+  script.async = true;
+  script.addEventListener('load', () => window.Tally?.loadEmbeds());
+  document.body.appendChild(script);
+}
+
+export function ApplyCta({ applyEmail, jobTitle, tallyFormId }: ApplyCtaProps) {
   const { t } = useTranslation('jobs');
   const subject = encodeURIComponent(
     t('cta.applySubject', { title: jobTitle }),
   );
+
+  useEffect(() => {
+    if (tallyFormId) loadTallyEmbeds();
+  }, [tallyFormId]);
+
+  const tallySrc = tallyFormId
+    ? `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`
+    : null;
 
   return (
     <div
@@ -53,13 +91,30 @@ export function ApplyCta({ applyEmail, jobTitle }: ApplyCtaProps) {
         >
           {t('apply.desc')}
         </p>
-        <a
-          href={`mailto:${applyEmail}?subject=${subject}`}
-          className={button({ variant: 'primary', size: 'lg' })}
-        >
-          <Send size={14} />
-          {t('apply.cta')}
-        </a>
+        {tallySrc ? (
+          <iframe
+            data-tally-src={tallySrc}
+            loading="lazy"
+            width="100%"
+            height={200}
+            scrolling="no"
+            title={t('apply.formTitle', { title: jobTitle })}
+            className={css({
+              w: 'full',
+              border: 'none',
+              bg: 'transparent',
+              overflow: 'hidden',
+            })}
+          />
+        ) : (
+          <a
+            href={`mailto:${applyEmail}?subject=${subject}`}
+            className={button({ variant: 'primary', size: 'lg' })}
+          >
+            <Send size={14} />
+            {t('apply.cta')}
+          </a>
+        )}
       </div>
     </div>
   );
