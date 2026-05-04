@@ -4,15 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 
-import type { MemberTrack } from '~/modules/schemas';
-import type { StudioMember } from '~/routes/_main.($lang).studio';
+import type { StudioMember } from '~/modules/content/members';
+import { type MemberTrack, MemberTrackSchema } from '~/modules/schemas';
 
 import { Container } from '../ui/Container';
 import { TeamMemberCard } from './team-member-card';
 
 type Filter = MemberTrack | 'all';
 
-const FILTERS: Filter[] = ['all', 'architect', 'builder', 'expert-engineer'];
+const FILTERS = [
+  'all',
+  ...MemberTrackSchema.options,
+] as const satisfies readonly Filter[];
 
 interface TeamSectionProps {
   members: StudioMember[];

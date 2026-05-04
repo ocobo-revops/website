@@ -12,25 +12,17 @@ import { TeamSection } from '~/components/studio/team-section';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import {
+  type StudioMember,
   getActiveMembers,
   loadMemberRegistry,
 } from '~/modules/content/members';
 import { throwIfDisabled } from '~/modules/feature-flags';
-import type { MemberTrack } from '~/modules/schemas';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
 import { url, getImageOgFullPath } from '~/utils/url';
 
-export type StudioMember = {
-  slug: string;
-  name: string;
-  track: MemberTrack;
-  role: string;
-  bio: string;
-  avatar: string;
-  linkedin?: string;
-};
+export type { StudioMember };
 
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);

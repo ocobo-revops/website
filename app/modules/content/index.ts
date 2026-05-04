@@ -72,7 +72,7 @@ export {
   loadMemberRegistry,
   resolveMember,
 } from './members';
-export type { Member, MemberRegistry } from './members';
+export type { Member, MemberRegistry, StudioMember } from './members';
 
 // Type exports
 export type {
