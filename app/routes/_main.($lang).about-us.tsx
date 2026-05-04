@@ -40,7 +40,7 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     (m) => ({
       slug: m.slug,
       name: m.name,
-      role: m.role,
+      role: m.role[lang],
       bio: m.bio[lang],
       imageSrc: m.avatar,
       linkedInUrl: m.linkedin,

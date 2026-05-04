@@ -161,7 +161,10 @@ export type MemberTrack = z.infer<typeof MemberTrackSchema>;
  */
 export const MemberFrontmatterSchema = z.object({
   name: CommonSchemas.nonEmptyString,
-  role: CommonSchemas.nonEmptyString,
+  role: z.object({
+    fr: CommonSchemas.nonEmptyString,
+    en: CommonSchemas.nonEmptyString,
+  }),
   track: MemberTrackSchema,
   linkedin: z.string().url().optional(),
   avatar: CommonSchemas.nonEmptyString,

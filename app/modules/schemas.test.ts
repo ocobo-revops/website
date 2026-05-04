@@ -511,7 +511,7 @@ describe('HiringContactSchema', () => {
 describe('MemberFrontmatterSchema', () => {
   const validMember: MemberFrontmatter = {
     name: 'Benjamin Boileux',
-    role: 'Architecte RevOps & Associé',
+    role: { fr: 'Associé', en: 'Partner' },
     track: 'architecte',
     linkedin: 'https://www.linkedin.com/in/benjamin-boileux/',
     avatar: 'https://blob.vercel-storage.com/team/benjamin-boileux.jpg',
@@ -553,6 +553,13 @@ describe('MemberFrontmatterSchema', () => {
   it.each(['fr', 'en'] as const)('requires bio.%s', (lang) => {
     const invalid = { ...validMember, bio: { ...validMember.bio } };
     delete (invalid.bio as any)[lang];
+    const result = MemberFrontmatterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+
+  it.each(['fr', 'en'] as const)('requires role.%s', (lang) => {
+    const invalid = { ...validMember, role: { ...validMember.role } };
+    delete (invalid.role as any)[lang];
     const result = MemberFrontmatterSchema.safeParse(invalid);
     expect(result.success).toBe(false);
   });

@@ -28,7 +28,7 @@ const mockGetPrivateEnvVars = vi.mocked(getPrivateEnvVars);
 const member = (overrides: Partial<Member>): Member => ({
   slug: overrides.slug ?? 'benjamin-boileux',
   name: overrides.name ?? 'Benjamin Boileux',
-  role: overrides.role ?? 'Architecte RevOps',
+  role: overrides.role ?? { fr: 'Associé', en: 'Partner' },
   track: overrides.track ?? 'architecte',
   avatar: overrides.avatar ?? 'https://blob/benjamin.jpg',
   displayOrder: overrides.displayOrder ?? 1,
