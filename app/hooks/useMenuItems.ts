@@ -79,10 +79,9 @@ export function useMenuItems(): NavItem[] {
       key: 'jobs',
       label: t('navigation.company.jobs'),
       description: t('navigation.company.jobs.description'),
-      path: url.careers,
+      path: getLocalizedPath(url.jobs),
       icon: Briefcase,
       color: 'coral',
-      isExternal: true,
       shouldHide: isHidden('jobs'),
     },
   ];

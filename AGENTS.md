@@ -58,3 +58,17 @@ Read only the one or two documents relevant to your task — not all of them.
 - **Local**: `CONTENT_SOURCE=locale` — reads from `~/projects/ocobo-posts/`
 - **GitHub**: `CONTENT_SOURCE=github` — fetches from GitHub API
 - **Branch**: Set `GITHUB_BRANCH=offers` to test placeholder offers
+
+## Agent skills
+
+### Issue tracker
+
+GitHub issues on `ocobo-revops/website`, accessed via `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary — `needs-triage` / `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.

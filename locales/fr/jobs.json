@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "Nous rejoindre — Ocobo",
+    "description": "Rejoignez Ocobo, référence française du Revenue Operations. Découvrez nos offres d'emploi."
+  },
+  "cta": {
+    "apply": "Postuler",
+    "applySubject": "Candidature - {{title}}",
+    "seeOffer": "Voir l'offre"
+  },
+  "list": {
+    "badge": "RECRUTEMENT",
+    "empty": "Aucune offre disponible pour le moment."
+  },
+  "toc": {
+    "navLabel": "Navigation",
+    "mission": "La Mission",
+    "responsabilites": "Responsabilités",
+    "profil": "Profil recherché"
+  },
+  "hero": {
+    "badge": "RECRUTEMENT",
+    "title": "Rejoignez les\narchitectes.",
+    "intro": "Rejoindre Ocobo, c'est intégrer une équipe d'experts issus des plus belles scale-ups (TheFork, PayFit, Qonto).",
+    "quote": "Ici, pas de « juniors vendus comme des seniors ». Nous cherchons l'excellence opérationnelle et la capacité à comprendre les enjeux business profonds de nos clients.",
+    "quoteSub": "C'est une occasion unique d'apprendre les meilleures méthodologies RevOps et de façonner le futur de la discipline en France.",
+    "cardLabel": "Intelligence Collective",
+    "cardStat": "100%\nImpact",
+    "seminaireAlt": "L'équipe Ocobo en séminaire",
+    "cafetAlt": "Les bureaux Ocobo"
+  },
+  "values": {
+    "badge": "NOTRE ADN",
+    "title": "Ce qui définit notre culture",
+    "items": [
+      {
+        "title": "Excellence Senior",
+        "desc": "Ici, on ne bricole pas. On construit des systèmes robustes avec l'exigence des meilleurs standards du marché."
+      },
+      {
+        "title": "Transparence Radicale",
+        "desc": "Pas de politique, pas de non-dits. On progresse par le feedback honnête et la remise en question permanente."
+      },
+      {
+        "title": "Impact Mesurable",
+        "desc": "Chaque sprint, chaque ligne de process, chaque dashboard doit créer de la valeur concrète pour nos clients."
+      },
+      {
+        "title": "Esprit de Squad",
+        "desc": "On ne travaille jamais seul. On partage nos blocages, nos victoires et nos apprentissages en temps réel."
+      }
+    ]
+  },
+  "jobs": {
+    "sectionTitle": "Postes ouverts",
+    "sectionSubtitle": "Nous recherchons des architectes passionnés par la donnée et les systèmes.",
+    "opportunitiesCount_one": "{{count}} OPPORTUNITÉ DISPONIBLE",
+    "opportunitiesCount_other": "{{count}} OPPORTUNITÉS DISPONIBLES"
+  },
+  "process": {
+    "badge": "TRANSPARENCE",
+    "title": "Processus de recrutement",
+    "subtitle": "Simple, rigoureux et bienveillant.",
+    "steps": [
+      {
+        "title": "RH, Fit et Motivation",
+        "duration": "30 min",
+        "desc": "Première discussion avec le référent RH sur l'expérience professionnelle du candidat, ses motivations sur le poste et Ocobo."
+      },
+      {
+        "title": "Hiring Manager Call",
+        "duration": "45 min",
+        "desc": "Première discussion avec son/sa manager RevOps pour un échange plus détaillé sur l'expérience professionnelle et les enjeux du poste."
+      },
+      {
+        "title": "Entretien Technique",
+        "duration": "45 à 60 min",
+        "desc": "Echange sur les compétences techniques et méthodologiques indispensables pour Ocobo."
+      },
+      {
+        "title": "Case Study",
+        "duration": "90 à 120 min",
+        "desc": "Restitution du cas pratique préparé en amont auprès de tous les fondateurs afin de valider les compétences techniques."
+      },
+      {
+        "title": "Cultural Fit",
+        "duration": "45 min",
+        "desc": "Échange avec un collaborateur pour valider le fit avec les valeurs et l'ambition d'Ocobo et permettre au candidat de poser ses questions à un consultant RevOps Ocobo."
+      },
+      {
+        "title": "Prise de référence",
+        "duration": "15 min",
+        "desc": "Prise de référence auprès d'un ancien employeur."
+      }
+    ]
+  },
+  "detail": {
+    "breadcrumb": "Retour aux offres",
+    "category": "Recrutement"
+  },
+  "apply": {
+    "title": "Prêt(e) pour l'impact ?",
+    "desc": "Envoie-nous ton profil. On ne cherche pas des exécutants, mais des architectes du revenu.",
+    "cta": "Postuler maintenant",
+    "formTitle": "Formulaire de candidature — {{title}}"
+  },
+  "offices": {
+    "title": "Nos bureaux",
+    "subtitle": "À Cadet, dans le 9ème arrondissement de Paris.",
+    "mapsLink": "Voir sur Maps"
+  },
+  "about": {
+    "title": "Pourquoi nous rejoindre ?",
+    "benefits": [
+      "Management 100% Senior",
+      "Culture du feedback radical",
+      "Équipe issue des tops scale-ups",
+      "Impact GTM direct"
+    ],
+    "cta": "Postuler maintenant",
+    "coffee": {
+      "title": "Venez prendre\nun café.",
+      "desc": "On adore parler RevOps, même si vous ne cherchez pas de job tout de suite."
+    }
+  }
+}

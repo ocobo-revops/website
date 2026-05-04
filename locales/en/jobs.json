@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "title": "Join us — Ocobo",
+    "description": "Join Ocobo, France's leading Revenue Operations consultancy. Explore our job openings."
+  },
+  "cta": {
+    "apply": "Apply",
+    "applySubject": "Application - {{title}}",
+    "seeOffer": "View offer"
+  },
+  "list": {
+    "badge": "HIRING",
+    "empty": "No openings available at the moment."
+  },
+  "toc": {
+    "navLabel": "Navigation",
+    "mission": "The Mission",
+    "responsabilites": "Responsibilities",
+    "profil": "Candidate profile"
+  },
+  "hero": {
+    "badge": "HIRING",
+    "title": "Join the\narchitects.",
+    "intro": "Joining Ocobo means joining a team of experts from the best scale-ups (TheFork, PayFit, Qonto).",
+    "quote": "No \"juniors sold as seniors\" here. We seek operational excellence and the ability to understand our clients' deep business challenges.",
+    "quoteSub": "A unique opportunity to learn the best RevOps methodologies and shape the future of the discipline in France.",
+    "cardLabel": "Collective Intelligence",
+    "cardStat": "100%\nImpact",
+    "seminaireAlt": "The Ocobo team at a seminar",
+    "cafetAlt": "Ocobo office"
+  },
+  "values": {
+    "badge": "OUR DNA",
+    "title": "What defines our culture",
+    "items": [
+      {
+        "title": "Senior Excellence",
+        "desc": "We don't hack things together. We architect robust systems with the highest market standards."
+      },
+      {
+        "title": "Radical Transparency",
+        "desc": "No politics, no hidden agendas. We grow through honest feedback and constant self-questioning."
+      },
+      {
+        "title": "Measurable Impact",
+        "desc": "Every sprint, every process line, every dashboard must create concrete value for our clients."
+      },
+      {
+        "title": "Squad Spirit",
+        "desc": "We never work alone. We share our blockers, victories and learnings in real time."
+      }
+    ]
+  },
+  "jobs": {
+    "sectionTitle": "Open positions",
+    "sectionSubtitle": "We are looking for architects passionate about data and systems.",
+    "opportunitiesCount_one": "{{count}} OPPORTUNITY AVAILABLE",
+    "opportunitiesCount_other": "{{count}} OPPORTUNITIES AVAILABLE"
+  },
+  "process": {
+    "badge": "TRANSPARENCY",
+    "title": "Hiring process",
+    "subtitle": "Simple, rigorous and caring.",
+    "steps": [
+      {
+        "title": "HR, Fit & Motivation",
+        "duration": "30 min",
+        "desc": "First discussion with HR about the candidate's professional experience, motivations for the role and Ocobo."
+      },
+      {
+        "title": "Hiring Manager Call",
+        "duration": "45 min",
+        "desc": "First discussion with the RevOps manager for a more detailed exchange on professional experience and role challenges."
+      },
+      {
+        "title": "Technical Interview",
+        "duration": "45 to 60 min",
+        "desc": "Discussion on the technical and methodological skills essential for Ocobo."
+      },
+      {
+        "title": "Case Study",
+        "duration": "90 to 120 min",
+        "desc": "Presentation of the case study prepared in advance to all founders to validate technical skills."
+      },
+      {
+        "title": "Cultural Fit",
+        "duration": "45 min",
+        "desc": "Exchange with a team member to validate alignment with Ocobo's values and ambition, allowing the candidate to ask questions to an Ocobo RevOps consultant."
+      },
+      {
+        "title": "Reference Check",
+        "duration": "15 min",
+        "desc": "Reference check with a former employer."
+      }
+    ]
+  },
+  "detail": {
+    "breadcrumb": "Back to offers",
+    "category": "Hiring"
+  },
+  "apply": {
+    "title": "Ready for impact?",
+    "desc": "Send us your profile. We're not looking for executors, but architects of revenue.",
+    "cta": "Apply now",
+    "formTitle": "Application form — {{title}}"
+  },
+  "offices": {
+    "title": "Our offices",
+    "subtitle": "At Cadet, in the 9th arrondissement of Paris.",
+    "mapsLink": "See on Maps"
+  },
+  "about": {
+    "title": "Why join us?",
+    "benefits": [
+      "100% Senior management",
+      "Culture of radical feedback",
+      "Team from top scale-ups",
+      "Direct GTM impact"
+    ],
+    "cta": "Apply now",
+    "coffee": {
+      "title": "Come grab\na coffee.",
+      "desc": "We love talking RevOps, even if you're not looking for a job right now."
+    }
+  }
+}

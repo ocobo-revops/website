@@ -31,6 +31,8 @@ export {
   fetchPages,
   fetchContent,
   fetchContents,
+  fetchJob,
+  fetchJobs,
   ContentValidators,
 } from './api';
 
@@ -50,6 +52,17 @@ export {
   mapStatusToState,
   createValidator,
 } from './processor';
+
+export { extractJobSections } from './job-sections';
+export type { JobSections } from './job-sections';
+
+export { buildJobPostingLd, serializeJsonLd } from './job-posting-ld';
+
+export {
+  loadContactRegistry,
+  parseContactsYaml,
+  resolveContact,
+} from './contacts';
 
 // Type exports
 export type {

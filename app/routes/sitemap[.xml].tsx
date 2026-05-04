@@ -1,4 +1,4 @@
-import { fetchBlogposts, fetchStories } from '~/modules/content';
+import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -12,6 +12,7 @@ function getUrlElementWithDate(url: string, date: string) {
 function generateSiteMap(
   stories: { slug: string; date: Date }[],
   posts: { slug: string; date: Date }[],
+  jobs: { slug: string; date: Date }[],
 ) {
   return `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
@@ -38,6 +39,16 @@ function generateSiteMap(
                   `${getUrlElementWithDate(
                     `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
                     post.date.toISOString(),
+                  )}`,
+              )
+              .join('\n')}
+            ${getUrlElementWithDate(`${baseUrl}/fr/jobs`, new Date().toISOString())}
+            ${jobs
+              .map(
+                (job) =>
+                  `${getUrlElementWithDate(
+                    `${baseUrl}/fr/jobs/${job.slug}`,
+                    job.date.toISOString(),
                   )}`,
               )
               .join('\n')}
@@ -69,8 +80,25 @@ export async function loader() {
     return [];
   });
 
-  const [stories, posts] = await Promise.all([storiesQuery, postsQuery]);
-  return new Response(generateSiteMap(stories, posts), {
+  const jobsQuery = fetchJobs().then((result) => {
+    const [, state, data] = result;
+    if (state === 'success' && data) {
+      return data
+        .filter((job) => job.frontmatter.status === 'published')
+        .map((job) => ({
+          slug: job.slug,
+          date: new Date(job.frontmatter.publishedAt),
+        }));
+    }
+    return [];
+  });
+
+  const [stories, posts, jobs] = await Promise.all([
+    storiesQuery,
+    postsQuery,
+    jobsQuery,
+  ]);
+  return new Response(generateSiteMap(stories, posts, jobs), {
     headers: {
       'content-type': 'application/xml',
     },

@@ -9,6 +9,8 @@ import type { MarkdocFile } from '~/types';
 import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
+  type JobFrontmatter,
+  JobFrontmatterSchema,
   type PageFrontmatter,
   PageFrontmatterSchema,
   type StoryFrontmatter,
@@ -28,6 +30,7 @@ export const ContentValidators = {
     'Blogpost',
   ),
   page: createValidator<PageFrontmatter>(PageFrontmatterSchema, 'Page'),
+  job: createValidator<JobFrontmatter>(JobFrontmatterSchema, 'Job'),
 } as const;
 
 /**
@@ -141,6 +144,16 @@ export async function fetchPage(path: string, slug: string = '') {
 
 export async function fetchPages(path: string) {
   return pageFetcher.fetchPages(path);
+}
+
+export async function fetchJobs(language = 'fr') {
+  const path = `jobs/${language}`;
+  return genericFetcher.fetchMultiple(path, ContentValidators.job);
+}
+
+export async function fetchJob(slug: string, language = 'fr') {
+  const path = `jobs/${language}`;
+  return genericFetcher.fetchSingle(path, slug, ContentValidators.job);
 }
 
 /**
