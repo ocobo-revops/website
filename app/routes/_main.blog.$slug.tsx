@@ -27,13 +27,15 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchBlogpost(slug);
+    const [[status, _state, article], registry] = await Promise.all([
+      fetchBlogpost(slug),
+      loadMemberRegistry(),
+    ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
     }
 
-    const registry = await loadMemberRegistry();
     const resolvedAuthor = resolveAuthor(article.frontmatter.author, registry);
 
     return data(
