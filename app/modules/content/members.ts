@@ -27,7 +27,7 @@ export function resolveMember(
 }
 
 const byDisplayOrder = (a: Member, b: Member) =>
-  a.displayOrder - b.displayOrder;
+  a.displayOrder - b.displayOrder || a.slug.localeCompare(b.slug);
 
 export function getActiveMembers(registry: MemberRegistry): Member[] {
   return Object.values(registry)
@@ -50,6 +50,7 @@ export function getFeaturedAboutMembers(registry: MemberRegistry): Member[] {
     .sort(byDisplayOrder);
 }
 
+// Process-level cache — invalidated on redeploy (matches contacts.ts pattern).
 let _cachedRegistry: MemberRegistry | null = null;
 let _cacheKey: string | null = null;
 
@@ -63,13 +64,18 @@ export async function loadMemberRegistry(): Promise<MemberRegistry> {
   const cacheKey = `${readContentFrom}:${githubBranch ?? 'local'}`;
   if (_cachedRegistry && _cacheKey === cacheKey) return _cachedRegistry;
 
-  const [, state, files] = await fetchMembers();
+  const [status, state, files] = await fetchMembers();
+
+  if (status !== 200 || state !== 'success' || !files) {
+    console.error(
+      `[MemberRegistry] Failed to load: status=${status} state=${state}`,
+    );
+    return {};
+  }
 
   const registry: MemberRegistry = {};
-  if (state === 'success' && files) {
-    for (const file of files) {
-      registry[file.slug] = { slug: file.slug, ...file.frontmatter };
-    }
+  for (const file of files) {
+    registry[file.slug] = { slug: file.slug, ...file.frontmatter };
   }
 
   _cachedRegistry = registry;

@@ -512,7 +512,7 @@ describe('MemberFrontmatterSchema', () => {
   const validMember: MemberFrontmatter = {
     name: 'Benjamin Boileux',
     role: { fr: 'Associé', en: 'Partner' },
-    track: 'architecte',
+    track: 'architect',
     linkedin: 'https://www.linkedin.com/in/benjamin-boileux/',
     avatar: 'https://blob.vercel-storage.com/team/benjamin-boileux.jpg',
     displayOrder: 1,
@@ -613,7 +613,7 @@ describe('MemberFrontmatterSchema', () => {
   });
 
   it('accepts each track enum value', () => {
-    for (const track of ['architecte', 'builder', 'expert-engineer'] as const) {
+    for (const track of ['architect', 'builder', 'expert-engineer'] as const) {
       const result = MemberFrontmatterSchema.safeParse({
         ...validMember,
         track,

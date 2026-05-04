@@ -29,7 +29,7 @@ const member = (overrides: Partial<Member>): Member => ({
   slug: overrides.slug ?? 'benjamin-boileux',
   name: overrides.name ?? 'Benjamin Boileux',
   role: overrides.role ?? { fr: 'Associé', en: 'Partner' },
-  track: overrides.track ?? 'architecte',
+  track: overrides.track ?? 'architect',
   avatar: overrides.avatar ?? 'https://blob/benjamin.jpg',
   displayOrder: overrides.displayOrder ?? 1,
   active: overrides.active ?? true,
@@ -96,28 +96,28 @@ describe('getMembersByTrack', () => {
     const registry: MemberRegistry = {
       a: member({
         slug: 'a',
-        track: 'architecte',
+        track: 'architect',
         displayOrder: 2,
         name: 'A',
       }),
       b: member({ slug: 'b', track: 'builder', displayOrder: 1, name: 'B' }),
       c: member({
         slug: 'c',
-        track: 'architecte',
+        track: 'architect',
         displayOrder: 1,
         name: 'C',
       }),
     };
-    const result = getMembersByTrack(registry, 'architecte');
+    const result = getMembersByTrack(registry, 'architect');
     expect(result.map((m) => m.name)).toEqual(['C', 'A']);
   });
 
   it('excludes inactive members of the requested track', () => {
     const registry: MemberRegistry = {
-      a: member({ slug: 'a', track: 'architecte', active: false }),
-      b: member({ slug: 'b', track: 'architecte', active: true }),
+      a: member({ slug: 'a', track: 'architect', active: false }),
+      b: member({ slug: 'b', track: 'architect', active: true }),
     };
-    const result = getMembersByTrack(registry, 'architecte');
+    const result = getMembersByTrack(registry, 'architect');
     expect(result).toHaveLength(1);
     expect(result[0].slug).toBe('b');
   });

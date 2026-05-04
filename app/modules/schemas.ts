@@ -149,7 +149,7 @@ export const ContactsRecordSchema = z.record(z.string(), HiringContactSchema);
  * Track enum — drives the colored top badge and studio filter
  */
 export const MemberTrackSchema = z.enum([
-  'architecte',
+  'architect',
   'builder',
   'expert-engineer',
 ]);

@@ -25,7 +25,7 @@ import { redirectWithLocale } from '~/utils/redirections';
 import { url, getImageOgFullPath } from '~/utils/url';
 
 const trackToColor: Record<MemberTrack, TeamSectionMember['color']> = {
-  architecte: 'yellow',
+  architect: 'yellow',
   builder: 'mint',
   'expert-engineer': 'sky',
 };
