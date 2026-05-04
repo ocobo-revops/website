@@ -88,6 +88,8 @@ export function __resetMemberRegistryCache(): void {
   _cacheKey = null;
 }
 
+// Never throws — returns {} on any fetch/parse failure so callers can use
+// Promise.all without wrapping in catch.
 export async function loadMemberRegistry(): Promise<MemberRegistry> {
   const { readContentFrom, githubBranch } = getPrivateEnvVars();
   const cacheKey = `${readContentFrom}:${githubBranch ?? 'local'}`;

@@ -26,6 +26,10 @@ const { fetchContents } = await import('./api');
 const mockFetchContents = vi.mocked(fetchContents);
 const mockGetPrivateEnvVars = vi.mocked(getPrivateEnvVars);
 
+beforeEach(() => {
+  __resetMemberRegistryCache();
+});
+
 const member = (overrides: Partial<Member>): Member => ({
   slug: overrides.slug ?? 'benjamin-boileux',
   name: overrides.name ?? 'Benjamin Boileux',
