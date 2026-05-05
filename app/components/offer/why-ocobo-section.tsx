@@ -14,11 +14,11 @@ type Reason = {
   color: 'yellow' | 'coral' | 'mint';
 };
 
-const colorMap: Record<Reason['color'], string> = {
-  yellow: 'ocobo.yellow',
-  coral: 'ocobo.coral',
-  mint: 'ocobo.mint',
-} as const;
+const checkBgStyles: Record<Reason['color'], string> = {
+  yellow: css({ bg: 'ocobo.yellow' }),
+  coral: css({ bg: 'ocobo.coral' }),
+  mint: css({ bg: 'ocobo.mint' }),
+};
 
 export const WhyOcoboSection = () => {
   const { t } = useTranslation('offer');
@@ -36,16 +36,19 @@ export const WhyOcoboSection = () => {
           {reasons.map((reason) => (
             <div key={reason.title} className={css({ textAlign: 'center' })}>
               <div
-                className={`${center({ inline: true })} ${css({
-                  w: '16',
-                  h: '16',
-                  bg: colorMap[reason.color],
-                  rounded: 'full',
-                  color: 'ocobo.dark',
-                  mx: 'auto',
-                  mb: '6',
-                  flexShrink: '0',
-                })}`}
+                className={cx(
+                  center({ inline: true }),
+                  css({
+                    w: '16',
+                    h: '16',
+                    rounded: 'full',
+                    color: 'ocobo.dark',
+                    mx: 'auto',
+                    mb: '6',
+                    flexShrink: '0',
+                  }),
+                  checkBgStyles[reason.color],
+                )}
               >
                 <CheckCircle2 size={32} strokeWidth={4} />
               </div>

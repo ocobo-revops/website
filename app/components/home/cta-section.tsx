@@ -25,22 +25,16 @@ const variantToSectionBg: Record<CtaVariant, 'yellow' | 'sky' | 'dark'> = {
   dark: 'dark',
 };
 
-const variantStyles: Record<
-  CtaVariant,
-  { subtitleColor: string; buttonVariant: 'cta' | 'primary' }
-> = {
-  yellow: {
-    subtitleColor: 'ocobo.dark/70',
-    buttonVariant: 'cta',
-  },
-  sky: {
-    subtitleColor: 'gray.600',
-    buttonVariant: 'cta',
-  },
-  dark: {
-    subtitleColor: 'white/80',
-    buttonVariant: 'primary',
-  },
+const subtitleColorStyles: Record<CtaVariant, string> = {
+  yellow: css({ color: 'ocobo.dark/70' }),
+  sky: css({ color: 'gray.600' }),
+  dark: css({ color: 'white/80' }),
+};
+
+const buttonVariants: Record<CtaVariant, 'cta' | 'primary'> = {
+  yellow: 'cta',
+  sky: 'cta',
+  dark: 'primary',
 };
 
 export const CtaSection: React.FC<CtaSectionProps> = ({
@@ -51,7 +45,6 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
   ctaLink,
 }) => {
   const getLocalizedPath = useLocalizedPathname();
-  const styles = variantStyles[variant];
 
   return (
     <section
@@ -75,12 +68,14 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
         </h2>
         {subtitle ? (
           <p
-            className={css({
-              fontSize: { base: 'lg', md: 'xl' },
-              fontWeight: 'bold',
-              mb: '12',
-              color: styles.subtitleColor,
-            })}
+            className={cx(
+              css({
+                fontSize: { base: 'lg', md: 'xl' },
+                fontWeight: 'bold',
+                mb: '12',
+              }),
+              subtitleColorStyles[variant],
+            )}
           >
             {subtitle}
           </p>
@@ -88,7 +83,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
         <div className={center()}>
           <ButtonLink
             to={getLocalizedPath(ctaLink)}
-            variant={styles.buttonVariant}
+            variant={buttonVariants[variant]}
             size="lg"
           >
             {ctaText}

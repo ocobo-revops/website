@@ -16,12 +16,12 @@ interface TeamMemberCardProps {
   className?: string;
 }
 
-const borderColorMap: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+const avatarBorderStyles: Record<ThemeColor, string> = {
+  yellow: css({ borderColor: 'ocobo.yellow' }),
+  mint: css({ borderColor: 'ocobo.mint' }),
+  sky: css({ borderColor: 'ocobo.sky' }),
+  coral: css({ borderColor: 'ocobo.coral' }),
+  dark: css({ borderColor: 'ocobo.dark' }),
 };
 
 export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
@@ -46,16 +46,18 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
       )}
     >
       <div
-        className={css({
-          w: '32',
-          h: '32',
-          mx: 'auto',
-          mb: '6',
-          rounded: 'full',
-          overflow: 'hidden',
-          borderWidth: '4px',
-          borderColor: borderColorMap[color],
-        })}
+        className={cx(
+          css({
+            w: '32',
+            h: '32',
+            mx: 'auto',
+            mb: '6',
+            rounded: 'full',
+            overflow: 'hidden',
+            borderWidth: '4px',
+          }),
+          avatarBorderStyles[color],
+        )}
       >
         <img
           src={imageSrc}

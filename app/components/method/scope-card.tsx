@@ -15,28 +15,28 @@ interface ScopeCardProps {
   className?: string;
 }
 
-const iconBgStyles: Record<ThemeColor, { bg: string; color: string }> = {
-  yellow: { bg: 'ocobo.yellow.light', color: 'ocobo.yellow' },
-  mint: { bg: 'ocobo.mint.light', color: 'ocobo.mint' },
-  sky: { bg: 'ocobo.sky.light', color: 'ocobo.sky' },
-  coral: { bg: 'ocobo.coral.light', color: 'ocobo.coral' },
-  dark: { bg: 'gray.200', color: 'ocobo.dark' },
+const iconBoxStyles: Record<ThemeColor, string> = {
+  yellow: css({ bg: 'ocobo.yellow.light', color: 'ocobo.yellow' }),
+  mint: css({ bg: 'ocobo.mint.light', color: 'ocobo.mint' }),
+  sky: css({ bg: 'ocobo.sky.light', color: 'ocobo.sky' }),
+  coral: css({ bg: 'ocobo.coral.light', color: 'ocobo.coral' }),
+  dark: css({ bg: 'gray.200', color: 'ocobo.dark' }),
 };
 
-const bulletStyles: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+const bulletBgStyles: Record<ThemeColor, string> = {
+  yellow: css({ bg: 'ocobo.yellow' }),
+  mint: css({ bg: 'ocobo.mint' }),
+  sky: css({ bg: 'ocobo.sky' }),
+  coral: css({ bg: 'ocobo.coral' }),
+  dark: css({ bg: 'ocobo.dark' }),
 };
 
-const hoverBorderStyles: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+const hoverStyles: Record<ThemeColor, string> = {
+  yellow: css({ _hover: { shadow: 'lg', borderColor: 'ocobo.yellow' } }),
+  mint: css({ _hover: { shadow: 'lg', borderColor: 'ocobo.mint' } }),
+  sky: css({ _hover: { shadow: 'lg', borderColor: 'ocobo.sky' } }),
+  coral: css({ _hover: { shadow: 'lg', borderColor: 'ocobo.coral' } }),
+  dark: css({ _hover: { shadow: 'lg', borderColor: 'ocobo.dark' } }),
 };
 
 export const ScopeCard: React.FC<ScopeCardProps> = ({
@@ -46,31 +46,28 @@ export const ScopeCard: React.FC<ScopeCardProps> = ({
   icon: Icon,
   className = '',
 }) => {
-  const iconStyle = iconBgStyles[color];
-
   return (
     <div
-      className={`${css({
-        bg: 'white',
-        borderWidth: '1px',
-        borderColor: 'gray.100',
-        p: '8',
-        transition: 'all',
-        transitionDuration: '300ms',
-        rounded: 'xl',
-        _hover: { shadow: 'lg', borderColor: hoverBorderStyles[color] },
-      })} ${className}`}
+      className={cx(
+        css({
+          bg: 'white',
+          borderWidth: '1px',
+          borderColor: 'gray.100',
+          p: '8',
+          transition: 'all',
+          transitionDuration: '300ms',
+          rounded: 'xl',
+        }),
+        hoverStyles[color],
+        className,
+      )}
     >
       <div
-        className={`${center({ inline: true })} ${css({
-          w: '12',
-          h: '12',
-          rounded: 'lg',
-          mb: '6',
-          bg: iconStyle.bg,
-          color: iconStyle.color,
-          flexShrink: 0,
-        })}`}
+        className={cx(
+          center({ inline: true }),
+          css({ w: '12', h: '12', rounded: 'lg', mb: '6', flexShrink: 0 }),
+          iconBoxStyles[color],
+        )}
       >
         <Icon size={24} />
       </div>
@@ -81,13 +78,10 @@ export const ScopeCard: React.FC<ScopeCardProps> = ({
         {items.map((item) => (
           <li key={item} className={hstack({ gap: '3' })}>
             <div
-              className={css({
-                w: '1.5',
-                h: '1.5',
-                rounded: 'full',
-                flexShrink: 0,
-                bg: bulletStyles[color],
-              })}
+              className={cx(
+                css({ w: '1.5', h: '1.5', rounded: 'full', flexShrink: 0 }),
+                bulletBgStyles[color],
+              )}
             />
             {item}
           </li>

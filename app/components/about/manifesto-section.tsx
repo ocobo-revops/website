@@ -7,13 +7,25 @@ import { text } from '@ocobo/styled-system/recipes';
 
 import { FlexPair } from '../home/flex-pair';
 
-const toneColorMap = {
-  white: 'white',
-  muted: 'gray.400',
-  highlight: 'ocobo.yellow',
-} as const;
+type Tone = 'white' | 'muted' | 'highlight';
 
-type Tone = keyof typeof toneColorMap;
+const toneStyles: Record<Tone, string> = {
+  white: css({ color: 'white' }),
+  muted: css({ color: 'gray.400' }),
+  highlight: css({ color: 'ocobo.yellow' }),
+};
+
+const weightStyles: Record<'medium' | 'bold', string> = {
+  medium: css({ fontWeight: 'medium' }),
+  bold: css({ fontWeight: 'bold' }),
+};
+
+const manifestoLineCss = css({
+  fontSize: { base: '2xl', md: '4xl' },
+  lineHeight: 'tight',
+});
+
+const italicCss = css({ fontStyle: 'italic' });
 
 type ManifestoLine = {
   text: string;
@@ -148,13 +160,12 @@ export const ManifestoSection = () => {
             {introLines.map((line, index) => (
               <p
                 key={`intro-${index}`}
-                className={css({
-                  fontSize: { base: '2xl', md: '4xl' },
-                  fontWeight: line.weight ?? 'medium',
-                  color: toneColorMap[line.tone],
-                  lineHeight: 'tight',
-                  fontStyle: line.italic ? 'italic' : 'normal',
-                })}
+                className={cx(
+                  manifestoLineCss,
+                  toneStyles[line.tone],
+                  weightStyles[line.weight ?? 'medium'],
+                  line.italic ? italicCss : undefined,
+                )}
               >
                 {line.text}
               </p>
@@ -173,13 +184,12 @@ export const ManifestoSection = () => {
             {statementLines.map((line, index) => (
               <p
                 key={`statement-${index}`}
-                className={css({
-                  fontSize: { base: '2xl', md: '4xl' },
-                  fontWeight: line.weight ?? 'bold',
-                  color: toneColorMap[line.tone],
-                  lineHeight: 'tight',
-                  fontStyle: line.italic ? 'italic' : 'normal',
-                })}
+                className={cx(
+                  manifestoLineCss,
+                  toneStyles[line.tone],
+                  weightStyles[line.weight ?? 'bold'],
+                  line.italic ? italicCss : undefined,
+                )}
               >
                 {line.text}
               </p>
@@ -190,13 +200,12 @@ export const ManifestoSection = () => {
             {actionsLines.map((line, index) => (
               <p
                 key={`actions-${index}`}
-                className={css({
-                  fontSize: { base: '2xl', md: '4xl' },
-                  fontWeight: line.weight ?? 'medium',
-                  color: toneColorMap[line.tone],
-                  lineHeight: 'tight',
-                  fontStyle: line.italic ? 'italic' : 'normal',
-                })}
+                className={cx(
+                  manifestoLineCss,
+                  toneStyles[line.tone],
+                  weightStyles[line.weight ?? 'medium'],
+                  line.italic ? italicCss : undefined,
+                )}
               >
                 {line.text}
               </p>
@@ -207,12 +216,11 @@ export const ManifestoSection = () => {
             {clarityLines.map((line, index) => (
               <p
                 key={`clarity-${index}`}
-                className={css({
-                  fontSize: { base: '2xl', md: '4xl' },
-                  fontWeight: line.weight ?? 'medium',
-                  color: toneColorMap[line.tone],
-                  lineHeight: 'tight',
-                })}
+                className={cx(
+                  manifestoLineCss,
+                  toneStyles[line.tone],
+                  weightStyles[line.weight ?? 'medium'],
+                )}
               >
                 {line.text}
               </p>
@@ -300,12 +308,11 @@ export const ManifestoSection = () => {
             {conclusionLines.map((line, index) => (
               <p
                 key={`conclusion-${index}`}
-                className={css({
-                  fontSize: { base: '2xl', md: '4xl' },
-                  fontWeight: line.weight ?? 'medium',
-                  color: toneColorMap[line.tone],
-                  lineHeight: 'tight',
-                })}
+                className={cx(
+                  manifestoLineCss,
+                  toneStyles[line.tone],
+                  weightStyles[line.weight ?? 'medium'],
+                )}
               >
                 {line.text}
               </p>
