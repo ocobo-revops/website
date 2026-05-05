@@ -1,5 +1,13 @@
 import { createListCollection } from '@ark-ui/react/select';
-import { Check, ChevronRight, Menu, X } from 'lucide-react';
+import {
+  Briefcase,
+  Check,
+  ChevronRight,
+  MapPin,
+  Menu,
+  Users,
+  X,
+} from 'lucide-react';
 import type { MetaFunction } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -13,6 +21,7 @@ import { Input } from '~/components/ui/Input';
 import { Label } from '~/components/ui/Label';
 import { Logocobo } from '~/components/ui/Logocobo';
 import { Select } from '~/components/ui/Select';
+import { MetaPill } from '~/components/ui/meta-pill';
 import { getMetaTags } from '~/utils/metatags';
 
 // Create collection for fruit select
@@ -409,6 +418,41 @@ export default function Index() {
             </Select.Root>
           </div>
         </form>
+      </Section>
+      <Section>
+        <h2 className={sectionTitle}>MetaPill</h2>
+        <ul className={hstack({ gap: '4' })}>
+          <li>
+            <MetaPill
+              icon={
+                <MapPin size={14} className={css({ color: 'ocobo.sky' })} />
+              }
+            >
+              Paris, France
+            </MetaPill>
+          </li>
+          <li>
+            <MetaPill
+              icon={
+                <Briefcase
+                  size={14}
+                  className={css({ color: 'ocobo.yellow' })}
+                />
+              }
+            >
+              CDI
+            </MetaPill>
+          </li>
+          <li>
+            <MetaPill
+              icon={
+                <Users size={14} className={css({ color: 'ocobo.mint' })} />
+              }
+            >
+              Senior
+            </MetaPill>
+          </li>
+        </ul>
       </Section>
       <Section>
         <h2 className={sectionTitle}>Icons</h2>
