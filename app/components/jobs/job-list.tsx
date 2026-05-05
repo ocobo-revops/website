@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, hstack, vstack } from '@ocobo/styled-system/patterns';
+import { card } from '@ocobo/styled-system/recipes';
 
 import type { JobFrontmatter } from '~/modules/schemas';
 import type { MarkdocFile } from '~/types';
@@ -105,22 +106,22 @@ export function JobList({ jobs, lang }: JobListProps) {
               })}
             >
               <div
-                className={`${flex({
-                  direction: { base: 'column', md: 'row' },
-                  justify: 'space-between',
-                  align: 'center',
-                })} ${css({
-                  p: { base: '8', md: '12' },
-                  rounded: '3xl',
-                  borderWidth: '1px',
-                  borderColor: 'gray.100',
-                  bg: 'white',
-                  transition: 'all',
-                  transitionDuration: '500ms',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  _hover: { shadow: 'lg' },
-                })}`}
+                className={cx(
+                  card({ radius: 'lg', border: true, tone: 'white' }),
+                  flex({
+                    direction: { base: 'column', md: 'row' },
+                    justify: 'space-between',
+                    align: 'center',
+                  }),
+                  css({
+                    p: { base: '8', md: '12' },
+                    transition: 'all',
+                    transitionDuration: '500ms',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    _hover: { shadow: 'lg' },
+                  }),
+                )}
               >
                 {/* Hover highlight bar */}
                 <div

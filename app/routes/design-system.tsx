@@ -13,7 +13,7 @@ import type { MetaFunction } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
 import { grid, hstack, vstack } from '@ocobo/styled-system/patterns';
-import { button, icon, link } from '@ocobo/styled-system/recipes';
+import { button, card, icon, link } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 import { Illustration } from '~/components/ui/Illustration';
@@ -488,6 +488,41 @@ export default function Index() {
           </li>
           <li>
             <Illustration name="strategy_hero" />
+          </li>
+        </ul>
+      </Section>
+      <Section>
+        <h2 className={sectionTitle}>Card recipe</h2>
+        <ul
+          className={hstack({
+            gap: '6',
+            alignItems: 'stretch',
+            flexWrap: 'wrap',
+          })}
+        >
+          <li className={card()}>
+            <p className={css({ fontWeight: 'bold' })}>Default card</p>
+            <p className={css({ color: 'gray.500', fontSize: 'sm', mt: '2' })}>
+              padding md · radius md · white · border
+            </p>
+          </li>
+          <li className={card({ tone: 'tinted' })}>
+            <p className={css({ fontWeight: 'bold' })}>Tinted card</p>
+            <p className={css({ color: 'gray.500', fontSize: 'sm', mt: '2' })}>
+              tone tinted (gray.50 bg)
+            </p>
+          </li>
+          <li className={card({ border: false })}>
+            <p className={css({ fontWeight: 'bold' })}>No-border card</p>
+            <p className={css({ color: 'gray.500', fontSize: 'sm', mt: '2' })}>
+              border false · shadow only
+            </p>
+          </li>
+          <li className={card({ padding: 'lg', radius: 'lg' })}>
+            <p className={css({ fontWeight: 'bold' })}>Large card</p>
+            <p className={css({ color: 'gray.500', fontSize: 'sm', mt: '2' })}>
+              padding lg · radius lg (3xl)
+            </p>
           </li>
         </ul>
       </Section>

@@ -1,5 +1,6 @@
 import { badge } from './badge';
 import { button } from './button';
+import { card } from './card';
 import { iconBox } from './icon-box';
 import { section } from './section';
 import { text } from './text';
@@ -12,6 +13,7 @@ import { subtitle } from './_legacy/subtitle';
 export const recipes = {
   badge,
   button,
+  card,
   icon,
   iconBox,
   link,
