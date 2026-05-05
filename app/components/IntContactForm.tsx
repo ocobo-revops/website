@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Form } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
+import { styled } from '@ocobo/styled-system/jsx';
+import { button } from '@ocobo/styled-system/recipes';
 
-import { Button } from './ui/Button';
+const Button = styled('button', button);
 import { Input } from './ui/Input';
 import { Label } from './ui/Label';
 import { Select } from './ui/Select';

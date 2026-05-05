@@ -5,10 +5,8 @@ import type { MetaFunction } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
 import { grid, hstack, vstack } from '@ocobo/styled-system/patterns';
-import { icon, link } from '@ocobo/styled-system/recipes';
+import { button, icon, link } from '@ocobo/styled-system/recipes';
 
-import { Button } from '~/components/ui/Button';
-import { Card } from '~/components/ui/Card';
 import { Container } from '~/components/ui/Container';
 import { Illustration } from '~/components/ui/Illustration';
 import { Input } from '~/components/ui/Input';
@@ -47,6 +45,8 @@ const Section = styled('section', {
 });
 
 const sectionTitle = css({ textStyle: 'heading2', mb: '4' });
+
+const Button = styled('button', button);
 
 const ColorBox = styled('div', {
   base: {
@@ -333,187 +333,7 @@ export default function Index() {
           </li>
         </ul>
       </Section>
-      <Section>
-        <h2 className={sectionTitle}>Card</h2>
-        <ul className={grid({ columns: 2, gap: '10', maxWidth: '[1200px]' })}>
-          <li>
-            <Card.Root variant="yellow">
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="sky">
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="mint">
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="coral">
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="yellow" isColoured>
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="sky" isColoured>
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="mint" isColoured>
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-          <li>
-            <Card.Root variant="coral" isColoured>
-              <Card.Title>Stratégies Revenue Operations</Card.Title>
-              <Card.Content>
-                <p className={css({ textStyle: 'large' })}>
-                  Nos experts en stratégies Revenue vous fournissent un plan
-                  d’actions RevOps, comprennent vos équipes et vos processus,
-                  optimisent la data, et brisent les silos.
-                </p>
-                <p>
-                  Analyses du funnel et mapping du customer journey.
-                  Organisation d’équipes. Forecasting & budgets. Segmentation.
-                  Territory Planning.
-                </p>
-                <p>
-                  <a className={link()} href="/#">
-                    En savoir plus
-                  </a>
-                </p>
-              </Card.Content>
-            </Card.Root>
-          </li>
-        </ul>
-      </Section>
+      {/* Card section: replaced by card recipe — see #84 */}
       <Section>
         <h2 className={sectionTitle}>Form</h2>
         <form
