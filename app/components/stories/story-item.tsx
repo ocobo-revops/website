@@ -99,35 +99,22 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                   transform: 'translateY(8px)',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '2',
                 }),
               )}
             >
               <img
                 src={featuredTool.iconUrl}
-                alt=""
-                aria-hidden="true"
+                alt={featuredTool.name}
                 loading="lazy"
                 decoding="async"
-                width={20}
-                height={20}
+                width={28}
+                height={28}
                 className={css({
-                  h: '5',
-                  w: '5',
+                  h: '7',
+                  w: '7',
                   objectFit: 'contain',
                 })}
               />
-              <span
-                className={css({
-                  fontSize: 'xs',
-                  fontWeight: 'black',
-                  textTransform: 'uppercase',
-                  letterSpacing: 'widest',
-                  color: 'white',
-                })}
-              >
-                {featuredTool.name}
-              </span>
             </div>
           ) : null}
         </NavLink>
