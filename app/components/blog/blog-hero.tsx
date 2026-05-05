@@ -16,7 +16,6 @@ const BlogHero: React.FunctionComponent = () => {
     >
       <div
         className={css({
-          mb: '20',
           pb: '12',
           borderBottomWidth: '1px',
           borderColor: 'gray.200',

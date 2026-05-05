@@ -4,6 +4,8 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 import { badge } from '@ocobo/styled-system/recipes';
 
+import { StoriesIllustration } from './stories-illustration';
+
 const Hero = () => {
   const { t } = useTranslation('common');
 
@@ -59,6 +61,17 @@ const Hero = () => {
           >
             {t('clients.description')}
           </p>
+        </div>
+        <div
+          className={`${flex({
+            justify: { base: 'center', lg: 'end' },
+            align: 'center',
+          })} ${css({
+            lg: { w: '1/2' },
+            position: 'relative',
+          })}`}
+        >
+          <StoriesIllustration />
         </div>
       </div>
     </section>

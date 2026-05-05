@@ -84,6 +84,10 @@ export const keyframes = defineKeyframes({
     from: { transform: 'rotate(0deg)' },
     to: { transform: 'rotate(360deg)' },
   },
+  pulse: {
+    '0%, 100%': { opacity: '1' },
+    '50%': { opacity: '0.5' },
+  },
   'radar-sweep': {
     from: { transform: 'rotate(0deg)' },
     to: { transform: 'rotate(360deg)' },
