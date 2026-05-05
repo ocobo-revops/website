@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -22,14 +22,7 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
   return (
     <section className={section({ bg: 'white', padding: 'lg' })}>
       <Container className={css({ textAlign: 'center' })}>
-        <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: '4xl',
-            fontWeight: 'bold',
-            mb: '6',
-          })}
-        >
+        <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '6' }))}>
           {t('stack.title')}
         </h2>
         <p

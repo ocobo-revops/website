@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -32,19 +33,17 @@ export const HeroSection = () => {
         >
           <HeroSplit.Content>
             <h1
-              className={css({
-                fontFamily: 'display',
-                fontSize: { base: '4xl', md: '6xl' },
-                fontWeight: 'bold',
-                color: 'ocobo.dark',
-                mb: '10',
-                lineHeight: '0.95',
-                letterSpacing: 'tight',
-                opacity: '0',
-                animation: 'hero-reveal',
-                animationDelay: '0.1s',
-                animationFillMode: 'forwards',
-              })}
+              className={cx(
+                text({ variant: 'display-xl', color: 'dark' }),
+                css({
+                  color: 'ocobo.dark',
+                  mb: '10',
+                  opacity: '0',
+                  animation: 'hero-reveal',
+                  animationDelay: '0.1s',
+                  animationFillMode: 'forwards',
+                }),
+              )}
             >
               {titleLines[0]}
               <br />
@@ -93,14 +92,15 @@ export const HeroSection = () => {
               })}
             >
               <p
-                className={css({
-                  fontFamily: 'display',
-                  fontSize: { base: 'lg', md: 'xl' },
-                  fontWeight: 'normal',
-                  color: 'ocobo.dark',
-                  lineHeight: 'tight',
-                  letterSpacing: 'tight',
-                })}
+                className={cx(
+                  text({ variant: 'display-xl', color: 'dark' }),
+                  css({
+                    fontSize: { base: 'lg', md: 'xl' },
+                    fontWeight: 'normal',
+                    lineHeight: 'tight',
+                    letterSpacing: 'tight',
+                  }),
+                )}
               >
                 {t('hero.callout.before')}{' '}
                 <span className={css({ fontWeight: 'bold' })}>

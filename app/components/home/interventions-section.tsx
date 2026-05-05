@@ -2,9 +2,9 @@ import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
-import { badge, section } from '@ocobo/styled-system/recipes';
+import { badge, card, section, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -26,24 +26,21 @@ const COLOR_MAP: Record<Intervention['badgeColor'], string> = {
   mint: 'ocobo.mint',
 } as const;
 
-const cardStyle = css({
-  bg: 'white',
-  borderWidth: '1px',
-  borderColor: 'gray.100',
-  p: '10',
-  rounded: '2xl',
-  display: 'flex',
-  flexDirection: 'column',
-  h: 'full',
-  position: 'relative',
-  overflow: 'hidden',
-  transition: 'all',
-  transitionDuration: '300ms',
-  _hover: {
-    shadow: '2xl',
-    translateY: '-1',
-  },
-});
+const cardStyle = cx(
+  card({ padding: 'md', radius: 'md', tone: 'white', border: true }),
+  css({
+    p: '10',
+    h: 'full',
+    position: 'relative',
+    overflow: 'hidden',
+    transition: 'all',
+    transitionDuration: '300ms',
+    _hover: {
+      shadow: '2xl',
+      translateY: '-1',
+    },
+  }),
+);
 
 export const InterventionsSection = () => {
   const { t } = useTranslation('home');
@@ -56,14 +53,14 @@ export const InterventionsSection = () => {
     <section className={section({ bg: 'white', padding: 'lg' })}>
       <Container>
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: '4xl',
-            fontWeight: 'bold',
-            color: 'ocobo.dark',
-            mb: '4',
-            textAlign: 'center',
-          })}
+          className={cx(
+            text({ variant: 'display-lg', color: 'dark' }),
+            css({
+              fontSize: '4xl',
+              mb: '4',
+              textAlign: 'center',
+            }),
+          )}
         >
           {t('interventions.title')}
         </h2>
@@ -118,16 +115,16 @@ export const InterventionsSection = () => {
                   </p>
                 </div>
                 <h3
-                  className={css({
-                    fontFamily: 'display',
-                    fontSize: '3xl',
-                    fontWeight: 'bold',
-                    mb: '6',
-                    color: 'ocobo.dark',
-                    lineHeight: 'tight',
-                    transition: 'colors',
-                    _groupHover: { color: 'black' },
-                  })}
+                  className={cx(
+                    text({ variant: 'display-lg', color: 'dark' }),
+                    css({
+                      fontSize: '3xl',
+                      mb: '6',
+                      lineHeight: 'tight',
+                      transition: 'colors',
+                      _groupHover: { color: 'black' },
+                    }),
+                  )}
                 >
                   {item.title}
                 </h3>

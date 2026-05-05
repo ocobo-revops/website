@@ -1,8 +1,9 @@
 import { Plus } from 'lucide-react';
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -35,23 +36,24 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 
   return (
     <div
-      className={`${flex({
-        direction: 'column',
-        align: 'center',
-        justify: 'center',
-      })} ${css({
-        position: 'relative',
-        bg: 'white',
-        borderWidth: '1px',
-        borderColor: 'gray.50',
-        p: '12',
-        aspectRatio: 'square',
-        rounded: '2xl',
-        transition: 'all',
-        transitionDuration: '500ms',
-        textAlign: 'center',
-        _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
-      })} group ${className}`}
+      className={cx(
+        card({ padding: 'lg', radius: 'md', tone: 'white', border: true }),
+        flex({
+          direction: 'column',
+          align: 'center',
+          justify: 'center',
+        }),
+        css({
+          position: 'relative',
+          p: '12',
+          aspectRatio: 'square',
+          transition: 'all',
+          transitionDuration: '500ms',
+          textAlign: 'center',
+          _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
+        }),
+        `group ${className}`,
+      )}
     >
       <div
         className={css({
@@ -80,32 +82,30 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
 
       {label && (
         <span
-          className={css({
-            fontFamily: 'display',
-            fontWeight: 'black',
-            color: 'ocobo.dark/30',
-            fontSize: 'sm',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5em',
-            mb: '4',
-          })}
+          className={cx(
+            text({ variant: 'label', color: 'dark' }),
+            css({
+              color: 'ocobo.dark/30',
+              mb: '4',
+            }),
+          )}
         >
           {label}
         </span>
       )}
 
       <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: '4xl',
-          fontWeight: 'black',
-          color: 'ocobo.dark',
-          mb: '3',
-          letterSpacing: 'tighter',
-          transition: 'colors',
-          transitionDuration: '300ms',
-          _groupHover: { color: styles.text },
-        })}
+        className={cx(
+          text({ variant: 'display-lg', color: 'dark' }),
+          css({
+            fontSize: '4xl',
+            mb: '3',
+            letterSpacing: 'tighter',
+            transition: 'colors',
+            transitionDuration: '300ms',
+            _groupHover: { color: styles.text },
+          }),
+        )}
       >
         {title}
       </h3>

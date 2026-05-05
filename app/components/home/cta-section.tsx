@@ -1,8 +1,8 @@
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -63,13 +63,13 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
     >
       <Container className={css({ textAlign: 'center' })}>
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '4xl', md: '5xl' },
-            fontWeight: 'black',
-            mb: '8',
-            letterSpacing: 'tight',
-          })}
+          className={cx(
+            text({ variant: 'display-lg' }),
+            css({
+              fontSize: { base: '4xl', md: '5xl' },
+              mb: '8',
+            }),
+          )}
         >
           {title}
         </h2>
