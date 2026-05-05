@@ -146,7 +146,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **StoryItem** | `StoryItem.tsx` | Story card with shadow, rounded corners, hover | Reusable |
 | **StoryArticle** | `StoryArticle.tsx` | Full story display | Stories-specific |
 | **StoryHeader** | `StoryHeader.tsx` | Story header with display font | Reusable for content |
-| **StoryMetas** | `StoryMetas.tsx` | Story metadata in AsideCard | Reusable for content |
+| **StoryMetas** | `StoryMetas.tsx` | Story metadata panel | Reusable for content |
 | **StoryDeliverables** | `StoryDeliverables.tsx` | Deliverables section | Stories-specific |
 | **StorySpeaker** | `StorySpeaker.tsx` | Speaker with display font | Reusable |
 | **StoryMarkdownContainer** | `StoryMarkdownContainer.tsx` | Content wrapper | Reusable |
@@ -253,9 +253,10 @@ Active Panda CSS recipes — use these before reaching for inline `css()`.
 |--------|------|-------------|
 | `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label — colour variants (`yellow`, `mint`, `sky`, `coral`), sizes `sm`/`lg` |
 | `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles — variants (`primary`, `solid`, `outline`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
+| `card` | [`preset/recipes/card.ts`](../../preset/recipes/card.ts) | Bordered card surface — tone `default`/`tinted`, padding `md`/`lg`, radius `md`/`lg`, border toggle |
 | `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
 | `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background + vertical padding — `bg` tokens, padding `sm`/`md`/`lg` |
-| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-xl`, `display-lg`, `display-md`, `subtitle`, `body`, `label` variants with colour tokens |
+| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-2xl`, `display-lg`, `display-lg-bold`, `display-section`, `display-sm`, `display-md`, `display-md-bold`, `display-heading`, `display-card`, `display-label`, `subtitle`, `body`, `label` variants with colour tokens. `display-label`: xs display-font uppercase label (track badges, caption badges) |
 
 ### Section composition pattern
 
@@ -285,6 +286,24 @@ The canonical pattern for page sections: `section()` recipe on the `<section>` e
 
 `<Container>` handles `maxW: '70rem', mx: 'auto', px: '8'`. Use `narrow` prop for narrower content columns (`maxW: '56rem'`).
 
+### Card usage pattern
+
+All bordered card surfaces use the `card()` recipe. Do not write inline `rounded` + `border` + `shadow` combinations.
+
+```tsx
+// Default card (white, border, shadow, padding md, radius md)
+<div className={card()}>...</div>
+
+// Tinted background
+<div className={card({ tone: 'tinted' })}>...</div>
+
+// No border, shadow only
+<div className={card({ border: false })}>...</div>
+
+// Large padding and radius
+<div className={card({ padding: 'lg', radius: 'lg' })}>...</div>
+```
+
 ### Recipes vs inline `css()` — decision rules
 
 - **Use a recipe** when the component already has a matching recipe (check the table above). Don't reinvent what the DS owns.
@@ -296,10 +315,8 @@ The canonical pattern for page sections: `section()` recipe on the `<section>` e
 ## Design System Integration
 
 ### Panda CSS Recipes Used
-- **Button**: Multiple variants (primary, secondary, ghost)
-- **Input**: Form field styling with states
-- **Typography**: Consistent text styling
-- **Section**: Page section patterns
+
+Six live recipes (see table above): `badge`, `button`, `card`, `iconBox`, `section`, `text`. The `_legacy/` folder (`icon`, `link`, `subtitle`, `button`) was deleted in issue #94. See `docs/adr/0001-design-system-adoption-policy.md`.
 
 ### Ark UI Components
 - **Accordion**: Expandable content sections
@@ -309,7 +326,7 @@ The canonical pattern for page sections: `section()` recipe on the `<section>` e
 
 ### Radix UI (remaining)
 - **NavigationMenu**: Main site navigation (not yet migrated)
-- **react-context**: Context utility used by Card, AsideCard, MobileMenu
+- **react-context**: Context utility used by Card, MobileMenu
 
 ## Component Dependencies
 

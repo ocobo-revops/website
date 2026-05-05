@@ -1,7 +1,8 @@
 import { Plus } from 'lucide-react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 interface StackItem {
   type: 'logo' | 'empty';
@@ -128,14 +129,10 @@ export const ModularStackGrid = ({
                 />
                 {showLabels && item.label && (
                   <span
-                    className={css({
-                      fontSize: 'xs',
-                      fontWeight: 'black',
-                      textTransform: 'uppercase',
-                      letterSpacing: 'widest',
-                      color: 'ocobo.dark',
-                      opacity: '0.3',
-                    })}
+                    className={cx(
+                      text({ variant: 'label', color: 'dark' }),
+                      css({ opacity: '0.3' }),
+                    )}
                   >
                     {item.label}
                   </span>

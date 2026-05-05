@@ -1,15 +1,14 @@
 import { CalendarDaysIcon, CoffeeIcon, Linkedin, TagsIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { circle, flex } from '@ocobo/styled-system/patterns';
-import { icon } from '@ocobo/styled-system/recipes';
+import { card } from '@ocobo/styled-system/recipes';
 
 import type { ResolvedAuthor } from '~/modules/content/members';
 import { type BlogpostFrontmatter } from '~/types';
 import { getTag } from '~/utils/labels';
 
-import { AsideCard } from '../AsideCard';
 import { Avatar } from '../ui/Avatar';
 
 const formatDate = (date: string, locale: string) => {
@@ -20,22 +19,40 @@ const formatDate = (date: string, locale: string) => {
   }).format(new Date(date));
 };
 
-interface BlogpostMetasProps
-  extends React.ComponentProps<typeof AsideCard.Root> {
+interface BlogpostMetasProps {
   item: BlogpostFrontmatter;
   resolvedAuthor: ResolvedAuthor;
+  className?: string;
 }
+
+const sectionCss = css({
+  bg: 'sky.light',
+  borderColor: 'sky',
+  borderBottom: 'thin',
+  p: 6,
+  _last: {
+    borderBottom: 'none',
+  },
+});
+
+const iconCss = css({ h: '6', w: '6' });
 
 const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
   item,
   resolvedAuthor,
-  ...props
+  className,
 }) => {
   const { i18n } = useTranslation();
 
   return (
-    <AsideCard.Root variant="post" {...props}>
-      <AsideCard.Section>
+    <div
+      className={cx(
+        card({ padding: 'sm' }),
+        css({ mb: 8, p: '0', overflow: 'hidden' }),
+        className,
+      )}
+    >
+      <div className={sectionCss}>
         <div
           className={flex({ gap: 3, fontWeight: 'bold', alignItems: 'center' })}
         >
@@ -62,34 +79,34 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
             </a>
           )}
         </div>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionCss}>
         <div className={flex({ gap: 3, alignItems: 'center' })}>
-          <CalendarDaysIcon className={icon({ size: 'lg' })} />
+          <CalendarDaysIcon className={iconCss} />
           {formatDate(item.date, i18n.language || 'fr')}
         </div>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionCss}>
         <div className={flex({ gap: 3, alignItems: 'center' })}>
-          <CoffeeIcon className={icon({ size: 'lg' })} />
+          <CoffeeIcon className={iconCss} />
           {item.read}
         </div>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionCss}>
         <div className={flex({ gap: 3 })}>
-          <TagsIcon className={icon({ size: 'lg' })} />
+          <TagsIcon className={iconCss} />
           <ul>
-            {item.tags.map((item) => {
+            {item.tags.map((tag) => {
               return (
-                <li key={item} className={css({})}>
-                  {getTag(item)}
+                <li key={tag} className={css({})}>
+                  {getTag(tag)}
                 </li>
               );
             })}
           </ul>
         </div>
-      </AsideCard.Section>
-    </AsideCard.Root>
+      </div>
+    </div>
   );
 };
 

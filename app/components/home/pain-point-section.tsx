@@ -1,9 +1,9 @@
 import { BarChart3, Layout, Target, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { FeatureCard } from './feature-card';
@@ -59,15 +59,13 @@ export const PainPointSection = () => {
         })}
       >
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '4xl', md: '6xl' },
-            fontWeight: 'black',
-            color: 'ocobo.dark',
-            mb: '10',
-            lineHeight: '0.95',
-            letterSpacing: 'tight',
-          })}
+          className={cx(
+            text({ variant: 'display-xl', color: 'dark' }),
+            css({
+              color: 'ocobo.dark',
+              mb: '10',
+            }),
+          )}
         >
           {t('painPoint.title.line1')}
           <br />
@@ -86,26 +84,23 @@ export const PainPointSection = () => {
           <p>{t('painPoint.description')}</p>
         </div>
         <div
-          className={css({
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '3',
-            px: '8',
-            py: '3',
-            bg: 'ocobo.dark',
-            color: 'white',
-            fontFamily: 'display',
-            fontWeight: 'black',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            fontSize: 'sm',
-            rounded: 'full',
-            transform: 'scale(1)',
-            transition: 'transform',
-            cursor: 'default',
-            shadow: 'xl',
-            _hover: { transform: 'scale(1.05)' },
-          })}
+          className={cx(
+            text({ variant: 'label', color: 'white' }),
+            css({
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '3',
+              px: '8',
+              py: '3',
+              bg: 'ocobo.dark',
+              rounded: 'full',
+              transform: 'scale(1)',
+              transition: 'transform',
+              cursor: 'default',
+              shadow: 'xl',
+              _hover: { transform: 'scale(1.05)' },
+            }),
+          )}
         >
           {t('painPoint.badge')}
         </div>
@@ -138,31 +133,28 @@ export const PainPointSection = () => {
         })}
       >
         <div
-          className={css({
-            display: 'inline-block',
-            px: '5',
-            py: '2',
-            bg: 'ocobo.mint',
-            color: 'ocobo.dark',
-            fontFamily: 'display',
-            fontWeight: 'black',
-            textTransform: 'uppercase',
-            letterSpacing: '0.3em',
-            fontSize: 'xs',
-            mb: '8',
-            rounded: 'full',
-          })}
+          className={cx(
+            text({ variant: 'label', color: 'dark' }),
+            css({
+              display: 'inline-block',
+              px: '5',
+              py: '2',
+              bg: 'ocobo.mint',
+              mb: '8',
+              rounded: 'full',
+            }),
+          )}
         >
           {t('painPoint.mission.label')}
         </div>
         <h3
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '4xl', md: '5xl' },
-            fontWeight: 'black',
-            mb: '6',
-            letterSpacing: 'tight',
-          })}
+          className={cx(
+            text({ variant: 'display-lg' }),
+            css({
+              fontSize: { base: '4xl', md: '5xl' },
+              mb: '6',
+            }),
+          )}
         >
           {t('painPoint.mission.title')}
         </h3>

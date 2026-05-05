@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 export const ArchitecturalGrid = () => {
   const { t } = useTranslation('offer');
@@ -38,24 +39,23 @@ export const ArchitecturalGrid = () => {
           })}
         >
           <div
-            className={css({
-              fontFamily: 'display',
-              fontWeight: 'bold',
-              color: 'ocobo.dark/40',
-              fontSize: 'xs',
-              textTransform: 'uppercase',
-              letterSpacing: '0.6em',
-              mb: '4',
-              whiteSpace: 'nowrap',
-              writingMode: 'vertical-lr',
-              textOrientation: 'mixed',
-              transform: 'rotate(180deg)',
-              '@supports not (writing-mode: vertical-rl)': {
-                writingMode: 'horizontal-tb',
-                transform: 'rotate(-90deg)',
-                transformOrigin: 'center',
-              },
-            })}
+            className={cx(
+              text({ variant: 'display-label', color: 'dark' }),
+              css({
+                color: 'ocobo.dark/40',
+                letterSpacing: '0.6em',
+                mb: '4',
+                whiteSpace: 'nowrap',
+                writingMode: 'vertical-lr',
+                textOrientation: 'mixed',
+                transform: 'rotate(180deg)',
+                '@supports not (writing-mode: vertical-rl)': {
+                  writingMode: 'horizontal-tb',
+                  transform: 'rotate(-90deg)',
+                  transformOrigin: 'center',
+                },
+              }),
+            )}
           >
             {t('hero.grid.axis')}
           </div>
@@ -131,14 +131,15 @@ export const ArchitecturalGrid = () => {
                 style={{ animationDelay: item.delay }}
               >
                 <span
-                  className={css({
-                    fontFamily: 'display',
-                    fontWeight: 'bold',
-                    transition: 'colors',
-                    transitionDuration: '300ms',
-                    fontSize: { base: 'xs', md: 'sm' },
-                    _groupHover: { color: item.color },
-                  })}
+                  className={cx(
+                    text({ variant: 'display-label', color: 'dark' }),
+                    css({
+                      fontSize: { base: 'xs', md: 'sm' },
+                      transition: 'colors',
+                      transitionDuration: '300ms',
+                      _groupHover: { color: item.color },
+                    }),
+                  )}
                 >
                   {item.label}
                 </span>

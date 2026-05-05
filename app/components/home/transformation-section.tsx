@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -75,13 +75,14 @@ export const TransformationSection = () => {
         >
           <div className={css({ w: { md: '1/2' } })}>
             <h2
-              className={css({
-                fontFamily: 'display',
-                fontSize: '4xl',
-                fontWeight: 'bold',
-                color: 'ocobo.dark',
-                mb: '6',
-              })}
+              className={cx(
+                text({ variant: 'display-lg', color: 'dark' }),
+                css({
+                  fontSize: '4xl',
+                  color: 'ocobo.dark',
+                  mb: '6',
+                }),
+              )}
             >
               {t('transformation.title')}
             </h2>
@@ -101,24 +102,30 @@ export const TransformationSection = () => {
                   <FlexPair gap={4}>
                     <FlexPair.Icon>
                       <div
-                        className={`${center()} ${css({
-                          w: '12',
-                          h: '12',
-                          bg: 'white',
-                          rounded: 'full',
-                          color: 'ocobo.dark',
-                          shadow: 'sm',
-                          fontWeight: 'bold',
-                          borderWidth: '1px',
-                          borderColor: 'gray.100',
-                        })}`}
+                        className={`${center()} ${cx(
+                          text({ variant: 'body', color: 'dark' }),
+                          css({
+                            w: '12',
+                            h: '12',
+                            bg: 'white',
+                            rounded: 'full',
+                            color: 'ocobo.dark',
+                            shadow: 'sm',
+                            fontWeight: 'bold',
+                            borderWidth: '1px',
+                            borderColor: 'gray.100',
+                          }),
+                        )}`}
                       >
                         {index + 1}
                       </div>
                     </FlexPair.Icon>
                     <FlexPair.Content>
                       <h4
-                        className={css({ fontWeight: 'bold', fontSize: 'lg' })}
+                        className={cx(
+                          text({ variant: 'subtitle', color: 'dark' }),
+                          css({ fontWeight: 'bold' }),
+                        )}
                       >
                         {item.title}
                       </h4>
@@ -159,13 +166,13 @@ export const TransformationSection = () => {
               })}
             />
             <h3
-              className={css({
-                fontFamily: 'display',
-                fontSize: '2xl',
-                fontWeight: 'bold',
-                mb: '8',
-                textAlign: 'center',
-              })}
+              className={cx(
+                text({ variant: 'display-md' }),
+                css({
+                  mb: '8',
+                  textAlign: 'center',
+                }),
+              )}
             >
               {t('transformation.method.title.line1')}
               <br />
@@ -194,16 +201,7 @@ export const TransformationSection = () => {
               })}
             </div>
             <div className={css({ mt: '8', textAlign: 'center' })}>
-              <p
-                className={css({
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: 'sm',
-                  textTransform: 'uppercase',
-                  letterSpacing: 'wider',
-                  mb: '4',
-                })}
-              >
+              <p className={cx(text({ variant: 'label' }), css({ mb: '4' }))}>
                 {t('transformation.method.label')}
               </p>
               <ButtonLink

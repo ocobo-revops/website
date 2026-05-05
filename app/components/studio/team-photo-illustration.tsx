@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { hstack } from '@ocobo/styled-system/patterns';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 export const TeamPhotoIllustration = () => {
   const { t } = useTranslation('studio');
@@ -123,18 +124,16 @@ export const TeamPhotoIllustration = () => {
 
         {/* Main photo card */}
         <div
-          className={css({
-            position: 'relative',
-            bg: 'white',
-            p: '2.5',
-            rounded: '3xl',
-            shadow: 'soft-lg',
-            borderWidth: '1px',
-            borderColor: 'gray.100',
-            overflow: 'hidden',
-            transition: 'transform 700ms',
-            _hover: { transform: 'scale(1.01)' },
-          })}
+          className={`${card({ radius: 'lg', tone: 'white', border: true })} ${css(
+            {
+              position: 'relative',
+              p: '2.5',
+              shadow: 'soft-lg',
+              overflow: 'hidden',
+              transition: 'transform 700ms',
+              _hover: { transform: 'scale(1.01)' },
+            },
+          )}`}
         >
           <img
             src="/images/studio.jpg"
@@ -193,14 +192,7 @@ export const TeamPhotoIllustration = () => {
               })}
             />
             <span
-              className={css({
-                fontFamily: 'display',
-                fontWeight: 'black',
-                fontSize: 'xs',
-                textTransform: 'uppercase',
-                letterSpacing: '0.25em',
-                color: 'ocobo.dark',
-              })}
+              className={`${text({ variant: 'display-label', color: 'dark' })}`}
             >
               {t('hero.captionBadge')}
             </span>

@@ -3,9 +3,9 @@ import { Fragment } from 'react';
 import type React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
-import { badge } from '@ocobo/styled-system/recipes';
+import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { SectionHeader } from './section-header';
@@ -71,21 +71,21 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
         })}
       >
         <div
-          className={`${center({ inline: true })} ${css({
-            w: '16',
-            h: '16',
-            bg: colorToken,
-            color: 'ocobo.dark',
-            fontFamily: 'display',
-            fontWeight: 'bold',
-            fontSize: '2xl',
-            borderWidth: '1px',
-            borderColor: 'ocobo.dark',
-            shadow: 'offset',
-            mb: '8',
-            flexShrink: '0',
-            alignSelf: 'flex-start',
-          })}`}
+          className={cx(
+            center({ inline: true }),
+            text({ variant: 'display-md-bold', color: 'dark' }),
+            css({
+              w: '16',
+              h: '16',
+              bg: colorToken,
+              borderWidth: '1px',
+              borderColor: 'ocobo.dark',
+              shadow: 'offset',
+              mb: '8',
+              flexShrink: '0',
+              alignSelf: 'flex-start',
+            }),
+          )}
         >
           {service.number}
         </div>

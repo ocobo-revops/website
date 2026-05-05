@@ -4,10 +4,12 @@ import type { RenderableTreeNode } from '@markdoc/markdoc';
 import { QuoteIcon } from 'lucide-react';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { icon, subtitle } from '@ocobo/styled-system/recipes';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { PlayerYoutube } from '../PlayerYoutube';
 import { MarkdownContainer } from '../markdown-container';
+
+const iconSizeMd = css({ h: '4', w: '4' });
 
 export function Container({ children }: HTMLAttributes<HTMLElement>) {
   return (
@@ -63,7 +65,22 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
         })}
       >
         <div />
-        <span className={subtitle()}>{children}</span>
+        <span
+          className={cx(
+            text({ variant: 'subtitle' }),
+            css({
+              display: 'inline-block',
+              p: '0.5em 1em',
+              bg: 'dark',
+              color: 'white',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
+              position: 'relative',
+            }),
+          )}
+        >
+          {children}
+        </span>
       </h2>
     );
   }
@@ -242,7 +259,7 @@ export function Quote({ children, author, url, ...props }: QuoteProps) {
     <blockquote cite={url} className={css({ fontStyle: 'italic' })} {...props}>
       <QuoteIcon
         className={cx(
-          icon({ size: 'md' }),
+          iconSizeMd,
           css({
             display: 'inline-block',
             mr: '0.5em',

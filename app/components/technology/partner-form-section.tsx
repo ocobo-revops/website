@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, flex, grid, vstack } from '@ocobo/styled-system/patterns';
-import { badge, iconBox, text } from '@ocobo/styled-system/recipes';
+import { badge, card, iconBox, text } from '@ocobo/styled-system/recipes';
 
 import { FlexPair } from '../home/flex-pair';
 import { Container } from '../ui/Container';
@@ -302,15 +302,7 @@ export const PartnerFormSection = () => {
             </span>
 
             <h2
-              className={css({
-                fontFamily: 'display',
-                fontSize: { base: '5xl', md: '6xl' },
-                fontWeight: 'bold',
-                lineHeight: '0.95',
-                letterSpacing: 'tight',
-                color: 'ocobo.dark',
-                mb: '8',
-              })}
+              className={`${text({ variant: 'display-xl', color: 'dark' })} ${css({ mb: '8' })}`}
             >
               {t('partnerForm.title.before')}
               <br />
@@ -335,16 +327,14 @@ export const PartnerFormSection = () => {
 
           <div className={css({ lg: { w: '1/2' }, w: 'full' })}>
             <div
-              className={css({
-                bg: 'white',
-                p: { base: '8', md: '12' },
-                rounded: '3xl',
-                shadow: '2xl',
-                borderWidth: '1px',
-                borderColor: 'gray.100',
-                position: 'relative',
-                overflow: 'hidden',
-              })}
+              className={`${card({ padding: 'lg', radius: 'lg', tone: 'white', border: true })} ${css(
+                {
+                  p: { base: '8', md: '12' },
+                  shadow: '2xl',
+                  position: 'relative',
+                  overflow: 'hidden',
+                },
+              )}`}
             >
               <div
                 className={css({

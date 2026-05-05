@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
+import { Container } from '../ui/Container';
 import { PartnerCardFromData, type PartnerData } from './partner-card';
 
 const CATEGORIES = [
@@ -60,13 +62,7 @@ export const EcosystemSection = () => {
 
   return (
     <section className={css({ py: '24', bg: 'white' })}>
-      <div
-        className={css({
-          maxW: '7xl',
-          mx: 'auto',
-          px: { base: '4', sm: '6', lg: '8' },
-        })}
-      >
+      <Container>
         <div
           className={`${flex({
             direction: { base: 'column', md: 'row' },
@@ -77,14 +73,7 @@ export const EcosystemSection = () => {
         >
           <div>
             <h2
-              className={css({
-                fontFamily: 'display',
-                fontSize: '4xl',
-                fontWeight: 'black',
-                mb: '4',
-                color: 'ocobo.dark',
-                letterSpacing: 'tight',
-              })}
+              className={`${text({ variant: 'display-lg', color: 'dark' })} ${css({ mb: '4' })}`}
             >
               {t('ecosystem.title')}
             </h2>
@@ -136,7 +125,7 @@ export const EcosystemSection = () => {
             />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

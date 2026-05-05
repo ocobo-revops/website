@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, hstack } from '@ocobo/styled-system/patterns';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { PyramidSection } from './pyramid-section';
@@ -40,14 +41,10 @@ export const SymptomsSection = () => {
           className={css({ textAlign: 'center', mb: { base: '16', md: '24' } })}
         >
           <h2
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: '3xl', md: '5xl' },
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              mb: '6',
-              lineHeight: 'tight',
-            })}
+            className={cx(
+              text({ variant: 'display-section', color: 'dark' }),
+              css({ mb: '6' }),
+            )}
           >
             {t('symptoms.title.line1')}
             <br className={css({ display: { base: 'none', md: 'block' } })} />
@@ -76,15 +73,15 @@ export const SymptomsSection = () => {
             return (
               <div
                 key={key}
-                className={css({
-                  bg: 'gray.50',
-                  p: '6',
-                  rounded: '2xl',
-                  borderWidth: '1px',
-                  borderColor: 'gray.100',
-                  position: 'relative',
-                  overflow: 'hidden',
-                })}
+                className={cx(
+                  card({
+                    padding: 'md',
+                    radius: 'md',
+                    tone: 'tinted',
+                    border: true,
+                  }),
+                  css({ position: 'relative', overflow: 'hidden' }),
+                )}
               >
                 <div
                   className={css({
@@ -100,28 +97,26 @@ export const SymptomsSection = () => {
                 />
                 <div className={`${hstack({ gap: '4' })} ${css({ mb: '4' })}`}>
                   <div
-                    className={`${center()} ${css({
-                      w: '10',
-                      h: '10',
-                      bg: 'white',
-                      borderWidth: '1px',
-                      borderColor: 'ocobo.dark',
-                      rounded: 'full',
-                      fontFamily: 'display',
-                      fontWeight: 'bold',
-                      fontSize: 'lg',
-                      shadow: 'sm',
-                    })}`}
+                    className={cx(
+                      center(),
+                      css({
+                        w: '10',
+                        h: '10',
+                        bg: 'white',
+                        borderWidth: '1px',
+                        borderColor: 'ocobo.dark',
+                        rounded: 'full',
+                        fontFamily: 'display',
+                        fontWeight: 'bold',
+                        fontSize: 'lg',
+                        shadow: 'sm',
+                      }),
+                    )}
                   >
                     {index + 1}
                   </div>
                   <h3
-                    className={css({
-                      fontFamily: 'display',
-                      fontSize: 'xl',
-                      fontWeight: 'bold',
-                      color: 'ocobo.dark',
-                    })}
+                    className={text({ variant: 'display-card', color: 'dark' })}
                   >
                     {role.title}
                   </h3>

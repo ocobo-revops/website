@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -65,13 +66,10 @@ export const MethodeSection = () => {
                 {index + 1}
               </div>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontSize: 'xl',
-                  fontWeight: 'bold',
-                  color: 'ocobo.dark',
-                  mb: '3',
-                })}
+                className={cx(
+                  text({ variant: 'display-card', color: 'dark' }),
+                  css({ mb: '3' }),
+                )}
               >
                 {step.title}
               </h3>
@@ -118,16 +116,16 @@ export const MethodeSection = () => {
         </div>
 
         <h3
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '2xl', md: '3xl' },
-            fontWeight: 'bold',
-            textAlign: 'center',
-            mt: '16',
-            mb: '4',
-            maxW: '2xl',
-            mx: 'auto',
-          })}
+          className={cx(
+            text({ variant: 'display-md-bold', color: 'dark' }),
+            css({
+              textAlign: 'center',
+              mt: '16',
+              mb: '4',
+              maxW: '2xl',
+              mx: 'auto',
+            }),
+          )}
         >
           <span className={css({ color: 'ocobo.yellow' })}>
             {t('method.closing.line1')}

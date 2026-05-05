@@ -2,6 +2,7 @@ import { Linkedin } from 'lucide-react';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import type { MemberTrack } from '~/modules/schemas';
 
@@ -71,6 +72,7 @@ export const TeamMemberCard = ({
       {/* Track badge */}
       <div
         className={cx(
+          text({ variant: 'display-label' }),
           css({
             position: 'absolute',
             top: 0,
@@ -78,11 +80,6 @@ export const TeamMemberCard = ({
             px: '4',
             py: '1.5',
             roundedBottomLeft: 'xl',
-            fontFamily: 'display',
-            fontWeight: 'black',
-            fontSize: 'xs',
-            textTransform: 'uppercase',
-            letterSpacing: 'widest',
             shadow: 'sm',
             transition: 'all 300ms',
           }),
@@ -128,13 +125,7 @@ export const TeamMemberCard = ({
       {/* Info */}
       <div className={css({ textAlign: 'center' })}>
         <h3
-          className={css({
-            fontFamily: 'display',
-            fontSize: 'xl',
-            fontWeight: 'black',
-            color: 'ocobo.dark',
-            mb: '1',
-          })}
+          className={`${text({ variant: 'display-card', color: 'dark' })} ${css({ mb: '1' })}`}
         >
           {name}
         </h3>

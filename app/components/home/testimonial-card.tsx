@@ -2,8 +2,9 @@ import { ArrowRight } from 'lucide-react';
 import type React from 'react';
 import { NavLink } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
@@ -72,16 +73,16 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
 
       <div className={css({ position: 'relative', zIndex: '10' })}>
         <p
-          className={css({
-            color: 'white',
-            fontFamily: 'display',
-            fontSize: { base: 'lg', md: '2xl' },
-            fontWeight: 'black',
-            mb: '12',
-            lineHeight: 'relaxed',
-            maxW: '2xl',
-            mx: { base: 'auto', md: '0' },
-          })}
+          className={cx(
+            text({ variant: 'display-md', color: 'white' }),
+            css({
+              fontSize: { base: 'lg', md: '2xl' },
+              mb: '12',
+              lineHeight: 'relaxed',
+              maxW: '2xl',
+              mx: { base: 'auto', md: '0' },
+            }),
+          )}
         >
           {quote}
         </p>
@@ -109,22 +110,23 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
         >
           <div className={flex({ align: 'center', gap: '6' })}>
             <div
-              className={`${center({
-                w: '14',
-                h: '14',
-                bg: 'ocobo.yellow',
-                rounded: '2xl',
-                color: 'ocobo.dark',
-                fontFamily: 'display',
-                fontWeight: 'black',
-                fontSize: 'xl',
-                shadow: 'xl',
-                overflow: 'hidden',
-                transform: 'rotate(3deg)',
-                transition: 'transform',
-                transitionDuration: '500ms',
-                _groupHover: { transform: 'rotate(0deg)' },
-              })}`}
+              className={cx(
+                text({ variant: 'display-md', color: 'dark' }),
+                center({
+                  w: '14',
+                  h: '14',
+                  bg: 'ocobo.yellow',
+                  rounded: '2xl',
+                  color: 'ocobo.dark',
+                  fontSize: 'xl',
+                  shadow: 'xl',
+                  overflow: 'hidden',
+                  transform: 'rotate(3deg)',
+                  transition: 'transform',
+                  transitionDuration: '500ms',
+                  _groupHover: { transform: 'rotate(0deg)' },
+                }),
+              )}
             >
               {authorAvatar ? (
                 <img
@@ -157,24 +159,21 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
               })}
             >
               <p
-                className={css({
-                  color: 'white',
-                  fontWeight: 'black',
-                  fontSize: 'lg',
-                  letterSpacing: 'tight',
-                })}
+                className={cx(
+                  text({ variant: 'display-md', color: 'white' }),
+                  css({
+                    fontSize: 'lg',
+                    letterSpacing: 'tight',
+                  }),
+                )}
               >
                 {authorName}
               </p>
               <p
-                className={css({
-                  mt: '0',
-                  fontSize: 'xs',
-                  fontWeight: 'black',
-                  color: 'ocobo.yellow',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.25em',
-                })}
+                className={cx(
+                  text({ variant: 'label', color: 'yellow' }),
+                  css({ mt: '0' }),
+                )}
               >
                 {authorRole}
               </p>
@@ -184,19 +183,18 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           {ctaText && ctaLink && (
             <NavLink
               to={getLocalizedPath(ctaLink)}
-              className={`${flex({
-                align: 'center',
-                gap: '4',
-                color: 'white/40',
-                fontFamily: 'display',
-                fontWeight: 'black',
-                fontSize: 'sm',
-                textTransform: 'uppercase',
-                letterSpacing: '0.2em',
-                transition: 'colors',
-                transitionDuration: '300ms',
-                _hover: { color: 'ocobo.yellow' },
-              })} group/btn`}
+              className={cx(
+                text({ variant: 'label', color: 'white' }),
+                flex({
+                  align: 'center',
+                  gap: '4',
+                  transition: 'colors',
+                  transitionDuration: '300ms',
+                  _hover: { color: 'ocobo.yellow' },
+                }),
+                css({ color: 'white/40' }),
+                'group/btn',
+              )}
             >
               {ctaText}
               <ArrowRight

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
-import { section } from '@ocobo/styled-system/recipes';
+import { css, cx } from '@ocobo/styled-system/css';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import type { Testimonial } from '~/routes/_main.($lang)._index';
 import { url } from '~/utils/url';
@@ -65,27 +65,25 @@ export const SocialProofSection = ({
       <Container className={css({ position: 'relative', zIndex: '10' })}>
         <div className={css({ mb: '16', textAlign: 'center' })}>
           <span
-            className={css({
-              fontFamily: 'display',
-              fontWeight: 'black',
-              color: 'white/40',
-              fontSize: 'xs',
-              textTransform: 'uppercase',
-              letterSpacing: '0.4em',
-              mb: '4',
-              display: 'inline-block',
-            })}
+            className={cx(
+              text({ variant: 'label', color: 'white' }),
+              css({
+                color: 'white/40',
+                mb: '4',
+                display: 'inline-block',
+              }),
+            )}
           >
             {t('socialProof.label')}
           </span>
           <h3
-            className={css({
-              color: 'white',
-              fontSize: { base: '3xl', md: '5xl' },
-              fontWeight: 'bold',
-              mb: '8',
-              letterSpacing: 'tight',
-            })}
+            className={cx(
+              text({ variant: 'display-lg', color: 'white' }),
+              css({
+                fontSize: { base: '3xl', md: '5xl' },
+                mb: '8',
+              }),
+            )}
           >
             {t('socialProof.title')}
           </h3>

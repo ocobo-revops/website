@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, hstack } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 type RoleKey = 'ceo' | 'managers' | 'teams' | 'clients';
 
@@ -147,12 +148,7 @@ export const PyramidSection = () => {
                 1
               </div>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: '2xl',
-                  color: 'ocobo.dark',
-                })}
+                className={text({ variant: 'display-md-bold', color: 'dark' })}
               >
                 {pyramid.ceo.title}
               </h3>
@@ -199,12 +195,7 @@ export const PyramidSection = () => {
           >
             <div className={hstack({ gap: '4', mb: '3' })}>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: '2xl',
-                  color: 'ocobo.dark',
-                })}
+                className={text({ variant: 'display-md-bold', color: 'dark' })}
               >
                 {pyramid.managers.title}
               </h3>
@@ -287,12 +278,7 @@ export const PyramidSection = () => {
                 3
               </div>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: '2xl',
-                  color: 'ocobo.dark',
-                })}
+                className={text({ variant: 'display-md-bold', color: 'dark' })}
               >
                 {pyramid.teams.title}
               </h3>
@@ -339,27 +325,26 @@ export const PyramidSection = () => {
           >
             <div className={hstack({ gap: '4', mb: '3' })}>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontSize: '2xl',
-                  color: 'ocobo.dark',
-                })}
+                className={text({ variant: 'display-md-bold', color: 'dark' })}
               >
                 {pyramid.clients.title}
               </h3>
               <div
-                className={`${center()} ${css({
-                  w: '10',
-                  h: '10',
-                  bg: 'white',
-                  borderWidth: '2px',
-                  borderColor: 'ocobo.dark',
-                  rounded: 'full',
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: 'lg',
-                  shadow: 'sm',
-                })}`}
+                className={cx(
+                  center(),
+                  css({
+                    w: '10',
+                    h: '10',
+                    bg: 'white',
+                    borderWidth: '2px',
+                    borderColor: 'ocobo.dark',
+                    rounded: 'full',
+                    fontFamily: 'display',
+                    fontWeight: 'bold',
+                    fontSize: 'lg',
+                    shadow: 'sm',
+                  }),
+                )}
               >
                 4
               </div>

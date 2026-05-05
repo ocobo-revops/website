@@ -5,7 +5,6 @@ import { QuoteIcon } from 'lucide-react';
 import { useHydrated } from 'remix-utils/use-hydrated';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { icon } from '@ocobo/styled-system/recipes';
 
 import { createHubSpotForm, loadHubSpotScript } from '~/utils/hubspot';
 
@@ -256,7 +255,7 @@ export function Quote({ children, author, url, ...props }: QuoteProps) {
     <blockquote cite={url} className={css({ fontStyle: 'italic' })} {...props}>
       <QuoteIcon
         className={cx(
-          icon({ size: 'md' }),
+          css({ h: '4', w: '4' }),
           css({
             display: 'inline-block',
             mr: '0.5em',

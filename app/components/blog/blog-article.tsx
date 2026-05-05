@@ -4,14 +4,13 @@ import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { icon } from '@ocobo/styled-system/recipes';
 
 import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
 
-import { PostHeader } from './PostHeader';
-import { PostMetas } from './PostMetas';
+import { PostHeader } from './post-header';
+import { PostMetas } from './post-metas';
 
 import { LayoutPost } from '../LayoutPost';
 import { PageMarkdownContainer } from '../PageMarkdownContainer';
@@ -37,7 +36,7 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
       <LayoutPost.Main>
         <p className={css({ mb: '4', fontSize: 'sm', color: 'gray.500' })}>
           <NavLink to={url.blog} className={flex({ align: 'center', gap: 2 })}>
-            <ChevronLeftCircleIcon className={icon({ size: 'md' })} />
+            <ChevronLeftCircleIcon className={css({ h: '4', w: '4' })} />
             {t('back')}
           </NavLink>
         </p>

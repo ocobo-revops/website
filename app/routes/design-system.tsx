@@ -13,7 +13,7 @@ import type { MetaFunction } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
 import { grid, hstack, vstack } from '@ocobo/styled-system/patterns';
-import { button, card, icon, link } from '@ocobo/styled-system/recipes';
+import { button, card } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 import { Illustration } from '~/components/ui/Illustration';
@@ -236,7 +236,7 @@ export default function Index() {
         </ul>
       </Section>
       <Section>
-        <h2 className={sectionTitle}>Buttons & a className={link()}s</h2>
+        <h2 className={sectionTitle}>Buttons</h2>
         <ul
           className={css({
             display: 'flex',
@@ -303,25 +303,6 @@ export default function Index() {
             <Button variant="solid" disabled>
               disabled
             </Button>
-          </li>
-        </ul>
-        <ul
-          className={css({
-            display: 'flex',
-            gap: '4',
-            p: '4',
-          })}
-        >
-          <li
-            className={css({
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2',
-            })}
-          >
-            <a className={link()} href="/#">
-              En savoir plus
-            </a>
           </li>
         </ul>
       </Section>
@@ -458,19 +439,19 @@ export default function Index() {
         <h2 className={sectionTitle}>Icons</h2>
         <ul className={hstack()}>
           <li>
-            <Menu className={icon({ size: 'lg' })} />
+            <Menu className={css({ h: '6', w: '6' })} />
           </li>
           <li>
-            <X className={icon({ size: 'lg' })} />
+            <X className={css({ h: '6', w: '6' })} />
           </li>
           <li>
-            <ChevronRight className={icon({ size: 'lg' })} />
+            <ChevronRight className={css({ h: '6', w: '6' })} />
           </li>
           <li className={css({ color: 'mint' })}>
-            <Check className={icon({ size: 'lg' })} />
+            <Check className={css({ h: '6', w: '6' })} />
           </li>
           <li className={css({ color: 'coral' })}>
-            <X className={icon({ size: 'lg' })} />
+            <X className={css({ h: '6', w: '6' })} />
           </li>
         </ul>
       </Section>

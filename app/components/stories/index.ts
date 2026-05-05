@@ -1,3 +1,3 @@
-export { Hero } from './Hero';
-export { StoryList } from './StoryList';
-export { StoryArticle } from './StoryArticle';
+export { Hero } from './hero';
+export { StoryList } from './story-list';
+export { StoryArticle } from './story-article';

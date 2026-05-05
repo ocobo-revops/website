@@ -1,8 +1,9 @@
 import { CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid, hstack } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 
@@ -14,13 +15,10 @@ export const ReassuranceSection = () => {
     <section className={css({ py: '24', bg: 'gray.50' })}>
       <Container>
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: '4xl',
-            fontWeight: 'bold',
-            mb: '4',
-            textAlign: 'center',
-          })}
+          className={cx(
+            text({ variant: 'display-lg-bold', color: 'dark' }),
+            css({ mb: '4', textAlign: 'center' }),
+          )}
         >
           {t('reassurance.title')}
         </h2>

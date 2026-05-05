@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { Container } from '@ocobo/styled-system/jsx';
-import { icon } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { url } from '~/utils/url';
@@ -23,7 +22,7 @@ const Message: React.FunctionComponent<
         height: 'calc(100vh - 452px)',
       })}
     >
-      <BombIcon className={icon({ size: 'xl' })} />
+      <BombIcon className={css({ h: '8', w: '8' })} />
       <h1
         className={css({
           textStyle: 'heading2',

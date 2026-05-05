@@ -2,8 +2,8 @@ import { Send } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
-import { button } from '@ocobo/styled-system/recipes';
+import { css, cx } from '@ocobo/styled-system/css';
+import { button, text } from '@ocobo/styled-system/recipes';
 
 type ApplyCtaProps = {
   applyEmail: string;
@@ -69,14 +69,10 @@ export function ApplyCta({ applyEmail, jobTitle, tallyFormId }: ApplyCtaProps) {
     >
       <div className={css({ position: 'relative', zIndex: 10 })}>
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: '4xl',
-            fontWeight: 'black',
-            color: 'ocobo.dark',
-            mb: '4',
-            letterSpacing: 'tight',
-          })}
+          className={cx(
+            text({ variant: 'display-lg', color: 'dark' }),
+            css({ mb: '4' }),
+          )}
         >
           {t('apply.title')}
         </h2>

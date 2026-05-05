@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 
@@ -11,11 +12,11 @@ type TransitionItem = {
   color: 'yellow' | 'mint' | 'coral' | 'sky';
 };
 
-const colorMap: Record<TransitionItem['color'], string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  coral: 'ocobo.coral',
-  sky: 'ocobo.sky',
+const titleColorStyles: Record<TransitionItem['color'], string> = {
+  yellow: text({ variant: 'display-md-bold', color: 'yellow' }),
+  mint: text({ variant: 'display-md-bold', color: 'mint' }),
+  coral: text({ variant: 'display-md-bold', color: 'coral' }),
+  sky: text({ variant: 'display-md-bold', color: 'sky' }),
 };
 
 export const TransitionSection = () => {
@@ -43,15 +44,10 @@ export const TransitionSection = () => {
           })}
         >
           <h2
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: '3xl', md: '5xl' },
-              fontWeight: 'bold',
-              color: 'white',
-              mb: { base: '16', md: '20' },
-              textAlign: 'center',
-              lineHeight: 'tight',
-            })}
+            className={cx(
+              text({ variant: 'display-section', color: 'white' }),
+              css({ mb: { base: '16', md: '20' }, textAlign: 'center' }),
+            )}
           >
             {t('transition.title')}
           </h2>
@@ -61,16 +57,7 @@ export const TransitionSection = () => {
           >
             {items.map((item) => (
               <div key={item.title} className={css({ spaceY: '4' })}>
-                <h3
-                  className={css({
-                    fontFamily: 'display',
-                    fontSize: '2xl',
-                    fontWeight: 'bold',
-                    color: colorMap[item.color],
-                  })}
-                >
-                  {item.title}
-                </h3>
+                <h3 className={titleColorStyles[item.color]}>{item.title}</h3>
                 <p
                   className={css({
                     fontSize: 'base',

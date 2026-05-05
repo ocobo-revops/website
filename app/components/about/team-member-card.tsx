@@ -1,7 +1,8 @@
 import { Linkedin } from 'lucide-react';
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -15,12 +16,12 @@ interface TeamMemberCardProps {
   className?: string;
 }
 
-const borderColorMap: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+const avatarBorderStyles: Record<ThemeColor, string> = {
+  yellow: css({ borderColor: 'ocobo.yellow' }),
+  mint: css({ borderColor: 'ocobo.mint' }),
+  sky: css({ borderColor: 'ocobo.sky' }),
+  coral: css({ borderColor: 'ocobo.coral' }),
+  dark: css({ borderColor: 'ocobo.dark' }),
 };
 
 export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
@@ -34,28 +35,29 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
 }) => {
   return (
     <div
-      className={`${css({
-        bg: 'white',
-        p: '8',
-        borderWidth: '1px',
-        borderColor: 'gray.100',
-        shadow: 'sm',
-        transition: 'all',
-        textAlign: 'center',
-        _hover: { shadow: 'lg' },
-      })} ${className}`}
+      className={cx(
+        card({ padding: 'lg', border: true }),
+        css({
+          transition: 'all',
+          textAlign: 'center',
+          _hover: { shadow: 'lg' },
+        }),
+        className,
+      )}
     >
       <div
-        className={css({
-          w: '32',
-          h: '32',
-          mx: 'auto',
-          mb: '6',
-          rounded: 'full',
-          overflow: 'hidden',
-          borderWidth: '4px',
-          borderColor: borderColorMap[color],
-        })}
+        className={cx(
+          css({
+            w: '32',
+            h: '32',
+            mx: 'auto',
+            mb: '6',
+            rounded: 'full',
+            overflow: 'hidden',
+            borderWidth: '4px',
+          }),
+          avatarBorderStyles[color],
+        )}
       >
         <img
           src={imageSrc}
@@ -64,13 +66,10 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
         />
       </div>
       <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: '2xl',
-          fontWeight: 'bold',
-          color: 'ocobo.dark',
-          mb: '1',
-        })}
+        className={cx(
+          text({ variant: 'display-md-bold', color: 'dark' }),
+          css({ mb: '1' }),
+        )}
       >
         {name}
       </h3>

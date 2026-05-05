@@ -1,9 +1,9 @@
 import { Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -32,12 +32,10 @@ export const ComparatifSection = ({
       <Container>
         <div className={css({ textAlign: 'center', mb: '16' })}>
           <h2
-            className={css({
-              fontFamily: 'display',
-              fontSize: '4xl',
-              fontWeight: 'bold',
-              mb: '4',
-            })}
+            className={cx(
+              text({ variant: 'display-lg' }),
+              css({ fontSize: '4xl', mb: '4' }),
+            )}
           >
             {t('comparatif.title.line1')}
             <br />
@@ -80,13 +78,10 @@ export const ComparatifSection = ({
               {t('comparatif.ocobo.label')}
             </div>
             <h3
-              className={css({
-                fontFamily: 'display',
-                fontSize: '2xl',
-                fontWeight: 'bold',
-                mb: '8',
-                mt: '4',
-              })}
+              className={cx(
+                text({ variant: 'display-md' }),
+                css({ mb: '8', mt: '4' }),
+              )}
             >
               {t('comparatif.ocobo.title')}
             </h3>
@@ -120,14 +115,10 @@ export const ComparatifSection = ({
             })}
           >
             <h3
-              className={css({
-                fontFamily: 'display',
-                fontSize: '2xl',
-                fontWeight: 'bold',
-                mb: '8',
-                mt: '4',
-                color: 'white',
-              })}
+              className={cx(
+                text({ variant: 'display-md', color: 'white' }),
+                css({ mb: '8', mt: '4' }),
+              )}
             >
               {t('comparatif.others.title')}
             </h3>
