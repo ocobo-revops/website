@@ -15,6 +15,7 @@ interface StoryItemProps {
   item: MarkdocFile<StoryFrontmatter>['frontmatter'];
   slug: string;
   featuredTool?: Tool | null;
+  resolvedTools?: Tool[];
   index?: number;
 }
 
@@ -43,12 +44,52 @@ const cardClass = css({
 });
 
 const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
-  ({ item, slug, featuredTool = null, index = 0 }) => {
+  ({ item, slug, featuredTool = null, resolvedTools = [], index = 0 }) => {
     const { t } = useTranslation('common');
     const storyUrl = `${url.stories}/${slug}`;
 
     return (
       <article className={`${vstack()} ${cardClass}`}>
+        {/* Featured tool above image */}
+        {featuredTool ? (
+          <div
+            className={hstack({
+              gap: '2',
+              w: 'full',
+              alignItems: 'center',
+              mb: '2',
+            })}
+          >
+            {featuredTool.iconUrl ? (
+              <img
+                src={featuredTool.iconUrl}
+                alt=""
+                aria-hidden="true"
+                width={20}
+                height={20}
+                loading="lazy"
+                decoding="async"
+                className={css({
+                  w: '5',
+                  h: '5',
+                  objectFit: 'contain',
+                })}
+              />
+            ) : null}
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
+                color: 'ocobo.dark',
+              })}
+            >
+              {featuredTool.name}
+            </span>
+          </div>
+        ) : null}
+
         {/* Image with logo overlay */}
         <NavLink
           to={storyUrl}
@@ -177,43 +218,70 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             </span>
           </div>
 
-          {/* Tool chip */}
-          {featuredTool ? (
-            <span
+          {/* Tool chips */}
+          {resolvedTools.length > 0 ? (
+            <div
               className={css({
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '2',
-                fontSize: 'xs',
-                fontWeight: 'bold',
-                color: 'gray.700',
-                borderWidth: '1px',
-                borderColor: 'gray.200',
-                rounded: 'full',
-                px: '3',
-                py: '1',
-                bg: 'gray.50',
+                w: 'full',
                 mb: '4',
+                pt: '3',
+                borderTopWidth: '1px',
+                borderColor: 'gray.100',
               })}
             >
-              {featuredTool.iconUrl ? (
-                <img
-                  src={featuredTool.iconUrl}
-                  alt=""
-                  aria-hidden="true"
-                  width={14}
-                  height={14}
-                  loading="lazy"
-                  decoding="async"
-                  className={css({
-                    w: '[14px]',
-                    h: '[14px]',
-                    objectFit: 'contain',
-                  })}
-                />
-              ) : null}
-              {featuredTool.name}
-            </span>
+              <span
+                className={css({
+                  display: 'block',
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.3em',
+                  color: 'gray.400',
+                  mb: '2',
+                })}
+              >
+                {t('clients.techStack')}
+              </span>
+              <div className={hstack({ gap: '2', flexWrap: 'wrap' })}>
+                {resolvedTools.map((tool) => (
+                  <span
+                    key={tool.slug}
+                    className={css({
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '1.5',
+                      fontSize: 'xs',
+                      fontWeight: 'bold',
+                      color: 'gray.700',
+                      borderWidth: '1px',
+                      borderColor: 'gray.200',
+                      rounded: 'full',
+                      px: '2.5',
+                      py: '1',
+                      bg: 'gray.50',
+                    })}
+                  >
+                    {tool.iconUrl ? (
+                      <img
+                        src={tool.iconUrl}
+                        alt=""
+                        aria-hidden="true"
+                        width={12}
+                        height={12}
+                        loading="lazy"
+                        decoding="async"
+                        className={css({
+                          w: '[12px]',
+                          h: '[12px]',
+                          objectFit: 'contain',
+                        })}
+                      />
+                    ) : null}
+                    {tool.name}
+                  </span>
+                ))}
+              </div>
+            </div>
           ) : null}
 
           {/* Read more */}

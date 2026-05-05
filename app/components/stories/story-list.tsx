@@ -10,6 +10,7 @@ import { StoryItem } from './story-item';
 
 export type StoryListItem = MarkdocFile<StoryFrontmatter> & {
   featuredTool?: Tool | null;
+  resolvedTools?: Tool[];
 };
 
 interface StoryListProps {
@@ -66,6 +67,7 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
             slug={entry.slug}
             item={entry.frontmatter}
             featuredTool={entry.featuredTool ?? null}
+            resolvedTools={entry.resolvedTools ?? []}
             index={i}
           />
         </li>

@@ -40,13 +40,19 @@ export const loader = createHybridLoader(
         _sortDate: new Date(entry.frontmatter.date).getTime(),
       }))
       .sort((a, b) => b._sortDate - a._sortDate)
-      .map(({ _sortDate, ...entry }) => ({
-        ...entry,
-        featuredTool: resolveTool(
-          entry.frontmatter.featuredTool ?? entry.frontmatter.tools[0] ?? '',
-          toolRegistry,
-        ),
-      }));
+      .map(({ _sortDate, ...entry }) => {
+        const resolvedTools = entry.frontmatter.tools
+          .map((slug) => resolveTool(slug, toolRegistry))
+          .filter((tool): tool is NonNullable<typeof tool> => tool !== null);
+        return {
+          ...entry,
+          featuredTool: resolveTool(
+            entry.frontmatter.featuredTool ?? entry.frontmatter.tools[0] ?? '',
+            toolRegistry,
+          ),
+          resolvedTools,
+        };
+      });
 
     return {
       stories,
