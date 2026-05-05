@@ -6,6 +6,12 @@ export const text = defineRecipe({
   base: {},
   variants: {
     variant: {
+      'display-2xl': {
+        fontFamily: 'display',
+        fontSize: { base: '4xl', md: '6xl' },
+        fontWeight: 'black',
+        letterSpacing: 'tight',
+      },
       'display-xl': {
         fontFamily: 'display',
         fontSize: { base: '5xl', md: '6xl' },
@@ -19,10 +25,50 @@ export const text = defineRecipe({
         fontWeight: 'black',
         letterSpacing: 'tight',
       },
+      'display-lg-bold': {
+        fontFamily: 'display',
+        fontSize: { base: '4xl', md: '5xl' },
+        fontWeight: 'bold',
+        letterSpacing: 'tight',
+      },
+      'display-section': {
+        fontFamily: 'display',
+        fontSize: { base: '3xl', md: '5xl' },
+        fontWeight: 'bold',
+        lineHeight: 'tight',
+      },
+      'display-sm': {
+        fontFamily: 'display',
+        fontSize: { base: '3xl', md: '4xl' },
+        fontWeight: 'black',
+        letterSpacing: 'tight',
+      },
       'display-md': {
         fontFamily: 'display',
         fontSize: '2xl',
         fontWeight: 'black',
+      },
+      'display-md-bold': {
+        fontFamily: 'display',
+        fontSize: '2xl',
+        fontWeight: 'bold',
+      },
+      'display-heading': {
+        fontFamily: 'display',
+        fontSize: { base: '2xl', md: '3xl' },
+        fontWeight: 'bold',
+      },
+      'display-card': {
+        fontFamily: 'display',
+        fontSize: 'xl',
+        fontWeight: 'bold',
+      },
+      'display-label': {
+        fontFamily: 'display',
+        fontSize: 'xs',
+        fontWeight: 'black',
+        letterSpacing: 'widest',
+        textTransform: 'uppercase',
       },
       subtitle: {
         fontSize: 'xl',

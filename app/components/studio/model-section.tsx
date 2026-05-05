@@ -85,13 +85,7 @@ export const ModelSection = () => {
                   <IconComponent size={28} />
                 </div>
                 <h3
-                  className={css({
-                    fontFamily: 'display',
-                    fontSize: '2xl',
-                    fontWeight: 'black',
-                    mb: '4',
-                    color: 'ocobo.dark',
-                  })}
+                  className={`${text({ variant: 'display-md', color: 'dark' })} ${css({ mb: '4' })}`}
                 >
                   {card.title}
                 </h3>

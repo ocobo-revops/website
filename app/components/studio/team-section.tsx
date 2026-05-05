@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import type { Member } from '~/modules/content/members';
 import { type MemberTrack, MemberTrackSchema } from '~/modules/schemas';
@@ -60,14 +61,7 @@ export const TeamSection = ({ members, lang }: TeamSectionProps) => {
         >
           <div>
             <h2
-              className={css({
-                fontFamily: 'display',
-                fontSize: '4xl',
-                fontWeight: 'black',
-                mb: '4',
-                color: 'ocobo.dark',
-                letterSpacing: 'tight',
-              })}
+              className={`${text({ variant: 'display-lg', color: 'dark' })} ${css({ mb: '4' })}`}
             >
               {t('team.title')}
             </h2>

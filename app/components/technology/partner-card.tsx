@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, vstack } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 export interface PartnerData {
   name: string;
@@ -153,14 +154,7 @@ const Body = ({ name, tags, description }: BodyProps) => {
   return (
     <div className={`${vstack()} ${css({ mb: '6', flexGrow: 1 })}`}>
       <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: '2xl',
-          fontWeight: 'black',
-          color: 'ocobo.dark',
-          mb: '4',
-          letterSpacing: 'tight',
-        })}
+        className={`${text({ variant: 'display-md', color: 'dark' })} ${css({ mb: '4', letterSpacing: 'tight' })}`}
       >
         {name}
       </h3>

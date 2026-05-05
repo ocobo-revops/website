@@ -255,7 +255,7 @@ Active Panda CSS recipes — use these before reaching for inline `css()`.
 | `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles — variants (`primary`, `solid`, `outline`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
 | `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
 | `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background + vertical padding — `bg` tokens, padding `sm`/`md`/`lg` |
-| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-xl`, `display-lg`, `display-md`, `subtitle`, `body`, `label` variants with colour tokens |
+| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-xl`, `display-lg`, `display-lg-bold`, `display-section`, `display-sm`, `display-md`, `display-md-bold`, `display-heading`, `display-card`, `display-label`, `subtitle`, `body`, `label` variants with colour tokens. `display-label`: xs display-font uppercase label (track badges, caption badges) |
 
 ### Section composition pattern
 
