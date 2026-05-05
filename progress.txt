@@ -467,3 +467,91 @@ Decisions:
 Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 218 ✅ (+5 new tests, +2 fixture fixes)
 
 Next ⏭️ slice: #100 (TOC extraction, no blocker) or #101 (blog index, no blocker)
+
+### Slice #100 — 83396d3
+
+Files:
+- app/modules/content/toc.ts — extractToc() + slugify() (French diacritics via \p{M})
+- app/modules/content/toc.test.ts — 13 tests (h2-only, h2+h3, maxLevel, accents, idempotent, explicit id)
+- app/modules/config.ts — heading transform auto-generates id from text when no {% #id %}
+- app/hooks/use-active-section.ts — IntersectionObserver hook, rootMargin -70% bottom
+- app/routes/_main.blog.$slug.tsx — loader: extractToc(Markdoc.parse(article.markdown)), forwards toc
+- app/components/blog/blog-article.tsx — BlogToc in aside above PostMetas
+- app/components/blog/blog-toc.tsx — sticky TOC, active-section highlight
+
+Decisions:
+- TOC extracted from raw AST (article.markdown re-parsed) — no type changes to MarkdocFile
+- slugify uses \p{M} Unicode property to strip diacritics (no hand-rolled range, Biome-safe)
+- heading config transform generates matching ids server-side so anchor links resolve
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 231 ✅ (+13 new)
+
+### Slice #101 — 52147eb
+
+Files:
+- app/components/blog/blog-hero.tsx — sky.light header, badge + display-xl title + description
+- app/routes/_main.blog._index.tsx — added BlogHero, removed tag URL-filter code path
+- locales/{fr,en}/blog.json — hero.badge / hero.title / hero.description
+
+Decisions:
+- Blog still has tags in schema but no tab UI; loader simplified to sort-only
+- Direct component imports (no barrel) per coding standards
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 231 ✅
+
+Next ⏭️ slice: #102 (team resolution on story detail, unblocked by #99) or #103 (stories index visual realign, unblocked by #98) or #105 (blog detail visual realign, unblocked by #100)
+
+### Slice #102 — 0241a4b
+
+Files:
+- app/modules/content/members.ts — resolveTeam(slugs[], registry) → Member[]
+- app/modules/content/members.test.ts — 4 new tests (valid list, unknown skip, empty, ordering)
+- app/modules/content/index.ts — export resolveTeam
+- app/routes/_main.($lang).clients.$slug.tsx — fetch memberRegistry in parallel, resolve team, forward
+- app/components/stories/story-article.tsx — forward resolvedTeam to StoryMetas
+- app/components/stories/story-metas.tsx — team section with UsersIcon + Avatar circles (32px)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅ (+4 new)
+
+### Slice #103 — c2ce730
+
+Files:
+- app/routes/_main.($lang).clients._index.tsx — use frontmatter.featuredTool over tools[0]
+- app/components/stories/hero.tsx — add mint badge (clients.badge key)
+- locales/{fr,en}/common.json — clients.badge added; EN description.items fixed (was in FR)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅
+
+### Slice #104 — e50ebcf
+
+Files:
+- app/components/stories/story-header.tsx — dark rotated card (rotate -3deg) + display-xl title
+- app/components/stories/story-metas.tsx — 'Process & Outils' label strip (mint, uppercase)
+- app/components/stories/story-quote-block.tsx — rotated avatar (3deg) + italic first quote + speaker cite
+- app/components/stories/story-article.tsx — StoryQuoteBlock wired at end of main
+- locales/{fr,en}/common.json — clients.processAndTools added
+
+Decisions:
+- StorySpeaker removed from header; speaker identity shown only in bottom quote block
+- First quote item.quotes[0] used; renders nothing if array empty
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅
+
+### Slice #105 — cf126ab
+
+Files:
+- app/modules/content/toc.ts — extractFirstParagraph() added
+- app/modules/content/toc.test.ts — 4 new tests
+- app/routes/_main.blog.$slug.tsx — loader simplified (no member registry), intro extracted, direct import
+- app/components/blog/blog-article.tsx — PostMetas removed from aside; italic intro block in main
+- app/components/blog/post-header.tsx — centred hero: tag badges + date + read + giant title + image
+
+Decisions:
+- PostMetas (author sidebar) removed entirely — author context moved to intro/header
+- BlogToc + LayoutPost CTA = full aside content now
+- intro = exerpt ?? firstParagraph ?? null
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅ (+4 new)
+
+All 8 slices of feat/stories-blog-realign complete ✅
+Next: open PR for feat/stories-blog-realign → main
