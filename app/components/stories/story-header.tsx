@@ -16,9 +16,9 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
 }) => {
   return (
     <header
-      className={`${flex({ direction: { base: 'column', lg: 'row' }, gap: '12', align: 'start' })} ${css({ mb: '12' })}`}
+      className={`${flex({ direction: { base: 'column', lg: 'row' }, gap: '16', align: 'start' })} ${css({ mb: '24' })}`}
     >
-      <div className={css({ flex: '1', minW: '0' })}>
+      <div className={css({ lg: { w: '2/3' } })}>
         <h1
           className={cx(
             text({ variant: 'display-xl', color: 'dark' }),
@@ -34,10 +34,7 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
       </div>
 
       <div
-        className={css({
-          flexShrink: 0,
-          alignSelf: { lg: 'center' },
-        })}
+        className={`${flex()} ${css({ lg: { w: '1/3', justifyContent: 'end', pt: '20' } })}`}
       >
         <div
           className={css({
@@ -57,9 +54,8 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
             loading="eager"
             decoding="async"
             className={css({
-              h: '12',
+              h: '10',
               w: 'auto',
-              maxW: '32',
               objectFit: 'contain',
               display: 'block',
             })}
