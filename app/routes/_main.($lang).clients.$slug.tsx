@@ -1,11 +1,8 @@
 import { type LoaderFunctionArgs, MetaFunction, data } from 'react-router';
 import { useLoaderData } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
-
 import { StoryArticle } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
-import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
 import {
   fetchStory,
@@ -71,19 +68,12 @@ export default function Index() {
     useLoaderData<typeof loader>();
 
   return (
-    <div
-      className={css({
-        position: 'relative',
-      })}
-    >
-      <ScrollProgressBar variant="mint" />
-      <Container>
-        <StoryArticle
-          article={article}
-          resolvedTools={resolvedTools}
-          resolvedTeam={resolvedTeam}
-        />
-      </Container>
-    </div>
+    <Container>
+      <StoryArticle
+        article={article}
+        resolvedTools={resolvedTools}
+        resolvedTeam={resolvedTeam}
+      />
+    </Container>
   );
 }

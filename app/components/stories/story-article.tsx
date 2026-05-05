@@ -31,54 +31,60 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <LayoutPost.Root>
-      <LayoutPost.Aside>
-        <StoryMetas
-          item={article.frontmatter}
-          slug={article.slug}
-          resolvedTools={resolvedTools}
-          resolvedTeam={resolvedTeam}
-          className={css({
-            hideBelow: 'lg',
+    <div>
+      <p
+        className={css({ mb: '8', pt: '8', fontSize: 'sm', color: 'gray.500' })}
+      >
+        <NavLink
+          to={url.stories}
+          className={flex({
+            align: 'center',
+            gap: '2',
+            display: 'inline-flex',
           })}
-        />
-        <StoryDeliverables items={article.frontmatter.deliverables} />
-      </LayoutPost.Aside>
-
-      <LayoutPost.Main>
-        <p className={css({ mb: '8', fontSize: 'sm', color: 'gray.500' })}>
-          <NavLink
-            to={url.stories}
-            className={flex({
-              align: 'center',
-              gap: '2',
-              display: 'inline-flex',
+        >
+          <ArrowLeftIcon className={css({ h: '4', w: '4' })} />
+          <span
+            className={css({
+              fontWeight: 'black',
+              textTransform: 'uppercase',
+              letterSpacing: 'widest',
+              fontSize: 'xs',
             })}
           >
-            <ArrowLeftIcon className={css({ h: '4', w: '4' })} />
-            <span
-              className={css({
-                fontWeight: 'black',
-                textTransform: 'uppercase',
-                letterSpacing: 'widest',
-                fontSize: 'xs',
-              })}
-            >
-              {t('clients.back')}
-            </span>
-          </NavLink>
-        </p>
-        <StoryHeader item={article.frontmatter} slug={article.slug} />
-        <StoryMarkdownContainer content={article.content} />
-        {article.frontmatter.youtubeId && (
-          <PlayerYoutube
-            id={article.frontmatter.youtubeId}
-            className={css({ mt: 8 })}
+            {t('clients.back')}
+          </span>
+        </NavLink>
+      </p>
+
+      <StoryHeader item={article.frontmatter} slug={article.slug} />
+
+      <LayoutPost.Root>
+        <LayoutPost.Aside>
+          <StoryMetas
+            item={article.frontmatter}
+            slug={article.slug}
+            resolvedTools={resolvedTools}
+            resolvedTeam={resolvedTeam}
+            className={css({
+              hideBelow: 'lg',
+            })}
           />
-        )}
-        <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
-      </LayoutPost.Main>
-    </LayoutPost.Root>
+          <StoryDeliverables items={article.frontmatter.deliverables} />
+        </LayoutPost.Aside>
+
+        <LayoutPost.Main>
+          <StoryMarkdownContainer content={article.content} />
+          {article.frontmatter.youtubeId && (
+            <PlayerYoutube
+              id={article.frontmatter.youtubeId}
+              className={css({ mt: 8 })}
+            />
+          )}
+          <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
+        </LayoutPost.Main>
+      </LayoutPost.Root>
+    </div>
   );
 };
 
