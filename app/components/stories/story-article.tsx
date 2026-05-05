@@ -1,9 +1,13 @@
+import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
+import { flex } from '@ocobo/styled-system/patterns';
 
 import type { Member, Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
+import { url } from '~/utils/url';
 
 import { StoryDeliverables } from './story-deliverables';
 import { StoryHeader } from './story-header';
@@ -13,7 +17,6 @@ import { StoryQuoteBlock } from './story-quote-block';
 
 import { LayoutPost } from '../LayoutPost';
 import { PlayerYoutube } from '../PlayerYoutube';
-import { Breadcrumb } from '../ui/Breadcrumb';
 
 interface StoryArticleProps {
   article: MarkdocFile<StoryFrontmatter>;
@@ -43,9 +46,28 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
       </LayoutPost.Aside>
 
       <LayoutPost.Main>
-        <Breadcrumb>
-          {t('navigation.stories')} / {article.frontmatter.name}
-        </Breadcrumb>
+        <p className={css({ mb: '8', fontSize: 'sm', color: 'gray.500' })}>
+          <NavLink
+            to={url.stories}
+            className={flex({
+              align: 'center',
+              gap: '2',
+              display: 'inline-flex',
+            })}
+          >
+            <ArrowLeftIcon className={css({ h: '4', w: '4' })} />
+            <span
+              className={css({
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: 'widest',
+                fontSize: 'xs',
+              })}
+            >
+              {t('clients.back')}
+            </span>
+          </NavLink>
+        </p>
         <StoryHeader item={article.frontmatter} slug={article.slug} />
         <StoryMarkdownContainer content={article.content} />
         {article.frontmatter.youtubeId && (
