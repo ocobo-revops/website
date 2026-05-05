@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { DataIllustration } from './data-illustration';
@@ -22,15 +23,13 @@ export const HeroSection = () => {
           })}
         >
           <h1
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: '5xl', md: '6xl' },
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              mb: '8',
-              lineHeight: '0.9',
-              letterSpacing: 'tight',
-            })}
+            className={cx(
+              text({ variant: 'display-xl', color: 'dark' }),
+              css({
+                mb: '8',
+                lineHeight: '0.9',
+              }),
+            )}
           >
             {t('hero.title.line1')}
             <br />

@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -181,12 +182,10 @@ export const TeamSection = ({ showStudio, members }: TeamSectionProps) => {
             })}
           >
             <h2
-              className={css({
-                fontFamily: 'display',
-                fontSize: '4xl',
-                fontWeight: 'bold',
-                mb: '6',
-              })}
+              className={cx(
+                text({ variant: 'display-lg-bold', color: 'dark' }),
+                css({ mb: '6' }),
+              )}
             >
               {t('team.title')}
             </h2>

@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { ValueCard } from './value-card';
@@ -24,14 +24,10 @@ export const ValuesSection = () => {
     <section className={section({ bg: 'dark', padding: 'lg' })}>
       <Container>
         <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: '4xl',
-            fontWeight: 'bold',
-            mb: '16',
-            textAlign: 'center',
-            color: 'white',
-          })}
+          className={cx(
+            text({ variant: 'display-lg-bold', color: 'white' }),
+            css({ mb: '16', textAlign: 'center' }),
+          )}
         >
           {t('values.title')}
         </h2>
