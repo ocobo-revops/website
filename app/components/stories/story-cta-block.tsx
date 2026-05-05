@@ -21,7 +21,7 @@ const StoryCtaBlock: React.FunctionComponent = () => {
         color: 'ocobo.dark',
         position: 'relative',
         overflow: 'hidden',
-        mt: '16',
+        mt: '32',
         mb: '16',
       })}
     >
@@ -80,7 +80,7 @@ const StoryCtaBlock: React.FunctionComponent = () => {
               _hover: { transform: 'scale(1.05)' },
             })}
           >
-            {t('contact.cta')}
+            {t('clients.cta.button')}
           </ButtonLink>
         </div>
       </div>
