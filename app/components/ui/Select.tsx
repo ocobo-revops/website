@@ -41,8 +41,9 @@ import { Portal } from '@ark-ui/react/portal';
 import { Select as ArkSelect } from '@ark-ui/react/select';
 import { Check, ChevronDown } from 'lucide-react';
 
+import { css } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
-import { icon, select } from '@ocobo/styled-system/recipes';
+import { select } from '@ocobo/styled-system/recipes';
 
 // Ark UI uses styled() directly, no @shadow-panda/style-context needed
 const StyledRoot = styled(ArkSelect.Root);
@@ -68,7 +69,7 @@ const TriggerBase = React.forwardRef<
       <StyledTrigger ref={ref} className={styles.trigger} {...props}>
         <StyledValueText className={styles.value}>{children}</StyledValueText>
         <StyledIndicator>
-          <ChevronDown className={icon({ dimmed: true })} />
+          <ChevronDown className={css({ opacity: '0.5', h: '4', w: '4' })} />
         </StyledIndicator>
       </StyledTrigger>
     </StyledControl>
@@ -115,7 +116,7 @@ const ItemBase = React.forwardRef<HTMLDivElement, SelectItemProps>(
     return (
       <StyledItem ref={ref} item={item} className={styles.item} {...props}>
         <StyledItemIndicator className={styles.itemIndicator}>
-          <Check className={icon()} />
+          <Check className={css({ h: '4', w: '4' })} />
         </StyledItemIndicator>
         <StyledItemText>{children}</StyledItemText>
       </StyledItem>

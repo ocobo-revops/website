@@ -5,7 +5,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { styled } from '@ocobo/styled-system/jsx';
-import { icon } from '@ocobo/styled-system/recipes';
 
 const NavButton = styled('button', {
   base: {
@@ -158,11 +157,11 @@ const Root = <T extends { id: string }>({
           })}
         >
           <NavButton onClick={onClickPrev}>
-            <ChevronLeftIcon className={icon({ size: 'lg' })} />
+            <ChevronLeftIcon className={css({ h: '6', w: '6' })} />
           </NavButton>
 
           <NavButton onClick={onClickNext}>
-            <ChevronRightIcon className={icon({ size: 'lg' })} />
+            <ChevronRightIcon className={css({ h: '6', w: '6' })} />
           </NavButton>
         </div>
       )}
