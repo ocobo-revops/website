@@ -2,9 +2,9 @@ import { ArrowLeft, Briefcase, MapPin, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, hstack } from '@ocobo/styled-system/patterns';
-import { badge } from '@ocobo/styled-system/recipes';
+import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { MetaPill } from '~/components/ui/meta-pill';
 import type { JobFrontmatter } from '~/modules/schemas';
@@ -46,15 +46,14 @@ export function Header({ frontmatter, lang }: HeaderProps) {
           {t('detail.category')}
         </span>
         <h1
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '4xl', md: '6xl' },
-            fontWeight: 'black',
-            color: 'ocobo.dark',
-            mb: '10',
-            lineHeight: '1.05',
-            letterSpacing: 'tight',
-          })}
+          className={cx(
+            text({ variant: 'display-lg', color: 'dark' }),
+            css({
+              fontSize: { base: '4xl', md: '6xl' },
+              mb: '10',
+              lineHeight: '1.05',
+            }),
+          )}
         >
           {frontmatter.title}
         </h1>
