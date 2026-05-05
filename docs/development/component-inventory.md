@@ -245,6 +245,54 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 - Specific levers components
 - Page-specific hero components
 
+## Design System Recipes
+
+Active Panda CSS recipes — use these before reaching for inline `css()`.
+
+| Recipe | File | Description |
+|--------|------|-------------|
+| `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label — colour variants (`yellow`, `mint`, `sky`, `coral`), sizes `sm`/`lg` |
+| `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles — variants (`primary`, `solid`, `outline`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
+| `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
+| `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background + vertical padding — `bg` tokens, padding `sm`/`md`/`lg` |
+| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-xl`, `display-lg`, `display-md`, `subtitle`, `body`, `label` variants with colour tokens |
+
+### Section composition pattern
+
+The canonical pattern for page sections: `section()` recipe on the `<section>` element + `<Container>` inside for max-width and horizontal padding.
+
+**Before (inline `css()`):**
+```tsx
+<div className={css({
+  maxW: '7xl',
+  mx: 'auto',
+  px: { base: '4', sm: '6', lg: '8' },
+  py: '24',
+  bg: 'gray.light',
+})}>
+  {children}
+</div>
+```
+
+**After (recipe + `<Container>`):**
+```tsx
+<section className={section({ bg: 'gray', padding: 'lg' })}>
+  <Container>
+    {children}
+  </Container>
+</section>
+```
+
+`<Container>` handles `maxW: '70rem', mx: 'auto', px: '8'`. Use `narrow` prop for narrower content columns (`maxW: '56rem'`).
+
+### Recipes vs inline `css()` — decision rules
+
+- **Use a recipe** when the component already has a matching recipe (check the table above). Don't reinvent what the DS owns.
+- **Use `css()` for overrides only** — extra properties beyond what the recipe covers (e.g. `shadow`, `_groupHover`, `transition`).
+- **Never duplicate recipe props inline** — if `iconBox({ size: 'xl' })` already sets `w`, `h`, and `rounded`, don't repeat them in a sibling `css()` call.
+- **Static values only in `css()`** — Panda CSS extracts classes at build time; dynamic values won't generate. Pre-compute per-variant class strings with `css()` and combine at runtime with `cx()`.
+- **Propose a recipe addition** when you see the same three-or-more `css()` properties repeated across two or more unrelated components.
+
 ## Design System Integration
 
 ### Panda CSS Recipes Used
