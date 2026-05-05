@@ -111,7 +111,7 @@ const ClientCarousel: React.FunctionComponent<{
         className={css({
           bg: 'dark',
           color: 'white',
-          py: { base: '6' },
+          py: { base: '4' },
           textAlign: 'center',
         })}
       >
@@ -164,7 +164,7 @@ const ClientCarousel: React.FunctionComponent<{
                   loading="lazy"
                   decoding="async"
                   className={css({
-                    maxH: '40px',
+                    maxH: '30px',
                     w: 'auto',
                     display: 'block',
                     mx: 'auto',
