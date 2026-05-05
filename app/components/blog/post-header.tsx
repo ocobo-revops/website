@@ -1,4 +1,5 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { BlogpostFrontmatter } from '~/types';
 
@@ -14,14 +15,13 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
       })}
     >
       <h1
-        className={css({
-          fontFamily: 'display',
-          fontSize: { base: '4xl', md: '6xl' },
-          fontWeight: 'bold',
-          color: 'ocobo.dark',
-          lineHeight: '0.95',
-          letterSpacing: 'tight',
-        })}
+        className={cx(
+          text({ variant: 'display-2xl', color: 'dark' }),
+          css({
+            fontWeight: 'bold',
+            lineHeight: '0.95',
+          }),
+        )}
       >
         {item.title}
       </h1>

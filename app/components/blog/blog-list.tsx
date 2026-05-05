@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 
-import { BlogItem } from './BlogItem';
+import { BlogItem } from './blog-item';
 
 type BlogListItem = MarkdocFile<BlogpostFrontmatter> & {
   resolvedAuthor: ResolvedAuthor;
@@ -29,13 +30,10 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
           })}
         >
           <p
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: 'xl', md: '2xl' },
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              mb: '4',
-            })}
+            className={cx(
+              text({ variant: 'display-card', color: 'dark' }),
+              css({ fontSize: { base: 'xl', md: '2xl' }, mb: '4' }),
+            )}
           >
             {t('empty.title')}
           </p>
