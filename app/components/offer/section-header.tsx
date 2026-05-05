@@ -1,7 +1,7 @@
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
-import { badge } from '@ocobo/styled-system/recipes';
+import { css, cx } from '@ocobo/styled-system/css';
+import { badge, text } from '@ocobo/styled-system/recipes';
 
 type BadgeVariant = 'yellow' | 'sky' | 'mint' | 'coral';
 
@@ -24,7 +24,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   className = '',
   light = false,
 }) => {
-  const titleColor = light ? 'white' : 'ocobo.dark';
+  const titleTextColor: 'white' | 'dark' = light ? 'white' : 'dark';
   const subtitleColor = light ? 'gray.300' : 'gray.600';
 
   return (
@@ -41,14 +41,10 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         </span>
       ) : null}
       <h2
-        className={css({
-          fontFamily: 'display',
-          fontSize: { base: '3xl', md: '5xl' },
-          fontWeight: 'bold',
-          color: titleColor,
-          mb: '6',
-          lineHeight: 'tight',
-        })}
+        className={cx(
+          text({ variant: 'display-section', color: titleTextColor }),
+          css({ mb: '6' }),
+        )}
       >
         {title}
       </h2>

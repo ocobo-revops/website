@@ -1,8 +1,9 @@
 import { CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, grid } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { SectionHeader } from './section-header';
@@ -49,12 +50,10 @@ export const WhyOcoboSection = () => {
                 <CheckCircle2 size={32} strokeWidth={4} />
               </div>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontSize: 'xl',
-                  fontWeight: 'bold',
-                  mb: '4',
-                })}
+                className={cx(
+                  text({ variant: 'display-card', color: 'white' }),
+                  css({ mb: '4' }),
+                )}
               >
                 {reason.title}
               </h3>

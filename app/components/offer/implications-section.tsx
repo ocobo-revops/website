@@ -9,8 +9,9 @@ import {
 import type React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, grid, hstack } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 
@@ -50,12 +51,10 @@ export const ImplicationsSection = () => {
       <Container>
         <div className={css({ mb: '16' })}>
           <h2
-            className={css({
-              fontFamily: 'display',
-              fontSize: '4xl',
-              fontWeight: 'bold',
-              mb: '6',
-            })}
+            className={cx(
+              text({ variant: 'display-lg-bold', color: 'dark' }),
+              css({ mb: '6' }),
+            )}
           >
             {t('implications.title')}
           </h2>
@@ -89,12 +88,10 @@ export const ImplicationsSection = () => {
                 {iconMap[block.color]}
               </div>
               <h3
-                className={css({
-                  fontFamily: 'display',
-                  fontWeight: 'bold',
-                  fontSize: 'xl',
-                  mb: '4',
-                })}
+                className={cx(
+                  text({ variant: 'display-card', color: 'dark' }),
+                  css({ mb: '4' }),
+                )}
               >
                 {block.title}
               </h3>

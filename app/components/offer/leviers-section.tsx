@@ -2,9 +2,9 @@ import { ArrowRight, Cpu, Layers, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid, hstack, vstack } from '@ocobo/styled-system/patterns';
-import { iconBox } from '@ocobo/styled-system/recipes';
+import { card, iconBox, text } from '@ocobo/styled-system/recipes';
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
@@ -86,23 +86,23 @@ export const LeviersSection = () => {
                 className={`group ${vstack({ h: 'full', alignItems: 'stretch' })}`}
               >
                 <div
-                  className={`${vstack({ alignItems: 'stretch' })} ${css({
-                    position: 'relative',
-                    p: '10',
-                    bg: 'gray.50',
-                    rounded: '3xl',
-                    borderWidth: '1px',
-                    borderColor: 'gray.100',
-                    flexGrow: '1',
-                    transition: 'all',
-                    transitionDuration: '500',
-                    overflow: 'hidden',
-                    _hover: {
-                      shadow: '2xl',
-                      bg: 'white',
-                      transform: 'translateY(-8px)',
-                    },
-                  })}`}
+                  className={cx(
+                    vstack({ alignItems: 'stretch' }),
+                    card({ radius: 'lg', tone: 'tinted', border: true }),
+                    css({
+                      position: 'relative',
+                      p: '10',
+                      flexGrow: '1',
+                      transition: 'all',
+                      transitionDuration: '500',
+                      overflow: 'hidden',
+                      _hover: {
+                        shadow: '2xl',
+                        bg: 'white',
+                        transform: 'translateY(-8px)',
+                      },
+                    }),
+                  )}
                 >
                   <div
                     className={`${hstack({ justify: 'space-between' })} ${css({ mb: '12' })}`}
@@ -130,27 +130,26 @@ export const LeviersSection = () => {
                     />
                   </div>
                   <h3
-                    className={css({
-                      fontFamily: 'display',
-                      fontSize: '2xl',
-                      fontWeight: 'bold',
-                      mb: '6',
-                      _groupHover: { color: hoverColor },
-                      transition: 'colors',
-                    })}
+                    className={cx(
+                      text({ variant: 'display-md-bold', color: 'dark' }),
+                      css({
+                        mb: '6',
+                        _groupHover: { color: hoverColor },
+                        transition: 'colors',
+                      }),
+                    )}
                   >
                     {lever.title}
                   </h3>
                   <p
-                    className={css({
-                      color: 'gray.400',
-                      fontFamily: 'display',
-                      fontWeight: 'black',
-                      fontSize: 'xs',
-                      textTransform: 'uppercase',
-                      letterSpacing: 'widest',
-                      mb: '4',
-                    })}
+                    className={cx(
+                      text({ variant: 'display-label' }),
+                      css({
+                        color: 'gray.400',
+                        letterSpacing: 'widest',
+                        mb: '4',
+                      }),
+                    )}
                   >
                     {lever.badge}
                   </p>
