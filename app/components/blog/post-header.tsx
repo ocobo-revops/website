@@ -21,6 +21,7 @@ interface BlogpostHeaderProps {
 
 const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
   const { i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language ?? 'fr';
   const firstTag = item.tags[0];
 
   return (
@@ -74,7 +75,7 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
             aria-hidden="true"
             className={css({ color: 'ocobo.yellow' })}
           />
-          {formatDate(item.date, i18n.language || 'fr')}
+          {formatDate(item.date, locale)}
         </span>
         <span className={flex({ gap: '2', align: 'center' })}>
           <ClockIcon
