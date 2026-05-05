@@ -6,7 +6,7 @@ import { QuoteIcon } from 'lucide-react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { icon, subtitle } from '@ocobo/styled-system/recipes';
 
-import { MarkdownContainer } from '../MarkdowContainer';
+import { MarkdownContainer } from '../markdown-container';
 import { PlayerYoutube } from '../PlayerYoutube';
 
 export function Container({ children }: HTMLAttributes<HTMLElement>) {
