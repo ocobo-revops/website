@@ -83,7 +83,7 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
             maxW: 'md',
           })}
         >
-          "{quote}"
+          <q>{quote}</q>
         </p>
       </div>
     </blockquote>
