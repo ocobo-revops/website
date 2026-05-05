@@ -12,7 +12,6 @@ const Hero = () => {
   return (
     <section
       className={css({
-        pt: '40',
         pb: '20',
         maxW: '7xl',
         mx: 'auto',
