@@ -77,9 +77,6 @@ export const StoryFrontmatterSchema = z.object({
   /** Optional: primary tool slug surfaced on the index card */
   featuredTool: CommonSchemas.nonEmptyString.optional(),
 
-  /** Visual accent — drives hero card bg, badge variant, decorative dots */
-  accent: z.enum(['yellow', 'mint']).default('yellow'),
-
   /** Key quotes from the client */
   quotes: CommonSchemas.stringArray,
 

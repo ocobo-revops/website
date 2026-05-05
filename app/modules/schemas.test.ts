@@ -33,7 +33,6 @@ describe('Zod Schemas Validation', () => {
       duration: '3 months',
       scopes: ['Digital Transformation', 'Process Automation'],
       tools: ['hubspot', 'notion'],
-      accent: 'yellow',
       quotes: ['This changed everything for us'],
       deliverables: ['Web Application', 'Mobile App'],
       youtubeId: 'dQw4w9WgXcQ',
@@ -184,30 +183,6 @@ describe('Zod Schemas Validation', () => {
         expect(result.data.team).toBeUndefined();
         expect(result.data.featuredTool).toBeUndefined();
       }
-    });
-
-    it('defaults accent to "yellow" when absent', () => {
-      const { accent: _omit, ...withoutAccent } = validStoryData;
-      const result = StoryFrontmatterSchema.safeParse(withoutAccent);
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data.accent).toBe('yellow');
-      }
-    });
-
-    it('accepts accent "mint"', () => {
-      const data = { ...validStoryData, accent: 'mint' };
-      const result = StoryFrontmatterSchema.safeParse(data);
-      expect(result.success).toBe(true);
-      if (result.success) {
-        expect(result.data.accent).toBe('mint');
-      }
-    });
-
-    it('rejects accent values outside yellow/mint', () => {
-      const data = { ...validStoryData, accent: 'sky' };
-      const result = StoryFrontmatterSchema.safeParse(data);
-      expect(result.success).toBe(false);
     });
   });
 
