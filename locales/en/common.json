@@ -33,6 +33,10 @@
   "clients.back": "Back to Success Stories",
   "clients.deliverables": "Mission deliverables",
   "clients.processAndTools": "Process & Tools",
+  "clients.duration": "Duration",
+  "clients.team": "Team",
+  "clients.techStack": "Tech Stack",
+  "clients.scopes": "Scope",
   "clients.empty.title": "No client testimonials available",
   "clients.empty.subtitle": "Discover our clients' experiences soon.",
   "clients.description.items": [

@@ -57,7 +57,6 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
         <LayoutPost.Aside>
           <StoryMetas
             item={article.frontmatter}
-            slug={article.slug}
             resolvedTools={resolvedTools}
             resolvedTeam={resolvedTeam}
             className={css({

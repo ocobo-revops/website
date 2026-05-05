@@ -1,64 +1,102 @@
+import { CheckIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css, cx } from '@ocobo/styled-system/css';
-import { card } from '@ocobo/styled-system/recipes';
+import { css } from '@ocobo/styled-system/css';
+import { flex, vstack } from '@ocobo/styled-system/patterns';
 
-import { StoryFrontmatter } from '~/types';
+import type { StoryFrontmatter } from '~/types';
 
 interface StoryDeliverablesProps {
   items: StoryFrontmatter['deliverables'];
 }
 
-const titleStyle = css({
-  fontWeight: 'bold',
-  bg: 'mint.dark',
-  color: 'white',
-  height: '90px',
-  display: 'flex',
-  alignItems: 'center',
-  p: 6,
-});
-
-const sectionStyle = css({
-  bg: 'mint.light',
-  borderColor: 'mint',
-  borderBottom: 'thin',
-  p: 6,
-  _last: {
-    borderBottom: 'none',
-  },
-});
-
-const listStyle = css({
-  pl: 6,
-  listStyleType: 'disc',
-  '& li': {
-    mb: 4,
-    _last: {
-      mb: 0,
-    },
-  },
-});
-
 const StoryDeliverables: React.FunctionComponent<StoryDeliverablesProps> = ({
   items,
 }) => {
   const { t } = useTranslation();
+
+  if (items.length === 0) return null;
+
   return (
     <div
-      className={cx(
-        card({ padding: 'md', radius: 'md', tone: 'white', border: true }),
-        css({ mb: 8, padding: '0', overflow: 'hidden' }),
-      )}
+      className={css({
+        bg: 'ocobo.dark',
+        p: '10',
+        rounded: '3xl',
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden',
+        shadow: '2xl',
+      })}
     >
-      <h2 className={titleStyle}>{t('clients.deliverables')}</h2>
-      <div className={sectionStyle}>
-        <ul className={listStyle}>
-          {items.map((item, i) => {
-            return <li key={`deliverable-${i}`}>{item}</li>;
-          })}
-        </ul>
-      </div>
+      <div
+        className={css({
+          position: 'absolute',
+          top: '0',
+          right: '0',
+          w: '32',
+          h: '32',
+          bg: 'ocobo.mint/10',
+          rounded: 'full',
+          filter: 'blur(48px)',
+          pointerEvents: 'none',
+        })}
+      />
+      <h4
+        className={css({
+          fontFamily: 'display',
+          fontWeight: 'black',
+          fontSize: 'xs',
+          textTransform: 'uppercase',
+          letterSpacing: '0.4em',
+          color: 'white/40',
+          mb: '8',
+          position: 'relative',
+        })}
+      >
+        {t('clients.deliverables')}
+      </h4>
+
+      <ul className={vstack({ gap: '5', alignItems: 'start' })}>
+        {items.map((item) => (
+          <li
+            key={item}
+            className={`${flex({ gap: '4', align: 'start' })} ${css({
+              '& .check-bg': { transition: 'colors' },
+              '& .check-icon': { transition: 'colors' },
+              '& span': { transition: 'colors' },
+              '&:hover .check-bg': { bg: 'ocobo.mint' },
+              '&:hover .check-icon': { color: 'ocobo.dark' },
+              '&:hover span': { color: 'white' },
+            })}`}
+          >
+            <div
+              className={`check-bg ${css({
+                mt: '1',
+                bg: 'white/10',
+                p: '1',
+                rounded: 'sm',
+                flexShrink: '0',
+              })}`}
+            >
+              <CheckIcon
+                size={12}
+                className={`check-icon ${css({ color: 'ocobo.mint' })}`}
+              />
+            </div>
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'bold',
+                color: 'gray.300',
+                lineHeight: 'snug',
+              })}
+            >
+              {item}
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
