@@ -382,3 +382,68 @@ Branch: feature/jobs-pocock (website) + feature/jobs (ocobo-posts)
 - useMenuItems jobs entry: getLocalizedPath(url.jobs), no isExternal
 - grep confirms 0 remaining Notion URL refs in app/
 - 177 tests ✅
+
+---
+
+## Feature: Stories + Blog realignment on prototype rendering
+
+Specs: GitHub #97 (parent) + #98–#105 (slices)
+Branch: feat/stories-blog-realign (off main, post-#96 merge)
+Companion content branch: ocobo-posts feat/tools-registry
+Started: 2026-05-05
+
+Slice plan (TDD, vertical, AFK):
+- #98 tools registry foundation + tool chip on story card
+- #99 story schema migration (drop tags, add team + featuredTool)
+- #100 TOC extraction + active-section hook
+- #101 blog index visual realign
+- #102 team resolution on story detail (blocked by #99)
+- #103 stories index visual realign (blocked by #98)
+- #104 stories detail visual realign (blocked by #98 #99 #102)
+- #105 blog detail visual realign (blocked by #100)
+
+Resumption checklist:
+1. `git switch feat/stories-blog-realign`
+2. Confirm ocobo-posts feat/tools-registry exists (`tools/` + slug-normalised stories)
+3. Pick next ⏭️ slice based on dep graph
+4. TDD per slice: red → green → commit + log entry → pause
+
+### Slice #98 — 6a46b55 (website) + ocobo-posts a4f7395
+
+Files (website):
+- app/modules/schemas.ts — ToolFrontmatterSchema (name + optional category/iconUrl/url)
+- app/modules/content/tools.ts — loadToolRegistry, resolveTool (case-insensitive),
+  fetchTools; mirrors members.ts incl. cache keyed by readContentFrom+githubBranch
+- app/modules/content/tools.test.ts — 9 tests (resolve, load, cache invalidation, fetchTools)
+- app/modules/content/index.ts — re-export tools API
+- app/routes/_main.($lang).clients._index.tsx — Promise.all(stories, registry); resolves
+  featuredTool from tools[0] (no featuredTool field yet — ships in #99)
+- app/routes/_main.($lang).clients.$slug.tsx — resolves all story tools; forwards Tool[]
+- app/components/stories/story-list.tsx — StoryListItem type with featuredTool field
+- app/components/stories/story-item.tsx — small tool chip (icon optional, name fallback)
+- app/components/stories/story-article.tsx — forwards resolvedTools to metas
+- app/components/stories/story-metas.tsx — renders display names from resolved tools
+  (falls back to raw slug if registry empty)
+
+Files (ocobo-posts):
+- tools/ — 16 entries (Aircall, BigQuery, Gsheet, HubSpot, Hyperline, Lemlist, Modjo,
+  Notion, Odoo, Outreach, Planhat, Qobra, Salesforce, Tableau, Vitally, Zendesk)
+  with name + category; iconUrl deferred (content-author work)
+- stories/fr/*.md (16 files) — tool references rewritten to slugs;
+  Hubspot/HubSpot collapsed onto single `hubspot` slug
+
+Decisions:
+- Lookup is case-insensitive (resolveTool falls back to lowered slug) so legacy
+  display-name references degrade rather than break during the migration window
+- Icon URLs absent for now — chip renders name-only when no iconUrl; full icon
+  upload is content-author follow-up, not blocking the slice
+- Detail aside fix bundled here (was a regression of the slug normalisation, not a
+  separate concern) — slice #104 will redesign the aside entirely
+
+Surprises:
+- Story detail aside renders item.tools verbatim — slug normalisation in content
+  required loader-side resolution to keep display names. Fixed inline.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 214 ✅ (+9 new tests)
+
+Next ⏭️ slice: #99 (no blocker, parallel candidate with #100, #101)
