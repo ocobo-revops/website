@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 
-import type { Tool } from '~/modules/content';
+import type { Member, Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 import { StoryDeliverables } from './story-deliverables';
@@ -17,11 +17,13 @@ import { Breadcrumb } from '../ui/Breadcrumb';
 interface StoryArticleProps {
   article: MarkdocFile<StoryFrontmatter>;
   resolvedTools?: Tool[];
+  resolvedTeam?: Member[];
 }
 
 const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
   article,
   resolvedTools = [],
+  resolvedTeam = [],
 }) => {
   const { t } = useTranslation();
   return (
@@ -31,6 +33,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
           item={article.frontmatter}
           slug={article.slug}
           resolvedTools={resolvedTools}
+          resolvedTeam={resolvedTeam}
           className={css({
             hideBelow: 'lg',
           })}

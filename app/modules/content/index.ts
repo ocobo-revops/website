@@ -67,6 +67,7 @@ export {
   loadMemberRegistry,
   resolveAuthor,
   resolveMember,
+  resolveTeam,
 } from './members';
 export type {
   Member,

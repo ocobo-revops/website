@@ -1,17 +1,25 @@
-import { MessageSquareTextIcon, TimerIcon, WrenchIcon } from 'lucide-react';
+import {
+  MessageSquareTextIcon,
+  TimerIcon,
+  UsersIcon,
+  WrenchIcon,
+} from 'lucide-react';
 
 import { css } from '@ocobo/styled-system/css';
-import { flex } from '@ocobo/styled-system/patterns';
+import { circle, flex } from '@ocobo/styled-system/patterns';
 import { card } from '@ocobo/styled-system/recipes';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
-import type { Tool } from '~/modules/content';
+import type { Member, Tool } from '~/modules/content';
 import { StoryFrontmatter } from '~/types';
+
+import { Avatar } from '../ui/Avatar';
 
 interface StoryMetasProps extends React.HTMLAttributes<HTMLDivElement> {
   item: StoryFrontmatter;
   slug: string;
   resolvedTools?: Tool[];
+  resolvedTeam?: Member[];
 }
 
 const iconSizeLg = css({ h: '6', w: '6' });
@@ -30,6 +38,7 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
   item,
   slug,
   resolvedTools,
+  resolvedTeam = [],
   className,
   ...props
 }) => {
@@ -85,6 +94,34 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
           </ul>
         </div>
       </div>
+      {resolvedTeam.length > 0 && (
+        <div className={sectionStyle}>
+          <div className={flex({ gap: 3, align: 'start' })}>
+            <UsersIcon className={iconSizeLg} />
+            <div className={flex({ gap: 2, wrap: 'wrap' })}>
+              {resolvedTeam.map((member) =>
+                member.avatar ? (
+                  <Avatar
+                    key={member.slug}
+                    src={member.avatar}
+                    alt={member.name}
+                    title={member.name}
+                    className={circle({ size: '32px' })}
+                  />
+                ) : (
+                  <span
+                    key={member.slug}
+                    className={css({ fontSize: 'sm', color: 'gray.600' })}
+                    title={member.name}
+                  >
+                    {member.name}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

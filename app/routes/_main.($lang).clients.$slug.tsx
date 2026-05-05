@@ -7,7 +7,13 @@ import { StoryArticle } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
 import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchStory, loadToolRegistry, resolveTool } from '~/modules/content';
+import {
+  fetchStory,
+  loadMemberRegistry,
+  loadToolRegistry,
+  resolveTeam,
+  resolveTool,
+} from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -19,10 +25,12 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [[status, _state, article], toolRegistry] = await Promise.all([
-      fetchStory(slug),
-      loadToolRegistry(),
-    ]);
+    const [[status, _state, article], toolRegistry, memberRegistry] =
+      await Promise.all([
+        fetchStory(slug),
+        loadToolRegistry(),
+        loadMemberRegistry(),
+      ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
@@ -32,8 +40,13 @@ export const loader = createHybridLoader(
       .map((toolSlug) => resolveTool(toolSlug, toolRegistry))
       .filter((t): t is NonNullable<typeof t> => t !== null);
 
+    const resolvedTeam = resolveTeam(
+      article.frontmatter.team ?? [],
+      memberRegistry,
+    );
+
     return data(
-      { article, resolvedTools },
+      { article, resolvedTools, resolvedTeam },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -54,7 +67,8 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article, resolvedTools } = useLoaderData<typeof loader>();
+  const { article, resolvedTools, resolvedTeam } =
+    useLoaderData<typeof loader>();
 
   return (
     <div
@@ -64,7 +78,11 @@ export default function Index() {
     >
       <ScrollProgressBar variant="mint" />
       <Container>
-        <StoryArticle article={article} resolvedTools={resolvedTools} />
+        <StoryArticle
+          article={article}
+          resolvedTools={resolvedTools}
+          resolvedTeam={resolvedTeam}
+        />
       </Container>
     </div>
   );
