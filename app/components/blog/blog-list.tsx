@@ -52,6 +52,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
       {/* Featured post */}
       <NavLink
         to={`${url.blog}/${featured.slug}`}
+        aria-label={featured.frontmatter.title}
         className={`${grid({ columns: { base: 1, md: 2 } })} ${css({
           rounded: '3xl',
           overflow: 'hidden',

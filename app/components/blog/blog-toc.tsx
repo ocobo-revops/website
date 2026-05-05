@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { css, cx } from '@ocobo/styled-system/css';
 
 import { useActiveSection } from '~/hooks/use-active-section';
@@ -35,13 +37,14 @@ const linkActive = css({
 });
 
 const BlogToc: React.FunctionComponent<BlogTocProps> = ({ entries }) => {
+  const { t } = useTranslation('blog');
   const ids = entries.map((e) => e.id);
   const activeId = useActiveSection(ids);
 
   if (entries.length === 0) return null;
 
   return (
-    <nav className={css({ mb: 4 })}>
+    <nav aria-label={t('toc.label')} className={css({ mb: 4 })}>
       <ul
         className={css({
           listStyle: 'none',

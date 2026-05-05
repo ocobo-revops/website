@@ -74,7 +74,8 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
         >
           <img
             src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
-            alt={item.name}
+            alt=""
+            aria-hidden="true"
             loading={index < 4 ? 'eager' : 'lazy'}
             decoding="async"
             width={600}
