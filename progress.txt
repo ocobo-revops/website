@@ -447,3 +447,23 @@ Surprises:
 Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 214 ✅ (+9 new tests)
 
 Next ⏭️ slice: #99 (no blocker, parallel candidate with #100, #101)
+
+### Slice #99 — b850ffe (website) + ocobo-posts 93b8ffd
+
+Files (website):
+- app/modules/schemas.ts — removed tags, added team?/featuredTool? to StoryFrontmatterSchema
+- app/modules/schemas.test.ts — updated fixture, 5 new tests (strip tags, team, featuredTool, defaults)
+- app/modules/validation.server.test.ts — fixture cleanup
+- app/components/stories/story-metas.tsx — removed tags rendering block
+- app/routes/_main.($lang).clients._index.tsx — removed ?tag= filter code path
+
+Files (ocobo-posts):
+- stories/fr/*.md (16 files) — tags field removed entirely
+
+Decisions:
+- Zod strips unknown fields by default → existing story YAMLs with tags pass validation
+  silently (no error, no output field). No need for strict mode.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 218 ✅ (+5 new tests, +2 fixture fixes)
+
+Next ⏭️ slice: #100 (TOC extraction, no blocker) or #101 (blog index, no blocker)
