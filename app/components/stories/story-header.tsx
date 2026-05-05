@@ -31,22 +31,12 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
         >
           {item.title}
         </h1>
-        <p
-          className={css({
-            mt: '6',
-            fontSize: { base: 'md', md: 'lg' },
-            color: 'gray.600',
-            lineHeight: 'relaxed',
-          })}
-        >
-          {item.description}
-        </p>
       </div>
 
       <div
         className={css({
           flexShrink: 0,
-          pt: { lg: '16' },
+          alignSelf: { lg: 'center' },
         })}
       >
         <div
