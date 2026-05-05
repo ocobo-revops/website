@@ -55,7 +55,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
       <StoryHeader item={article.frontmatter} slug={article.slug} />
 
       <LayoutPost.Root>
-        <LayoutPost.Aside>
+        <LayoutPost.Aside hideCta>
           <StoryMetas
             item={article.frontmatter}
             resolvedTools={resolvedTools}

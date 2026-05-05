@@ -31,9 +31,9 @@ const AsideWrapper = styled('aside', {
   },
 });
 
-const Aside: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+const Aside: React.FunctionComponent<
+  React.PropsWithChildren<{ hideCta?: boolean }>
+> = ({ children, hideCta = false }) => {
   const { t } = useTranslation();
   const getLocalizedPath = useLocalizedPathname();
   return (
@@ -48,15 +48,17 @@ const Aside: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
         })}
       >
         {children}
-        <div className={css({ py: 4 })}>
-          <p className={css({ fontWeight: 'bold', mb: '0.5rem' })}>
-            {t('contact.meet')}
-          </p>
+        {!hideCta && (
+          <div className={css({ py: 4 })}>
+            <p className={css({ fontWeight: 'bold', mb: '0.5rem' })}>
+              {t('contact.meet')}
+            </p>
 
-          <ButtonLink to={getLocalizedPath(url.contact)}>
-            {t('contact.cta')}
-          </ButtonLink>
-        </div>
+            <ButtonLink to={getLocalizedPath(url.contact)}>
+              {t('contact.cta')}
+            </ButtonLink>
+          </div>
+        )}
       </div>
     </AsideWrapper>
   );
