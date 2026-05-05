@@ -43,7 +43,7 @@ export const loader = createHybridLoader(
       .map(({ _sortDate, ...entry }) => ({
         ...entry,
         featuredTool: resolveTool(
-          entry.frontmatter.tools[0] ?? '',
+          entry.frontmatter.featuredTool ?? entry.frontmatter.tools[0] ?? '',
           toolRegistry,
         ),
       }));

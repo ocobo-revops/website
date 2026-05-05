@@ -2,7 +2,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { Grid, GridItem } from '@ocobo/styled-system/jsx';
-import { text } from '@ocobo/styled-system/recipes';
+import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { Illustration } from '../ui/Illustration';
@@ -42,6 +42,14 @@ const Hero = () => {
                 mb: '4',
               })}
             />
+            <span
+              className={cx(
+                badge({ variant: 'mint' }),
+                css({ mb: '6', display: 'inline-block' }),
+              )}
+            >
+              {t('clients.badge')}
+            </span>
             <h1
               className={cx(
                 text({ variant: 'display-sm', color: 'dark' }),
