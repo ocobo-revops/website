@@ -1,4 +1,4 @@
-import { CalendarDaysIcon, CoffeeIcon } from 'lucide-react';
+import { CalendarDaysIcon, ClockIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -21,31 +21,34 @@ interface BlogpostHeaderProps {
 
 const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
   const { i18n } = useTranslation();
+  const firstTag = item.tags[0];
 
   return (
-    <header className={css({ textAlign: 'center', mb: '10' })}>
-      {item.tags.length > 0 && (
-        <ul
-          className={cx(
-            flex({ gap: 2, justify: 'center', wrap: 'wrap' }),
-            css({ mb: '6' }),
-          )}
-        >
-          {item.tags.map((tag) => (
-            <li key={tag}>
-              <span className={badge({ variant: 'sky' })}>{getTag(tag)}</span>
-            </li>
-          ))}
-        </ul>
+    <header
+      className={css({
+        textAlign: 'center',
+        mb: '16',
+        maxW: '4xl',
+        mx: 'auto',
+      })}
+    >
+      {firstTag && (
+        <div className={css({ mb: '8' })}>
+          <span className={badge({ variant: 'coral' })}>
+            {getTag(firstTag)}
+          </span>
+        </div>
       )}
 
       <h1
         className={cx(
           text({ variant: 'display-xl', color: 'dark' }),
           css({
-            fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
+            fontSize: { base: '3xl', md: '4xl', lg: '6xl' },
+            fontWeight: 'black',
             letterSpacing: 'tight',
-            mb: '6',
+            lineHeight: '1.05',
+            mb: '10',
           }),
         )}
       >
@@ -54,16 +57,31 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
 
       <div
         className={cx(
-          flex({ gap: 4, justify: 'center', align: 'center', wrap: 'wrap' }),
-          css({ color: 'gray.500', fontSize: 'sm', mb: '10' }),
+          flex({ gap: 8, justify: 'center', align: 'center', wrap: 'wrap' }),
+          css({
+            fontSize: 'xs',
+            fontWeight: 'bold',
+            color: 'gray.400',
+            textTransform: 'uppercase',
+            letterSpacing: 'widest',
+            mb: '10',
+          }),
         )}
       >
-        <span className={flex({ gap: 1, align: 'center' })}>
-          <CalendarDaysIcon size={14} aria-hidden="true" />
+        <span className={flex({ gap: '2', align: 'center' })}>
+          <CalendarDaysIcon
+            size={14}
+            aria-hidden="true"
+            className={css({ color: 'ocobo.yellow' })}
+          />
           {formatDate(item.date, i18n.language || 'fr')}
         </span>
-        <span className={flex({ gap: 1, align: 'center' })}>
-          <CoffeeIcon size={14} aria-hidden="true" />
+        <span className={flex({ gap: '2', align: 'center' })}>
+          <ClockIcon
+            size={14}
+            aria-hidden="true"
+            className={css({ color: 'ocobo.sky' })}
+          />
           {item.read}
         </span>
       </div>
