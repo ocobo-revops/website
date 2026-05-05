@@ -1,25 +1,28 @@
 import { useTranslation } from 'react-i18next';
 
-import { css, cx } from '@ocobo/styled-system/css';
-import { text } from '@ocobo/styled-system/recipes';
-
-import { Container } from '~/components/ui/Container';
+import { css } from '@ocobo/styled-system/css';
 
 const BlogHero: React.FunctionComponent = () => {
   const { t } = useTranslation('blog');
 
   return (
-    <header
+    <section
       className={css({
-        bg: 'white',
-        pt: { base: 24, lg: 32 },
-        pb: { base: 12, lg: 20 },
-        borderBottomWidth: '1px',
-        borderColor: 'gray.200',
+        pt: '32',
+        maxW: '7xl',
+        mx: 'auto',
+        px: { base: '4', sm: '6', lg: '8' },
       })}
     >
-      <Container>
-        <div className={css({ maxWidth: '2xl' })}>
+      <div
+        className={css({
+          mb: '20',
+          pb: '12',
+          borderBottomWidth: '1px',
+          borderColor: 'gray.200',
+        })}
+      >
+        <div className={css({ maxW: '2xl' })}>
           <span
             className={css({
               fontFamily: 'display',
@@ -35,29 +38,28 @@ const BlogHero: React.FunctionComponent = () => {
             {t('hero.eyebrow')}
           </span>
           <h1
-            className={cx(
-              text({ variant: 'display-xl', color: 'dark' }),
-              css({
-                mb: '6',
-                fontSize: { base: '4xl', md: '5xl' },
-              }),
-            )}
+            className={css({
+              fontFamily: 'display',
+              fontSize: '5xl',
+              fontWeight: 'bold',
+              color: 'ocobo.dark',
+              mb: '6',
+            })}
           >
             {t('hero.title')}
           </h1>
           <p
             className={css({
-              fontSize: { base: 'lg', md: 'xl' },
+              fontSize: 'xl',
               color: 'gray.600',
-              lineHeight: 'relaxed',
-              maxWidth: 'lg',
+              fontWeight: 'medium',
             })}
           >
             {t('hero.description')}
           </p>
         </div>
-      </Container>
-    </header>
+      </div>
+    </section>
   );
 };
 

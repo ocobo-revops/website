@@ -95,7 +95,7 @@ const Aside: React.FunctionComponent<
             </p>
             <ButtonLink
               to={getLocalizedPath(url.contact)}
-              variant="cta"
+              variant="yellow"
               className={css({ w: 'full', justifyContent: 'center' })}
             >
               {t('contact.sidebar.cta')}

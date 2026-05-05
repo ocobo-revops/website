@@ -665,3 +665,99 @@ Files:
 Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
 
 Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-5 — 9becd83
+
+Files:
+- app/components/stories/story-item.tsx — rebuilt: horizontal card (dark logo panel left md+, company eyebrow, display-font title, speaker·role, featured tool chip, read-more arrow)
+- app/components/stories/story-list.tsx — grid 1-col (base/md/lg) → 2-col (xl), gap 8
+
+Decisions:
+- No per-story accent (dark everywhere)
+- Logo panel: dark bg, white logo, fixed w:64 on md+
+- No image overlay (old pattern removed entirely)
+- 4px ocobo.dark top border
+- TDD note: pure visual, no extractable logic → implement directly, no unit test
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Next ⏭️ remaining #108 slices: blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-6 — 7d7eebe
+
+Files:
+- app/components/blog/blog-hero.tsx — coral eyebrow span (not badge), white bg, bottom-border separator, 5xl title explicit
+- locales/{fr,en}/blog.json — hero.badge → hero.eyebrow, value → "RevOps Library"
+
+Decisions:
+- bg white (was sky.light) to match prototype
+- Proper noun "RevOps Library" kept same in both locales
+- No filter tabs (out of scope)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Slice #108-7 — d2d21be
+
+Files:
+- app/components/blog/post-header.tsx — coral badge (tags[0]), black 6xl title, Calendar ocobo.yellow + Clock ocobo.sky metadata, maxW:4xl centred
+- app/components/blog/blog-article.tsx — ArrowLeft back link above LayoutPost (was inside content col), coral em-dash prefix on intro
+
+Decisions:
+- Share rail deferred (out of scope for now)
+- Hero image kept (not in prototype but not explicitly removed in issue)
+- Back link pattern matches story-article (gray.400, uppercase, widest, xs, hover ocobo.dark)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Slice #108-8 — 8fc0a8d
+
+Files:
+- app/components/blog/blog-toc.tsx — per-link borderLeft 2px, active: ocobo.yellow + translateX(4px) + bold ocobo.dark, inactive: gray.100 + gray.400
+
+Decisions:
+- Removed wrapper left border (moved to per-link)
+- Static class maps (linkBase/linkInactive/linkActive) — Panda static analysis safe
+- TDD note: pure visual, no extractable logic → implement directly
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+All #108 slices complete ✅
+
+### Visual feedback fixes — eeaf816 / cc1b33d / 7ef9a62
+
+User review after #108 slices identified 4 gaps vs prototype:
+
+1. **ScrollProgressBar** (eeaf816) — removed from blog detail route
+2. **Blog sidebar CTA** (eeaf816) — LayoutPost Aside CTA rebuilt as dark ocobo.dark card
+   (yellow blur deco, display-font title, gray.400 description, yellow CTA button).
+   i18n: contact.sidebar.{title,description,cta} added fr+en.
+3. **Blog index featured hero** (cc1b33d) — blog-list.tsx: items[0] shown as full-width
+   featured dark card (image left, yellow "À la une" badge, title, description, white pill CTA),
+   rest in 3-col grid. i18n: featured.badge added fr+en.
+4. **Stories index cards** (7ef9a62) — story-item.tsx rebuilt: vertical card matching
+   prototype (grayscale avatar photo 16:10, hover logo overlay in dark box, company eyebrow,
+   display-font title, speaker+role, tool chip). Grid reverted to 1/2/3-col.
+   No KPI strip (out of scope decision maintained).
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Heroes realign — bf8dbc0
+
+User review showed stories + blog index heroes didn't match prototype (wrong bg, wrong badge, wrong title text/size).
+
+Files:
+- app/components/stories/hero.tsx — white bg (was mint.light), yellow badge (was mint), 4xl-5xl-6xl title with lineHeight:0.95/letterSpacing:tight, flex layout (removed 12-col grid + Illustration PNGs)
+- app/components/blog/blog-hero.tsx — title updated to match proto ("Explorez la science du revenu."), description updated
+- locales/fr/common.json — clients.badge → "Success Stories", clients.title → "Ils ont choisi l'architecture.", clients.description flat string (removed .items array with Trans/HTML)
+- locales/en/common.json — same structure, clients.title → "They chose architecture."
+- locales/fr/blog.json — hero.title/description updated
+- locales/en/blog.json — hero.title/description updated
+
+Decisions:
+- Stories hero: illustration PNGs (radar SVG + satellite cards) deferred — not in current scope
+- clients.description.items (Trans array) → flat clients.description string (no HTML markup needed)
+- lineHeight: 0.95 + letterSpacing: tight for display heading — matches prototype tight stacking
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Feature #108 complete ✅ — branch feat/stories-blog-realign ready for visual review
