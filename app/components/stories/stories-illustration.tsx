@@ -1,9 +1,12 @@
 import { BarChart3, Smile, Star, TrendingUp, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { center, hstack } from '@ocobo/styled-system/patterns';
 
 const StoriesIllustration: React.FunctionComponent = () => {
+  const { t } = useTranslation('common');
+
   return (
     <div
       className={`${center()} ${css({
@@ -29,7 +32,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
       <svg
         viewBox="0 0 600 600"
         role="img"
-        aria-label="Architecture radar illustration"
+        aria-label={t('clients.illustration.aria')}
         className={css({
           w: 'full',
           h: 'full',
@@ -114,10 +117,10 @@ const StoriesIllustration: React.FunctionComponent = () => {
         </g>
 
         <foreignObject
-          x="420"
-          y="80"
-          width="160"
-          height="100"
+          x="408"
+          y="72"
+          width="180"
+          height="120"
           className={css({ animation: 'float-gentle' })}
         >
           <div
@@ -128,6 +131,8 @@ const StoriesIllustration: React.FunctionComponent = () => {
               p: '4',
               rounded: '2xl',
               shadow: 'offset',
+              mr: '2',
+              mb: '2',
             })}
           >
             <div className={`${hstack({ gap: '2' })} ${css({ mb: '2' })}`}>
@@ -142,7 +147,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                   opacity: 0.4,
                 })}
               >
-                Impact
+                {t('clients.illustration.impact.label')}
               </span>
             </div>
             <div
@@ -165,16 +170,16 @@ const StoriesIllustration: React.FunctionComponent = () => {
                 textTransform: 'uppercase',
               })}
             >
-              Efficacité GTM
+              {t('clients.illustration.impact.caption')}
             </div>
           </div>
         </foreignObject>
 
         <foreignObject
-          x="40"
-          y="320"
-          width="160"
-          height="100"
+          x="32"
+          y="312"
+          width="180"
+          height="120"
           className={css({
             animation: 'float-gentle',
             animationDelay: '1.2s',
@@ -188,6 +193,8 @@ const StoriesIllustration: React.FunctionComponent = () => {
               p: '4',
               rounded: '2xl',
               shadow: 'offset',
+              mr: '2',
+              mb: '2',
             })}
           >
             <div className={`${hstack({ gap: '2' })} ${css({ mb: '2' })}`}>
@@ -202,7 +209,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                   opacity: 0.4,
                 })}
               >
-                Process
+                {t('clients.illustration.process.label')}
               </span>
             </div>
             <div
@@ -225,16 +232,16 @@ const StoriesIllustration: React.FunctionComponent = () => {
                 textTransform: 'uppercase',
               })}
             >
-              Automatisé
+              {t('clients.illustration.process.caption')}
             </div>
           </div>
         </foreignObject>
 
         <foreignObject
-          x="350"
-          y="440"
-          width="160"
-          height="100"
+          x="340"
+          y="432"
+          width="180"
+          height="120"
           className={css({
             animation: 'float-gentle',
             animationDelay: '2.5s',
@@ -248,6 +255,8 @@ const StoriesIllustration: React.FunctionComponent = () => {
               p: '4',
               rounded: '2xl',
               shadow: 'offset',
+              mr: '2',
+              mb: '2',
             })}
           >
             <div className={`${hstack({ gap: '2' })} ${css({ mb: '2' })}`}>
@@ -262,7 +271,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                   opacity: 0.4,
                 })}
               >
-                Data
+                {t('clients.illustration.data.label')}
               </span>
             </div>
             <div
@@ -274,7 +283,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                 lineHeight: 'none',
               })}
             >
-              Clean
+              {t('clients.illustration.data.value')}
             </div>
             <div
               className={css({
@@ -285,16 +294,16 @@ const StoriesIllustration: React.FunctionComponent = () => {
                 textTransform: 'uppercase',
               })}
             >
-              Donnée fiable
+              {t('clients.illustration.data.caption')}
             </div>
           </div>
         </foreignObject>
 
         <foreignObject
-          x="50"
-          y="60"
-          width="160"
-          height="100"
+          x="32"
+          y="42"
+          width="240"
+          height="160"
           className={css({
             animation: 'float-gentle',
             animationDelay: '0.6s',
@@ -308,6 +317,8 @@ const StoriesIllustration: React.FunctionComponent = () => {
               p: '4',
               rounded: '2xl',
               shadow: 'offset',
+              mr: '2',
+              mb: '2',
             })}
           >
             <div className={`${hstack({ gap: '2' })} ${css({ mb: '2' })}`}>
@@ -322,7 +333,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                   opacity: 0.4,
                 })}
               >
-                User Experience
+                {t('clients.illustration.userExperience.label')}
               </span>
             </div>
             <div className={hstack({ gap: '3' })}>
@@ -335,30 +346,31 @@ const StoriesIllustration: React.FunctionComponent = () => {
                   lineHeight: 'none',
                 })}
               >
-                Fluidité
+                {t('clients.illustration.userExperience.value')}
               </div>
               <svg
                 width="24"
                 height="24"
-                viewBox="0 0 84 84"
+                viewBox="0 0 48 48"
                 fill="none"
                 aria-hidden="true"
                 className={css({ color: 'ocobo.mint' })}
               >
                 <circle
-                  cx="42"
-                  cy="42"
-                  r="38"
+                  cx="24"
+                  cy="24"
+                  r="20"
                   stroke="currentColor"
-                  strokeWidth="6"
+                  strokeWidth="3"
                 />
-                <ellipse cx="32" cy="36" rx="4.5" ry="8" fill="currentColor" />
-                <ellipse cx="52" cy="36" rx="4.5" ry="8" fill="currentColor" />
+                <circle cx="18" cy="20" r="2.5" fill="currentColor" />
+                <circle cx="30" cy="20" r="2.5" fill="currentColor" />
                 <path
-                  d="M26 55 C34 65, 50 65, 58 55"
+                  d="M16 30 Q24 36 32 30"
                   stroke="currentColor"
-                  strokeWidth="6"
+                  strokeWidth="3"
                   strokeLinecap="round"
+                  fill="none"
                 />
               </svg>
             </div>
@@ -371,7 +383,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
                 textTransform: 'uppercase',
               })}
             >
-              Adoption & Engagement
+              {t('clients.illustration.userExperience.caption')}
             </div>
           </div>
         </foreignObject>
