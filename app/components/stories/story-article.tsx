@@ -32,30 +32,24 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
   const { t } = useTranslation();
   return (
     <div>
-      <p
-        className={css({ mb: '8', pt: '8', fontSize: 'sm', color: 'gray.500' })}
-      >
+      <div className={css({ mb: '12' })}>
         <NavLink
           to={url.stories}
-          className={flex({
-            align: 'center',
-            gap: '2',
+          className={`${flex({ gap: '2', align: 'center' })} ${css({
             display: 'inline-flex',
-          })}
+            color: 'gray.400',
+            fontWeight: 'black',
+            textTransform: 'uppercase',
+            letterSpacing: 'widest',
+            fontSize: 'xs',
+            transition: 'colors',
+            _hover: { color: 'ocobo.dark' },
+          })}`}
         >
-          <ArrowLeftIcon className={css({ h: '4', w: '4' })} />
-          <span
-            className={css({
-              fontWeight: 'black',
-              textTransform: 'uppercase',
-              letterSpacing: 'widest',
-              fontSize: 'xs',
-            })}
-          >
-            {t('clients.back')}
-          </span>
+          <ArrowLeftIcon size={14} className={css({ mr: '2' })} />
+          {t('clients.back')}
         </NavLink>
-      </p>
+      </div>
 
       <StoryHeader item={article.frontmatter} slug={article.slug} />
 
