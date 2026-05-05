@@ -3,6 +3,7 @@ import type React from 'react';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -94,26 +95,22 @@ export const PillarCard: React.FC<PillarCardProps> = ({
           <Icon size={32} />
         </div>
         <span
-          className={css({
-            fontSize: '6xl',
-            fontFamily: 'display',
-            fontWeight: 'bold',
-            color: 'gray.100/60',
-            lineHeight: 'none',
-            userSelect: 'none',
-          })}
+          className={cx(
+            text({ variant: 'display-xl' }),
+            css({
+              fontSize: '6xl',
+              color: 'gray.100/60',
+              lineHeight: 'none',
+              userSelect: 'none',
+            }),
+          )}
         >
           {number}
         </span>
       </div>
 
       <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: '3xl',
-          fontWeight: 'bold',
-          mb: '6',
-        })}
+        className={cx(text({ variant: 'display-heading' }), css({ mb: '6' }))}
       >
         {title}
       </h3>
@@ -139,16 +136,15 @@ export const PillarCard: React.FC<PillarCardProps> = ({
         })}
       >
         <span
-          className={css({
-            fontFamily: 'display',
-            fontWeight: 'bold',
-            fontSize: 'xs',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            color: 'ocobo.dark/40',
-            display: 'block',
-            mb: '6',
-          })}
+          className={cx(
+            text({ variant: 'display-label' }),
+            css({
+              letterSpacing: '0.2em',
+              color: 'ocobo.dark/40',
+              display: 'block',
+              mb: '6',
+            }),
+          )}
         >
           {deliverablesLabel}
         </span>

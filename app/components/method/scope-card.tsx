@@ -1,8 +1,9 @@
 import type { LucideIcon } from 'lucide-react';
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, hstack } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -73,14 +74,7 @@ export const ScopeCard: React.FC<ScopeCardProps> = ({
       >
         <Icon size={24} />
       </div>
-      <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: 'xl',
-          fontWeight: 'bold',
-          mb: '4',
-        })}
-      >
+      <h3 className={cx(text({ variant: 'display-card' }), css({ mb: '4' }))}>
         {title}
       </h3>
       <ul className={css({ spaceY: '3', fontSize: 'sm', color: 'gray.600' })}>

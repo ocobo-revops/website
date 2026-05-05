@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { circle } from '@ocobo/styled-system/patterns';
+import { card, text } from '@ocobo/styled-system/recipes';
 import { Linkedin } from 'lucide-react';
 
 import type { Member } from '~/modules/content/members';
@@ -28,14 +29,10 @@ export function HiringContact({ contact }: HiringContactProps) {
 
   return (
     <div
-      className={css({
-        p: { base: '8', md: '10' },
-        borderRadius: '2xl',
-        bg: 'white',
-        borderWidth: '1px',
-        borderColor: 'gray.100',
-        shadow: 'sm',
-      })}
+      className={cx(
+        card({ padding: 'lg', radius: 'md', tone: 'white', border: true }),
+        css({ p: { base: '8', md: '10' } }),
+      )}
     >
       <div
         className={css({
@@ -51,18 +48,18 @@ export function HiringContact({ contact }: HiringContactProps) {
         >
           <div
             aria-hidden="true"
-            className={`${circle({ size: '100px' })} ${css({
-              bg: 'gray.100',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontFamily: 'display',
-              fontWeight: 'black',
-              fontSize: '2xl',
-              color: 'ocobo.dark',
-              position: 'absolute',
-              inset: 0,
-            })}`}
+            className={cx(
+              circle({ size: '100px' }),
+              text({ variant: 'display-md', color: 'dark' }),
+              css({
+                bg: 'gray.100',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                inset: 0,
+              }),
+            )}
           >
             {initials}
           </div>
@@ -88,14 +85,14 @@ export function HiringContact({ contact }: HiringContactProps) {
         {/* Content */}
         <div className={css({ flex: 1 })}>
           <div
-            className={css({
-              fontFamily: 'display',
-              fontWeight: 'black',
-              fontSize: { base: '2xl', md: '3xl' },
-              color: 'ocobo.dark',
-              letterSpacing: 'tight',
-              lineHeight: '1.1',
-            })}
+            className={cx(
+              text({ variant: 'display-sm', color: 'dark' }),
+              css({
+                fontSize: { base: '2xl', md: '3xl' },
+                letterSpacing: 'tight',
+                lineHeight: '1.1',
+              }),
+            )}
           >
             {contact.name}
           </div>

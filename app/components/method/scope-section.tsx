@@ -8,9 +8,9 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
-import { section } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { ScopeCard } from './scope-card';
@@ -49,15 +49,7 @@ export const ScopeSection = () => {
       className={`${section({ bg: 'white', padding: 'lg' })} ${css({ overflow: 'hidden' })}`}
     >
       <Container className={css({ textAlign: 'center' })}>
-        <h2
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '4xl', md: '5xl' },
-            fontWeight: 'black',
-            mb: '6',
-            letterSpacing: 'tight',
-          })}
-        >
+        <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '6' }))}>
           {t('scope.title')}
         </h2>
         <p
@@ -76,14 +68,10 @@ export const ScopeSection = () => {
         <UnifiedBowtie />
 
         <h3
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: '2xl', md: '3xl' },
-            fontWeight: 'bold',
-            mt: '16',
-            mb: '4',
-            textAlign: 'center',
-          })}
+          className={cx(
+            text({ variant: 'display-heading' }),
+            css({ mt: '16', mb: '4', textAlign: 'center' }),
+          )}
         >
           {t('scope.activitiesTitle')}
         </h3>

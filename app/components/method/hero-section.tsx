@@ -1,9 +1,9 @@
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
-import { badge } from '@ocobo/styled-system/recipes';
+import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -46,15 +46,10 @@ export const HeroSection = () => {
           </span>
 
           <h1
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: '5xl', md: '6xl' },
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              mb: '10',
-              lineHeight: '0.95',
-              letterSpacing: 'tight',
-            })}
+            className={cx(
+              text({ variant: 'display-xl' }),
+              css({ color: 'ocobo.dark', mb: '10' }),
+            )}
           >
             {t('hero.title.line1')}
             <br />
