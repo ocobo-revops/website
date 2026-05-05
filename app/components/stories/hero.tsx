@@ -1,7 +1,8 @@
 import { Trans, useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { Grid, GridItem } from '@ocobo/styled-system/jsx';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
 import { Illustration } from '../ui/Illustration';
@@ -42,14 +43,14 @@ const Hero = () => {
               })}
             />
             <h1
-              className={css({
-                fontFamily: 'display',
-                fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
-                fontWeight: 'black',
-                letterSpacing: 'tight',
-                color: 'ocobo.dark',
-                mb: '4',
-              })}
+              className={cx(
+                text({ variant: 'display-sm', color: 'dark' }),
+                css({
+                  fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
+                  color: 'ocobo.dark',
+                  mb: '4',
+                }),
+              )}
             >
               {t('clients.title')}
             </h1>

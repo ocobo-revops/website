@@ -1,8 +1,9 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { StoryFrontmatter } from '~/types';
 
-import { StorySpeaker } from './StorySpeaker';
+import { StorySpeaker } from './story-speaker';
 
 interface StoryHeaderProps {
   item: StoryFrontmatter;
@@ -20,13 +21,14 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
       })}
     >
       <h1
-        className={css({
-          fontFamily: 'display',
-          fontSize: { base: '2xl', md: '3xl', lg: '4xl' },
-          fontWeight: 'bold',
-          color: 'ocobo.dark',
-          letterSpacing: 'tight',
-        })}
+        className={cx(
+          text({ variant: 'display-heading', color: 'dark' }),
+          css({
+            fontSize: { base: '2xl', md: '3xl', lg: '4xl' },
+            color: 'ocobo.dark',
+            letterSpacing: 'tight',
+          }),
+        )}
       >
         {item.title}
       </h1>

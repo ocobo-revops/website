@@ -4,10 +4,10 @@ import { css } from '@ocobo/styled-system/css';
 
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
-import { StoryDeliverables } from './StoryDeliverables';
-import { StoryHeader } from './StoryHeader';
-import { StoryMarkdownContainer } from './StoryMarkdownContainer';
-import { StoryMetas } from './StoryMetas';
+import { StoryDeliverables } from './story-deliverables';
+import { StoryHeader } from './story-header';
+import { StoryMarkdownContainer } from './story-markdown-container';
+import { StoryMetas } from './story-metas';
 
 import { LayoutPost } from '../LayoutPost';
 import { PlayerYoutube } from '../PlayerYoutube';

@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
-import { StoryItem } from './StoryItem';
+import { StoryItem } from './story-item';
 
 interface StoryListProps {
   items: MarkdocFile<StoryFrontmatter>[];
@@ -23,13 +24,10 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
         })}
       >
         <p
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: 'xl', md: '2xl' },
-            fontWeight: 'bold',
-            color: 'ocobo.dark',
-            mb: '4',
-          })}
+          className={cx(
+            text({ variant: 'display-card', color: 'dark' }),
+            css({ color: 'ocobo.dark', mb: '4' }),
+          )}
         >
           {t('clients.empty.title')}
         </p>

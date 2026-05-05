@@ -2,25 +2,39 @@ import { MessageSquareTextIcon, TimerIcon, WrenchIcon } from 'lucide-react';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
-import { icon } from '@ocobo/styled-system/recipes';
+import { card } from '@ocobo/styled-system/recipes';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
 import { StoryFrontmatter } from '~/types';
 
-import { AsideCard } from '../AsideCard';
-
-interface StoryMetasProps extends React.ComponentProps<typeof AsideCard.Root> {
+interface StoryMetasProps extends React.HTMLAttributes<HTMLDivElement> {
   item: StoryFrontmatter;
   slug: string;
 }
 
+const iconSizeLg = css({ h: '6', w: '6' });
+
+const sectionStyle = css({
+  bg: 'mint.light',
+  borderColor: 'mint',
+  borderBottom: 'thin',
+  p: 6,
+  _last: {
+    borderBottom: 'none',
+  },
+});
+
 const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
   item,
   slug,
+  className,
   ...props
 }) => {
   return (
-    <AsideCard.Root {...props}>
+    <div
+      className={`${card({ padding: 'md', radius: 'md', tone: 'white', border: true })} ${css({ mb: 8, padding: '0', overflow: 'hidden' })}${className ? ` ${className}` : ''}`}
+      {...props}
+    >
       <img
         src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
         alt={item.name}
@@ -32,58 +46,58 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
         })}
       />
 
-      <AsideCard.Section>
+      <div className={sectionStyle}>
         <ul>
-          {item.tags.map((item) => {
+          {item.tags.map((tag) => {
             return (
               <li
-                key={item}
+                key={tag}
                 className={css({
                   fontWeight: 'bold',
                   color: 'ocobo.dark',
                 })}
               >
-                {item}
+                {tag}
               </li>
             );
           })}
         </ul>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionStyle}>
         <div className={flex({ gap: 3 })}>
-          <TimerIcon className={icon({ size: 'lg' })} />
+          <TimerIcon className={iconSizeLg} />
           {item.duration}
         </div>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionStyle}>
         <div className={flex({ gap: 3 })}>
-          <MessageSquareTextIcon className={icon({ size: 'lg' })} />
+          <MessageSquareTextIcon className={iconSizeLg} />
           <ul>
-            {item.scopes.map((item) => {
+            {item.scopes.map((scope) => {
               return (
-                <li key={item} className={css({})}>
-                  {item}
+                <li key={scope} className={css({})}>
+                  {scope}
                 </li>
               );
             })}
           </ul>
         </div>
-      </AsideCard.Section>
-      <AsideCard.Section>
+      </div>
+      <div className={sectionStyle}>
         <div className={flex({ gap: 3 })}>
-          <WrenchIcon className={icon({ size: 'lg' })} />
+          <WrenchIcon className={iconSizeLg} />
           <ul>
-            {item.tools.map((item) => {
+            {item.tools.map((tool) => {
               return (
-                <li key={item} className={css({})}>
-                  {item}
+                <li key={tool} className={css({})}>
+                  {tool}
                 </li>
               );
             })}
           </ul>
         </div>
-      </AsideCard.Section>
-    </AsideCard.Root>
+      </div>
+    </div>
   );
 };
 

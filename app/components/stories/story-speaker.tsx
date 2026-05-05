@@ -1,9 +1,9 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { circle } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
-
-import { circle } from '@ocobo/styled-system/patterns';
 import { Avatar } from '../ui/Avatar';
 
 interface StorySpeakerProps {
@@ -39,12 +39,10 @@ const StorySpeaker: React.FunctionComponent<StorySpeakerProps> = ({
       </div>
       <div>
         <div
-          className={css({
-            fontFamily: 'display',
-            fontSize: { base: 'xl', md: '2xl' },
-            fontWeight: 'bold',
-            color: 'ocobo.dark',
-          })}
+          className={cx(
+            text({ variant: 'display-card', color: 'dark' }),
+            css({ color: 'ocobo.dark' }),
+          )}
         >
           {item.speaker}
         </div>
