@@ -8,6 +8,7 @@ import Markdoc from '@markdoc/markdoc';
 import type { Config, Node } from '@markdoc/markdoc';
 
 import { slugify } from '~/modules/content/toc';
+import { applyFrenchTypography } from '~/utils/typography';
 
 function extractRawText(node: Node): string {
   if (node.type === 'text') return String(node.attributes.content ?? '');
@@ -145,3 +146,26 @@ export const config: Config = {
     },
   },
 };
+
+/**
+ * Build a Markdoc config tailored to the rendering locale.
+ *
+ * For `fr`, every text node passes through `applyFrenchTypography` so that
+ * French punctuation rules are applied to all rendered prose. Code fences,
+ * raw HTML, and tag attributes are left untouched.
+ */
+export function createMarkdocConfig(locale: string): Config {
+  if (locale !== 'fr') return config;
+  return {
+    ...config,
+    nodes: {
+      ...config.nodes,
+      text: {
+        transform(node) {
+          const content = String(node.attributes.content ?? '');
+          return applyFrenchTypography(content);
+        },
+      },
+    },
+  };
+}

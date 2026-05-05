@@ -50,7 +50,7 @@ export interface ContentSourceConfig {
   filesystem?: {
     basePath: string;
   };
-  markdocConfig: Config;
+  markdocConfig: (locale: string) => Config;
 }
 
 /**
@@ -73,6 +73,7 @@ export interface ContentSource {
     path: string,
     slug: string,
     validator: ContentValidator<T>,
+    locale?: string,
   ): Promise<ContentResult<MarkdocFile<T>>>;
 
   /**
@@ -81,6 +82,7 @@ export interface ContentSource {
   fetchMultiple<T>(
     path: string,
     validator: ContentValidator<T>,
+    locale?: string,
   ): Promise<ContentResult<MarkdocFile<T>[]>>;
 
   /**
