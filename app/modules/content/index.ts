@@ -74,6 +74,9 @@ export type {
   ResolvedAuthor,
 } from './members';
 
+export { fetchTools, loadToolRegistry, resolveTool } from './tools';
+export type { Tool, ToolRegistry } from './tools';
+
 // Type exports
 export type {
   ContentFetchState,

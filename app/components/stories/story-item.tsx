@@ -7,12 +7,14 @@ import { vstack } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
+import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { url } from '~/utils/url';
 
 interface StoryItemProps {
   item: MarkdocFile<StoryFrontmatter>['frontmatter'];
   slug: string;
+  featuredTool?: Tool | null;
   index?: number;
 }
 
@@ -70,7 +72,7 @@ const linkClass = cx(
 );
 
 const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
-  ({ item, slug, index = 0 }) => {
+  ({ item, slug, featuredTool = null, index = 0 }) => {
     const { t } = useTranslation('common');
 
     return (
@@ -170,6 +172,42 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
           >
             {item.role}
           </p>
+          {featuredTool ? (
+            <p
+              className={css({
+                mt: '3',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '2',
+                fontSize: 'xs',
+                color: 'gray.700',
+                borderWidth: '1px',
+                borderColor: 'gray.200',
+                rounded: 'full',
+                px: '3',
+                py: '1',
+                bg: 'gray.50',
+              })}
+            >
+              {featuredTool.iconUrl ? (
+                <img
+                  src={featuredTool.iconUrl}
+                  alt=""
+                  aria-hidden="true"
+                  width={16}
+                  height={16}
+                  loading="lazy"
+                  decoding="async"
+                  className={css({
+                    w: '16px',
+                    h: '16px',
+                    objectFit: 'contain',
+                  })}
+                />
+              ) : null}
+              {featuredTool.name}
+            </p>
+          ) : null}
         </div>
 
         <p

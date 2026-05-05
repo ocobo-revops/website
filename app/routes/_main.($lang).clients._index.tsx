@@ -10,7 +10,7 @@ import { Hero, StoryList } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
 import { Loader } from '~/components/ui/Loader';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchStories } from '~/modules/content';
+import { fetchStories, loadToolRegistry, resolveTool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { getMetaTags } from '~/utils/metatags';
 import { getImageOgFullPath } from '~/utils/url';
@@ -20,7 +20,10 @@ export const loader = createHybridLoader(
     const url = new URL(request.url);
     const tag = url.searchParams.get('tag');
 
-    const [status, state, storiesData] = await fetchStories();
+    const [[status, state, storiesData], toolRegistry] = await Promise.all([
+      fetchStories(),
+      loadToolRegistry(),
+    ]);
 
     // Handle errors gracefully
     if (status !== 200 || !storiesData) {
@@ -45,7 +48,13 @@ export const loader = createHybridLoader(
         _sortDate: new Date(entry.frontmatter.date).getTime(),
       }))
       .sort((a, b) => b._sortDate - a._sortDate)
-      .map(({ _sortDate, ...entry }) => entry);
+      .map(({ _sortDate, ...entry }) => ({
+        ...entry,
+        featuredTool: resolveTool(
+          entry.frontmatter.tools[0] ?? '',
+          toolRegistry,
+        ),
+      }));
 
     return {
       stories,

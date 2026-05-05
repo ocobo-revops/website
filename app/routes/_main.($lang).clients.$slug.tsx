@@ -7,7 +7,7 @@ import { StoryArticle } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
 import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchStory } from '~/modules/content';
+import { fetchStory, loadToolRegistry, resolveTool } from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -19,14 +19,21 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchStory(slug);
+    const [[status, _state, article], toolRegistry] = await Promise.all([
+      fetchStory(slug),
+      loadToolRegistry(),
+    ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
     }
 
+    const resolvedTools = article.frontmatter.tools
+      .map((toolSlug) => resolveTool(toolSlug, toolRegistry))
+      .filter((t): t is NonNullable<typeof t> => t !== null);
+
     return data(
-      { article },
+      { article, resolvedTools },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -47,7 +54,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article } = useLoaderData<typeof loader>();
+  const { article, resolvedTools } = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -57,7 +64,7 @@ export default function Index() {
     >
       <ScrollProgressBar variant="mint" />
       <Container>
-        <StoryArticle article={article} />
+        <StoryArticle article={article} resolvedTools={resolvedTools} />
       </Container>
     </div>
   );

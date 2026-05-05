@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 
+import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 import { StoryDeliverables } from './story-deliverables';
@@ -15,10 +16,12 @@ import { Breadcrumb } from '../ui/Breadcrumb';
 
 interface StoryArticleProps {
   article: MarkdocFile<StoryFrontmatter>;
+  resolvedTools?: Tool[];
 }
 
 const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
   article,
+  resolvedTools = [],
 }) => {
   const { t } = useTranslation();
   return (
@@ -27,6 +30,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
         <StoryMetas
           item={article.frontmatter}
           slug={article.slug}
+          resolvedTools={resolvedTools}
           className={css({
             hideBelow: 'lg',
           })}

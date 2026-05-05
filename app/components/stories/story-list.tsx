@@ -3,12 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
+import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 import { StoryItem } from './story-item';
 
+export type StoryListItem = MarkdocFile<StoryFrontmatter> & {
+  featuredTool?: Tool | null;
+};
+
 interface StoryListProps {
-  items: MarkdocFile<StoryFrontmatter>[];
+  items: StoryListItem[];
 }
 
 const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
@@ -53,7 +58,12 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
             position: 'relative',
           })}
         >
-          <StoryItem slug={entry.slug} item={entry.frontmatter} index={i} />
+          <StoryItem
+            slug={entry.slug}
+            item={entry.frontmatter}
+            featuredTool={entry.featuredTool ?? null}
+            index={i}
+          />
         </li>
       ))}
     </ul>
