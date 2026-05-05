@@ -789,3 +789,34 @@ Decisions:
 - Featured tool can differ from tools[] list — frontmatter contract documented above.
 
 Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Tool icons — interim PNG via Vercel Blob (56cabb6 + posts b37d2ca)
+
+#107 stays open (proper SVG pass) but interim icons unblock today's cards.
+
+Approach: option 2 from Vercel-Blob-vs-public-CDN tradeoff — self-host on the
+existing blob store, no third-party flakiness, 100% control of URLs.
+
+Website (commit 56cabb6):
+- scripts/upload-tool-icons.js — uploads /public/logos/<slug>.<ext> →
+  content/tools/<slug>.<ext> on Vercel Blob, filtered by tool registry slugs
+- Pattern mirrors scripts/migrate-to-blob.js (put with addRandomSuffix:false,
+  allowOverwrite:true)
+- Run: `node --env-file=.env scripts/upload-tool-icons.js`
+
+Posts (`ocobo/posts`, branch `feat/tools-registry`, commit b37d2ca):
+- iconUrl populated on 7 tools: hubspot, lemlist, planhat, qobra, salesforce,
+  tableau, zendesk
+- Remaining 9 (aircall, bigquery, gsheet, hyperline, modjo, notion, odoo,
+  outreach, vitally) keep iconUrl null → text fallback
+
+Coverage: 5 of 6 distinct featuredTool slugs across 16 stories now have icons
+(hubspot, planhat, salesforce, qobra, zendesk). Hyperline → text.
+
+Decisions:
+- PNG accepted as interim (sourced from existing /public/logos/). #107 remains
+  the right place to track the SVG sourcing pass + dark-bg variant.
+- Upload script was kept generic — drop SVGs into /public/logos/ later, re-run,
+  done. No script change needed.
+
+Checks: pnpm check ✅ pnpm typecheck ✅
