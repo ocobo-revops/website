@@ -13,6 +13,7 @@ export const iconBox = defineRecipe({
     size: {
       sm: { w: '8', h: '8', rounded: 'md' },
       md: { w: '10', h: '10', rounded: 'md' },
+      xl: { w: '14', h: '14', rounded: '2xl' },
       lg: { w: '16', h: '16', rounded: 'lg' },
     },
     variant: {

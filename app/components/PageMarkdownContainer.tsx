@@ -9,7 +9,7 @@ import { icon } from '@ocobo/styled-system/recipes';
 
 import { createHubSpotForm, loadHubSpotScript } from '~/utils/hubspot';
 
-import { MarkdownContainer } from './MarkdowContainer';
+import { MarkdownContainer } from './markdown-container';
 
 export function Container({ children }: React.HTMLAttributes<HTMLElement>) {
   return (

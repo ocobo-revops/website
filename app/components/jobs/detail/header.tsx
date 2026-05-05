@@ -6,6 +6,7 @@ import { css } from '@ocobo/styled-system/css';
 import { flex, hstack } from '@ocobo/styled-system/patterns';
 import { badge } from '@ocobo/styled-system/recipes';
 
+import { MetaPill } from '~/components/ui/meta-pill';
 import type { JobFrontmatter } from '~/modules/schemas';
 
 type HeaderProps = {
@@ -68,51 +69,23 @@ export function Header({ frontmatter, lang }: HeaderProps) {
             },
           )}`}
         >
-          <div
-            className={`${hstack({ gap: '2.5' })} ${css({
-              px: '4',
-              py: '2',
-              bg: 'gray.50/50',
-              borderWidth: '1px',
-              borderColor: 'gray.100',
-              rounded: 'full',
-            })}`}
+          <MetaPill
+            icon={
+              <Briefcase size={14} className={css({ color: 'ocobo.yellow' })} />
+            }
           >
-            <Briefcase size={14} className={css({ color: 'ocobo.yellow' })} />
-            <span className={css({ color: 'ocobo.dark' })}>
-              {frontmatter.contractType}
-            </span>
-          </div>
-          <div
-            className={`${hstack({ gap: '2.5' })} ${css({
-              px: '4',
-              py: '2',
-              bg: 'gray.50/50',
-              borderWidth: '1px',
-              borderColor: 'gray.100',
-              rounded: 'full',
-            })}`}
+            {frontmatter.contractType}
+          </MetaPill>
+          <MetaPill
+            icon={<MapPin size={14} className={css({ color: 'ocobo.sky' })} />}
           >
-            <MapPin size={14} className={css({ color: 'ocobo.sky' })} />
-            <span className={css({ color: 'ocobo.dark' })}>
-              {frontmatter.location}
-            </span>
-          </div>
-          <div
-            className={`${hstack({ gap: '2.5' })} ${css({
-              px: '4',
-              py: '2',
-              bg: 'gray.50/50',
-              borderWidth: '1px',
-              borderColor: 'gray.100',
-              rounded: 'full',
-            })}`}
+            {frontmatter.location}
+          </MetaPill>
+          <MetaPill
+            icon={<Star size={14} className={css({ color: 'ocobo.mint' })} />}
           >
-            <Star size={14} className={css({ color: 'ocobo.mint' })} />
-            <span className={css({ color: 'ocobo.dark' })}>
-              {frontmatter.seniority}
-            </span>
-          </div>
+            {frontmatter.seniority}
+          </MetaPill>
         </div>
       </div>
     </div>

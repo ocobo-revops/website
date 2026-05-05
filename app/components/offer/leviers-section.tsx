@@ -3,13 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import {
-  center,
-  flex,
-  grid,
-  hstack,
-  vstack,
-} from '@ocobo/styled-system/patterns';
+import { flex, grid, hstack, vstack } from '@ocobo/styled-system/patterns';
+import { iconBox } from '@ocobo/styled-system/recipes';
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
@@ -113,11 +108,8 @@ export const LeviersSection = () => {
                     className={`${hstack({ justify: 'space-between' })} ${css({ mb: '12' })}`}
                   >
                     <div
-                      className={`${center()} ${css({
-                        w: '14',
-                        h: '14',
+                      className={`${iconBox({ size: 'xl' })} ${css({
                         bg: 'white',
-                        rounded: '2xl',
                         color: iconColor,
                         shadow: 'sm',
                         borderWidth: '1px',
