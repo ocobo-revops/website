@@ -30,12 +30,9 @@
   "contact.sidebar.title": "Besoin d'aide pour structurer votre équipe ?",
   "contact.sidebar.description": "Nos architectes vous accompagnent dans la définition de votre modèle RevOps.",
   "contact.sidebar.cta": "Discuter avec nous",
-  "clients.badge": "Études de cas",
-  "clients.title": "Favoris des leaders actuels et futurs",
-  "clients.description.items": [
-    "Ocobo a accompagné une <0>multitude d'entreprises de toutes tailles en forte croissance</0> à se développer plus rapidement, plus intelligemment et plus solidement.",
-    "Voici comment."
-  ],
+  "clients.badge": "Success Stories",
+  "clients.title": "Ils ont choisi l'architecture.",
+  "clients.description": "Découvrez comment nous accompagnons les plus belles scale-ups européennes dans leur quête d'excellence opérationnelle.",
   "clients.back": "Retour aux Success Stories",
   "clients.deliverables": "Livrables de la mission",
   "clients.processAndTools": "Process & Outils",

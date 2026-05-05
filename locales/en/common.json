@@ -31,8 +31,9 @@
   "contact.sidebar.description": "Our architects guide you in defining your RevOps model.",
   "contact.sidebar.cta": "Talk to us",
   "see_more": "Learn more",
-  "clients.badge": "Case studies",
-  "clients.title": "Favourites of current and future leaders",
+  "clients.badge": "Success Stories",
+  "clients.title": "They chose architecture.",
+  "clients.description": "Discover how we support Europe's most ambitious scale-ups in their quest for operational excellence.",
   "clients.back": "Back to Success Stories",
   "clients.deliverables": "Mission deliverables",
   "clients.processAndTools": "Process & Tools",
@@ -45,10 +46,6 @@
   "clients.cta.button": "Start my RevOps audit",
   "clients.empty.title": "No client testimonials available",
   "clients.empty.subtitle": "Discover our clients' experiences soon.",
-  "clients.description.items": [
-    "Ocobo has supported <0>a wide range of high-growth companies of all sizes</0> to grow faster, smarter and more sustainably.",
-    "Here's how."
-  ],
   "footer.copyright": "{{year}} © Ocobo - All rights reserved",
   "footer.company.title": "Ocobo",
   "footer.company.about": "About us",
