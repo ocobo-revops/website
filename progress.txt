@@ -761,3 +761,31 @@ Decisions:
 Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
 
 Feature #108 complete ✅ — branch feat/stories-blog-realign ready for visual review
+
+### Tools-on-cards (f8331df + posts 0254c4e)
+
+User feedback: featured tool icon above image, all tools as chips into the card.
+
+Posts (`ocobo/posts`, branch `feat/tools-registry`, commit 0254c4e):
+- Added `featuredTool: <slug>` to 16 FR stories per user mapping
+- Mapping: citron→hubspot, combo→planhat, cybelangel→salesforce, ekodev→hubspot,
+  epack→qobra, jus-mundi→hyperline, qare→zendesk, qobra→salesforce, qonto→salesforce,
+  resilience→planhat, steeple→hubspot, tomorro→hubspot, vibe-co→salesforce,
+  vizzia→hubspot, wecandoo→hubspot, yousign→salesforce
+- Resilience: featuredTool=planhat even though tools list lacks planhat (chip list only
+  shows tools[]; featured can highlight a different tool)
+
+Website (commit f8331df):
+- app/routes/_main.($lang).clients._index.tsx — loader resolves all tools per story
+  (resolvedTools: Tool[]) in addition to featuredTool
+- app/components/stories/story-list.tsx — StoryListItem type extended; passes resolvedTools
+- app/components/stories/story-item.tsx — featured tool icon+name above image (small row);
+  "Tech Stack" chip list below content (one chip per tool, with iconUrl-when-present)
+
+Decisions:
+- iconUrl currently unused on tool frontmatters (issue #107 tracks populating it). Layout
+  is structurally ready — icons drop in automatically once #107 lands.
+- Reused existing i18n key `clients.techStack` for section label (no new keys).
+- Featured tool can differ from tools[] list — frontmatter contract documented above.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
