@@ -1,5 +1,8 @@
 {
   "back": "Blog",
   "empty.title": "No blog posts available",
-  "empty.subtitle": "Check back soon for our latest Revenue Operations content."
+  "empty.subtitle": "Check back soon for our latest Revenue Operations content.",
+  "hero.badge": "Blog",
+  "hero.title": "RevOps resources",
+  "hero.description": "Best practices, trends, and field insights for Revenue Operations teams and high-growth leaders."
 }
