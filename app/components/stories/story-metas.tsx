@@ -54,23 +54,6 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
       />
 
       <div className={sectionStyle}>
-        <ul>
-          {item.tags.map((tag) => {
-            return (
-              <li
-                key={tag}
-                className={css({
-                  fontWeight: 'bold',
-                  color: 'ocobo.dark',
-                })}
-              >
-                {tag}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className={sectionStyle}>
         <div className={flex({ gap: 3 })}>
           <TimerIcon className={iconSizeLg} />
           {item.duration}

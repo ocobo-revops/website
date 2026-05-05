@@ -17,9 +17,6 @@ import { getImageOgFullPath } from '~/utils/url';
 
 export const loader = createHybridLoader(
   async ({ request }: LoaderFunctionArgs) => {
-    const url = new URL(request.url);
-    const tag = url.searchParams.get('tag');
-
     const [[status, state, storiesData], toolRegistry] = await Promise.all([
       fetchStories(),
       loadToolRegistry(),
@@ -37,12 +34,7 @@ export const loader = createHybridLoader(
 
     const entries = storiesData as MarkdocFile<StoryFrontmatter>[];
 
-    // Filter and sort stories
-    const filteredEntries = tag
-      ? entries.filter((entry) => entry.frontmatter.tags.includes(tag))
-      : entries;
-
-    const stories = filteredEntries
+    const stories = entries
       .map((entry) => ({
         ...entry,
         _sortDate: new Date(entry.frontmatter.date).getTime(),

@@ -68,11 +68,14 @@ export const StoryFrontmatterSchema = z.object({
   /** Project scopes/areas covered */
   scopes: CommonSchemas.stringArray,
 
-  /** Categorization tags */
-  tags: CommonSchemas.stringArray,
-
-  /** Tools and technologies used */
+  /** Tools and technologies used (stored as registry slugs) */
   tools: CommonSchemas.stringArray,
+
+  /** Optional: team member slugs for progressive enrichment */
+  team: z.array(CommonSchemas.nonEmptyString).optional(),
+
+  /** Optional: primary tool slug surfaced on the index card */
+  featuredTool: CommonSchemas.nonEmptyString.optional(),
 
   /** Key quotes from the client */
   quotes: CommonSchemas.stringArray,
