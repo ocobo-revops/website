@@ -91,6 +91,7 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
         alt=""
         loading="eager"
         decoding="async"
+        fetchPriority="high"
         className={css({
           display: 'block',
           width: '100%',

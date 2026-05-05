@@ -53,6 +53,7 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
             alt={item.name}
             loading="eager"
             decoding="async"
+            fetchPriority="high"
             className={css({
               h: '10',
               w: 'auto',

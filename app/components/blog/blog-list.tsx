@@ -76,6 +76,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
             alt=""
             loading="eager"
             decoding="async"
+            fetchPriority="high"
             className={css({
               position: 'absolute',
               inset: 0,
