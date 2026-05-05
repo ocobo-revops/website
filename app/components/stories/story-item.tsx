@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { flex, vstack } from '@ocobo/styled-system/patterns';
-import { text } from '@ocobo/styled-system/recipes';
+import { hstack, vstack } from '@ocobo/styled-system/patterns';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { Tool } from '~/modules/content';
@@ -19,91 +18,127 @@ interface StoryItemProps {
   index?: number;
 }
 
+const cardClass = css({
+  position: 'relative',
+  bg: 'white',
+  borderWidth: '1px',
+  borderColor: 'gray.100',
+  rounded: '3xl',
+  p: '6',
+  transition: 'all',
+  transitionDuration: '500ms',
+  overflow: 'hidden',
+  h: 'full',
+  _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
+  '& .main-img': { transition: 'all', transitionDuration: '700ms' },
+  '&:hover .main-img': {
+    filter: 'grayscale(0)',
+    opacity: 1,
+    transform: 'scale(1.05)',
+  },
+  '& .logo-overlay': { transition: 'all', transitionDuration: '500ms' },
+  '&:hover .logo-overlay': { opacity: 1, transform: 'translateY(0)' },
+  '& .arrow': { transition: 'all' },
+  '&:hover .arrow': { color: 'ocobo.dark', transform: 'translateX(4px)' },
+});
+
 const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
   ({ item, slug, featuredTool = null, index = 0 }) => {
     const { t } = useTranslation('common');
     const storyUrl = `${url.stories}/${slug}`;
 
     return (
-      <article
-        className={css({
-          bg: 'white',
-          rounded: '3xl',
-          shadow: 'sm',
-          overflow: 'hidden',
-          borderTopWidth: '4px',
-          borderTopColor: 'ocobo.dark',
-          transition: 'all',
-          transitionDuration: '300ms',
-          _hover: { shadow: 'soft-lg', transform: 'translateY(-4px)' },
-          display: 'flex',
-          flexDirection: { base: 'column', md: 'row' },
-          h: 'full',
-        })}
-      >
-        {/* Logo panel */}
+      <article className={`${vstack()} ${cardClass}`}>
+        {/* Image with logo overlay */}
         <NavLink
           to={storyUrl}
-          tabIndex={-1}
-          aria-hidden="true"
           className={css({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            position: 'relative',
+            aspectRatio: '16/10',
+            overflow: 'hidden',
+            rounded: '2xl',
+            bg: 'gray.50',
+            mb: '4',
+            display: 'block',
+            w: 'full',
             flexShrink: 0,
-            bg: 'ocobo.dark',
-            w: { base: 'full', md: '64' },
-            minH: { base: '48', md: 'auto' },
-            p: '8',
           })}
         >
           <img
-            src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-            alt=""
+            src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
+            alt={item.name}
             loading={index < 4 ? 'eager' : 'lazy'}
             decoding="async"
-            width={120}
-            height={48}
-            className={css({
-              w: 'auto',
-              h: '12',
-              maxW: '36',
-              objectFit: 'contain',
-            })}
+            width={600}
+            height={375}
+            className={cx(
+              'main-img',
+              css({
+                w: 'full',
+                h: 'full',
+                objectFit: 'cover',
+                filter: 'grayscale(100%)',
+                opacity: 0.8,
+              }),
+            )}
           />
+          <div
+            className={cx(
+              'logo-overlay',
+              css({
+                position: 'absolute',
+                bottom: '4',
+                right: '4',
+                bg: 'ocobo.dark',
+                p: '3',
+                rounded: 'xl',
+                shadow: '2xl',
+                opacity: 0,
+                transform: 'translateY(8px)',
+              }),
+            )}
+          >
+            <img
+              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              width={60}
+              height={16}
+              className={css({ h: '4', w: 'auto', objectFit: 'contain' })}
+            />
+          </div>
         </NavLink>
 
         {/* Content */}
-        <div
-          className={`${vstack({ alignItems: 'start', gap: '3' })} ${css({
-            p: '8',
-            flex: '1',
-          })}`}
-        >
-          <span
-            className={css({
-              fontSize: 'xs',
-              fontWeight: 'black',
-              textTransform: 'uppercase',
-              letterSpacing: 'widest',
-              color: 'gray.400',
-            })}
-          >
-            {item.name}
-          </span>
-
-          <h2
-            className={cx(
-              text({ variant: 'display-card' }),
-              css({
-                fontFamily: 'display',
-                fontSize: { base: 'xl', md: '2xl' },
-                fontWeight: 'bold',
+        <div className={`${vstack()} ${css({ flexGrow: 1, w: 'full' })}`}>
+          {/* Company eyebrow */}
+          <div className={hstack({ gap: '2', mb: '2' })}>
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
                 color: 'ocobo.dark',
-                lineHeight: 'tight',
-                letterSpacing: 'tight',
-              }),
-            )}
+              })}
+            >
+              {item.name}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2
+            className={css({
+              fontFamily: 'display',
+              fontSize: '2xl',
+              fontWeight: 'bold',
+              color: 'ocobo.dark',
+              lineHeight: 'tight',
+              mb: '2',
+              letterSpacing: 'tight',
+            })}
           >
             <NavLink
               to={storyUrl}
@@ -116,12 +151,33 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             </NavLink>
           </h2>
 
-          <p className={css({ fontSize: 'sm', color: 'gray.500' })}>
-            {item.speaker}
-            {' · '}
-            <span className={css({ color: 'gray.400' })}>{item.role}</span>
-          </p>
+          {/* Speaker */}
+          <div className={css({ mb: '4' })}>
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: 'widest',
+                color: 'ocobo.dark',
+                opacity: 0.6,
+                display: 'block',
+              })}
+            >
+              {item.speaker}
+            </span>
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'medium',
+                color: 'gray.400',
+              })}
+            >
+              {item.role}
+            </span>
+          </div>
 
+          {/* Tool chip */}
           {featuredTool ? (
             <span
               className={css({
@@ -137,6 +193,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 px: '3',
                 py: '1',
                 bg: 'gray.50',
+                mb: '4',
               })}
             >
               {featuredTool.iconUrl ? (
@@ -159,21 +216,27 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             </span>
           ) : null}
 
-          <div className={css({ mt: 'auto', pt: '4' })}>
+          {/* Read more */}
+          <div className={css({ mt: 'auto' })}>
             <NavLink
               to={storyUrl}
-              className={`${flex({ align: 'center', gap: '2' })} ${css({
+              className={`${hstack({ gap: '2' })} ${css({
                 fontSize: 'xs',
                 fontWeight: 'black',
                 textTransform: 'uppercase',
                 letterSpacing: 'widest',
-                color: 'ocobo.dark',
-                transition: 'gap',
-                _hover: { gap: '3' },
+                color: 'gray.400',
+                display: 'inline-flex',
               })}`}
             >
               {t('see_more')}
-              <ArrowRight size={14} className={css({ flexShrink: 0 })} />
+              <ArrowRight
+                size={14}
+                className={cx(
+                  'arrow',
+                  css({ color: 'gray.300', flexShrink: 0 }),
+                )}
+              />
             </NavLink>
           </div>
         </div>
