@@ -39,6 +39,8 @@ All display typography goes through the `text()` recipe. Do not write `fontFamil
 
 Available `text()` variants: `display-2xl`, `display-lg`, `display-lg-bold`, `display-section`, `display-sm`, `display-md`, `display-md-bold`, `display-heading`, `display-card`, `display-label`, `subtitle`, `body`, `label`.
 
+**Variant naming convention for paired sizes:** some sizes come in two weights. The base name (`display-lg`, `display-md`, `display-sm`) uses `fontWeight: 'black'` — the heaviest display weight. The `-bold` suffix (`display-lg-bold`, `display-md-bold`) uses `fontWeight: 'bold'`. When choosing a paired variant, pick `-bold` for softer heading contexts (form labels, section subtitles) and the base for maximum-impact headlines. `display-xl` breaks this pattern (it uses `bold`, not `black`) because no black variant is needed at that size — treat it as a named exception.
+
 ### Sectioning rule
 
 All page sections use `<section className={section()}>` wrapping `<Container>`. Do not write inline `maxW: '7xl'` / `mx: 'auto'` container patterns.
@@ -85,17 +87,41 @@ Enforcement is at review time only (option C, logged during triage of #81). A Bi
 
 ---
 
-## Known intentional inline exceptions
+## Known inline exceptions
 
-These files retain `fontFamily: 'display'` or other inline patterns and are explicitly excluded from this policy:
+### Permanent exceptions
+
+These files retain `fontFamily: 'display'` for a structural reason that cannot be resolved with recipes:
 
 | File | Reason |
 |------|--------|
 | `app/components/method/unified-bowtie.tsx` | SVG `<text>` elements — recipe `className` values break SVG presentation attributes |
 | `app/components/method/attio-pillars-illustration.tsx` | SVG `<text>` elements — same reason as above |
-| `app/components/Footer.tsx` | Shared component out of scope for this migration; to be addressed in a follow-up |
-| `app/components/PageMarkdownContainer.tsx` | Shared component out of scope for this migration; to be addressed in a follow-up |
-| `app/components/navbar/mobile-menu.tsx` | Shared component out of scope for this migration; to be addressed in a follow-up |
+
+### Shared component follow-up
+
+These shared/layout components were out of scope for the #86–#93 per-feature migration. They retain inline `fontFamily: 'display'` and should be addressed in a follow-up issue:
+
+| File | Occurrences | Note |
+|------|-------------|------|
+| `app/components/PageMarkdownContainer.tsx` | 4 | Markdown renderer headings |
+| `app/components/Footer.tsx` | 1 | Footer heading |
+| `app/components/navbar/mobile-menu.tsx` | 1 | Mobile nav heading |
+
+### Deferred per-feature occurrences
+
+These component files were migrated in #86–#91 but retain a small number of inline occurrences that had no matching `text` variant (size or weight outside the current scale) or were in contexts where recipe substitution caused visual regressions. Each occurrence is a candidate for a targeted follow-up:
+
+| File | Occurrences | Context |
+|------|-------------|---------|
+| `app/components/offer/pyramid-section.tsx` | 4 | Numbered circle labels at non-standard sizes |
+| `app/components/offer/offers-detail-section.tsx` | 1 | Service number badge |
+| `app/components/offer/symptoms-section.tsx` | 1 | Symptom card number |
+| `app/components/jobs/about-ocobo-section.tsx` | 1 | h5 at `fontSize: lg` — no `text` variant at this size |
+| `app/components/jobs/detail/scrollspy-toc.tsx` | 1 | Nav label at `fontSize: xs` — too small for display variants |
+| `app/routes/_main.($lang).contact.tsx` | 1 | Contact route heading |
+
+Running `grep -rn "fontFamily.*display" app/ --include="*.tsx"` should return only the files listed in the two tables above. Any hit outside these tables is a policy violation.
 
 ---
 
@@ -103,5 +129,5 @@ These files retain `fontFamily: 'display'` or other inline patterns and are expl
 
 - `@ocobo/styled-system/recipes` no longer exports `icon`, `link`, or `subtitle`.
 - The six live recipes (`badge`, `button`, `card`, `iconBox`, `section`, `text`) are the canonical DS surface.
-- 9 remaining non-excepted `fontFamily: 'display'` inline occurrences (in `offer/`, `jobs/`, `routes/contact`) should be migrated in a follow-up pass.
 - Component inventory (`docs/development/component-inventory.md`) is the authoritative recipe reference.
+- Follow-up scope: 6 deferred per-feature occurrences + 3 shared component files (see tables above).
