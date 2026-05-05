@@ -7,6 +7,33 @@ interface BlogTocProps {
   entries: TocEntry[];
 }
 
+const linkBase = css({
+  display: 'block',
+  fontSize: 'sm',
+  fontWeight: 'medium',
+  lineHeight: '1.4',
+  py: '1',
+  pl: '4',
+  borderLeftWidth: '2px',
+  textDecoration: 'none',
+  transition: 'all',
+  transitionDuration: '300ms',
+});
+
+const linkInactive = css({
+  color: 'gray.400',
+  borderColor: 'gray.100',
+  _hover: { color: 'gray.600', borderColor: 'gray.300' },
+});
+
+const linkActive = css({
+  color: 'ocobo.dark',
+  fontWeight: 'bold',
+  borderColor: 'ocobo.yellow',
+  transform: 'translateX(4px)',
+  _hover: { color: 'ocobo.dark', borderColor: 'ocobo.yellow' },
+});
+
 const BlogToc: React.FunctionComponent<BlogTocProps> = ({ entries }) => {
   const ids = entries.map((e) => e.id);
   const activeId = useActiveSection(ids);
@@ -14,41 +41,24 @@ const BlogToc: React.FunctionComponent<BlogTocProps> = ({ entries }) => {
   if (entries.length === 0) return null;
 
   return (
-    <nav
-      className={css({
-        mb: 4,
-        borderLeft: '2px solid',
-        borderColor: 'gray.200',
-        pl: 3,
-      })}
-    >
-      <ul className={css({ listStyle: 'none', p: 0, m: 0 })}>
+    <nav className={css({ mb: 4 })}>
+      <ul
+        className={css({
+          listStyle: 'none',
+          p: 0,
+          m: 0,
+          display: 'flex',
+          flexDir: 'column',
+          gap: '3',
+        })}
+      >
         {entries.map((entry) => (
-          <li
-            key={entry.id}
-            className={css({
-              pl: entry.level === 3 ? 3 : 0,
-              mb: 1,
-            })}
-          >
+          <li key={entry.id} className={css({ pl: entry.level === 3 ? 3 : 0 })}>
             <a
               href={`#${entry.id}`}
               className={cx(
-                css({
-                  display: 'block',
-                  fontSize: 'xs',
-                  lineHeight: '1.4',
-                  py: '0.5',
-                  color: 'gray.500',
-                  textDecoration: 'none',
-                  transition: 'color 0.15s',
-                  _hover: { color: 'ocobo.dark' },
-                }),
-                activeId === entry.id &&
-                  css({
-                    color: 'ocobo.dark',
-                    fontWeight: 'semibold',
-                  }),
+                linkBase,
+                activeId === entry.id ? linkActive : linkInactive,
               )}
             >
               {entry.title}
