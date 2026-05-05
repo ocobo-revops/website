@@ -652,3 +652,16 @@ Decisions:
 Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅ (+3 new)
 
 Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-4 — e30399b
+
+Files:
+- app/components/stories/story-markdown-container.tsx — h2 display/3xl/black/uppercase; h3 display/2xl/bold; p gray.700 + relaxed
+- app/components/stories/story-quote-block.tsx — gray.50 card, grayscale-rotate avatar, display-font speaker name/role
+- app/components/stories/story-cta-block.tsx — NEW: yellow ocobo.yellow block, dots radial pattern, eyebrow/h2/ButtonLink
+- app/components/stories/story-article.tsx — StoryCtaBlock wired after LayoutPost.Root
+- locales/{fr,en}/common.json — clients.cta.eyebrow/title added
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
