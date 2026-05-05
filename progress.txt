@@ -554,4 +554,45 @@ Decisions:
 Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅ (+4 new)
 
 All 8 slices of feat/stories-blog-realign complete ✅
-Next: open PR for feat/stories-blog-realign → main
+PR opened, then visual review against prototype screenshots showed structural
+slices ≠ prototype's actual visual treatment. Issues filed:
+- #107 tools registry iconUrl backfill (needs-info)
+- #108 visual realignment (ready-for-agent, 8 sub-slices)
+
+---
+
+## Feature: Visual realignment with prototype (#108)
+
+Specs: github.com/ocobo-revops/website#108
+Branch: feat/stories-blog-realign (continued — same PR)
+Created: 2026-05-05
+
+Reference:
+- Deployed proto: prototype-seven-delta.vercel.app
+- Source: github.com/ocobo-revops/prototype (Panda CSS, same palette as website)
+
+Resumption checklist:
+1. Read top-of-file Codebase Patterns
+2. Read #108 issue body for slice list
+3. Pick next ⏭️ slice
+4. One commit + log entry per slice + pause for feedback
+
+### Slice #108-1 — 38c1a96 / reverted in 95266bb
+
+Initial attempt: added per-story `accent: yellow|mint` field + static class maps.
+Reverted after visual review — prototype's per-story accent variation is too
+subtle to read on actual screenshots. Decision: mint everywhere, no schema
+field, no content backfill.
+
+Files: schemas.ts (revert), schemas.test.ts (revert), story-accent.ts (deleted)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅
+
+### Open rules for upcoming slices
+
+- **Aside layout** — when rebuilding (slice #108-3), keep label+value
+  groups left-flushed inside each row. Prototype has them centered, which
+  looks awkward; left-flush is the correct ferrage for our website.
+
+Next ⏭️ slice #108-2: story hero rebuild (large rotated mint card +
+architectural grid overlay).
