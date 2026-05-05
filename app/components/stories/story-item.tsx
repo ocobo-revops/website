@@ -50,47 +50,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
 
     return (
       <article className={`${vstack()} ${cardClass}`}>
-        {/* Featured tool above image */}
-        {featuredTool ? (
-          <div
-            className={hstack({
-              gap: '2',
-              w: 'full',
-              alignItems: 'center',
-              mb: '2',
-            })}
-          >
-            {featuredTool.iconUrl ? (
-              <img
-                src={featuredTool.iconUrl}
-                alt=""
-                aria-hidden="true"
-                width={20}
-                height={20}
-                loading="lazy"
-                decoding="async"
-                className={css({
-                  w: '5',
-                  h: '5',
-                  objectFit: 'contain',
-                })}
-              />
-            ) : null}
-            <span
-              className={css({
-                fontSize: 'xs',
-                fontWeight: 'black',
-                textTransform: 'uppercase',
-                letterSpacing: '0.2em',
-                color: 'ocobo.dark',
-              })}
-            >
-              {featuredTool.name}
-            </span>
-          </div>
-        ) : null}
-
-        {/* Image with logo overlay */}
+        {/* Image with featured tool overlay (on hover) */}
         <NavLink
           to={storyUrl}
           className={css({
@@ -123,33 +83,53 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
               }),
             )}
           />
-          <div
-            className={cx(
-              'logo-overlay',
-              css({
-                position: 'absolute',
-                bottom: '4',
-                right: '4',
-                bg: 'ocobo.dark',
-                p: '3',
-                rounded: 'xl',
-                shadow: '2xl',
-                opacity: 0,
-                transform: 'translateY(8px)',
-              }),
-            )}
-          >
-            <img
-              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              decoding="async"
-              width={60}
-              height={16}
-              className={css({ h: '4', w: 'auto', objectFit: 'contain' })}
-            />
-          </div>
+          {featuredTool?.iconUrl ? (
+            <div
+              className={cx(
+                'logo-overlay',
+                css({
+                  position: 'absolute',
+                  bottom: '4',
+                  right: '4',
+                  bg: 'ocobo.dark',
+                  p: '3',
+                  rounded: 'xl',
+                  shadow: '2xl',
+                  opacity: 0,
+                  transform: 'translateY(8px)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '2',
+                }),
+              )}
+            >
+              <img
+                src={featuredTool.iconUrl}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                width={20}
+                height={20}
+                className={css({
+                  h: '5',
+                  w: '5',
+                  objectFit: 'contain',
+                })}
+              />
+              <span
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: 'widest',
+                  color: 'white',
+                })}
+              >
+                {featuredTool.name}
+              </span>
+            </div>
+          ) : null}
         </NavLink>
 
         {/* Content */}
@@ -192,30 +172,55 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             </NavLink>
           </h2>
 
-          {/* Speaker */}
-          <div className={css({ mb: '4' })}>
-            <span
+          {/* Speaker + client logo */}
+          <div
+            className={hstack({
+              gap: '3',
+              alignItems: 'center',
+              mb: '4',
+              w: 'full',
+            })}
+          >
+            <img
+              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+              alt={item.name}
+              loading="lazy"
+              decoding="async"
+              width={48}
+              height={16}
               className={css({
-                fontSize: 'xs',
-                fontWeight: 'black',
-                textTransform: 'uppercase',
-                letterSpacing: 'widest',
-                color: 'ocobo.dark',
-                opacity: 0.6,
-                display: 'block',
+                h: '4',
+                w: 'auto',
+                maxW: '20',
+                objectFit: 'contain',
+                flexShrink: 0,
+                filter: 'brightness(0)',
               })}
-            >
-              {item.speaker}
-            </span>
-            <span
-              className={css({
-                fontSize: 'xs',
-                fontWeight: 'medium',
-                color: 'gray.400',
-              })}
-            >
-              {item.role}
-            </span>
+            />
+            <div className={css({ flex: 1, minW: 0 })}>
+              <span
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: 'widest',
+                  color: 'ocobo.dark',
+                  opacity: 0.6,
+                  display: 'block',
+                })}
+              >
+                {item.speaker}
+              </span>
+              <span
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'medium',
+                  color: 'gray.400',
+                })}
+              >
+                {item.role}
+              </span>
+            </div>
           </div>
 
           {/* Tool chips */}
