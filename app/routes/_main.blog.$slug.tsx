@@ -2,11 +2,8 @@ import { type LoaderFunctionArgs, MetaFunction, data } from 'react-router';
 import { useLoaderData } from 'react-router';
 
 import Markdoc from '@markdoc/markdoc';
-import { css } from '@ocobo/styled-system/css';
-
 import { BlogArticle } from '~/components/blog/blog-article';
 import { Container } from '~/components/ui/Container';
-import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
 import { fetchBlogpost } from '~/modules/content';
 import { extractFirstParagraph, extractToc } from '~/modules/content/toc';
@@ -62,12 +59,7 @@ export default function Index() {
   const { article, toc, intro } = useLoaderData<typeof loader>();
 
   return (
-    <div
-      className={css({
-        position: 'relative',
-      })}
-    >
-      <ScrollProgressBar variant="sky" />
+    <div>
       <Container>
         <BlogArticle article={article} toc={toc} intro={intro} />
       </Container>

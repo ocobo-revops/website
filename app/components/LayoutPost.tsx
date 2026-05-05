@@ -49,13 +49,56 @@ const Aside: React.FunctionComponent<
       >
         {children}
         {!hideCta && (
-          <div className={css({ py: 4 })}>
-            <p className={css({ fontWeight: 'bold', mb: '0.5rem' })}>
-              {t('contact.meet')}
+          <div
+            className={css({
+              mt: '10',
+              p: '8',
+              bg: 'ocobo.dark',
+              rounded: '2xl',
+              color: 'white',
+              position: 'relative',
+              overflow: 'hidden',
+            })}
+          >
+            <div
+              className={css({
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                w: '24',
+                h: '24',
+                bg: 'ocobo.yellow/10',
+                rounded: 'full',
+                filter: 'blur(32px)',
+                pointerEvents: 'none',
+              })}
+            />
+            <p
+              className={css({
+                fontFamily: 'display',
+                fontSize: 'lg',
+                fontWeight: 'bold',
+                mb: '4',
+              })}
+            >
+              {t('contact.sidebar.title')}
             </p>
-
-            <ButtonLink to={getLocalizedPath(url.contact)}>
-              {t('contact.cta')}
+            <p
+              className={css({
+                fontSize: 'xs',
+                color: 'gray.400',
+                mb: '6',
+                lineHeight: 'relaxed',
+              })}
+            >
+              {t('contact.sidebar.description')}
+            </p>
+            <ButtonLink
+              to={getLocalizedPath(url.contact)}
+              variant="cta"
+              className={css({ w: 'full', justifyContent: 'center' })}
+            >
+              {t('contact.sidebar.cta')}
             </ButtonLink>
           </div>
         )}
