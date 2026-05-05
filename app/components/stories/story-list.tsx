@@ -46,8 +46,8 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
       className={css({
         py: { base: 6, lg: 12 },
         display: 'grid',
-        gridTemplateColumns: { base: '1fr', lg: 'repeat(3, 1fr)' },
-        gap: 10,
+        gridTemplateColumns: { base: '1fr', xl: 'repeat(2, 1fr)' },
+        gap: 8,
         alignItems: 'stretch',
       })}
     >
