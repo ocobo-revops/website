@@ -181,22 +181,32 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
               w: 'full',
             })}
           >
-            <img
-              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-              alt={item.name}
-              loading="lazy"
-              decoding="async"
-              width={48}
-              height={16}
+            <div
               className={css({
-                h: '4',
-                w: 'auto',
-                maxW: '20',
-                objectFit: 'contain',
+                bg: 'ocobo.dark',
+                px: '3',
+                py: '2',
+                rounded: 'lg',
                 flexShrink: 0,
-                filter: 'brightness(0)',
+                display: 'inline-flex',
+                alignItems: 'center',
               })}
-            />
+            >
+              <img
+                src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+                alt={item.name}
+                loading="lazy"
+                decoding="async"
+                width={96}
+                height={32}
+                className={css({
+                  h: '6',
+                  w: 'auto',
+                  maxW: '24',
+                  objectFit: 'contain',
+                })}
+              />
+            </div>
             <div className={css({ flex: 1, minW: 0 })}>
               <span
                 className={css({
