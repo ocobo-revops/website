@@ -22,6 +22,7 @@ const StoryCtaBlock: React.FunctionComponent = () => {
         position: 'relative',
         overflow: 'hidden',
         mt: '16',
+        mb: '16',
       })}
     >
       <div
