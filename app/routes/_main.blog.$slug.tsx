@@ -1,6 +1,7 @@
 import { type LoaderFunctionArgs, MetaFunction, data } from 'react-router';
 import { useLoaderData } from 'react-router';
 
+import Markdoc from '@markdoc/markdoc';
 import { css } from '@ocobo/styled-system/css';
 
 import { BlogArticle } from '~/components/blog';
@@ -12,6 +13,7 @@ import {
   loadMemberRegistry,
   resolveAuthor,
 } from '~/modules/content';
+import { extractToc } from '~/modules/content/toc';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -37,9 +39,10 @@ export const loader = createHybridLoader(
     }
 
     const resolvedAuthor = resolveAuthor(article.frontmatter.author, registry);
+    const toc = extractToc(Markdoc.parse(article.markdown));
 
     return data(
-      { article, resolvedAuthor },
+      { article, resolvedAuthor, toc },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -61,7 +64,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article, resolvedAuthor } = useLoaderData<typeof loader>();
+  const { article, resolvedAuthor, toc } = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -71,7 +74,11 @@ export default function Index() {
     >
       <ScrollProgressBar variant="sky" />
       <Container>
-        <BlogArticle article={article} resolvedAuthor={resolvedAuthor} />
+        <BlogArticle
+          article={article}
+          resolvedAuthor={resolvedAuthor}
+          toc={toc}
+        />
       </Container>
     </div>
   );

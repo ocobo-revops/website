@@ -6,9 +6,11 @@ import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 
 import type { ResolvedAuthor } from '~/modules/content/members';
+import type { TocEntry } from '~/modules/content/toc';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
 
+import { BlogToc } from './blog-toc';
 import { PostHeader } from './post-header';
 import { PostMetas } from './post-metas';
 
@@ -19,17 +21,20 @@ import { PlayerYoutube } from '../PlayerYoutube';
 interface BlogArticleProps {
   article: MarkdocFile<BlogpostFrontmatter>;
   resolvedAuthor: ResolvedAuthor;
+  toc: TocEntry[];
 }
 
 const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
   article,
   resolvedAuthor,
+  toc,
 }) => {
   const { t } = useTranslation('blog');
 
   return (
     <LayoutPost.Root>
       <LayoutPost.Aside>
+        <BlogToc entries={toc} />
         <PostMetas item={article.frontmatter} resolvedAuthor={resolvedAuthor} />
       </LayoutPost.Aside>
 

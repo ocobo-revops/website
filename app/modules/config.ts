@@ -4,7 +4,15 @@
  * This file defines how markdown elements are transformed into React components.
  * It includes custom nodes for enhanced content rendering and tags for embedded content.
  */
-import type { Config } from '@markdoc/markdoc';
+import Markdoc from '@markdoc/markdoc';
+import type { Config, Node } from '@markdoc/markdoc';
+
+import { slugify } from '~/modules/content/toc';
+
+function extractRawText(node: Node): string {
+  if (node.type === 'text') return String(node.attributes.content ?? '');
+  return node.children.map(extractRawText).join('');
+}
 
 /**
  * Main Markdoc configuration object
@@ -24,6 +32,12 @@ export const config: Config = {
       attributes: {
         id: { type: String },
         level: { type: Number, required: true, default: 1 },
+      },
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const children = node.transformChildren(config);
+        const id = attributes.id ?? slugify(extractRawText(node).trim());
+        return new Markdoc.Tag('Heading', { ...attributes, id }, children);
       },
     },
     paragraph: {
