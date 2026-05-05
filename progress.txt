@@ -703,7 +703,7 @@ Files:
 - app/components/blog/blog-article.tsx — ArrowLeft back link above LayoutPost (was inside content col), coral em-dash prefix on intro
 
 Decisions:
-- Share rail deferred (out of scope for now)
+- Share rail removed from scope (proto-faithful realign does not include share buttons; revisit in a future content-distribution slice if needed)
 - Hero image kept (not in prototype but not explicitly removed in issue)
 - Back link pattern matches story-article (gray.400, uppercase, widest, xs, hover ocobo.dark)
 
