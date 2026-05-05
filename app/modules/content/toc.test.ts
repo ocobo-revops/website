@@ -1,7 +1,7 @@
 import Markdoc from '@markdoc/markdoc';
 import { describe, expect, it } from 'vitest';
 
-import { extractToc, slugify } from './toc';
+import { extractFirstParagraph, extractToc, slugify } from './toc';
 
 function parseAst(markdown: string) {
   return Markdoc.parse(markdown);
@@ -101,5 +101,29 @@ describe('extractToc', () => {
     const ast1 = parseAst(markdown);
     const ast2 = parseAst(markdown);
     expect(extractToc(ast1)).toEqual(extractToc(ast2));
+  });
+});
+
+describe('extractFirstParagraph', () => {
+  it('returns the first paragraph text', () => {
+    const ast = parseAst('## Intro\n\nFirst paragraph.\n\nSecond paragraph.');
+    expect(extractFirstParagraph(ast)).toBe('First paragraph.');
+  });
+
+  it('skips headings and returns first real paragraph', () => {
+    const ast = parseAst('## Title\n\nThis is the intro.');
+    expect(extractFirstParagraph(ast)).toBe('This is the intro.');
+  });
+
+  it('returns null when no paragraphs exist', () => {
+    const ast = parseAst('## Only a heading');
+    expect(extractFirstParagraph(ast)).toBeNull();
+  });
+
+  it('returns plain text without markdown inline markup', () => {
+    const ast = parseAst('**Bold** and *italic* text.');
+    const result = extractFirstParagraph(ast);
+    expect(result).toContain('Bold');
+    expect(result).toContain('italic');
   });
 });

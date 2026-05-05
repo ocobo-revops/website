@@ -21,6 +21,16 @@ function extractNodeText(node: Node): string {
   return node.children.map(extractNodeText).join('');
 }
 
+export function extractFirstParagraph(ast: Node): string | null {
+  for (const node of ast.walk()) {
+    if (node.type === 'paragraph') {
+      const text = extractNodeText(node).trim();
+      if (text) return text;
+    }
+  }
+  return null;
+}
+
 export function extractToc(ast: Node, maxLevel = 3): TocEntry[] {
   const entries: TocEntry[] = [];
 
