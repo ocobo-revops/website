@@ -9,6 +9,7 @@ import { StoryDeliverables } from './story-deliverables';
 import { StoryHeader } from './story-header';
 import { StoryMarkdownContainer } from './story-markdown-container';
 import { StoryMetas } from './story-metas';
+import { StoryQuoteBlock } from './story-quote-block';
 
 import { LayoutPost } from '../LayoutPost';
 import { PlayerYoutube } from '../PlayerYoutube';
@@ -53,6 +54,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
             className={css({ mt: 8 })}
           />
         )}
+        <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
       </LayoutPost.Main>
     </LayoutPost.Root>
   );

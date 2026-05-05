@@ -4,6 +4,7 @@ import {
   UsersIcon,
   WrenchIcon,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { circle, flex } from '@ocobo/styled-system/patterns';
@@ -42,6 +43,7 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
   className,
   ...props
 }) => {
+  const { t } = useTranslation();
   const toolEntries =
     resolvedTools && resolvedTools.length > 0
       ? resolvedTools.map((t) => ({ key: t.slug, label: t.name }))
@@ -61,6 +63,21 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
           height: 'auto',
         })}
       />
+
+      <div
+        className={css({
+          bg: 'mint',
+          color: 'white',
+          px: 6,
+          py: 3,
+          fontSize: 'xs',
+          fontWeight: 'semibold',
+          letterSpacing: 'widest',
+          textTransform: 'uppercase',
+        })}
+      >
+        {t('clients.processAndTools')}
+      </div>
 
       <div className={sectionStyle}>
         <div className={flex({ gap: 3 })}>
