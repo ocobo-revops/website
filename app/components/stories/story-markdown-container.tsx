@@ -57,6 +57,7 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
           textTransform: 'uppercase',
           mt: '16',
           mb: '6',
+          _first: { mt: '0' },
         })}
       >
         {children}
