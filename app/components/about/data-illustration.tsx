@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 export const DataIllustration = () => {
   const { t } = useTranslation('about');
@@ -19,18 +20,18 @@ export const DataIllustration = () => {
         })}`}
       >
         <div
-          className={css({
-            position: 'relative',
-            w: 'full',
-            h: 'full',
-            bg: '#FCFAF5',
-            rounded: '3xl',
-            p: { base: '6', md: '8' },
-            shadow: 'soft-lg',
-            borderWidth: '1px',
-            borderColor: 'gray.100',
-            overflow: 'hidden',
-          })}
+          className={cx(
+            card({ radius: 'lg', border: true }),
+            css({
+              position: 'relative',
+              w: 'full',
+              h: 'full',
+              bg: '#FCFAF5',
+              p: { base: '6', md: '8' },
+              shadow: 'soft-lg',
+              overflow: 'hidden',
+            }),
+          )}
         >
           <svg
             viewBox="0 0 800 500"
@@ -177,15 +178,15 @@ export const DataIllustration = () => {
           })}
         >
           <h3
-            className={css({
-              fontFamily: 'display',
-              fontSize: { base: 'xl', md: '2xl' },
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              mb: '3',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-            })}
+            className={cx(
+              text({ variant: 'display-card', color: 'dark' }),
+              css({
+                fontSize: { base: 'xl', md: '2xl' },
+                mb: '3',
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
+              }),
+            )}
           >
             {t('hero.illustration.title')}
           </h3>

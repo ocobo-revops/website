@@ -1,6 +1,7 @@
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -13,12 +14,21 @@ interface ValueCardProps {
   className?: string;
 }
 
-const titleColorMap: Record<ThemeColor, string> = {
-  yellow: 'ocobo.yellow',
-  mint: 'ocobo.mint',
-  sky: 'ocobo.sky',
-  coral: 'ocobo.coral',
-  dark: 'ocobo.dark',
+// Pre-computed static class strings so Panda CSS can extract all variants at build time
+const titleTextClassMap: Record<ThemeColor, string> = {
+  yellow: text({ variant: 'display-md-bold', color: 'yellow' }),
+  mint: text({ variant: 'display-md-bold', color: 'mint' }),
+  sky: text({ variant: 'display-md-bold', color: 'sky' }),
+  coral: text({ variant: 'display-md-bold', color: 'coral' }),
+  dark: text({ variant: 'display-md-bold', color: 'dark' }),
+};
+
+const titleTextDarkVariantClassMap: Record<ThemeColor, string> = {
+  yellow: text({ variant: 'display-md-bold', color: 'yellow' }),
+  mint: text({ variant: 'display-md-bold', color: 'mint' }),
+  sky: text({ variant: 'display-md-bold', color: 'sky' }),
+  coral: text({ variant: 'display-md-bold', color: 'coral' }),
+  dark: text({ variant: 'display-md-bold', color: 'white' }),
 };
 
 export const ValueCard: React.FC<ValueCardProps> = ({
@@ -29,23 +39,15 @@ export const ValueCard: React.FC<ValueCardProps> = ({
   variant = 'light',
   className = '',
 }) => {
-  const titleColor =
-    color === 'dark' && variant === 'dark' ? 'white' : titleColorMap[color];
+  const titleTextClass =
+    variant === 'dark'
+      ? titleTextDarkVariantClassMap[color]
+      : titleTextClassMap[color];
   const descriptionColor = variant === 'dark' ? 'gray.300' : 'gray.600';
 
   return (
     <div className={className}>
-      <h3
-        className={css({
-          fontFamily: 'display',
-          fontWeight: 'bold',
-          fontSize: '2xl',
-          mb: '4',
-          color: titleColor,
-        })}
-      >
-        {title}
-      </h3>
+      <h3 className={cx(titleTextClass, css({ mb: '4' }))}>{title}</h3>
       <p className={css({ color: descriptionColor, lineHeight: 'relaxed' })}>
         {description}
       </p>

@@ -1,8 +1,9 @@
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
+import { text } from '@ocobo/styled-system/recipes';
 
 import { FlexPair } from '../home/flex-pair';
 
@@ -126,20 +127,17 @@ export const ManifestoSection = () => {
           )}`}
         >
           <span
-            className={css({
-              fontFamily: 'display',
-              fontWeight: 'bold',
-              color: 'ocobo.dark',
-              bg: 'ocobo.yellow',
-              px: '6',
-              py: '2',
-              fontSize: 'xs',
-              textTransform: 'uppercase',
-              letterSpacing: '0.3em',
-              display: 'inline-block',
-              rounded: 'full',
-              shadow: 'lg',
-            })}
+            className={cx(
+              text({ variant: 'display-label', color: 'dark' }),
+              css({
+                bg: 'ocobo.yellow',
+                px: '6',
+                py: '2',
+                display: 'inline-block',
+                rounded: 'full',
+                shadow: 'lg',
+              }),
+            )}
           >
             {t('manifesto.badge')}
           </span>
@@ -251,13 +249,14 @@ export const ManifestoSection = () => {
             />
 
             <p
-              className={css({
-                fontSize: { base: '2xl', md: '4xl' },
-                fontWeight: 'bold',
-                color: 'white',
-                lineHeight: 'tight',
-                mb: '12',
-              })}
+              className={cx(
+                text({ variant: 'display-md-bold', color: 'white' }),
+                css({
+                  fontSize: { base: '2xl', md: '4xl' },
+                  lineHeight: 'tight',
+                  mb: '12',
+                }),
+              )}
             >
               {t('manifesto.invitation.title')}
             </p>
@@ -332,15 +331,15 @@ export const ManifestoSection = () => {
                 })}
               />
               <p
-                className={css({
-                  fontFamily: 'display',
-                  fontSize: { base: '2xl', md: '4xl' },
-                  color: 'ocobo.yellow',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.3em',
-                  fontWeight: 'bold',
-                  lineHeight: 'tight',
-                })}
+                className={cx(
+                  text({ variant: 'display-md-bold', color: 'yellow' }),
+                  css({
+                    fontSize: { base: '2xl', md: '4xl' },
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.3em',
+                    lineHeight: 'tight',
+                  }),
+                )}
               >
                 {t('manifesto.signature')}
               </p>

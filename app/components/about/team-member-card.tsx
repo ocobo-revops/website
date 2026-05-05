@@ -1,7 +1,8 @@
 import { Linkedin } from 'lucide-react';
 import type React from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -34,16 +35,15 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
 }) => {
   return (
     <div
-      className={`${css({
-        bg: 'white',
-        p: '8',
-        borderWidth: '1px',
-        borderColor: 'gray.100',
-        shadow: 'sm',
-        transition: 'all',
-        textAlign: 'center',
-        _hover: { shadow: 'lg' },
-      })} ${className}`}
+      className={cx(
+        card({ padding: 'lg', border: true }),
+        css({
+          transition: 'all',
+          textAlign: 'center',
+          _hover: { shadow: 'lg' },
+        }),
+        className,
+      )}
     >
       <div
         className={css({
@@ -64,13 +64,10 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
         />
       </div>
       <h3
-        className={css({
-          fontFamily: 'display',
-          fontSize: '2xl',
-          fontWeight: 'bold',
-          color: 'ocobo.dark',
-          mb: '1',
-        })}
+        className={cx(
+          text({ variant: 'display-md-bold', color: 'dark' }),
+          css({ mb: '1' }),
+        )}
       >
         {name}
       </h3>
