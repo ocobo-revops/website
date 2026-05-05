@@ -12,13 +12,14 @@ import { Loader } from '~/components/ui/Loader';
 import { createHybridLoader } from '~/modules/cache';
 import { fetchStories, loadToolRegistry, resolveTool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
+import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { getImageOgFullPath } from '~/utils/url';
 
 export const loader = createHybridLoader(
-  async ({ request }: LoaderFunctionArgs) => {
+  async ({ params, request }: LoaderFunctionArgs) => {
     const [[status, state, storiesData], toolRegistry] = await Promise.all([
-      fetchStories(),
+      fetchStories(getLang(params)),
       loadToolRegistry(),
     ]);
 

@@ -24,7 +24,7 @@ export const loader = createHybridLoader(
 
     const [[status, _state, article], toolRegistry, memberRegistry] =
       await Promise.all([
-        fetchStory(slug),
+        fetchStory(slug, getLang(params)),
         loadToolRegistry(),
         loadMemberRegistry(),
       ]);

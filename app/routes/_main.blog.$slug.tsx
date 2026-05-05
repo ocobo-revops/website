@@ -22,7 +22,10 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchBlogpost(slug);
+    const [status, _state, article] = await fetchBlogpost(
+      slug,
+      getLang(params),
+    );
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
