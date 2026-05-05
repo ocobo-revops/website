@@ -1,11 +1,11 @@
-import { ArrowRightIcon, CheckIcon } from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
-import { center, flex, vstack } from '@ocobo/styled-system/patterns';
+import { flex, vstack } from '@ocobo/styled-system/patterns';
 
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
+import { ButtonLink } from '~/components/ui/button-link';
 import { url } from '~/utils/url';
 
 import type { StoryFrontmatter } from '~/types';
@@ -123,31 +123,14 @@ const StoryDeliverables: React.FunctionComponent<StoryDeliverablesProps> = ({
         >
           {t('contact.meet')}
         </p>
-        <NavLink to={getLocalizedPath(url.contact)}>
-          <div
-            className={`${center({ inline: true })} ${css({
-              w: 'full',
-              py: '4',
-              bg: 'white',
-              color: 'ocobo.dark',
-              fontWeight: 'black',
-              fontSize: 'xs',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              rounded: 'xl',
-              transition: 'all',
-              shadow: 'xl',
-              gap: '2',
-              cursor: 'pointer',
-              '& .arrow': { transition: 'transform' },
-              _hover: { bg: 'ocobo.mint' },
-              '&:hover .arrow': { transform: 'translateX(4px)' },
-            })}`}
-          >
-            {t('contact.cta')}
-            <ArrowRightIcon size={14} className="arrow" />
-          </div>
-        </NavLink>
+        <ButtonLink
+          to={getLocalizedPath(url.contact)}
+          variant="white"
+          size="lg"
+          className={css({ w: 'full' })}
+        >
+          {t('contact.cta')}
+        </ButtonLink>
       </div>
     </div>
   );
