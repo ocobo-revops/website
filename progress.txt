@@ -632,3 +632,23 @@ Resumption checklist for next session:
 2. Local proto ref: ~/projects/ocobo/prototype/pages/StoryDetail.tsx
 3. Next: slice #108-3 aside rebuild
 4. Aside proto source: StoryDetail.tsx ~line 558 (grid section with aside)
+
+### Slice #108-3 — 818d331
+
+Files:
+- app/components/stories/story-metas.tsx — rebuilt: white card (rounded-3xl, shadow-sm),
+  display-font header, icon-in-gray-square rows (duration/team/scopes/techStack), tool chips
+- app/components/stories/story-metas.test.ts — 3 unit tests for prepareToolEntries (TDD)
+- app/components/stories/story-deliverables.tsx — rebuilt: dark card (ocobo.dark, blur deco,
+  check-list with hover mint transition)
+- app/components/stories/story-article.tsx — drop slug prop from StoryMetas
+- locales/{fr,en}/common.json — clients.duration/team/techStack/scopes added
+
+Decisions:
+- Scopes row kept (not in proto but meaningful content) with MessageSquare icon
+- Logo image removed from aside (no longer used)
+- prepareToolEntries extracted as named export for testability
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅ (+3 new)
+
+Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
