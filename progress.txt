@@ -594,5 +594,19 @@ Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅
   groups left-flushed inside each row. Prototype has them centered, which
   looks awkward; left-flush is the correct ferrage for our website.
 
-Next ⏭️ slice #108-2: story hero rebuild (large rotated mint card +
-architectural grid overlay).
+### Slice #108-2 — f736206
+
+Files:
+- app/components/stories/story-header.tsx — two-col layout, logo card rotate(2deg) + hover unrotation
+- app/components/stories/story-article.tsx — Breadcrumb → ArrowLeft back link
+- locales/fr|en/common.json — added clients.back key
+
+Decisions:
+- Description paragraph kept below title (no segment badge — out of scope per #97)
+- Logo height h:12 with maxW:32 to keep size reasonable across logos
+- Prototype uses rotate(2deg) not -3deg (signed diff from previous shipped)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅
+
+Next ⏭️ slice #108-3: story aside rebuild (label structure left-flush,
+dark Process & Outils header, mint tools chips).
