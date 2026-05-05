@@ -102,6 +102,20 @@ describe('extractToc', () => {
     const ast2 = parseAst(markdown);
     expect(extractToc(ast1)).toEqual(extractToc(ast2));
   });
+
+  it('dedupes repeated heading text with numeric suffixes', () => {
+    const ast = parseAst('## Intro\n\n## Intro\n\n## Intro');
+    const toc = extractToc(ast);
+    expect(toc.map((e) => e.id)).toEqual(['intro', 'intro-2', 'intro-3']);
+  });
+
+  it('preserves explicit ids and only dedupes auto-generated ones', () => {
+    const ast = parseAst(
+      '## Intro {% #custom %}\n\n## Intro\n\n## Intro {% #custom %}',
+    );
+    const toc = extractToc(ast);
+    expect(toc.map((e) => e.id)).toEqual(['custom', 'intro', 'custom']);
+  });
 });
 
 describe('extractFirstParagraph', () => {
