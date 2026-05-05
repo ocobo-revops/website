@@ -31,16 +31,23 @@ const cardClass = css({
   overflow: 'hidden',
   h: 'full',
   _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
+  _focusWithin: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
   '& .main-img': { transition: 'all', transitionDuration: '700ms' },
-  '&:hover .main-img': {
+  '&:hover .main-img, &:focus-within .main-img': {
     filter: 'grayscale(0)',
     opacity: 1,
     transform: 'scale(1.05)',
   },
   '& .logo-overlay': { transition: 'all', transitionDuration: '500ms' },
-  '&:hover .logo-overlay': { opacity: 1, transform: 'translateY(0)' },
+  '&:hover .logo-overlay, &:focus-within .logo-overlay': {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
   '& .arrow': { transition: 'all' },
-  '&:hover .arrow': { color: 'ocobo.dark', transform: 'translateX(4px)' },
+  '&:hover .arrow, &:focus-within .arrow': {
+    color: 'ocobo.dark',
+    transform: 'translateX(4px)',
+  },
 });
 
 const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
