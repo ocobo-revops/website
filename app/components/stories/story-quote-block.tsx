@@ -1,11 +1,8 @@
-import { css, cx } from '@ocobo/styled-system/css';
-import { circle } from '@ocobo/styled-system/patterns';
-import { text } from '@ocobo/styled-system/recipes';
+import { css } from '@ocobo/styled-system/css';
+import { flex } from '@ocobo/styled-system/patterns';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { StoryFrontmatter } from '~/types';
-
-import { Avatar } from '../ui/Avatar';
 
 interface StoryQuoteBlockProps {
   item: StoryFrontmatter;
@@ -21,57 +18,73 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
 
   return (
     <blockquote
-      className={css({
-        mt: '16',
-        pt: '12',
-        borderTopWidth: '1px',
-        borderColor: 'gray.100',
-        display: 'flex',
-        flexDirection: { base: 'column', md: 'row' },
-        gap: '8',
-        alignItems: 'flex-start',
-      })}
+      className={`${flex({ direction: { base: 'column', md: 'row' }, align: 'center', gap: '10' })} ${css(
+        {
+          mt: '24',
+          p: '10',
+          bg: 'gray.50',
+          rounded: '3xl',
+          borderWidth: '1px',
+          borderColor: 'gray.100',
+        },
+      )}`}
     >
       <div
         className={css({
-          flexShrink: 0,
+          w: '32',
+          h: '32',
+          rounded: '3xl',
+          overflow: 'hidden',
+          filter: 'grayscale(100%)',
+          borderWidth: '4px',
+          borderColor: 'white',
+          shadow: 'xl',
           transform: 'rotate(3deg)',
-          shadow: 'md',
-          rounded: 'full',
+          flexShrink: 0,
         })}
       >
-        <Avatar
+        <img
           src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
           alt={item.speaker}
           loading="lazy"
           decoding="async"
-          className={circle({ size: '80px' })}
+          className={css({ w: 'full', h: 'full', objectFit: 'cover' })}
         />
       </div>
-      <div>
+      <div className={css({ textAlign: { base: 'center', md: 'left' } })}>
         <p
-          className={cx(
-            css({
-              fontStyle: 'italic',
-              fontSize: { base: 'lg', md: 'xl' },
-              color: 'gray.700',
-              lineHeight: 'relaxed',
-              mb: '4',
-            }),
-          )}
+          className={css({
+            fontFamily: 'display',
+            fontSize: '2xl',
+            fontWeight: 'black',
+            color: 'ocobo.dark',
+            mb: '1',
+          })}
         >
-          « {quote} »
+          {item.speaker}
         </p>
-        <footer>
-          <cite
-            className={cx(
-              text({ variant: 'body' }),
-              css({ fontStyle: 'normal', color: 'gray.500' }),
-            )}
-          >
-            {item.speaker} · {item.role}
-          </cite>
-        </footer>
+        <p
+          className={css({
+            fontSize: 'xs',
+            fontWeight: 'black',
+            color: 'ocobo.mint',
+            textTransform: 'uppercase',
+            letterSpacing: '0.3em',
+            mb: '4',
+          })}
+        >
+          {item.role}
+        </p>
+        <p
+          className={css({
+            color: 'gray.500',
+            fontSize: 'sm',
+            lineHeight: 'relaxed',
+            maxW: 'md',
+          })}
+        >
+          "{quote}"
+        </p>
       </div>
     </blockquote>
   );

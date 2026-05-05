@@ -9,6 +9,7 @@ import type { Member, Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { url } from '~/utils/url';
 
+import { StoryCtaBlock } from './story-cta-block';
 import { StoryDeliverables } from './story-deliverables';
 import { StoryHeader } from './story-header';
 import { StoryMarkdownContainer } from './story-markdown-container';
@@ -77,6 +78,8 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
           <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
         </LayoutPost.Main>
       </LayoutPost.Root>
+
+      <StoryCtaBlock />
     </div>
   );
 };

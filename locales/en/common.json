@@ -37,6 +37,8 @@
   "clients.team": "Team",
   "clients.techStack": "Tech Stack",
   "clients.scopes": "Scope",
+  "clients.cta.eyebrow": "Your future system",
+  "clients.cta.title": "Your revenue machine deserves elite architecture.",
   "clients.empty.title": "No client testimonials available",
   "clients.empty.subtitle": "Discover our clients' experiences soon.",
   "clients.description.items": [
