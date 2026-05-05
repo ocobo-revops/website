@@ -155,7 +155,11 @@ const ClientCarousel: React.FunctionComponent<{
                 key={item.src + i}
                 className={css({
                   w: itemWidth,
+                  h: '40px',
                   flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 })}
               >
                 <img
@@ -165,9 +169,9 @@ const ClientCarousel: React.FunctionComponent<{
                   decoding="async"
                   className={css({
                     maxH: '30px',
+                    maxW: 'full',
                     w: 'auto',
-                    display: 'block',
-                    mx: 'auto',
+                    objectFit: 'contain',
                   })}
                 />
               </li>
