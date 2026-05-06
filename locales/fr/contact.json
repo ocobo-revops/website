@@ -1,12 +1,17 @@
 {
   "meta.title": "Contactez-nous",
   "meta.description": "Rencontrez un vrai spécialiste des Revenue Operations.",
-  "title": "Rencontrez un vrai spécialiste des Revenue Operations. <0>Pas un SDR ni un BDR.</0>",
-  "subtitle": "Après avoir rempli le formulaire, vous serez invité à choisir un horaire de rendez-vous.",
-  "description": [
-    "Lors de notre <0>premier échange</0>, nous déterminons si, et comment, nous pouvons vous aider.",
-    "Ensuite, nous élaborons pour vous <0>un plan sur mesure</0>, que nous exécuterons pour atteindre ensemble vos objectifs."
-  ],
+
+  "eyebrow": "Première consultation",
+  "title": "Parlez à un architecte. <0>Pas à un vendeur.</0>",
+  "lead": "En 30 minutes, nous analysons la maturité de votre machine revenue et identifions vos leviers de croissance immédiats.",
+
+  "bullets.audit.title": "Audit flash",
+  "bullets.audit.description": "Diagnostic rapide de vos processus actuels et de votre stack.",
+  "bullets.clarity.title": "Clarté radicale",
+  "bullets.clarity.description": "Recommandations stratégiques immédiates, sans jargon.",
+  "bullets.zero.title": "Zéro engagement",
+  "bullets.zero.description": "Un échange entre pairs pour valider la pertinence d'une collaboration.",
 
   "form.email": "E-mail professionnel",
   "form.firstname": "Prénom",
