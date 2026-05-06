@@ -873,5 +873,32 @@ Decisions / deviations:
 
 Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
 
-Next ⏭️ slice: #115 (form chrome restyle)
+Next ⏭️ slice: #115 (ContactCard shell)
+
+### Slice #115 — 3c77eb6
+
+ContactCard shell wrapping HubSpot embed.
+
+Files:
+- app/components/contact/contact-card.tsx (new)
+- app/routes/_main.($lang).contact.tsx (wraps ContactForm in ContactCard)
+- locales/{fr,en}/contact.json (added card.heading, consent)
+
+Decisions / deviations:
+- card() recipe gives padding md and shadow sm by default; overrode with
+  responsive p:{base:8, md:12} + shadow:card to match prototype. The "no
+  inline rounded+border+shadow combo" rule is respected — recipe owns
+  rounded+border, only shadow is overridden.
+- Heading uses display-md-bold (display, 2xl, bold) to match the prototype
+  card heading (fontSize:2xl + display + bold).
+- overflow:hidden on the card so the gradient top bar respects the rounded
+  corners (1px h bar would otherwise sit flush on the card edges).
+- ContactForm component itself untouched — Distro contract on .hbspt-form
+  preserved.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: form submit → Distro inline calendar.
+
+Next ⏭️ slice: #116 (form chrome restyle)
 
