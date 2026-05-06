@@ -1,5 +1,11 @@
 {
   "back": "Blog",
   "empty.title": "No blog posts available",
-  "empty.subtitle": "Check back soon for our latest Revenue Operations content."
+  "empty.subtitle": "Check back soon for our latest Revenue Operations content.",
+  "hero.eyebrow": "RevOps Library",
+  "hero.title": "Explore the science of revenue.",
+  "hero.description": "Articles, interviews and masterclasses to structure your growth.",
+  "featured.badge": "Featured",
+  "toc.label": "Table of contents",
+  "author.heading": "About the author"
 }

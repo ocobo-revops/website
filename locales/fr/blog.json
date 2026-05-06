@@ -1,5 +1,11 @@
 {
   "back": "Le blog",
   "empty.title": "Aucun article de blog disponible",
-  "empty.subtitle": "Revenez bientôt pour découvrir nos derniers contenus sur les Revenue Operations."
+  "empty.subtitle": "Revenez bientôt pour découvrir nos derniers contenus sur les Revenue Operations.",
+  "hero.eyebrow": "RevOps Library",
+  "hero.title": "Explorez la science du revenu.",
+  "hero.description": "Articles, interviews et masterclasses pour structurer votre croissance.",
+  "featured.badge": "À la une",
+  "toc.label": "Sommaire",
+  "author.heading": "À propos de l'auteur"
 }

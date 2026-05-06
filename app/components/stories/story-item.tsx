@@ -1,200 +1,323 @@
+import { ArrowRight } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { vstack } from '@ocobo/styled-system/patterns';
-import { text } from '@ocobo/styled-system/recipes';
+import { hstack, vstack } from '@ocobo/styled-system/patterns';
 
 import { ASSETS_BASE_URL } from '~/config/assets';
+import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { url } from '~/utils/url';
 
 interface StoryItemProps {
   item: MarkdocFile<StoryFrontmatter>['frontmatter'];
   slug: string;
+  featuredTool?: Tool | null;
+  resolvedTools?: Tool[];
   index?: number;
 }
 
-const speakerTextClass = text({ variant: 'display-card' });
-
-const linkClass = cx(
-  text({ variant: 'body' }),
-  css({
-    display: 'inline-flex',
-    alignItems: 'center',
-    fontWeight: '700',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    gap: '2',
-    position: 'relative',
-    pb: '2px',
-
-    _before: {
-      content: '""',
-      display: 'inline-block',
-      background: 'foreground',
-      height: '[2px]',
-      width: '[calc(100% - 40px)]',
-      transition: 'all',
-      position: 'absolute',
-      bottom: 0,
-    },
-
-    _after: {
-      content: '""',
-      width: '[28px]',
-      height: '[9px]',
-      display: 'inline-block',
-      position: 'relative',
-      zIndex: '0',
-      bg: 'currentColor',
-      maskImage: `url("data:image/svg+xml,%3Csvg width='28' height='9' viewBox='0 0 28 9' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M27.3535 4.68388C27.5488 4.48862 27.5488 4.17204 27.3535 3.97678L24.1715 0.794796C23.9763 0.599534 23.6597 0.599534 23.4644 0.794796C23.2692 0.990058 23.2692 1.30664 23.4644 1.5019L26.2928 4.33033L23.4644 7.15876C23.2692 7.35402 23.2692 7.6706 23.4644 7.86586C23.6597 8.06113 23.9763 8.06113 24.1715 7.86586L27.3535 4.68388ZM0.473633 4.83033L27 4.83033V3.83033L0.473633 3.83033L0.473633 4.83033Z'/%3E%3C/svg%3E%0A")`,
-    },
-
-    _hover: {
-      _before: {
-        width: 'full',
-      },
-    },
-
-    _focusVisible: {
-      outline: 'none',
-      _before: {
-        height: '[4px]',
-      },
-    },
-
-    '& svg': { marginLeft: '2' },
-  }),
-);
+const cardClass = css({
+  position: 'relative',
+  bg: 'white',
+  borderWidth: '1px',
+  borderColor: 'gray.100',
+  rounded: '3xl',
+  p: '6',
+  transition: 'all',
+  transitionDuration: '500ms',
+  overflow: 'hidden',
+  h: 'full',
+  _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
+  _focusWithin: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
+  '& .main-img': { transition: 'all', transitionDuration: '700ms' },
+  '&:hover .main-img, &:focus-within .main-img': {
+    filter: 'grayscale(0)',
+    opacity: 1,
+    transform: 'scale(1.05)',
+  },
+  '& .logo-overlay': { transition: 'all', transitionDuration: '500ms' },
+  '&:hover .logo-overlay, &:focus-within .logo-overlay': {
+    opacity: 1,
+    transform: 'translateY(0)',
+  },
+  '& .arrow': { transition: 'all' },
+  '&:hover .arrow, &:focus-within .arrow': {
+    color: 'ocobo.dark',
+    transform: 'translateX(4px)',
+  },
+});
 
 const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
-  ({ item, slug, index = 0 }) => {
+  ({ item, slug, featuredTool = null, resolvedTools = [], index = 0 }) => {
     const { t } = useTranslation('common');
+    const storyUrl = `${url.stories}/${slug}`;
 
     return (
-      <article
-        className={`${vstack({ alignItems: 'stretch', gap: '4' })} ${css({
-          position: 'relative',
-          height: 'full',
-          bg: 'white',
-          borderWidth: '1px',
-          borderColor: 'gray.100',
-          rounded: '2xl',
-          shadow: 'sm',
-          transition: 'all',
-          overflow: 'hidden',
-          _hover: { shadow: '2xl', transform: 'translateY(-4px)' },
-        })}`}
-      >
+      <article className={`${vstack()} ${cardClass}`}>
+        {/* Image with featured tool overlay (on hover) */}
         <NavLink
-          to={`${url.stories}/${slug}`}
+          to={storyUrl}
           className={css({
-            display: 'block',
             position: 'relative',
-            mb: 4,
+            aspectRatio: '16/10',
+            overflow: 'hidden',
+            rounded: '2xl',
+            bg: 'gray.50',
+            mb: '4',
+            display: 'block',
+            w: 'full',
+            flexShrink: 0,
           })}
         >
-          <div
-            className={css({
-              overflow: 'hidden',
-              height: '280px',
-              roundedTop: 'xl',
-            })}
-          >
-            <img
-              src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
-              alt={item.name}
-              loading={index < 4 ? 'eager' : 'lazy'}
-              decoding="async"
-              width={340}
-              height={280}
-              {...({ fetchpriority: index < 2 ? 'high' : 'auto' } as any)}
-              className={css({
+          <img
+            src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
+            alt=""
+            aria-hidden="true"
+            loading={index < 4 ? 'eager' : 'lazy'}
+            decoding="async"
+            width={600}
+            height={375}
+            className={cx(
+              'main-img',
+              css({
                 w: 'full',
                 h: 'full',
                 objectFit: 'cover',
-                objectPosition: 'center',
-                filter: 'brightness(0.75)',
-                transition: 'filter 0.3s ease',
-              })}
-            />
-          </div>
-          <div
-            className={css({
-              position: 'absolute',
-              bottom: 0,
-              right: '16px',
-              transform: 'translateY(50%)',
-              bg: 'ocobo.dark',
-              px: 4,
-              py: 3,
-              rounded: 'lg',
-            })}
-          >
-            <img
-              src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-              alt={item.name}
-              loading="lazy"
-              decoding="async"
-              width={60}
-              height={28}
-              className={css({
-                w: '60px',
-                h: '28px',
-                objectFit: 'contain',
-              })}
-            />
-          </div>
-        </NavLink>
-
-        <div className={css({ px: '6' })}>
-          <h2
-            className={cx(
-              speakerTextClass,
-              css({
-                color: 'ocobo.dark',
-                pr: '60px',
+                filter: 'grayscale(100%)',
+                opacity: 0.8,
               }),
             )}
-          >
-            {item.speaker}
-          </h2>
-          <p
+          />
+          {featuredTool?.iconUrl ? (
+            <div
+              className={cx(
+                'logo-overlay',
+                css({
+                  position: 'absolute',
+                  bottom: '4',
+                  right: '4',
+                  bg: 'ocobo.dark',
+                  p: '3',
+                  rounded: 'xl',
+                  shadow: '2xl',
+                  opacity: 0,
+                  transform: 'translateY(8px)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                }),
+              )}
+            >
+              <img
+                src={featuredTool.iconUrl}
+                alt={featuredTool.name}
+                loading="lazy"
+                decoding="async"
+                width={28}
+                height={28}
+                className={css({
+                  h: '7',
+                  w: '7',
+                  objectFit: 'contain',
+                })}
+              />
+            </div>
+          ) : null}
+        </NavLink>
+
+        {/* Content */}
+        <div className={`${vstack()} ${css({ flexGrow: 1, w: 'full' })}`}>
+          {/* Company eyebrow */}
+          <div className={hstack({ gap: '2', mb: '2' })}>
+            <span
+              className={css({
+                fontSize: 'xs',
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
+                color: 'ocobo.dark',
+              })}
+            >
+              {item.name}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2
             className={css({
-              fontStyle: 'italic',
-              color: 'gray.600',
-              fontSize: 'sm',
+              fontFamily: 'display',
+              fontSize: '2xl',
+              fontWeight: 'bold',
+              color: 'ocobo.dark',
+              lineHeight: 'tight',
+              mb: '2',
+              letterSpacing: 'tight',
             })}
           >
-            {item.role}
-          </p>
+            <NavLink
+              to={storyUrl}
+              className={css({
+                transition: 'colors',
+                _hover: { color: 'black' },
+              })}
+            >
+              {item.title}
+            </NavLink>
+          </h2>
+
+          {/* Speaker + client logo */}
+          <div
+            className={hstack({
+              gap: '3',
+              alignItems: 'center',
+              mb: '4',
+              w: 'full',
+            })}
+          >
+            <div
+              className={css({
+                bg: 'ocobo.dark',
+                px: '3',
+                py: '2',
+                rounded: 'lg',
+                flexShrink: 0,
+                display: 'inline-flex',
+                alignItems: 'center',
+              })}
+            >
+              <img
+                src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+                alt={item.name}
+                loading="lazy"
+                decoding="async"
+                width={96}
+                height={32}
+                className={css({
+                  h: '6',
+                  w: 'auto',
+                  maxW: '24',
+                  objectFit: 'contain',
+                })}
+              />
+            </div>
+            <div className={css({ flex: 1, minW: 0 })}>
+              <span
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: 'widest',
+                  color: 'ocobo.dark',
+                  opacity: 0.6,
+                  display: 'block',
+                })}
+              >
+                {item.speaker}
+              </span>
+              <span
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'medium',
+                  color: 'gray.400',
+                })}
+              >
+                {item.role}
+              </span>
+            </div>
+          </div>
+
+          {/* Tool chips */}
+          {resolvedTools.length > 0 ? (
+            <div
+              className={css({
+                w: 'full',
+                mb: '4',
+                pt: '3',
+                borderTopWidth: '1px',
+                borderColor: 'gray.100',
+              })}
+            >
+              <span
+                className={css({
+                  display: 'block',
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.3em',
+                  color: 'gray.400',
+                  mb: '2',
+                })}
+              >
+                {t('clients.techStack')}
+              </span>
+              <div className={hstack({ gap: '2', flexWrap: 'wrap' })}>
+                {resolvedTools.map((tool) => (
+                  <span
+                    key={tool.slug}
+                    className={css({
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '1.5',
+                      fontSize: 'xs',
+                      fontWeight: 'bold',
+                      color: 'gray.700',
+                      borderWidth: '1px',
+                      borderColor: 'gray.200',
+                      rounded: 'full',
+                      px: '2.5',
+                      py: '1',
+                      bg: 'gray.50',
+                    })}
+                  >
+                    {tool.iconUrl ? (
+                      <img
+                        src={tool.iconUrl}
+                        alt=""
+                        aria-hidden="true"
+                        width={12}
+                        height={12}
+                        loading="lazy"
+                        decoding="async"
+                        className={css({
+                          w: '[12px]',
+                          h: '[12px]',
+                          objectFit: 'contain',
+                        })}
+                      />
+                    ) : null}
+                    {tool.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {/* Read more */}
+          <div className={css({ mt: 'auto' })}>
+            <NavLink
+              to={storyUrl}
+              className={`${hstack({ gap: '2' })} ${css({
+                fontSize: 'xs',
+                fontWeight: 'black',
+                textTransform: 'uppercase',
+                letterSpacing: 'widest',
+                color: 'gray.400',
+                display: 'inline-flex',
+              })}`}
+            >
+              {t('see_more')}
+              <ArrowRight
+                size={14}
+                className={cx(
+                  'arrow',
+                  css({ color: 'gray.300', flexShrink: 0 }),
+                )}
+              />
+            </NavLink>
+          </div>
         </div>
-
-        <p
-          className={css({
-            px: '6',
-            color: 'gray.700',
-            lineClamp: 3,
-            lineHeight: 'relaxed',
-          })}
-        >
-          {item.title}
-        </p>
-
-        <p
-          className={css({
-            fontSize: 'sm',
-            px: '6',
-            pb: '6',
-            mt: 'auto',
-          })}
-        >
-          <NavLink to={`${url.stories}/${slug}`} className={linkClass}>
-            {t('see_more')}
-          </NavLink>
-        </p>
       </article>
     );
   },

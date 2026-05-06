@@ -5,7 +5,7 @@
  * and manages the configuration for different environments.
  */
 
-import { config as markdocConfig } from '../config';
+import { createMarkdocConfig } from '../config';
 import { getPrivateEnvVars } from '../env.server';
 import { FilesystemContentSource } from './sources/filesystem';
 import { GitHubContentSource } from './sources/github';
@@ -77,7 +77,7 @@ export function createContentSource(): ContentSource {
             timeout: 5000,
             batchSize: 10,
           },
-          markdocConfig,
+          markdocConfig: createMarkdocConfig,
         },
         githubBranch,
       );
@@ -90,7 +90,7 @@ export function createContentSource(): ContentSource {
         filesystem: {
           basePath: localeRepoAPIUrl,
         },
-        markdocConfig,
+        markdocConfig: createMarkdocConfig,
       });
   }
 }

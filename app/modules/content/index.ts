@@ -67,12 +67,16 @@ export {
   loadMemberRegistry,
   resolveAuthor,
   resolveMember,
+  resolveTeam,
 } from './members';
 export type {
   Member,
   MemberRegistry,
   ResolvedAuthor,
 } from './members';
+
+export { fetchTools, loadToolRegistry, resolveTool } from './tools';
+export type { Tool, ToolRegistry } from './tools';
 
 // Type exports
 export type {

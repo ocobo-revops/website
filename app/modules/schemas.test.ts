@@ -32,8 +32,7 @@ describe('Zod Schemas Validation', () => {
       role: 'CEO',
       duration: '3 months',
       scopes: ['Digital Transformation', 'Process Automation'],
-      tags: ['enterprise', 'automation'],
-      tools: ['React', 'Node.js', 'AWS'],
+      tools: ['hubspot', 'notion'],
       quotes: ['This changed everything for us'],
       deliverables: ['Web Application', 'Mobile App'],
       youtubeId: 'dQw4w9WgXcQ',
@@ -144,6 +143,45 @@ describe('Zod Schemas Validation', () => {
         expect(result.error.issues[0].message).toContain(
           'Must be a valid date string',
         );
+      }
+    });
+
+    it('strips tags from parsed output (field retired)', () => {
+      const dataWithTags = { ...validStoryData, tags: ['CRM', 'Process'] };
+      const result = StoryFrontmatterSchema.safeParse(dataWithTags);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect((result.data as Record<string, unknown>).tags).toBeUndefined();
+      }
+    });
+
+    it('accepts team as an optional array of slugs', () => {
+      const data = {
+        ...validStoryData,
+        team: ['benjamin-boileux', 'aude-cadiot'],
+      };
+      const result = StoryFrontmatterSchema.safeParse(data);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.team).toEqual(['benjamin-boileux', 'aude-cadiot']);
+      }
+    });
+
+    it('accepts featuredTool as an optional slug string', () => {
+      const data = { ...validStoryData, featuredTool: 'hubspot' };
+      const result = StoryFrontmatterSchema.safeParse(data);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.featuredTool).toBe('hubspot');
+      }
+    });
+
+    it('parses successfully when both team and featuredTool are absent', () => {
+      const result = StoryFrontmatterSchema.safeParse(validStoryData);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.team).toBeUndefined();
+        expect(result.data.featuredTool).toBeUndefined();
       }
     });
   });
@@ -257,7 +295,6 @@ describe('Zod Schemas Validation', () => {
           role: 'CEO',
           duration: '30 min',
           scopes: [],
-          tags: [],
           tools: [],
           quotes: [],
           deliverables: [],
@@ -291,7 +328,6 @@ describe('Zod Schemas Validation', () => {
           role: 'CEO',
           duration: '30 min',
           scopes: [],
-          tags: [],
           tools: [],
           quotes: [],
           deliverables: [],
@@ -368,7 +404,6 @@ describe('Zod Schemas Validation', () => {
         role: 'CEO',
         duration: '30 min',
         scopes: ['valid', '', 'also valid'], // Empty string should fail
-        tags: [],
         tools: [],
         quotes: [],
         deliverables: [],

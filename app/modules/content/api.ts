@@ -46,8 +46,9 @@ export class GenericContentFetcher {
     path: string,
     slug: string,
     validator: ContentValidator<T>,
+    locale?: string,
   ): Promise<ContentResult<MarkdocFile<T>>> {
-    return this.contentSource.fetchSingle(path, slug, validator);
+    return this.contentSource.fetchSingle(path, slug, validator, locale);
   }
 
   /**
@@ -56,8 +57,9 @@ export class GenericContentFetcher {
   async fetchMultiple<T>(
     path: string,
     validator: ContentValidator<T>,
+    locale?: string,
   ): Promise<ContentResult<MarkdocFile<T>[]>> {
-    return this.contentSource.fetchMultiple(path, validator);
+    return this.contentSource.fetchMultiple(path, validator, locale);
   }
 
   /**
@@ -74,32 +76,32 @@ export class GenericContentFetcher {
  * Specific content type fetchers for backward compatibility
  */
 export class StoryFetcher extends GenericContentFetcher {
-  async fetchStory(path: string, slug: string = '') {
-    return this.fetchSingle(path, slug, ContentValidators.story);
+  async fetchStory(path: string, slug: string = '', locale?: string) {
+    return this.fetchSingle(path, slug, ContentValidators.story, locale);
   }
 
-  async fetchStories(path: string) {
-    return this.fetchMultiple(path, ContentValidators.story);
+  async fetchStories(path: string, locale?: string) {
+    return this.fetchMultiple(path, ContentValidators.story, locale);
   }
 }
 
 export class BlogpostFetcher extends GenericContentFetcher {
-  async fetchBlogpost(path: string, slug: string = '') {
-    return this.fetchSingle(path, slug, ContentValidators.blogpost);
+  async fetchBlogpost(path: string, slug: string = '', locale?: string) {
+    return this.fetchSingle(path, slug, ContentValidators.blogpost, locale);
   }
 
-  async fetchBlogposts(path: string) {
-    return this.fetchMultiple(path, ContentValidators.blogpost);
+  async fetchBlogposts(path: string, locale?: string) {
+    return this.fetchMultiple(path, ContentValidators.blogpost, locale);
   }
 }
 
 export class PageFetcher extends GenericContentFetcher {
-  async fetchPage(path: string, slug: string = '') {
-    return this.fetchSingle(path, slug, ContentValidators.page);
+  async fetchPage(path: string, slug: string = '', locale?: string) {
+    return this.fetchSingle(path, slug, ContentValidators.page, locale);
   }
 
-  async fetchPages(path: string) {
-    return this.fetchMultiple(path, ContentValidators.page);
+  async fetchPages(path: string, locale?: string) {
+    return this.fetchMultiple(path, ContentValidators.page, locale);
   }
 }
 
@@ -117,12 +119,12 @@ export const genericFetcher = new GenericContentFetcher();
  */
 export async function fetchStory(slug: string = '', language: string = 'fr') {
   const path = `stories/${language}`;
-  return storyFetcher.fetchStory(path, slug);
+  return storyFetcher.fetchStory(path, slug, language);
 }
 
 export async function fetchStories(language: string = 'fr') {
   const path = `stories/${language}`;
-  return storyFetcher.fetchStories(path);
+  return storyFetcher.fetchStories(path, language);
 }
 
 export async function fetchBlogpost(
@@ -130,30 +132,39 @@ export async function fetchBlogpost(
   language: string = 'fr',
 ) {
   const path = `blog/${language}`;
-  return blogpostFetcher.fetchBlogpost(path, slug);
+  return blogpostFetcher.fetchBlogpost(path, slug, language);
 }
 
 export async function fetchBlogposts(language: string = 'fr') {
   const path = `blog/${language}`;
-  return blogpostFetcher.fetchBlogposts(path);
+  return blogpostFetcher.fetchBlogposts(path, language);
 }
 
-export async function fetchPage(path: string, slug: string = '') {
-  return pageFetcher.fetchPage(path, slug);
+export async function fetchPage(
+  path: string,
+  slug: string = '',
+  language: string = 'fr',
+) {
+  return pageFetcher.fetchPage(path, slug, language);
 }
 
-export async function fetchPages(path: string) {
-  return pageFetcher.fetchPages(path);
+export async function fetchPages(path: string, language: string = 'fr') {
+  return pageFetcher.fetchPages(path, language);
 }
 
 export async function fetchJobs(language = 'fr') {
   const path = `jobs/${language}`;
-  return genericFetcher.fetchMultiple(path, ContentValidators.job);
+  return genericFetcher.fetchMultiple(path, ContentValidators.job, language);
 }
 
 export async function fetchJob(slug: string, language = 'fr') {
   const path = `jobs/${language}`;
-  return genericFetcher.fetchSingle(path, slug, ContentValidators.job);
+  return genericFetcher.fetchSingle(
+    path,
+    slug,
+    ContentValidators.job,
+    language,
+  );
 }
 
 /**
@@ -163,13 +174,15 @@ export async function fetchContent<T>(
   path: string,
   slug: string,
   validator: ContentValidator<T>,
+  locale?: string,
 ): Promise<ContentResult<MarkdocFile<T>>> {
-  return genericFetcher.fetchSingle(path, slug, validator);
+  return genericFetcher.fetchSingle(path, slug, validator, locale);
 }
 
 export async function fetchContents<T>(
   path: string,
   validator: ContentValidator<T>,
+  locale?: string,
 ): Promise<ContentResult<MarkdocFile<T>[]>> {
-  return genericFetcher.fetchMultiple(path, validator);
+  return genericFetcher.fetchMultiple(path, validator, locale);
 }

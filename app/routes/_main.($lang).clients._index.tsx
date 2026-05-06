@@ -10,17 +10,18 @@ import { Hero, StoryList } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
 import { Loader } from '~/components/ui/Loader';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchStories } from '~/modules/content';
+import { fetchStories, loadToolRegistry, resolveTool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
+import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { getImageOgFullPath } from '~/utils/url';
 
 export const loader = createHybridLoader(
-  async ({ request }: LoaderFunctionArgs) => {
-    const url = new URL(request.url);
-    const tag = url.searchParams.get('tag');
-
-    const [status, state, storiesData] = await fetchStories();
+  async ({ params, request }: LoaderFunctionArgs) => {
+    const [[status, state, storiesData], toolRegistry] = await Promise.all([
+      fetchStories(getLang(params)),
+      loadToolRegistry(),
+    ]);
 
     // Handle errors gracefully
     if (status !== 200 || !storiesData) {
@@ -34,18 +35,25 @@ export const loader = createHybridLoader(
 
     const entries = storiesData as MarkdocFile<StoryFrontmatter>[];
 
-    // Filter and sort stories
-    const filteredEntries = tag
-      ? entries.filter((entry) => entry.frontmatter.tags.includes(tag))
-      : entries;
-
-    const stories = filteredEntries
+    const stories = entries
       .map((entry) => ({
         ...entry,
         _sortDate: new Date(entry.frontmatter.date).getTime(),
       }))
       .sort((a, b) => b._sortDate - a._sortDate)
-      .map(({ _sortDate, ...entry }) => entry);
+      .map(({ _sortDate, ...entry }) => {
+        const resolvedTools = entry.frontmatter.tools
+          .map((slug) => resolveTool(slug, toolRegistry))
+          .filter((tool): tool is NonNullable<typeof tool> => tool !== null);
+        return {
+          ...entry,
+          featuredTool: resolveTool(
+            entry.frontmatter.featuredTool ?? entry.frontmatter.tools[0] ?? '',
+            toolRegistry,
+          ),
+          resolvedTools,
+        };
+      });
 
     return {
       stories,

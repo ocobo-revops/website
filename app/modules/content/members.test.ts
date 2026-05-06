@@ -12,6 +12,7 @@ import {
   loadMemberRegistry,
   resolveAuthor,
   resolveMember,
+  resolveTeam,
 } from './members';
 
 vi.mock('./api', () => ({
@@ -308,5 +309,43 @@ describe('fetchMembers', () => {
       'team',
       expect.objectContaining({ typeName: 'Member' }),
     );
+  });
+});
+
+describe('resolveTeam', () => {
+  const registry: MemberRegistry = {
+    'benjamin-boileux': member({ slug: 'benjamin-boileux', name: 'Benjamin' }),
+    'aude-cadiot': member({ slug: 'aude-cadiot', name: 'Aude' }),
+    'corentin-guerin': member({
+      slug: 'corentin-guerin',
+      name: 'Corentin',
+      displayOrder: 3,
+    }),
+  };
+
+  it('resolves known slugs to Member entries', () => {
+    const result = resolveTeam(['benjamin-boileux', 'aude-cadiot'], registry);
+    expect(result.map((m) => m.name)).toEqual(['Benjamin', 'Aude']);
+  });
+
+  it('skips unknown slugs gracefully', () => {
+    const result = resolveTeam(['benjamin-boileux', 'unknown-slug'], registry);
+    expect(result).toHaveLength(1);
+    expect(result[0].slug).toBe('benjamin-boileux');
+  });
+
+  it('returns empty array for empty slug list', () => {
+    expect(resolveTeam([], registry)).toEqual([]);
+  });
+
+  it('preserves input ordering', () => {
+    const result = resolveTeam(
+      ['corentin-guerin', 'benjamin-boileux'],
+      registry,
+    );
+    expect(result.map((m) => m.slug)).toEqual([
+      'corentin-guerin',
+      'benjamin-boileux',
+    ]);
   });
 });

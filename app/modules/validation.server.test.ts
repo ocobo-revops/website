@@ -22,8 +22,7 @@ describe('Zod-Powered Validation Functions', () => {
       role: 'CEO',
       duration: '3 months',
       scopes: ['Digital Transformation'],
-      tags: ['enterprise'],
-      tools: ['React'],
+      tools: ['hubspot'],
       quotes: ['Great work!'],
       deliverables: ['Web App'],
     };
@@ -226,7 +225,6 @@ describe('Zod-Powered Validation Functions', () => {
           role: 'CEO',
           duration: '30 min',
           scopes: [],
-          tags: [],
           tools: [],
           quotes: [],
           deliverables: [],

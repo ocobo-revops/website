@@ -19,7 +19,11 @@ export async function loader({ params }: LoaderFunctionArgs) {
     throw redirect('/legal/confidentialite', 301);
   }
 
-  const [status, _state, page] = await fetchPage('legal', slug);
+  const [status, _state, page] = await fetchPage(
+    'legal',
+    slug,
+    getLang(params),
+  );
 
   if (status !== 200 || !page) {
     throw new Response('Not Found', { status: 404 });

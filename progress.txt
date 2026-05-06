@@ -382,3 +382,441 @@ Branch: feature/jobs-pocock (website) + feature/jobs (ocobo-posts)
 - useMenuItems jobs entry: getLocalizedPath(url.jobs), no isExternal
 - grep confirms 0 remaining Notion URL refs in app/
 - 177 tests ✅
+
+---
+
+## Feature: Stories + Blog realignment on prototype rendering
+
+Specs: GitHub #97 (parent) + #98–#105 (slices)
+Branch: feat/stories-blog-realign (off main, post-#96 merge)
+Companion content branch: ocobo-posts feat/tools-registry
+Started: 2026-05-05
+
+Slice plan (TDD, vertical, AFK):
+- #98 tools registry foundation + tool chip on story card
+- #99 story schema migration (drop tags, add team + featuredTool)
+- #100 TOC extraction + active-section hook
+- #101 blog index visual realign
+- #102 team resolution on story detail (blocked by #99)
+- #103 stories index visual realign (blocked by #98)
+- #104 stories detail visual realign (blocked by #98 #99 #102)
+- #105 blog detail visual realign (blocked by #100)
+
+Resumption checklist:
+1. `git switch feat/stories-blog-realign`
+2. Confirm ocobo-posts feat/tools-registry exists (`tools/` + slug-normalised stories)
+3. Pick next ⏭️ slice based on dep graph
+4. TDD per slice: red → green → commit + log entry → pause
+
+### Slice #98 — 6a46b55 (website) + ocobo-posts a4f7395
+
+Files (website):
+- app/modules/schemas.ts — ToolFrontmatterSchema (name + optional category/iconUrl/url)
+- app/modules/content/tools.ts — loadToolRegistry, resolveTool (case-insensitive),
+  fetchTools; mirrors members.ts incl. cache keyed by readContentFrom+githubBranch
+- app/modules/content/tools.test.ts — 9 tests (resolve, load, cache invalidation, fetchTools)
+- app/modules/content/index.ts — re-export tools API
+- app/routes/_main.($lang).clients._index.tsx — Promise.all(stories, registry); resolves
+  featuredTool from tools[0] (no featuredTool field yet — ships in #99)
+- app/routes/_main.($lang).clients.$slug.tsx — resolves all story tools; forwards Tool[]
+- app/components/stories/story-list.tsx — StoryListItem type with featuredTool field
+- app/components/stories/story-item.tsx — small tool chip (icon optional, name fallback)
+- app/components/stories/story-article.tsx — forwards resolvedTools to metas
+- app/components/stories/story-metas.tsx — renders display names from resolved tools
+  (falls back to raw slug if registry empty)
+
+Files (ocobo-posts):
+- tools/ — 16 entries (Aircall, BigQuery, Gsheet, HubSpot, Hyperline, Lemlist, Modjo,
+  Notion, Odoo, Outreach, Planhat, Qobra, Salesforce, Tableau, Vitally, Zendesk)
+  with name + category; iconUrl deferred (content-author work)
+- stories/fr/*.md (16 files) — tool references rewritten to slugs;
+  Hubspot/HubSpot collapsed onto single `hubspot` slug
+
+Decisions:
+- Lookup is case-insensitive (resolveTool falls back to lowered slug) so legacy
+  display-name references degrade rather than break during the migration window
+- Icon URLs absent for now — chip renders name-only when no iconUrl; full icon
+  upload is content-author follow-up, not blocking the slice
+- Detail aside fix bundled here (was a regression of the slug normalisation, not a
+  separate concern) — slice #104 will redesign the aside entirely
+
+Surprises:
+- Story detail aside renders item.tools verbatim — slug normalisation in content
+  required loader-side resolution to keep display names. Fixed inline.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 214 ✅ (+9 new tests)
+
+Next ⏭️ slice: #99 (no blocker, parallel candidate with #100, #101)
+
+### Slice #99 — b850ffe (website) + ocobo-posts 93b8ffd
+
+Files (website):
+- app/modules/schemas.ts — removed tags, added team?/featuredTool? to StoryFrontmatterSchema
+- app/modules/schemas.test.ts — updated fixture, 5 new tests (strip tags, team, featuredTool, defaults)
+- app/modules/validation.server.test.ts — fixture cleanup
+- app/components/stories/story-metas.tsx — removed tags rendering block
+- app/routes/_main.($lang).clients._index.tsx — removed ?tag= filter code path
+
+Files (ocobo-posts):
+- stories/fr/*.md (16 files) — tags field removed entirely
+
+Decisions:
+- Zod strips unknown fields by default → existing story YAMLs with tags pass validation
+  silently (no error, no output field). No need for strict mode.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 218 ✅ (+5 new tests, +2 fixture fixes)
+
+Next ⏭️ slice: #100 (TOC extraction, no blocker) or #101 (blog index, no blocker)
+
+### Slice #100 — 83396d3
+
+Files:
+- app/modules/content/toc.ts — extractToc() + slugify() (French diacritics via \p{M})
+- app/modules/content/toc.test.ts — 13 tests (h2-only, h2+h3, maxLevel, accents, idempotent, explicit id)
+- app/modules/config.ts — heading transform auto-generates id from text when no {% #id %}
+- app/hooks/use-active-section.ts — IntersectionObserver hook, rootMargin -70% bottom
+- app/routes/_main.blog.$slug.tsx — loader: extractToc(Markdoc.parse(article.markdown)), forwards toc
+- app/components/blog/blog-article.tsx — BlogToc in aside above PostMetas
+- app/components/blog/blog-toc.tsx — sticky TOC, active-section highlight
+
+Decisions:
+- TOC extracted from raw AST (article.markdown re-parsed) — no type changes to MarkdocFile
+- slugify uses \p{M} Unicode property to strip diacritics (no hand-rolled range, Biome-safe)
+- heading config transform generates matching ids server-side so anchor links resolve
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 231 ✅ (+13 new)
+
+### Slice #101 — 52147eb
+
+Files:
+- app/components/blog/blog-hero.tsx — sky.light header, badge + display-xl title + description
+- app/routes/_main.blog._index.tsx — added BlogHero, removed tag URL-filter code path
+- locales/{fr,en}/blog.json — hero.badge / hero.title / hero.description
+
+Decisions:
+- Blog still has tags in schema but no tab UI; loader simplified to sort-only
+- Direct component imports (no barrel) per coding standards
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 231 ✅
+
+Next ⏭️ slice: #102 (team resolution on story detail, unblocked by #99) or #103 (stories index visual realign, unblocked by #98) or #105 (blog detail visual realign, unblocked by #100)
+
+### Slice #102 — 0241a4b
+
+Files:
+- app/modules/content/members.ts — resolveTeam(slugs[], registry) → Member[]
+- app/modules/content/members.test.ts — 4 new tests (valid list, unknown skip, empty, ordering)
+- app/modules/content/index.ts — export resolveTeam
+- app/routes/_main.($lang).clients.$slug.tsx — fetch memberRegistry in parallel, resolve team, forward
+- app/components/stories/story-article.tsx — forward resolvedTeam to StoryMetas
+- app/components/stories/story-metas.tsx — team section with UsersIcon + Avatar circles (32px)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅ (+4 new)
+
+### Slice #103 — c2ce730
+
+Files:
+- app/routes/_main.($lang).clients._index.tsx — use frontmatter.featuredTool over tools[0]
+- app/components/stories/hero.tsx — add mint badge (clients.badge key)
+- locales/{fr,en}/common.json — clients.badge added; EN description.items fixed (was in FR)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅
+
+### Slice #104 — e50ebcf
+
+Files:
+- app/components/stories/story-header.tsx — dark rotated card (rotate -3deg) + display-xl title
+- app/components/stories/story-metas.tsx — 'Process & Outils' label strip (mint, uppercase)
+- app/components/stories/story-quote-block.tsx — rotated avatar (3deg) + italic first quote + speaker cite
+- app/components/stories/story-article.tsx — StoryQuoteBlock wired at end of main
+- locales/{fr,en}/common.json — clients.processAndTools added
+
+Decisions:
+- StorySpeaker removed from header; speaker identity shown only in bottom quote block
+- First quote item.quotes[0] used; renders nothing if array empty
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 235 ✅
+
+### Slice #105 — cf126ab
+
+Files:
+- app/modules/content/toc.ts — extractFirstParagraph() added
+- app/modules/content/toc.test.ts — 4 new tests
+- app/routes/_main.blog.$slug.tsx — loader simplified (no member registry), intro extracted, direct import
+- app/components/blog/blog-article.tsx — PostMetas removed from aside; italic intro block in main
+- app/components/blog/post-header.tsx — centred hero: tag badges + date + read + giant title + image
+
+Decisions:
+- PostMetas (author sidebar) removed entirely — author context moved to intro/header
+- BlogToc + LayoutPost CTA = full aside content now
+- intro = exerpt ?? firstParagraph ?? null
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅ (+4 new)
+
+All 8 slices of feat/stories-blog-realign complete ✅
+PR opened, then visual review against prototype screenshots showed structural
+slices ≠ prototype's actual visual treatment. Issues filed:
+- #107 tools registry iconUrl backfill (needs-info)
+- #108 visual realignment (ready-for-agent, 8 sub-slices)
+
+---
+
+## Feature: Visual realignment with prototype (#108)
+
+Specs: github.com/ocobo-revops/website#108
+Branch: feat/stories-blog-realign (continued — same PR)
+Created: 2026-05-05
+
+Reference:
+- Deployed proto: prototype-seven-delta.vercel.app
+- Source: github.com/ocobo-revops/prototype (Panda CSS, same palette as website)
+
+Resumption checklist:
+1. Read top-of-file Codebase Patterns
+2. Read #108 issue body for slice list
+3. Pick next ⏭️ slice
+4. One commit + log entry per slice + pause for feedback
+
+### Slice #108-1 — 38c1a96 / reverted in 95266bb
+
+Initial attempt: added per-story `accent: yellow|mint` field + static class maps.
+Reverted after visual review — prototype's per-story accent variation is too
+subtle to read on actual screenshots. Decision: mint everywhere, no schema
+field, no content backfill.
+
+Files: schemas.ts (revert), schemas.test.ts (revert), story-accent.ts (deleted)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅
+
+### Open rules for upcoming slices
+
+- **Aside layout** — when rebuilding (slice #108-3), keep label+value
+  groups left-flushed inside each row. Prototype has them centered, which
+  looks awkward; left-flush is the correct ferrage for our website.
+
+### Slice #108-2 — f736206
+
+Files:
+- app/components/stories/story-header.tsx — two-col layout, logo card rotate(2deg) + hover unrotation
+- app/components/stories/story-article.tsx — Breadcrumb → ArrowLeft back link
+- locales/fr|en/common.json — added clients.back key
+
+Decisions:
+- Description paragraph kept below title (no segment badge — out of scope per #97)
+- Logo height h:12 with maxW:32 to keep size reasonable across logos
+- Prototype uses rotate(2deg) not -3deg (signed diff from previous shipped)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 239 ✅
+
+Next ⏭️ slice #108-3: story aside rebuild (label structure left-flush,
+dark Process & Outils header, mint tools chips).
+
+### Fixes post-108-2 — 69c86b3 / 5ee6dae / f0c9322 / 0a378fa / e50acc9
+
+Visual review against actual screenshots:
+- Description removed from hero (proto has none) — 69c86b3
+- Hero spacing exact from local proto: gap:16, mb:24, logo col w:1/3
+  pt:20 justifyContent:end, img h:10 — 5ee6dae
+- Back link exact: mb:12, color:gray.400, hover→ocobo.dark,
+  transition:colors, ArrowLeft size=14 mr:2 — f0c9322
+- Layout: back link + StoryHeader above LayoutPost.Root; ScrollProgressBar
+  removed from story detail route — 0a378fa
+- Container: maxW 70rem → 7xl (80rem), px base:4/sm:6/lg:8 — e50acc9
+  NOTE: global change, verify other pages visually after merge
+
+Key pattern: use LOCAL prototype at ~/projects/ocobo/prototype/
+for all future spacing/token lookups — faster than GitHub API, exact values.
+
+Resumption checklist for next session:
+1. Branch: feat/stories-blog-realign (PR open)
+2. Local proto ref: ~/projects/ocobo/prototype/pages/StoryDetail.tsx
+3. Next: slice #108-3 aside rebuild
+4. Aside proto source: StoryDetail.tsx ~line 558 (grid section with aside)
+
+### Slice #108-3 — 818d331
+
+Files:
+- app/components/stories/story-metas.tsx — rebuilt: white card (rounded-3xl, shadow-sm),
+  display-font header, icon-in-gray-square rows (duration/team/scopes/techStack), tool chips
+- app/components/stories/story-metas.test.ts — 3 unit tests for prepareToolEntries (TDD)
+- app/components/stories/story-deliverables.tsx — rebuilt: dark card (ocobo.dark, blur deco,
+  check-list with hover mint transition)
+- app/components/stories/story-article.tsx — drop slug prop from StoryMetas
+- locales/{fr,en}/common.json — clients.duration/team/techStack/scopes added
+
+Decisions:
+- Scopes row kept (not in proto but meaningful content) with MessageSquare icon
+- Logo image removed from aside (no longer used)
+- prepareToolEntries extracted as named export for testability
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅ (+3 new)
+
+Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-4 — e30399b
+
+Files:
+- app/components/stories/story-markdown-container.tsx — h2 display/3xl/black/uppercase; h3 display/2xl/bold; p gray.700 + relaxed
+- app/components/stories/story-quote-block.tsx — gray.50 card, grayscale-rotate avatar, display-font speaker name/role
+- app/components/stories/story-cta-block.tsx — NEW: yellow ocobo.yellow block, dots radial pattern, eyebrow/h2/ButtonLink
+- app/components/stories/story-article.tsx — StoryCtaBlock wired after LayoutPost.Root
+- locales/{fr,en}/common.json — clients.cta.eyebrow/title added
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Next ⏭️ remaining #108 slices: story index vertical cards, blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-5 — 9becd83
+
+Files:
+- app/components/stories/story-item.tsx — rebuilt: horizontal card (dark logo panel left md+, company eyebrow, display-font title, speaker·role, featured tool chip, read-more arrow)
+- app/components/stories/story-list.tsx — grid 1-col (base/md/lg) → 2-col (xl), gap 8
+
+Decisions:
+- No per-story accent (dark everywhere)
+- Logo panel: dark bg, white logo, fixed w:64 on md+
+- No image overlay (old pattern removed entirely)
+- 4px ocobo.dark top border
+- TDD note: pure visual, no extractable logic → implement directly, no unit test
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Next ⏭️ remaining #108 slices: blog index eyebrow, blog detail hero, TOC active styling
+
+### Slice #108-6 — 7d7eebe
+
+Files:
+- app/components/blog/blog-hero.tsx — coral eyebrow span (not badge), white bg, bottom-border separator, 5xl title explicit
+- locales/{fr,en}/blog.json — hero.badge → hero.eyebrow, value → "RevOps Library"
+
+Decisions:
+- bg white (was sky.light) to match prototype
+- Proper noun "RevOps Library" kept same in both locales
+- No filter tabs (out of scope)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Slice #108-7 — d2d21be
+
+Files:
+- app/components/blog/post-header.tsx — coral badge (tags[0]), black 6xl title, Calendar ocobo.yellow + Clock ocobo.sky metadata, maxW:4xl centred
+- app/components/blog/blog-article.tsx — ArrowLeft back link above LayoutPost (was inside content col), coral em-dash prefix on intro
+
+Decisions:
+- Share rail removed from scope (proto-faithful realign does not include share buttons; revisit in a future content-distribution slice if needed)
+- Hero image kept (not in prototype but not explicitly removed in issue)
+- Back link pattern matches story-article (gray.400, uppercase, widest, xs, hover ocobo.dark)
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Slice #108-8 — 8fc0a8d
+
+Files:
+- app/components/blog/blog-toc.tsx — per-link borderLeft 2px, active: ocobo.yellow + translateX(4px) + bold ocobo.dark, inactive: gray.100 + gray.400
+
+Decisions:
+- Removed wrapper left border (moved to per-link)
+- Static class maps (linkBase/linkInactive/linkActive) — Panda static analysis safe
+- TDD note: pure visual, no extractable logic → implement directly
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+All #108 slices complete ✅
+
+### Visual feedback fixes — eeaf816 / cc1b33d / 7ef9a62
+
+User review after #108 slices identified 4 gaps vs prototype:
+
+1. **ScrollProgressBar** (eeaf816) — removed from blog detail route
+2. **Blog sidebar CTA** (eeaf816) — LayoutPost Aside CTA rebuilt as dark ocobo.dark card
+   (yellow blur deco, display-font title, gray.400 description, yellow CTA button).
+   i18n: contact.sidebar.{title,description,cta} added fr+en.
+3. **Blog index featured hero** (cc1b33d) — blog-list.tsx: items[0] shown as full-width
+   featured dark card (image left, yellow "À la une" badge, title, description, white pill CTA),
+   rest in 3-col grid. i18n: featured.badge added fr+en.
+4. **Stories index cards** (7ef9a62) — story-item.tsx rebuilt: vertical card matching
+   prototype (grayscale avatar photo 16:10, hover logo overlay in dark box, company eyebrow,
+   display-font title, speaker+role, tool chip). Grid reverted to 1/2/3-col.
+   No KPI strip (out of scope decision maintained).
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Heroes realign — bf8dbc0
+
+User review showed stories + blog index heroes didn't match prototype (wrong bg, wrong badge, wrong title text/size).
+
+Files:
+- app/components/stories/hero.tsx — white bg (was mint.light), yellow badge (was mint), 4xl-5xl-6xl title with lineHeight:0.95/letterSpacing:tight, flex layout (removed 12-col grid + Illustration PNGs)
+- app/components/blog/blog-hero.tsx — title updated to match proto ("Explorez la science du revenu."), description updated
+- locales/fr/common.json — clients.badge → "Success Stories", clients.title → "Ils ont choisi l'architecture.", clients.description flat string (removed .items array with Trans/HTML)
+- locales/en/common.json — same structure, clients.title → "They chose architecture."
+- locales/fr/blog.json — hero.title/description updated
+- locales/en/blog.json — hero.title/description updated
+
+Decisions:
+- Stories hero: illustration PNGs (radar SVG + satellite cards) deferred — not in current scope
+- clients.description.items (Trans array) → flat clients.description string (no HTML markup needed)
+- lineHeight: 0.95 + letterSpacing: tight for display heading — matches prototype tight stacking
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+Feature #108 complete ✅ — branch feat/stories-blog-realign ready for visual review
+
+### Tools-on-cards (f8331df + posts 0254c4e)
+
+User feedback: featured tool icon above image, all tools as chips into the card.
+
+Posts (`ocobo/posts`, branch `feat/tools-registry`, commit 0254c4e):
+- Added `featuredTool: <slug>` to 16 FR stories per user mapping
+- Mapping: citron→hubspot, combo→planhat, cybelangel→salesforce, ekodev→hubspot,
+  epack→qobra, jus-mundi→hyperline, qare→zendesk, qobra→salesforce, qonto→salesforce,
+  resilience→planhat, steeple→hubspot, tomorro→hubspot, vibe-co→salesforce,
+  vizzia→hubspot, wecandoo→hubspot, yousign→salesforce
+- Resilience: featuredTool=planhat even though tools list lacks planhat (chip list only
+  shows tools[]; featured can highlight a different tool)
+
+Website (commit f8331df):
+- app/routes/_main.($lang).clients._index.tsx — loader resolves all tools per story
+  (resolvedTools: Tool[]) in addition to featuredTool
+- app/components/stories/story-list.tsx — StoryListItem type extended; passes resolvedTools
+- app/components/stories/story-item.tsx — featured tool icon+name above image (small row);
+  "Tech Stack" chip list below content (one chip per tool, with iconUrl-when-present)
+
+Decisions:
+- iconUrl currently unused on tool frontmatters (issue #107 tracks populating it). Layout
+  is structurally ready — icons drop in automatically once #107 lands.
+- Reused existing i18n key `clients.techStack` for section label (no new keys).
+- Featured tool can differ from tools[] list — frontmatter contract documented above.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 242 ✅
+
+### Tool icons — interim PNG via Vercel Blob (56cabb6 + posts b37d2ca)
+
+#107 stays open (proper SVG pass) but interim icons unblock today's cards.
+
+Approach: option 2 from Vercel-Blob-vs-public-CDN tradeoff — self-host on the
+existing blob store, no third-party flakiness, 100% control of URLs.
+
+Website (commit 56cabb6):
+- scripts/upload-tool-icons.js — uploads /public/logos/<slug>.<ext> →
+  content/tools/<slug>.<ext> on Vercel Blob, filtered by tool registry slugs
+- Pattern mirrors scripts/migrate-to-blob.js (put with addRandomSuffix:false,
+  allowOverwrite:true)
+- Run: `node --env-file=.env scripts/upload-tool-icons.js`
+
+Posts (`ocobo/posts`, branch `feat/tools-registry`, commit b37d2ca):
+- iconUrl populated on 7 tools: hubspot, lemlist, planhat, qobra, salesforce,
+  tableau, zendesk
+- Remaining 9 (aircall, bigquery, gsheet, hyperline, modjo, notion, odoo,
+  outreach, vitally) keep iconUrl null → text fallback
+
+Coverage: 5 of 6 distinct featuredTool slugs across 16 stories now have icons
+(hubspot, planhat, salesforce, qobra, zendesk). Hyperline → text.
+
+Decisions:
+- PNG accepted as interim (sourced from existing /public/logos/). #107 remains
+  the right place to track the SVG sourcing pass + dark-bg variant.
+- Upload script was kept generic — drop SVGs into /public/logos/ later, re-run,
+  done. No script change needed.
+
+Checks: pnpm check ✅ pnpm typecheck ✅

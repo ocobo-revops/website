@@ -111,7 +111,7 @@ const ClientCarousel: React.FunctionComponent<{
         className={css({
           bg: 'dark',
           color: 'white',
-          py: { base: '6', lg: '10' },
+          py: { base: '4' },
           textAlign: 'center',
         })}
       >
@@ -155,7 +155,11 @@ const ClientCarousel: React.FunctionComponent<{
                 key={item.src + i}
                 className={css({
                   w: itemWidth,
+                  h: '40px',
                   flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 })}
               >
                 <img
@@ -164,10 +168,10 @@ const ClientCarousel: React.FunctionComponent<{
                   loading="lazy"
                   decoding="async"
                   className={css({
-                    maxH: '60px',
+                    maxH: '30px',
+                    maxW: 'full',
                     w: 'auto',
-                    display: 'block',
-                    mx: 'auto',
+                    objectFit: 'contain',
                   })}
                 />
               </li>

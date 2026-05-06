@@ -1,9 +1,9 @@
 import { css, cx } from '@ocobo/styled-system/css';
+import { flex } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
-import { StoryFrontmatter } from '~/types';
-
-import { StorySpeaker } from './story-speaker';
+import { ASSETS_BASE_URL } from '~/config/assets';
+import type { StoryFrontmatter } from '~/types';
 
 interface StoryHeaderProps {
   item: StoryFrontmatter;
@@ -16,23 +16,53 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
 }) => {
   return (
     <header
-      className={css({
-        mb: '8',
-      })}
+      className={`${flex({ direction: { base: 'column', lg: 'row' }, gap: '16', align: 'start' })} ${css({ mb: '24' })}`}
     >
-      <h1
-        className={cx(
-          text({ variant: 'display-heading', color: 'dark' }),
-          css({
-            fontSize: { base: '2xl', md: '3xl', lg: '4xl' },
-            color: 'ocobo.dark',
-            letterSpacing: 'tight',
-          }),
-        )}
+      <div className={css({ lg: { w: '2/3' } })}>
+        <h1
+          className={cx(
+            text({ variant: 'display-xl', color: 'dark' }),
+            css({
+              fontSize: { base: '4xl', md: '5xl', lg: '6xl' },
+              letterSpacing: 'tight',
+              lineHeight: '0.95',
+            }),
+          )}
+        >
+          {item.title}
+        </h1>
+      </div>
+
+      <div
+        className={`${flex()} ${css({ lg: { w: '1/3', justifyContent: 'end', pt: '20' } })}`}
       >
-        {item.title}
-      </h1>
-      <StorySpeaker item={item} slug={slug} />
+        <div
+          className={css({
+            bg: 'ocobo.dark',
+            p: '8',
+            rounded: '3xl',
+            shadow: '2xl',
+            transform: 'rotate(2deg)',
+            transition: 'transform',
+            transitionDuration: '500ms',
+            _hover: { transform: 'rotate(0deg)' },
+          })}
+        >
+          <img
+            src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
+            alt={item.name}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className={css({
+              h: '10',
+              w: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            })}
+          />
+        </div>
+      </div>
     </header>
   );
 };

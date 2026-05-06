@@ -5,6 +5,7 @@
  * replacing the individual fs/fetchMarkdownFile(s).server.ts files.
  */
 
+import type { Config } from '@markdoc/markdoc';
 import fs from 'fs/promises';
 import type { MarkdocFile } from '~/types';
 
@@ -25,13 +26,14 @@ import type {
 export class FilesystemContentSource implements ContentSource {
   constructor(
     private config: NonNullable<ContentSourceConfig['filesystem']>,
-    private markdocConfig: any,
+    private markdocConfigFactory: (locale: string) => Config,
   ) {}
 
   async fetchSingle<T>(
     path: string,
     slug: string,
     validator: ContentValidator<T>,
+    locale: string = 'fr',
   ): Promise<ContentResult<MarkdocFile<T>>> {
     const fullPath = `${this.config.basePath}/${path}`;
     const filePath = constructFilePath(fullPath, slug);
@@ -46,7 +48,7 @@ export class FilesystemContentSource implements ContentSource {
         file,
         slug,
         validator,
-        this.markdocConfig,
+        this.markdocConfigFactory(locale),
         {
           respectIgnoreFlag: false, // Single file fetch shouldn't respect ignore
           context: `Filesystem:${validator.typeName}`,
@@ -92,6 +94,7 @@ export class FilesystemContentSource implements ContentSource {
   async fetchMultiple<T>(
     path: string,
     validator: ContentValidator<T>,
+    locale: string = 'fr',
   ): Promise<ContentResult<MarkdocFile<T>[]>> {
     const fullPath = `${this.config.basePath}/${path}`;
 
@@ -121,7 +124,7 @@ export class FilesystemContentSource implements ContentSource {
               file,
               slug,
               validator,
-              this.markdocConfig,
+              this.markdocConfigFactory(locale),
               {
                 respectIgnoreFlag: true, // Respect ignore flag in batch operations
                 context: `Filesystem:${validator.typeName}:Batch`,

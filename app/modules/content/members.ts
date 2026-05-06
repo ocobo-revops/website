@@ -33,6 +33,15 @@ export function resolveMember(
   return registry[slug] ?? null;
 }
 
+export function resolveTeam(
+  slugs: string[],
+  registry: MemberRegistry,
+): Member[] {
+  return slugs
+    .map((slug) => registry[slug] ?? null)
+    .filter((m): m is Member => m !== null);
+}
+
 export function resolveAuthor(
   slug: string,
   registry: MemberRegistry,

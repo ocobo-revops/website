@@ -70,8 +70,7 @@ export function NavItemWithDropdown({
         <Menu.Content
           className={css({
             w: '380px',
-            bg: 'white/95',
-            backdropFilter: 'blur(12px)',
+            bg: 'white',
             rounded: '3xl',
             p: '2',
             shadow: 'soft-lg',

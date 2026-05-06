@@ -96,6 +96,7 @@ export const tokens = defineTokens({
     'bounce-subtle': { value: 'bounce-subtle 3s ease-in-out infinite' },
     'spin-slow': { value: 'spin-slow 20s linear infinite' },
     'radar-sweep': { value: 'radar-sweep 10s linear infinite' },
+    pulse: { value: 'pulse 2s cubic-bezier(0.4,0,0.6,1) infinite' },
     'marquee-ultra-slow': {
       value: 'marquee-ultra-slow 90s linear infinite',
     },

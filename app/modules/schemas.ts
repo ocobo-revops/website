@@ -68,11 +68,14 @@ export const StoryFrontmatterSchema = z.object({
   /** Project scopes/areas covered */
   scopes: CommonSchemas.stringArray,
 
-  /** Categorization tags */
-  tags: CommonSchemas.stringArray,
-
-  /** Tools and technologies used */
+  /** Tools and technologies used (stored as registry slugs) */
   tools: CommonSchemas.stringArray,
+
+  /** Optional: team member slugs for progressive enrichment */
+  team: z.array(CommonSchemas.nonEmptyString).optional(),
+
+  /** Optional: primary tool slug surfaced on the index card */
+  featuredTool: CommonSchemas.nonEmptyString.optional(),
 
   /** Key quotes from the client */
   quotes: CommonSchemas.stringArray,
@@ -171,6 +174,20 @@ export const MemberFrontmatterSchema = z.object({
 });
 
 /**
+ * Tool frontmatter schema — one file per tool in `tools/<slug>.md`
+ *
+ * The slug (filename) is the canonical identifier referenced from story
+ * frontmatters. Casing duplicates (`Hubspot` / `HubSpot`) collapse to a single
+ * registry entry by sharing the same slug.
+ */
+export const ToolFrontmatterSchema = z.object({
+  name: CommonSchemas.nonEmptyString,
+  category: CommonSchemas.nonEmptyString.optional(),
+  iconUrl: z.string().url().optional(),
+  url: z.string().url().optional(),
+});
+
+/**
  * Job offer frontmatter schema
  */
 export const JobFrontmatterSchema = z.object({
@@ -201,6 +218,7 @@ export type PageFrontmatter = z.infer<typeof PageFrontmatterSchema>;
 export type JobFrontmatter = z.infer<typeof JobFrontmatterSchema>;
 export type MemberFrontmatter = z.infer<typeof MemberFrontmatterSchema>;
 export type MemberColor = z.infer<typeof MemberColorSchema>;
+export type ToolFrontmatter = z.infer<typeof ToolFrontmatterSchema>;
 
 /**
  * Union type for all frontmatter types

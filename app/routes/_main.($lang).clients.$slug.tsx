@@ -1,13 +1,16 @@
 import { type LoaderFunctionArgs, MetaFunction, data } from 'react-router';
 import { useLoaderData } from 'react-router';
 
-import { css } from '@ocobo/styled-system/css';
-
 import { StoryArticle } from '~/components/stories';
 import { Container } from '~/components/ui/Container';
-import { ScrollProgressBar } from '~/components/ui/ScrollProgressBar';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchStory } from '~/modules/content';
+import {
+  fetchStory,
+  loadMemberRegistry,
+  loadToolRegistry,
+  resolveTeam,
+  resolveTool,
+} from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -19,14 +22,28 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchStory(slug);
+    const [[status, _state, article], toolRegistry, memberRegistry] =
+      await Promise.all([
+        fetchStory(slug, getLang(params)),
+        loadToolRegistry(),
+        loadMemberRegistry(),
+      ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
     }
 
+    const resolvedTools = article.frontmatter.tools
+      .map((toolSlug) => resolveTool(toolSlug, toolRegistry))
+      .filter((t): t is NonNullable<typeof t> => t !== null);
+
+    const resolvedTeam = resolveTeam(
+      article.frontmatter.team ?? [],
+      memberRegistry,
+    );
+
     return data(
-      { article },
+      { article, resolvedTools, resolvedTeam },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -47,18 +64,16 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article } = useLoaderData<typeof loader>();
+  const { article, resolvedTools, resolvedTeam } =
+    useLoaderData<typeof loader>();
 
   return (
-    <div
-      className={css({
-        position: 'relative',
-      })}
-    >
-      <ScrollProgressBar variant="mint" />
-      <Container>
-        <StoryArticle article={article} />
-      </Container>
-    </div>
+    <Container>
+      <StoryArticle
+        article={article}
+        resolvedTools={resolvedTools}
+        resolvedTeam={resolvedTeam}
+      />
+    </Container>
   );
 }

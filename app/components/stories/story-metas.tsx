@@ -1,101 +1,177 @@
-import { MessageSquareTextIcon, TimerIcon, WrenchIcon } from 'lucide-react';
+import {
+  ClockIcon,
+  CpuIcon,
+  MessageSquareTextIcon,
+  UsersIcon,
+} from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
-import { flex } from '@ocobo/styled-system/patterns';
-import { card } from '@ocobo/styled-system/recipes';
+import { flex, vstack } from '@ocobo/styled-system/patterns';
 
-import { ASSETS_BASE_URL } from '~/config/assets';
+import type { Member, Tool } from '~/modules/content';
 import { StoryFrontmatter } from '~/types';
+
+interface ToolEntry {
+  key: string;
+  label: string;
+}
+
+function prepareToolEntries(
+  resolvedTools: Tool[] | undefined,
+  rawTools: string[],
+): ToolEntry[] {
+  if (resolvedTools && resolvedTools.length > 0) {
+    return resolvedTools.map((t) => ({ key: t.slug, label: t.name }));
+  }
+  return rawTools.map((slug) => ({ key: slug, label: slug }));
+}
 
 interface StoryMetasProps extends React.HTMLAttributes<HTMLDivElement> {
   item: StoryFrontmatter;
-  slug: string;
+  resolvedTools?: Tool[];
+  resolvedTeam?: Member[];
 }
 
-const iconSizeLg = css({ h: '6', w: '6' });
+const iconBoxStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  w: '10',
+  h: '10',
+  bg: 'gray.50',
+  rounded: 'xl',
+  color: 'ocobo.dark',
+  flexShrink: '0',
+});
 
-const sectionStyle = css({
-  bg: 'mint.light',
-  borderColor: 'mint',
-  borderBottom: 'thin',
-  p: 6,
-  _last: {
-    borderBottom: 'none',
-  },
+const rowLabelStyle = css({
+  fontSize: 'xs',
+  fontWeight: 'black',
+  color: 'gray.400',
+  textTransform: 'uppercase',
+  letterSpacing: 'widest',
+  mb: '0.5',
+});
+
+const rowValueStyle = css({
+  fontSize: 'sm',
+  fontWeight: 'bold',
+  color: 'ocobo.dark',
+});
+
+const chipStyle = css({
+  fontSize: 'xs',
+  fontWeight: 'bold',
+  bg: 'white',
+  borderWidth: '1px',
+  borderColor: 'gray.100',
+  px: '2',
+  py: '0.5',
+  rounded: 'sm',
+  color: 'gray.500',
 });
 
 const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
   item,
-  slug,
+  resolvedTools,
+  resolvedTeam = [],
   className,
   ...props
-}) => {
+}: StoryMetasProps) => {
+  const { t } = useTranslation();
+  const toolEntries = prepareToolEntries(resolvedTools, item.tools);
+  const teamDisplay = resolvedTeam.map((m) => m.name).join(', ');
+
   return (
     <div
-      className={`${card({ padding: 'md', radius: 'md', tone: 'white', border: true })} ${css({ mb: 8, padding: '0', overflow: 'hidden' })}${className ? ` ${className}` : ''}`}
+      className={`${css({
+        bg: 'white',
+        borderWidth: '1px',
+        borderColor: 'gray.100',
+        p: '10',
+        rounded: '3xl',
+        shadow: 'sm',
+        mb: '6',
+      })}${className ? ` ${className}` : ''}`}
       {...props}
     >
-      <img
-        src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
-        alt={item.name}
+      <h4
         className={css({
-          bg: 'mint.dark',
-          p: 4,
-          width: '100%',
-          height: 'auto',
+          fontFamily: 'display',
+          fontWeight: 'black',
+          fontSize: 'xs',
+          textTransform: 'uppercase',
+          letterSpacing: '0.4em',
+          color: 'ocobo.dark',
+          mb: '8',
         })}
-      />
+      >
+        {t('clients.processAndTools')}
+      </h4>
 
-      <div className={sectionStyle}>
-        <ul>
-          {item.tags.map((tag) => {
-            return (
-              <li
-                key={tag}
-                className={css({
-                  fontWeight: 'bold',
-                  color: 'ocobo.dark',
-                })}
+      <div className={vstack({ gap: '8', alignItems: 'start' })}>
+        <div className={flex({ gap: '5', align: 'center' })}>
+          <div className={iconBoxStyle}>
+            <ClockIcon size={18} />
+          </div>
+          <div>
+            <p className={rowLabelStyle}>{t('clients.duration')}</p>
+            <p className={rowValueStyle}>{item.duration}</p>
+          </div>
+        </div>
+
+        {(resolvedTeam.length > 0 || item.team) && (
+          <div className={flex({ gap: '5', align: 'center' })}>
+            <div className={iconBoxStyle}>
+              <UsersIcon size={18} />
+            </div>
+            <div>
+              <p className={rowLabelStyle}>{t('clients.team')}</p>
+              <p className={rowValueStyle}>
+                {resolvedTeam.length > 0 ? teamDisplay : item.team?.join(', ')}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {item.scopes.length > 0 && (
+          <div className={flex({ gap: '5', align: 'center' })}>
+            <div className={iconBoxStyle}>
+              <MessageSquareTextIcon size={18} />
+            </div>
+            <div>
+              <p className={rowLabelStyle}>{t('clients.scopes')}</p>
+              <ul>
+                {item.scopes.map((scope) => (
+                  <li key={scope} className={rowValueStyle}>
+                    {scope}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {toolEntries.length > 0 && (
+          <div className={flex({ gap: '5', align: 'start' })}>
+            <div className={iconBoxStyle}>
+              <CpuIcon size={18} />
+            </div>
+            <div>
+              <p className={rowLabelStyle}>{t('clients.techStack')}</p>
+              <div
+                className={`${flex({ wrap: 'wrap', gap: '2' })} ${css({ mt: '1' })}`}
               >
-                {tag}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className={sectionStyle}>
-        <div className={flex({ gap: 3 })}>
-          <TimerIcon className={iconSizeLg} />
-          {item.duration}
-        </div>
-      </div>
-      <div className={sectionStyle}>
-        <div className={flex({ gap: 3 })}>
-          <MessageSquareTextIcon className={iconSizeLg} />
-          <ul>
-            {item.scopes.map((scope) => {
-              return (
-                <li key={scope} className={css({})}>
-                  {scope}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
-      <div className={sectionStyle}>
-        <div className={flex({ gap: 3 })}>
-          <WrenchIcon className={iconSizeLg} />
-          <ul>
-            {item.tools.map((tool) => {
-              return (
-                <li key={tool} className={css({})}>
-                  {tool}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+                {toolEntries.map((tool) => (
+                  <span key={tool.key} className={chipStyle}>
+                    {tool.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -103,4 +179,4 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
 
 StoryMetas.displayName = 'StoryMetas';
 
-export { StoryMetas };
+export { StoryMetas, prepareToolEntries };

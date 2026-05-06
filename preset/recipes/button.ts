@@ -103,6 +103,19 @@ export const button = defineRecipe({
           outlineColor: 'currentColor',
         },
       },
+      yellow: {
+        bg: 'ocobo.yellow',
+        color: 'ocobo.dark',
+        shadow: 'xl',
+        _hover: {
+          bg: 'ocobo.yellow/80',
+          transform: 'translateY(-0.25rem)',
+          shadow: '2xl',
+        },
+        _focusVisible: {
+          outlineColor: 'ocobo.dark',
+        },
+      },
     },
     size: {
       sm: {

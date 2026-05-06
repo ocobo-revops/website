@@ -1,86 +1,79 @@
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { Grid, GridItem } from '@ocobo/styled-system/jsx';
-import { text } from '@ocobo/styled-system/recipes';
+import { flex } from '@ocobo/styled-system/patterns';
+import { badge } from '@ocobo/styled-system/recipes';
 
-import { Container } from '../ui/Container';
-import { Illustration } from '../ui/Illustration';
+import { StoriesIllustration } from './stories-illustration';
 
 const Hero = () => {
   const { t } = useTranslation('common');
 
-  const description = t('clients.description.items', { returnObjects: true });
-
   return (
-    <header
+    <section
       className={css({
-        mt: 24,
-        pb: 16,
-        bg: { base: 'mint.light', lg: 'transparent' },
+        pb: '20',
+        maxW: '7xl',
+        mx: 'auto',
+        px: { base: '4', sm: '6', lg: '8' },
       })}
     >
-      <Container isMobileFullWidth>
-        <Grid columns={{ base: 1, lg: 12 }} alignItems="center">
-          <GridItem className={css({ hideBelow: 'lg' })} />
-          <GridItem
-            colSpan={{ base: 1, lg: 5 }}
+      <div
+        className={flex({
+          direction: { base: 'column', lg: 'row' },
+          align: 'center',
+          justify: 'space-between',
+          gap: { base: '16', lg: '20' },
+        })}
+      >
+        <div className={css({ lg: { w: '1/2' } })}>
+          <span
+            className={cx(
+              badge({ variant: 'yellow' }),
+              css({ mb: '10', display: 'inline-block' }),
+            )}
+          >
+            {t('clients.badge')}
+          </span>
+          <h1
             className={css({
-              textAlign: { base: 'center', lg: 'left' },
-              maxWidth: { base: '2/3', lg: 'none' },
-              mx: 'auto',
+              fontFamily: 'display',
+              fontSize: { base: '5xl', md: '6xl' },
+              fontWeight: 'bold',
+              color: 'ocobo.dark',
+              mb: '10',
+              lineHeight: '0.95',
+              letterSpacing: 'tight',
+              whiteSpace: 'pre-line',
             })}
           >
-            <Illustration
-              name="stories_hero_mobile"
-              extension="png"
-              className={css({
-                hideFrom: 'lg',
-                maxWidth: '1/2',
-                mx: 'auto',
-                mt: '-50px',
-                mb: '4',
-              })}
-            />
-            <h1
-              className={cx(
-                text({ variant: 'display-sm', color: 'dark' }),
-                css({
-                  fontSize: { base: '3xl', md: '4xl', lg: '5xl' },
-                  color: 'ocobo.dark',
-                  mb: '4',
-                }),
-              )}
-            >
-              {t('clients.title')}
-            </h1>
-            <div
-              className={css({
-                pr: { base: 0, lg: '4em' },
-              })}
-            >
-              {Array.isArray(description) &&
-                description.length > 0 &&
-                description.map((item, i) => (
-                  <p key={`paragraph-${i}`}>
-                    <Trans
-                      i18nKey={item}
-                      components={[<strong key="strong" />]}
-                    />
-                  </p>
-                ))}
-            </div>
-          </GridItem>
-          <GridItem className={css({ hideBelow: 'lg' })} />
-          <GridItem
-            colSpan={{ base: 1, lg: 4 }}
-            className={css({ hideBelow: 'lg' })}
+            {t('clients.title')}
+          </h1>
+          <p
+            className={css({
+              fontSize: 'xl',
+              color: 'gray.700',
+              lineHeight: 'relaxed',
+              fontWeight: 'medium',
+              maxW: 'md',
+            })}
           >
-            <Illustration name="stories_hero_desktop" extension="png" />
-          </GridItem>
-        </Grid>
-      </Container>
-    </header>
+            {t('clients.description')}
+          </p>
+        </div>
+        <div
+          className={`${flex({
+            justify: { base: 'center', lg: 'end' },
+            align: 'center',
+          })} ${css({
+            lg: { w: '1/2' },
+            position: 'relative',
+          })}`}
+        >
+          <StoriesIllustration />
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -3,12 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
+import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 import { StoryItem } from './story-item';
 
+export type StoryListItem = MarkdocFile<StoryFrontmatter> & {
+  featuredTool?: Tool | null;
+  resolvedTools?: Tool[];
+};
+
 interface StoryListProps {
-  items: MarkdocFile<StoryFrontmatter>[];
+  items: StoryListItem[];
 }
 
 const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
@@ -41,8 +47,12 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
       className={css({
         py: { base: 6, lg: 12 },
         display: 'grid',
-        gridTemplateColumns: { base: '1fr', lg: 'repeat(3, 1fr)' },
-        gap: 10,
+        gridTemplateColumns: {
+          base: '1fr',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+        },
+        gap: 8,
         alignItems: 'stretch',
       })}
     >
@@ -53,7 +63,13 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
             position: 'relative',
           })}
         >
-          <StoryItem slug={entry.slug} item={entry.frontmatter} index={i} />
+          <StoryItem
+            slug={entry.slug}
+            item={entry.frontmatter}
+            featuredTool={entry.featuredTool ?? null}
+            resolvedTools={entry.resolvedTools ?? []}
+            index={i}
+          />
         </li>
       ))}
     </ul>

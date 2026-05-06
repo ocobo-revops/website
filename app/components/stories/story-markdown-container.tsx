@@ -4,7 +4,6 @@ import type { RenderableTreeNode } from '@markdoc/markdoc';
 import { QuoteIcon } from 'lucide-react';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { text } from '@ocobo/styled-system/recipes';
 
 import { PlayerYoutube } from '../PlayerYoutube';
 import { MarkdownContainer } from '../markdown-container';
@@ -50,37 +49,18 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h2
         {...props}
         className={css({
-          mb: '2rem',
-          position: 'relative',
-          _before: {
-            content: '""',
-            position: 'absolute',
-            bottom: '50%',
-            left: '0',
-            width: 'full',
-            height: '1px',
-            bg: 'dark',
-            zIndex: 0,
-          },
+          fontFamily: 'display',
+          fontSize: '3xl',
+          fontWeight: 'black',
+          color: 'ocobo.dark',
+          letterSpacing: 'tight',
+          textTransform: 'uppercase',
+          mt: '16',
+          mb: '6',
+          _first: { mt: '0' },
         })}
       >
-        <div />
-        <span
-          className={cx(
-            text({ variant: 'subtitle' }),
-            css({
-              display: 'inline-block',
-              p: '0.5em 1em',
-              bg: 'dark',
-              color: 'white',
-              textTransform: 'uppercase',
-              fontWeight: 'bold',
-              position: 'relative',
-            }),
-          )}
-        >
-          {children}
-        </span>
+        {children}
       </h2>
     );
   }
@@ -89,8 +69,12 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h3
         {...props}
         className={css({
-          textStyle: 'heading2',
-          maxW: { base: '100%', lg: '3/4' },
+          fontFamily: 'display',
+          fontSize: '2xl',
+          fontWeight: 'bold',
+          color: 'ocobo.dark',
+          mt: '12',
+          mb: '4',
         })}
       >
         {children}
@@ -102,8 +86,12 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       <h4
         {...props}
         className={css({
-          textStyle: 'large',
-          maxW: { base: '100%', lg: '3/4' },
+          fontFamily: 'display',
+          fontSize: 'xl',
+          fontWeight: 'bold',
+          color: 'ocobo.dark',
+          mt: '8',
+          mb: '3',
         })}
       >
         {children}
@@ -205,6 +193,8 @@ export function Paragraph({
       {...props}
       className={css({
         textStyle: 'medium',
+        color: 'gray.700',
+        lineHeight: 'relaxed',
         maxW: { base: '100%', lg: '3/4' },
       })}
     >

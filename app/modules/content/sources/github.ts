@@ -5,6 +5,7 @@
  * replacing the individual github/fetchMarkdownFile(s).server.ts files.
  */
 
+import type { Config } from '@markdoc/markdoc';
 import type { MarkdocFile } from '~/types';
 
 import { GitHubAPIError, toContentError } from '../../errors';
@@ -30,7 +31,7 @@ export class GitHubContentSource implements ContentSource {
 
   constructor(
     config: NonNullable<ContentSourceConfig['github']>,
-    private markdocConfig: any,
+    private markdocConfigFactory: (locale: string) => Config,
     branch: string = 'main',
   ) {
     this.config = config;
@@ -80,6 +81,7 @@ export class GitHubContentSource implements ContentSource {
     path: string,
     slug: string,
     validator: ContentValidator<T>,
+    locale: string = 'fr',
   ): Promise<ContentResult<MarkdocFile<T>>> {
     const filePath = constructFilePath(path, slug);
     const contentUrl = `${this.config.baseUrl}/${filePath}`;
@@ -99,7 +101,7 @@ export class GitHubContentSource implements ContentSource {
         markdown,
         slug,
         validator,
-        this.markdocConfig,
+        this.markdocConfigFactory(locale),
         {
           respectIgnoreFlag: true, // GitHub single files should respect ignore
           context: `GitHub:${validator.typeName}`,
@@ -139,6 +141,7 @@ export class GitHubContentSource implements ContentSource {
   async fetchMultiple<T>(
     path: string,
     validator: ContentValidator<T>,
+    locale: string = 'fr',
   ): Promise<ContentResult<MarkdocFile<T>[]>> {
     // First, get the list of files
     const [status, state, items] = await this.fetchMetadata(path);
@@ -157,7 +160,7 @@ export class GitHubContentSource implements ContentSource {
     for (let i = 0; i < items.length; i += this.batchSize) {
       const batch = items.slice(i, i + this.batchSize);
       const batchPromises = batch.map((item) =>
-        this.fetchSingle(path, item.slug, validator),
+        this.fetchSingle(path, item.slug, validator, locale),
       );
 
       const batchResults = await Promise.all(batchPromises);

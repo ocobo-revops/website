@@ -1,56 +1,105 @@
-import { css, cx } from '@ocobo/styled-system/css';
-import { text } from '@ocobo/styled-system/recipes';
+import { CalendarDaysIcon, ClockIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-import { BlogpostFrontmatter } from '~/types';
+import { css, cx } from '@ocobo/styled-system/css';
+import { flex } from '@ocobo/styled-system/patterns';
+import { badge, text } from '@ocobo/styled-system/recipes';
+
+import type { BlogpostFrontmatter } from '~/types';
+import { getTag } from '~/utils/labels';
+
+const formatDate = (date: string, locale: string) =>
+  new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(date));
 
 interface BlogpostHeaderProps {
   item: BlogpostFrontmatter;
 }
 
 const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language ?? 'fr';
+  const firstTag = item.tags[0];
+
   return (
     <header
       className={css({
-        mb: '8',
+        textAlign: 'center',
+        mb: '16',
+        maxW: '4xl',
+        mx: 'auto',
       })}
     >
+      {firstTag && (
+        <div className={css({ mb: '8' })}>
+          <span className={badge({ variant: 'coral' })}>
+            {getTag(firstTag)}
+          </span>
+        </div>
+      )}
+
       <h1
         className={cx(
-          text({ variant: 'display-2xl', color: 'dark' }),
+          text({ variant: 'display-xl', color: 'dark' }),
           css({
-            fontWeight: 'bold',
-            lineHeight: '0.95',
+            fontSize: { base: '3xl', md: '4xl', lg: '6xl' },
+            fontWeight: 'black',
+            letterSpacing: 'tight',
+            lineHeight: '1.05',
+            mb: '10',
           }),
         )}
       >
         {item.title}
       </h1>
 
-      <p
-        className={css({
-          fontSize: { base: 'lg', md: 'xl' },
-          color: 'gray.600',
-          fontWeight: 'medium',
-          lineHeight: 'relaxed',
-          borderLeftWidth: '4px',
-          borderColor: 'ocobo.sky',
-          pl: '6',
-          mt: '6',
-        })}
+      <div
+        className={cx(
+          flex({ gap: 8, justify: 'center', align: 'center', wrap: 'wrap' }),
+          css({
+            fontSize: 'xs',
+            fontWeight: 'bold',
+            color: 'gray.400',
+            textTransform: 'uppercase',
+            letterSpacing: 'widest',
+            mb: '10',
+          }),
+        )}
       >
-        {item.exerpt || item.description}
-      </p>
+        <span className={flex({ gap: '2', align: 'center' })}>
+          <CalendarDaysIcon
+            size={14}
+            aria-hidden="true"
+            className={css({ color: 'ocobo.yellow' })}
+          />
+          {formatDate(item.date, locale)}
+        </span>
+        <span className={flex({ gap: '2', align: 'center' })}>
+          <ClockIcon
+            size={14}
+            aria-hidden="true"
+            className={css({ color: 'ocobo.sky' })}
+          />
+          {item.read}
+        </span>
+      </div>
 
       <img
         src={item.image}
         alt=""
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         className={css({
           display: 'block',
           width: '100%',
           height: 'auto',
           objectFit: 'cover',
           borderRadius: '2xl',
-          my: 10,
+          aspectRatio: '16/7',
         })}
       />
     </header>
