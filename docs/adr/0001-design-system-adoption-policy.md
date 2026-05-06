@@ -119,7 +119,6 @@ These component files were migrated in #86–#91 but retain a small number of in
 | `app/components/offer/symptoms-section.tsx` | 1 | Symptom card number |
 | `app/components/jobs/about-ocobo-section.tsx` | 1 | h5 at `fontSize: lg` — no `text` variant at this size |
 | `app/components/jobs/detail/scrollspy-toc.tsx` | 1 | Nav label at `fontSize: xs` — too small for display variants |
-| `app/routes/_main.($lang).contact.tsx` | 1 | Contact route heading |
 
 Running `grep -rn "fontFamily.*display" app/ --include="*.tsx"` should return only the files listed in the two tables above. Any hit outside these tables is a policy violation.
 

@@ -84,7 +84,6 @@ const formScopedStyles = css({
     px: '6',
     bg: 'ocobo.dark',
     color: 'white',
-    fontFamily: 'display',
     fontWeight: 'bold',
     fontSize: 'base',
     borderRadius: 'md',
