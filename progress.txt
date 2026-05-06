@@ -932,3 +932,37 @@ field validation messages.
 
 Next ⏭️ slice: #117 (route ADR-0001 cleanup)
 
+### Slice #117 — (commit pending)
+
+Final route cleanup + ADR-0001 deferred occurrence closed.
+
+Files:
+- app/routes/_main.($lang).contact.tsx (rewritten — minimal, idiomatic)
+- app/components/contact/contact-card.tsx (drop fontFamily:'display' on
+  the .hs-button override; uses default sans + bold)
+- docs/adr/0001-design-system-adoption-policy.md (remove route row from
+  Deferred per-feature occurrences table)
+
+Decisions / deviations:
+- Dropped both Illustration placements (desktop + mobile) — prototype
+  doesn't include them; the right-column ContactCard already carries the
+  brand presence via the gradient bar.
+- Dropped the coral-tinted absolute bg div + blur child — same reason.
+- Dropped the inner xl:2/3 + mx:auto centering div around ContactCard;
+  prototype keeps the form col simple. GridItem owns the column width.
+- Outer wrapper now <section className={section()}> + <Container>; no
+  inline cx(section(), css({position:relative})) anymore.
+- Submit button override no longer carries inline fontFamily:'display'.
+  button() recipe convention is sans + semibold; my .hs-button uses
+  sans + bold (slightly heavier weight matching the prototype CTA).
+
+ADR-0001 invariant verified: contact route + contact-card.tsx no longer
+appear in `grep -rn 'fontFamily.*display' app/ --include='*.tsx'`.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: page renders fr/en, form submit →
+Distro inline calendar.
+
+Feature done — ready to push + open PR for #113.
+
