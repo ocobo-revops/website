@@ -820,3 +820,58 @@ Decisions:
   done. No script change needed.
 
 Checks: pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature: Contact page redesign (#113)
+
+Specs: github.com/ocobo-revops/website#113
+Slices: #114 → #115 → #116 → #117
+Branch: feat/contact-redesign
+Created: 2026-05-06
+
+Reference:
+- Prototype: prototype-seven-delta.vercel.app/#/contact
+- Source: ../prototype/pages/Contact.tsx
+
+Key decisions before code:
+- Form integration = option A: keep HubSpot embed + Distro untouched, restyle
+  via scoped CSS only (slices #115/#116/#117). Distro depends on the
+  hsForm_<formId> element, so .hbspt-form DOM tree must not be modified.
+- Tokens: ocobo.* already exist (preset/tokens/colors.ts) — no preset changes.
+- ADR-0001 occurrence in _main.($lang).contact.tsx resolved by slice #117.
+
+Resumption checklist:
+1. Read top-of-file Codebase Patterns
+2. Read #113 PRD + the next slice issue (#114/#115/#116/#117)
+3. One commit + log entry per slice + pause for feedback
+4. After #115/#116/#117: manual non-regression — submit form, verify Distro
+   inline calendar still appears
+
+### Slice #114 — 12acc62
+
+ContactHero left column + new i18n keys.
+
+Files:
+- app/components/contact/contact-hero.tsx (new)
+- app/routes/_main.($lang).contact.tsx (replaced left col block, dropped
+  inline Description component + obsolete title/subtitle/description handling)
+- locales/{fr,en}/contact.json (added eyebrow, lead, bullets.*, rewrote title
+  with <0> muted span; dropped obsolete subtitle + description array)
+
+Decisions / deviations:
+- iconBox recipe sizes (sm/md/xl/lg) don't include w-12/h-12 — used inline
+  css for the box layout, paired with static color maps (mint/sky/yellow) per
+  Panda CSS static-analysis memory note.
+- text() variants picked: display-label (eyebrow), display-xl (h1),
+  subtitle (lead), display-card (bullet titles), body (bullet descriptions).
+- FrenchText wraps eyebrow/lead/bullet strings; title goes through Trans for
+  the muted-span slot (no double punctuation in current copy → NBSP no-op,
+  but FrenchText future-proofs the strings).
+- ContactForm now rendered without children (mobile duplicate Description
+  was redundant with ContactHero stacking on mobile).
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Next ⏭️ slice: #115 (form chrome restyle)
+
