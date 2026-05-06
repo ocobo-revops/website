@@ -5,6 +5,7 @@ import { Container, Grid, GridItem } from '@ocobo/styled-system/jsx';
 import { section } from '@ocobo/styled-system/recipes';
 
 import { ContactForm } from '~/components/ContactForm';
+import { ContactCard } from '~/components/contact/contact-card';
 import { ContactHero } from '~/components/contact/contact-hero';
 import { Illustration } from '~/components/ui/Illustration';
 import i18nServer from '~/localization/i18n.server';
@@ -80,7 +81,9 @@ export default function Index() {
                 position: 'relative',
               })}
             >
-              <ContactForm />
+              <ContactCard>
+                <ContactForm />
+              </ContactCard>
             </div>
           </GridItem>
         </Grid>

@@ -13,6 +13,9 @@
   "bullets.zero.title": "Zero commitment",
   "bullets.zero.description": "A peer-to-peer conversation to assess if a collaboration makes sense.",
 
+  "card.heading": "Tell us more about your challenges",
+  "consent": "By clicking, you agree to be contacted by the Ocobo team.",
+
   "form.email": "Professional e-mail",
   "form.firstname": "First name",
   "form.lastname": "Last name",

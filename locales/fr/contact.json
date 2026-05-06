@@ -13,6 +13,9 @@
   "bullets.zero.title": "Zéro engagement",
   "bullets.zero.description": "Un échange entre pairs pour valider la pertinence d'une collaboration.",
 
+  "card.heading": "Dites-nous en plus sur vos enjeux",
+  "consent": "En cliquant, vous acceptez d'être recontacté par l'équipe Ocobo.",
+
   "form.email": "E-mail professionnel",
   "form.firstname": "Prénom",
   "form.lastname": "Nom",
