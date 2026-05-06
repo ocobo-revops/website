@@ -820,3 +820,149 @@ Decisions:
   done. No script change needed.
 
 Checks: pnpm check ✅ pnpm typecheck ✅
+
+---
+
+## Feature: Contact page redesign (#113)
+
+Specs: github.com/ocobo-revops/website#113
+Slices: #114 → #115 → #116 → #117
+Branch: feat/contact-redesign
+Created: 2026-05-06
+
+Reference:
+- Prototype: prototype-seven-delta.vercel.app/#/contact
+- Source: ../prototype/pages/Contact.tsx
+
+Key decisions before code:
+- Form integration = option A: keep HubSpot embed + Distro untouched, restyle
+  via scoped CSS only (slices #115/#116/#117). Distro depends on the
+  hsForm_<formId> element, so .hbspt-form DOM tree must not be modified.
+- Tokens: ocobo.* already exist (preset/tokens/colors.ts) — no preset changes.
+- ADR-0001 occurrence in _main.($lang).contact.tsx resolved by slice #117.
+
+Resumption checklist:
+1. Read top-of-file Codebase Patterns
+2. Read #113 PRD + the next slice issue (#114/#115/#116/#117)
+3. One commit + log entry per slice + pause for feedback
+4. After #115/#116/#117: manual non-regression — submit form, verify Distro
+   inline calendar still appears
+
+### Slice #114 — 12acc62
+
+ContactHero left column + new i18n keys.
+
+Files:
+- app/components/contact/contact-hero.tsx (new)
+- app/routes/_main.($lang).contact.tsx (replaced left col block, dropped
+  inline Description component + obsolete title/subtitle/description handling)
+- locales/{fr,en}/contact.json (added eyebrow, lead, bullets.*, rewrote title
+  with <0> muted span; dropped obsolete subtitle + description array)
+
+Decisions / deviations:
+- iconBox recipe sizes (sm/md/xl/lg) don't include w-12/h-12 — used inline
+  css for the box layout, paired with static color maps (mint/sky/yellow) per
+  Panda CSS static-analysis memory note.
+- text() variants picked: display-label (eyebrow), display-xl (h1),
+  subtitle (lead), display-card (bullet titles), body (bullet descriptions).
+- FrenchText wraps eyebrow/lead/bullet strings; title goes through Trans for
+  the muted-span slot (no double punctuation in current copy → NBSP no-op,
+  but FrenchText future-proofs the strings).
+- ContactForm now rendered without children (mobile duplicate Description
+  was redundant with ContactHero stacking on mobile).
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Next ⏭️ slice: #115 (ContactCard shell)
+
+### Slice #115 — 3c77eb6
+
+ContactCard shell wrapping HubSpot embed.
+
+Files:
+- app/components/contact/contact-card.tsx (new)
+- app/routes/_main.($lang).contact.tsx (wraps ContactForm in ContactCard)
+- locales/{fr,en}/contact.json (added card.heading, consent)
+
+Decisions / deviations:
+- card() recipe gives padding md and shadow sm by default; overrode with
+  responsive p:{base:8, md:12} + shadow:card to match prototype. The "no
+  inline rounded+border+shadow combo" rule is respected — recipe owns
+  rounded+border, only shadow is overridden.
+- Heading uses display-md-bold (display, 2xl, bold) to match the prototype
+  card heading (fontSize:2xl + display + bold).
+- overflow:hidden on the card so the gradient top bar respects the rounded
+  corners (1px h bar would otherwise sit flush on the card edges).
+- ContactForm component itself untouched — Distro contract on .hbspt-form
+  preserved.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: form submit → Distro inline calendar.
+
+Next ⏭️ slice: #116 (form chrome restyle)
+
+### Slice #116 — dfd3f08
+
+Scoped CSS restyle of HubSpot embed inputs.
+
+Files:
+- app/components/contact/contact-card.tsx (added formScopedStyles block)
+
+Decisions / deviations:
+- Used Panda nested selector keys (`'& .hbspt-form input[type="text"]'`,
+  etc.) on the card root via cx(). Each selector is a separate key —
+  comma-grouped selectors avoided to keep Panda parsing predictable.
+- Shared `inputBaseStyles` const reused across input/email/tel/number/
+  select/textarea (textarea adds minHeight:32). Pure object literal
+  (with `as const`), composed into the css() call — Panda extracts the
+  literal values at build time.
+- form-columns-2 flex layout applies at `md` breakpoint via Panda
+  nested responsive keys.
+- No `!important` was needed — HubSpot's injected styles lose to our
+  scoped declarations because our class is more specific (descendant
+  combinator + class on card root).
+- Submit button uses `font: display` to match the prototype CTA; non-DS
+  but matches the rest of the dark CTA family in the codebase.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: form submit → Distro inline calendar +
+field validation messages.
+
+Next ⏭️ slice: #117 (route ADR-0001 cleanup)
+
+### Slice #117 — (commit pending)
+
+Final route cleanup + ADR-0001 deferred occurrence closed.
+
+Files:
+- app/routes/_main.($lang).contact.tsx (rewritten — minimal, idiomatic)
+- app/components/contact/contact-card.tsx (drop fontFamily:'display' on
+  the .hs-button override; uses default sans + bold)
+- docs/adr/0001-design-system-adoption-policy.md (remove route row from
+  Deferred per-feature occurrences table)
+
+Decisions / deviations:
+- Dropped both Illustration placements (desktop + mobile) — prototype
+  doesn't include them; the right-column ContactCard already carries the
+  brand presence via the gradient bar.
+- Dropped the coral-tinted absolute bg div + blur child — same reason.
+- Dropped the inner xl:2/3 + mx:auto centering div around ContactCard;
+  prototype keeps the form col simple. GridItem owns the column width.
+- Outer wrapper now <section className={section()}> + <Container>; no
+  inline cx(section(), css({position:relative})) anymore.
+- Submit button override no longer carries inline fontFamily:'display'.
+  button() recipe convention is sans + semibold; my .hs-button uses
+  sans + bold (slightly heavier weight matching the prototype CTA).
+
+ADR-0001 invariant verified: contact route + contact-card.tsx no longer
+appear in `grep -rn 'fontFamily.*display' app/ --include='*.tsx'`.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: page renders fr/en, form submit →
+Distro inline calendar.
+
+Feature done — ready to push + open PR for #113.
+

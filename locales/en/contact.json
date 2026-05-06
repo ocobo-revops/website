@@ -1,12 +1,20 @@
 {
   "meta.title": "Contact us",
   "meta.description": "Contact page description",
-  "title": "Meet a real Revenue Operations specialist. <0>Not an SDR or a BDR.</0>",
-  "subtitle": "After filling in the form, you will be asked to choose an appointment time.",
-  "description": [
-    "During our <0>first exchange</0>, we determine if, and how, we can help you.",
-    "Then, we develop for you <0>a customized plan</0>, which we will execute to achieve your goals together."
-  ],
+
+  "eyebrow": "First consultation",
+  "title": "Talk to an architect. <0>Not to a salesperson.</0>",
+  "lead": "In 30 minutes, we assess the maturity of your revenue engine and identify your immediate growth levers.",
+
+  "bullets.audit.title": "Flash audit",
+  "bullets.audit.description": "Quick diagnostic of your current processes and stack.",
+  "bullets.clarity.title": "Radical clarity",
+  "bullets.clarity.description": "Immediate strategic recommendations, no jargon.",
+  "bullets.zero.title": "Zero commitment",
+  "bullets.zero.description": "A peer-to-peer conversation to assess if a collaboration makes sense.",
+
+  "card.heading": "Tell us more about your challenges",
+  "consent": "By clicking, you agree to be contacted by the Ocobo team.",
 
   "form.email": "Professional e-mail",
   "form.firstname": "First name",
