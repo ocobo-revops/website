@@ -902,3 +902,33 @@ Manual non-regression pending: form submit → Distro inline calendar.
 
 Next ⏭️ slice: #116 (form chrome restyle)
 
+### Slice #116 — dfd3f08
+
+Scoped CSS restyle of HubSpot embed inputs.
+
+Files:
+- app/components/contact/contact-card.tsx (added formScopedStyles block)
+
+Decisions / deviations:
+- Used Panda nested selector keys (`'& .hbspt-form input[type="text"]'`,
+  etc.) on the card root via cx(). Each selector is a separate key —
+  comma-grouped selectors avoided to keep Panda parsing predictable.
+- Shared `inputBaseStyles` const reused across input/email/tel/number/
+  select/textarea (textarea adds minHeight:32). Pure object literal
+  (with `as const`), composed into the css() call — Panda extracts the
+  literal values at build time.
+- form-columns-2 flex layout applies at `md` breakpoint via Panda
+  nested responsive keys.
+- No `!important` was needed — HubSpot's injected styles lose to our
+  scoped declarations because our class is more specific (descendant
+  combinator + class on card root).
+- Submit button uses `font: display` to match the prototype CTA; non-DS
+  but matches the rest of the dark CTA family in the codebase.
+
+Checks: pnpm typecheck ✅ pnpm check ✅ pnpm test 262 ✅
+
+Manual non-regression pending: form submit → Distro inline calendar +
+field validation messages.
+
+Next ⏭️ slice: #117 (route ADR-0001 cleanup)
+
