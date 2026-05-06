@@ -12,6 +12,8 @@ import { url } from '~/utils/url';
 
 import { BlogItem } from './blog-item';
 
+import { FrenchText } from '../typography/french-text';
+
 type BlogListItem = MarkdocFile<BlogpostFrontmatter> & {
   resolvedAuthor: ResolvedAuthor;
 };
@@ -128,7 +130,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
               lineHeight: 'tight',
             })}
           >
-            {featured.frontmatter.title}
+            <FrenchText>{featured.frontmatter.title}</FrenchText>
           </h2>
           <p
             className={css({
@@ -138,7 +140,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
               fontSize: 'sm',
             })}
           >
-            {featured.frontmatter.description}
+            <FrenchText>{featured.frontmatter.description}</FrenchText>
           </p>
           <span
             className={`${flex({ align: 'center', gap: '2' })} ${css({

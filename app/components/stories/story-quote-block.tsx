@@ -4,6 +4,8 @@ import { flex } from '@ocobo/styled-system/patterns';
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { StoryFrontmatter } from '~/types';
 
+import { FrenchText } from '../typography/french-text';
+
 interface StoryQuoteBlockProps {
   item: StoryFrontmatter;
   slug: string;
@@ -73,7 +75,7 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
             mb: '4',
           })}
         >
-          {item.role}
+          <FrenchText>{item.role}</FrenchText>
         </p>
         <p
           className={css({
@@ -83,7 +85,9 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
             maxW: 'md',
           })}
         >
-          <q>{quote}</q>
+          <q>
+            <FrenchText>{quote}</FrenchText>
+          </q>
         </p>
       </div>
     </blockquote>

@@ -5,6 +5,8 @@ import { text } from '@ocobo/styled-system/recipes';
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { StoryFrontmatter } from '~/types';
 
+import { FrenchText } from '../typography/french-text';
+
 interface StoryHeaderProps {
   item: StoryFrontmatter;
   slug: string;
@@ -29,7 +31,7 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
             }),
           )}
         >
-          {item.title}
+          <FrenchText>{item.title}</FrenchText>
         </h1>
       </div>
 

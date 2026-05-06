@@ -1,6 +1,7 @@
 import type { MetaFunction } from 'react-router';
 
 import { Language } from '~/localization/resources';
+import { applyFrenchTypography } from './typography';
 
 type GetMetaTagsParams = {
   title?: string;
@@ -38,20 +39,20 @@ const getMetaTags: (params: GetMetaTagsParams) => ReturnType<MetaFunction> = ({
   type = 'website',
   locale = 'fr',
 }) => {
+  const localised = locale === 'fr' ? applyFrenchTypography : (s: string) => s;
+  const finalTitle = localised(
+    getTitle(standaloneTitle, useCatchPhraseInTitle, title),
+  );
+  const finalDescription = localised(description);
+
   const metaTags = [
-    { title: getTitle(standaloneTitle, useCatchPhraseInTitle, title) },
-    {
-      name: 'og:title',
-      content: getTitle(standaloneTitle, useCatchPhraseInTitle, title),
-    },
+    { title: finalTitle },
+    { name: 'og:title', content: finalTitle },
     { name: 'og:locale', content: locale },
-    {
-      name: 'twitter:title',
-      content: getTitle(standaloneTitle, useCatchPhraseInTitle, title),
-    },
-    { name: 'description', content: description },
-    { name: 'og:description', content: description },
-    { name: 'twitter:description', content: description },
+    { name: 'twitter:title', content: finalTitle },
+    { name: 'description', content: finalDescription },
+    { name: 'og:description', content: finalDescription },
+    { name: 'twitter:description', content: finalDescription },
     { name: 'twitter:card', content: 'summary_large_image' },
     // { name: 'twitter:site', content: '' },
     // { name: 'twitter:creator', content: '' },

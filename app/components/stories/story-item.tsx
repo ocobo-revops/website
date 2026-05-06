@@ -11,6 +11,8 @@ import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { url } from '~/utils/url';
 
+import { FrenchText } from '../typography/french-text';
+
 interface StoryItemProps {
   item: MarkdocFile<StoryFrontmatter>['frontmatter'];
   slug: string;
@@ -163,7 +165,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 _hover: { color: 'black' },
               })}
             >
-              {item.title}
+              <FrenchText>{item.title}</FrenchText>
             </NavLink>
           </h2>
 
@@ -223,7 +225,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                   color: 'gray.400',
                 })}
               >
-                {item.role}
+                <FrenchText>{item.role}</FrenchText>
               </span>
             </div>
           </div>

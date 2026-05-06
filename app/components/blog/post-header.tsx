@@ -8,6 +8,8 @@ import { badge, text } from '@ocobo/styled-system/recipes';
 import type { BlogpostFrontmatter } from '~/types';
 import { getTag } from '~/utils/labels';
 
+import { FrenchText } from '../typography/french-text';
+
 const formatDate = (date: string, locale: string) =>
   new Intl.DateTimeFormat(locale, {
     day: 'numeric',
@@ -53,7 +55,7 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
           }),
         )}
       >
-        {item.title}
+        <FrenchText>{item.title}</FrenchText>
       </h1>
 
       <div

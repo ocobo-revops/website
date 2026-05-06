@@ -12,6 +12,7 @@ import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { getTag } from '~/utils/labels';
 import { url } from '~/utils/url';
 
+import { FrenchText } from '../typography/french-text';
 import { Avatar } from '../ui/Avatar';
 import { Tag } from '../ui/Tag';
 
@@ -118,7 +119,7 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
               css({ mb: '3' }),
             )}
           >
-            {item.title}
+            <FrenchText>{item.title}</FrenchText>
           </h2>
 
           <div
@@ -165,7 +166,7 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
               lineHeight: 'relaxed',
             })}
           >
-            {item.description}
+            <FrenchText>{item.description}</FrenchText>
           </p>
         </div>
         <p
