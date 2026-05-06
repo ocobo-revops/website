@@ -5,6 +5,7 @@ import { NavLink } from 'react-router';
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 
+import type { Member } from '~/modules/content/members';
 import type { TocEntry } from '~/modules/content/toc';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
@@ -15,17 +16,20 @@ import { PostHeader } from './post-header';
 import { LayoutPost } from '../LayoutPost';
 import { PageMarkdownContainer } from '../PageMarkdownContainer';
 import { PlayerYoutube } from '../PlayerYoutube';
+import { MemberCard } from '../member/member-card';
 
 interface BlogArticleProps {
   article: MarkdocFile<BlogpostFrontmatter>;
   toc: TocEntry[];
   intro: string | null;
+  author: Member | null;
 }
 
 const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
   article,
   toc,
   intro,
+  author,
 }) => {
   const { t } = useTranslation('blog');
 
@@ -82,6 +86,30 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
               id={article.frontmatter.youtubeId}
               className={css({ mt: 8 })}
             />
+          )}
+          {author && (
+            <div
+              className={css({
+                mt: '16',
+                pt: '12',
+                borderTopWidth: '1px',
+                borderColor: 'gray.100',
+              })}
+            >
+              <div
+                className={css({
+                  fontSize: 'xs',
+                  fontWeight: 'black',
+                  textTransform: 'uppercase',
+                  letterSpacing: 'widest',
+                  color: 'gray.400',
+                  mb: '6',
+                })}
+              >
+                {t('author.heading')}
+              </div>
+              <MemberCard member={author} />
+            </div>
           )}
         </LayoutPost.Main>
       </LayoutPost.Root>

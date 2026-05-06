@@ -5,7 +5,8 @@ import Markdoc from '@markdoc/markdoc';
 import { BlogArticle } from '~/components/blog/blog-article';
 import { Container } from '~/components/ui/Container';
 import { createHybridLoader } from '~/modules/cache';
-import { fetchBlogpost } from '~/modules/content';
+import { fetchBlogpost, loadMemberRegistry } from '~/modules/content';
+import { resolveMember } from '~/modules/content/members';
 import { extractFirstParagraph, extractToc } from '~/modules/content/toc';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
@@ -22,10 +23,10 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [status, _state, article] = await fetchBlogpost(
-      slug,
-      getLang(params),
-    );
+    const [[status, _state, article], registry] = await Promise.all([
+      fetchBlogpost(slug, getLang(params)),
+      loadMemberRegistry(),
+    ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
@@ -35,9 +36,10 @@ export const loader = createHybridLoader(
     const toc = extractToc(ast);
     const intro =
       article.frontmatter.exerpt ?? extractFirstParagraph(ast) ?? null;
+    const author = resolveMember(article.frontmatter.author, registry);
 
     return data(
-      { article, toc, intro },
+      { article, toc, intro, author },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -59,12 +61,17 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { article, toc, intro } = useLoaderData<typeof loader>();
+  const { article, toc, intro, author } = useLoaderData<typeof loader>();
 
   return (
     <div>
       <Container>
-        <BlogArticle article={article} toc={toc} intro={intro} />
+        <BlogArticle
+          article={article}
+          toc={toc}
+          intro={intro}
+          author={author}
+        />
       </Container>
     </div>
   );
