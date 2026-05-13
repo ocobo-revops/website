@@ -1,5 +1,4 @@
 import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useTranslation } from 'react-i18next';
 import { type LinksFunction, type LoaderFunctionArgs } from 'react-router';
 import {
@@ -17,6 +16,7 @@ import {
   type ExternalScriptsHandle,
 } from 'remix-utils/external-scripts';
 
+import { SpeedInsightsRouted } from '~/components/speed-insights-routed';
 import styles from '~/index.css?url';
 import { getLang } from '~/utils/lang';
 
@@ -163,7 +163,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
 
         <Analytics />
-        <SpeedInsights />
+        <SpeedInsightsRouted />
       </body>
     </html>
   );
