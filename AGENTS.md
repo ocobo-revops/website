@@ -46,7 +46,7 @@ Read only the one or two documents relevant to your task — not all of them.
 
 ## Key implementation details
 
-- **UI library**: Ark UI (migrated from Radix). NavigationMenu + `@radix-ui/react-context` still on Radix.
+- **UI library**: Ark UI.
 - **Routing**: file-based via `@react-router/fs-routes`. i18n uses `($lang)` param — e.g. `_main.($lang).blog._index.tsx`
 - **i18n config**: `app/localization/i18n.ts` (client), `app/localization/i18n.server.ts` (server)
 - **Markdoc config**: `app/modules/config.ts`
