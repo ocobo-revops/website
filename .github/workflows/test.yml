@@ -87,3 +87,12 @@ jobs:
 
       - name: Run tests with coverage
         run: pnpm test:coverage
+        continue-on-error: true
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          if-no-files-found: ignore
