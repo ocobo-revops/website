@@ -1,15 +1,10 @@
-import {
-  ClockIcon,
-  CpuIcon,
-  MessageSquareTextIcon,
-  UsersIcon,
-} from 'lucide-react';
+import { ClockIcon, CpuIcon, MessageSquareTextIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex, vstack } from '@ocobo/styled-system/patterns';
 
-import type { Member, Tool } from '~/modules/content';
+import type { Tool } from '~/modules/content';
 import { StoryFrontmatter } from '~/types';
 
 interface ToolEntry {
@@ -30,7 +25,6 @@ function prepareToolEntries(
 interface StoryMetasProps extends React.HTMLAttributes<HTMLDivElement> {
   item: StoryFrontmatter;
   resolvedTools?: Tool[];
-  resolvedTeam?: Member[];
 }
 
 const iconBoxStyle = css({
@@ -75,13 +69,11 @@ const chipStyle = css({
 const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
   item,
   resolvedTools,
-  resolvedTeam = [],
   className,
   ...props
 }: StoryMetasProps) => {
   const { t } = useTranslation();
   const toolEntries = prepareToolEntries(resolvedTools, item.tools);
-  const teamDisplay = resolvedTeam.map((m) => m.name).join(', ');
 
   return (
     <div
@@ -120,20 +112,6 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
             <p className={rowValueStyle}>{item.duration}</p>
           </div>
         </div>
-
-        {(resolvedTeam.length > 0 || item.team) && (
-          <div className={flex({ gap: '5', align: 'center' })}>
-            <div className={iconBoxStyle}>
-              <UsersIcon size={18} />
-            </div>
-            <div>
-              <p className={rowLabelStyle}>{t('clients.team')}</p>
-              <p className={rowValueStyle}>
-                {resolvedTeam.length > 0 ? teamDisplay : item.team?.join(', ')}
-              </p>
-            </div>
-          </div>
-        )}
 
         {item.scopes.length > 0 && (
           <div className={flex({ gap: '5', align: 'center' })}>

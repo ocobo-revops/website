@@ -15,6 +15,7 @@ import { StoryHeader } from './story-header';
 import { StoryMarkdownContainer } from './story-markdown-container';
 import { StoryMetas } from './story-metas';
 import { StoryQuoteBlock } from './story-quote-block';
+import { StoryTeamBlock } from './story-team-block';
 
 import { LayoutPost } from '../LayoutPost';
 import { PlayerYoutube } from '../PlayerYoutube';
@@ -59,7 +60,6 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
           <StoryMetas
             item={article.frontmatter}
             resolvedTools={resolvedTools}
-            resolvedTeam={resolvedTeam}
             className={css({
               hideBelow: 'lg',
             })}
@@ -76,6 +76,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
             />
           )}
           <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
+          <StoryTeamBlock members={resolvedTeam} />
         </LayoutPost.Main>
       </LayoutPost.Root>
 

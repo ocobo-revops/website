@@ -37,7 +37,7 @@
   "clients.deliverables": "Livrables de la mission",
   "clients.processAndTools": "Process & Outils",
   "clients.duration": "Durée",
-  "clients.team": "Équipe",
+  "clients.team.heading": "L'équipe Ocobo sur cette mission",
   "clients.techStack": "Tech Stack",
   "clients.scopes": "Périmètre",
   "clients.cta.eyebrow": "Votre futur système",
