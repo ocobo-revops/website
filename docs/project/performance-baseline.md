@@ -29,53 +29,15 @@ Same URLs used for every re-measurement. If any of routes 3/5/6 disappears, repl
 
 ### PageSpeed Insights API (lab + CrUX in one call)
 
-Get an API key at https://developers.google.com/speed/docs/insights/v5/get-started, then export it:
+Get an API key at https://developers.google.com/speed/docs/insights/v5/get-started, export it, then run the committed scripts in `scripts/perf/`:
 
 ```bash
 export PSI_KEY=<your-key>
+bash scripts/perf/baseline-run.sh        # dumps /tmp/psi-*.json (6 files)
+bash scripts/perf/baseline-extract.sh    # prints metrics as JSON, one block per URL
 ```
 
-Run the baseline script (mobile profile):
-
-```bash
-for url in \
-  "https://www.ocobo.co/" \
-  "https://www.ocobo.co/blog" \
-  "https://www.ocobo.co/blog/structurer-la-croissance-pour-liberer-la-vente-exemple-surfe" \
-  "https://www.ocobo.co/jobs" \
-  "https://www.ocobo.co/fr/jobs/revenue-operations-manager" \
-  "https://www.ocobo.co/clients/ekodev"; do
-  slug=$(echo "$url" | sed 's|https://www.ocobo.co||' | tr -c 'a-zA-Z0-9' '_' | sed 's|^_||;s|_$||')
-  [ -z "$slug" ] && slug="home"
-  curl -sG "https://www.googleapis.com/pagespeedonline/v5/runPagespeed" \
-    --data-urlencode "url=$url" \
-    --data-urlencode "strategy=mobile" \
-    --data-urlencode "category=performance" \
-    --data-urlencode "key=$PSI_KEY" \
-    -o "/tmp/psi-$slug.json"
-  echo "$slug → /tmp/psi-$slug.json"
-done
-```
-
-Extract the key metrics:
-
-```bash
-for f in /tmp/psi-*.json; do
-  echo "=== $f ==="
-  jq -r '{
-    score: .lighthouseResult.categories.performance.score,
-    lcp_ms: .lighthouseResult.audits["largest-contentful-paint"].numericValue,
-    cls: .lighthouseResult.audits["cumulative-layout-shift"].numericValue,
-    fcp_ms: .lighthouseResult.audits["first-contentful-paint"].numericValue,
-    ttfb_ms: .lighthouseResult.audits["server-response-time"].numericValue,
-    tbt_ms: .lighthouseResult.audits["total-blocking-time"].numericValue,
-    crux_lcp_p75: .loadingExperience.metrics.LARGEST_CONTENTFUL_PAINT_MS.percentile,
-    crux_cls_p75: .loadingExperience.metrics.CUMULATIVE_LAYOUT_SHIFT_SCORE.percentile,
-    crux_inp_p75: .loadingExperience.metrics.INTERACTION_TO_NEXT_PAINT.percentile,
-    crux_ttfb_p75: .loadingExperience.metrics.EXPERIENCE_FIRST_CONTENTFUL_PAINT_MS.percentile
-  }' "$f"
-done
-```
+See `scripts/perf/README.md` for details.
 
 ### Local Lighthouse CLI (alternative, no API key)
 
