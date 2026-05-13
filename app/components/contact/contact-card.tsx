@@ -87,7 +87,7 @@ const formScopedStyles = css({
     fontWeight: 'bold',
     fontSize: 'base',
     borderRadius: 'md',
-    borderWidth: '0',
+    border: 'none',
     cursor: 'pointer',
     boxShadow: 'xl',
     transition: 'background 0.2s, box-shadow 0.2s, transform 0.2s',
@@ -109,10 +109,8 @@ export const ContactCard = ({ children }: ContactCardProps) => {
   return (
     <div
       className={cx(
-        card({ padding: 'lg', tone: 'white', border: true }),
+        card({ padding: 'xl', shadow: 'card', tone: 'white', border: true }),
         css({
-          p: { base: '8', md: '12' },
-          shadow: 'card',
           position: 'relative',
           overflow: 'hidden',
         }),
