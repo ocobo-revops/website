@@ -10,11 +10,13 @@ import type { TocEntry } from '~/modules/content/toc';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
 
+import { selectArticleFooter } from '~/modules/article-footer';
+
 import { BlogToc } from './blog-toc';
 import { PostHeader } from './post-header';
 
 import { LayoutPost } from '../LayoutPost';
-import { PageMarkdownContainer } from '../PageMarkdownContainer';
+import { AushaPlayer, PageMarkdownContainer } from '../PageMarkdownContainer';
 import { PlayerYoutube } from '../PlayerYoutube';
 import { MemberCard } from '../member/member-card';
 
@@ -81,9 +83,17 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
             </p>
           )}
           <PageMarkdownContainer content={article.content} />
-          {article.frontmatter.youtubeId && (
+          {selectArticleFooter(article.frontmatter) === 'youtube' && (
             <PlayerYoutube
-              id={article.frontmatter.youtubeId}
+              id={article.frontmatter.youtubeId!}
+              className={css({ mt: 8 })}
+            />
+          )}
+          {selectArticleFooter(article.frontmatter) === 'podcast' && (
+            <AushaPlayer
+              podcastId={article.frontmatter.podcastId}
+              showId={article.frontmatter.podcastShowId}
+              title={t('player.podcast.title')}
               className={css({ mt: 8 })}
             />
           )}
