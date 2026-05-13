@@ -3,36 +3,51 @@
  * This file runs before all test files and sets up global test environment
  */
 
-import { beforeEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import { toHaveNoViolations } from 'jest-axe';
+import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from 'vitest';
 
-// Mock environment variables for tests
+import { server } from './msw/server';
+
+expect.extend(toHaveNoViolations);
+
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' });
+});
+
 beforeEach(() => {
-  // Reset all mocks before each test
   vi.clearAllMocks();
 
-  // Set default environment variables for tests
   process.env.NODE_ENV = 'test';
   process.env.GITHUB_ACCOUNT = 'test-account';
   process.env.GITHUB_REPO = 'test-repo';
   process.env.GITHUB_ACCESS_TOKEN = 'test-token';
 });
 
-// Global test utilities
+afterEach(() => {
+  cleanup();
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
+});
+
 (global as any).mockConsole = () => {
   const originalConsole = { ...console };
 
   beforeEach(() => {
     vi.spyOn(console, 'log').mockImplementation(() => {
-      // Mock console.log for testing
+      // suppress noise in tests
     });
     vi.spyOn(console, 'error').mockImplementation(() => {
-      // Mock console.error for testing
+      // suppress noise in tests
     });
     vi.spyOn(console, 'warn').mockImplementation(() => {
-      // Mock console.warn for testing
+      // suppress noise in tests
     });
     vi.spyOn(console, 'debug').mockImplementation(() => {
-      // Mock console.debug for testing
+      // suppress noise in tests
     });
   });
 
