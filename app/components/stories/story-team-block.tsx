@@ -39,8 +39,8 @@ const StoryTeamBlock: React.FunctionComponent<StoryTeamBlockProps> = ({
       </h2>
       <div
         className={css({
-          display: 'grid',
-          gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)' },
+          display: 'flex',
+          flexDirection: 'column',
           gap: '6',
         })}
       >
