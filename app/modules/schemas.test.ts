@@ -233,6 +233,43 @@ describe('Zod Schemas Validation', () => {
         }
       }
     });
+
+    it('should accept a valid 12-char alphanumeric podcastId', () => {
+      const result = BlogpostFrontmatterSchema.safeParse({
+        ...validBlogData,
+        podcastId: '4Pg3gfj8z0gx',
+      });
+      expect(result.success).toBe(true);
+    });
+
+    it('should accept a valid 12-char alphanumeric podcastShowId', () => {
+      const result = BlogpostFrontmatterSchema.safeParse({
+        ...validBlogData,
+        podcastShowId: 'wN6XqFGL519L',
+      });
+      expect(result.success).toBe(true);
+    });
+
+    it('should reject podcastId with wrong length', () => {
+      const result = BlogpostFrontmatterSchema.safeParse({
+        ...validBlogData,
+        podcastId: 'tooshort',
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject podcastId with non-alphanumeric characters', () => {
+      const result = BlogpostFrontmatterSchema.safeParse({
+        ...validBlogData,
+        podcastId: '4Pg3gfj8z0g!',
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should treat podcastId and podcastShowId as optional', () => {
+      const result = BlogpostFrontmatterSchema.safeParse(validBlogData);
+      expect(result.success).toBe(true);
+    });
   });
 
   describe('PageFrontmatterSchema', () => {

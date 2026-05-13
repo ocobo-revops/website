@@ -34,6 +34,18 @@ const CommonSchemas = {
     .string()
     .regex(/^[a-zA-Z0-9_-]{11}$/, 'Must be a valid YouTube video ID')
     .optional(),
+
+  /** Optional Ausha podcast episode ID (12 characters alphanumeric) */
+  podcastId: z
+    .string()
+    .regex(/^[a-zA-Z0-9]{12}$/, 'Must be a valid Ausha podcast episode ID')
+    .optional(),
+
+  /** Optional Ausha podcast show ID (12 characters alphanumeric) */
+  podcastShowId: z
+    .string()
+    .regex(/^[a-zA-Z0-9]{12}$/, 'Must be a valid Ausha podcast show ID')
+    .optional(),
 } as const;
 
 /**
@@ -118,6 +130,12 @@ export const BlogpostFrontmatterSchema = z.object({
 
   /** Optional YouTube video ID for video content */
   youtubeId: CommonSchemas.youtubeId,
+
+  /** Optional Ausha podcast episode ID */
+  podcastId: CommonSchemas.podcastId,
+
+  /** Optional Ausha podcast show ID (overrides default Revenue Echoes show) */
+  podcastShowId: CommonSchemas.podcastShowId,
 });
 
 /**
