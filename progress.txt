@@ -966,3 +966,90 @@ Distro inline calendar.
 
 Feature done — ready to push + open PR for #113.
 
+---
+
+## Feature: Speed Insights route patterns (#165, PRD #120)
+
+Specs: GitHub issue #165 (parent: PRD #120 — Performance).
+Branch: feat/speed-insights-routes (merged 2026-05-13 as 96ccda9).
+
+Key decisions before code:
+- Wrap `<SpeedInsights>` in a small component that reads `useMatches()`
+  rather than wiring the pattern at each route — single source of truth.
+- Emit Next-style bracket syntax (`[slug]`, `[lang]`) for the `route` prop;
+  Vercel's Routes tab UI is tuned for that convention.
+- Collapse `($lang)` to `[lang]` so FR and EN aggregate as one bucket per
+  page (e.g. `/[lang]/blog/[slug]`), not two separate routes.
+
+Resumption checklist (closing the loop on #165):
+- 2026-05-15: open Vercel Speed Insights, Last 24h window, Routes tab.
+- Confirm ≥6 patterns split out (home, blog index/detail, jobs index/
+  detail, client story).
+- Fill per-route table in docs/project/performance-baseline.md.
+- Verify RES did not regress vs 95 mobile pre-deploy.
+- Close #165.
+
+### Slice #165-1 — cf3f7a7
+
+Wrapper + util + tests + root wiring.
+
+Files:
+- app/utils/route-pattern.ts (new — `routeIdToPattern` + `matchesToRoutePattern`)
+- app/utils/route-pattern.test.ts (new — 13 cases)
+- app/components/speed-insights-routed.tsx (new — wraps SpeedInsights with
+  useMatches-derived route prop)
+- app/root.tsx (swap bare `<SpeedInsights />` for `<SpeedInsightsRouted />`)
+
+Decisions / deviations:
+- Initial implementation used colon syntax (`/:lang?/blog/:slug`).
+- `routeIdToPattern` splits on `.` outside `[...]` escapes so bracket-
+  escaped segments like `robots[.txt]` survive intact.
+- Pathless layout segments (anything starting with `_`) and `_index` are
+  dropped before transformation.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 291 ✅
+
+Next ⏭️ slice: code review fixes (167-2).
+
+### Slice #165-2 — c621109
+
+Apply code-review feedback before merge.
+
+Files:
+- app/utils/route-pattern.ts (switch to bracket syntax + regex-driven
+  transformSegment to handle param + trailing extension combos)
+- app/utils/route-pattern.test.ts (+6 cases: bracket outputs, media.$slug,
+  _main._index, leading bracket escape, $slug[.json], ($lang)[.html])
+- app/root.tsx (import via `~/components/...` instead of `./components/...`)
+
+Decisions / deviations:
+- `$slug` → `[slug]`, `($lang)` → `[lang]` — Vercel convention. Trailing
+  bracket escapes are unwrapped via the same `unwrapEscapes` helper.
+- `matchesToRoutePattern` gained a comment noting the leaf is always
+  path-bearing under fs-routes (justifies `matches[matches.length - 1]`).
+- Template literals replace string concatenation throughout.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test 297 ✅
+
+### Live verification (post-merge, 2026-05-13)
+
+Used agent-browser to inspect `script[src*="speed-insights"]` `data-route`
+attribute on production. Confirmed mapping on real URLs:
+
+| URL                            | data-route                |
+| ------------------------------ | ------------------------- |
+| /blog                          | /blog                     |
+| /blog/structurer-…-surfe       | /blog/[slug]              |
+| /fr                            | /[lang]                   |
+| /fr/jobs                       | /[lang]/jobs              |
+| /en/about-us                   | /[lang]/about-us          |
+
+Gotcha logged for future debugging: non-existent URLs (e.g. /fr/blog —
+blog isn't locale-prefixed in this repo) hit the ErrorBoundary; matches
+collapse to `[{id:'root'}]` and the wrapper emits `/root`. Always probe
+real URLs.
+
+PR done — merged 96ccda9, lane unapplied. Awaiting 1–2 days of RUM
+data before closing #165 (see resumption checklist above).
+
+
