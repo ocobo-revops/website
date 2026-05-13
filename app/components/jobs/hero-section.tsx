@@ -113,6 +113,11 @@ export function HeroSection() {
                   <img
                     src="/images/jobs/seminaire.jpeg"
                     alt={t('hero.seminaireAlt')}
+                    width={1024}
+                    height={900}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
                     className={css({
                       w: 'full',
                       aspectRatio: '1',
@@ -136,6 +141,10 @@ export function HeroSection() {
                   <img
                     src="/images/jobs/cafet.jpeg"
                     alt={t('hero.cafetAlt')}
+                    width={1000}
+                    height={667}
+                    loading="eager"
+                    decoding="async"
                     className={css({
                       w: 'full',
                       aspectRatio: '1',

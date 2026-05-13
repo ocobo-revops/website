@@ -138,6 +138,11 @@ export const TeamPhotoIllustration = () => {
           <img
             src="/images/studio.jpg"
             alt={t('hero.photoAlt')}
+            width={4032}
+            height={3024}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className={css({
               width: 'full',
               height: 'auto',
