@@ -3,8 +3,9 @@ import type { UIMatch } from 'react-router';
 /**
  * Convert a `@react-router/fs-routes` route id (e.g.
  * `routes/_main.($lang).blog.$slug`) into a stable pattern string
- * (`/:lang?/blog/:slug`) suitable for analytics tools that expect a
- * parameterised route — Vercel Speed Insights in particular.
+ * (`/[lang]/blog/[slug]`) for analytics tools that expect a parameterised
+ * route — Vercel Speed Insights in particular. Bracket syntax matches the
+ * Next.js convention Speed Insights' Routes tab is tuned for.
  *
  * Rules:
  * - `routes/` prefix is stripped
@@ -12,9 +13,12 @@ import type { UIMatch } from 'react-router';
  *   intact)
  * - `_index` segments are dropped
  * - Pathless layout segments (`_main`, `_layout`, …) are dropped
- * - `$param` → `:param`
- * - `($param)` → `:param?` (optional)
- * - `[literal]` escapes are unwrapped (e.g. `robots[.txt]` → `robots.txt`)
+ * - `$param` → `[param]`
+ * - `($param)` → `[param]` (optional collapses to a single pattern so
+ *   FR and EN aggregate together)
+ * - `[literal]` fs-routes escapes are unwrapped (e.g. `robots[.txt]` →
+ *   `robots.txt`); param + trailing escape combos like `$slug[.json]` are
+ *   preserved as `[slug].json`
  */
 export function routeIdToPattern(id: string): string {
   const stripped = id.replace(/^routes\//, '');
@@ -24,12 +28,15 @@ export function routeIdToPattern(id: string): string {
     .map(transformSegment);
 
   if (segments.length === 0) return '/';
-  return '/' + segments.join('/');
+  return `/${segments.join('/')}`;
 }
 
 export function matchesToRoutePattern(
   matches: ReadonlyArray<Pick<UIMatch, 'id'>>,
 ): string | undefined {
+  // The leaf match is always path-bearing under `@react-router/fs-routes` —
+  // pathless layouts (`_main`, `_layout`, …) can't be a leaf because they
+  // can't own a URL. See React Router `useMatches()` semantics.
   const last = matches[matches.length - 1];
   if (!last) return undefined;
   return routeIdToPattern(last.id);
@@ -66,11 +73,13 @@ function isPathlessLayout(segment: string): boolean {
 }
 
 function transformSegment(segment: string): string {
-  if (segment.startsWith('($') && segment.endsWith(')')) {
-    return ':' + segment.slice(2, -1) + '?';
+  const optional = segment.match(/^\(\$(\w+)\)(.*)$/);
+  if (optional) {
+    return `[${optional[1]}]${unwrapEscapes(optional[2])}`;
   }
-  if (segment.startsWith('$')) {
-    return ':' + segment.slice(1);
+  const required = segment.match(/^\$(\w+)(.*)$/);
+  if (required) {
+    return `[${required[1]}]${unwrapEscapes(required[2])}`;
   }
   return unwrapEscapes(segment);
 }

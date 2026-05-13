@@ -16,11 +16,11 @@ import {
   type ExternalScriptsHandle,
 } from 'remix-utils/external-scripts';
 
+import { SpeedInsightsRouted } from '~/components/speed-insights-routed';
 import styles from '~/index.css?url';
 import { getLang } from '~/utils/lang';
 
 import { ErrorMessage } from './components/ErrorMessage';
-import { SpeedInsightsRouted } from './components/speed-insights-routed';
 import { useSetViewportHeight } from './hooks/useSetViewportHeight';
 import { getDisabledPages } from './modules/feature-flags';
 
