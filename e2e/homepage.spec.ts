@@ -22,7 +22,12 @@ test.describe('homepage golden path', () => {
 });
 
 test.describe('contact page', () => {
-  test('nav CTA navigates to /contact', async ({ page }) => {
+  test('nav CTA navigates to /contact', async ({ page }, testInfo) => {
+    // nav-cta is desktop-only (d_none lg:d_flex); mobile uses the hamburger menu
+    test.skip(
+      testInfo.project.name === 'mobile-chrome',
+      'Desktop nav CTA is hidden on mobile viewport',
+    );
     await page.goto('/');
     await page.getByTestId('nav-cta').click();
     await expect(page).toHaveURL(/\/contact/);
