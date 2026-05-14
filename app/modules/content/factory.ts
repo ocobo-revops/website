@@ -74,8 +74,8 @@ export function createContentSource(): ContentSource {
           github: {
             accessToken: githubAccessToken,
             baseUrl: githubRepoAPIUrl,
-            timeout: 5000,
-            batchSize: 10,
+            timeout: 8000,
+            batchSize: 25,
           },
           markdocConfig: createMarkdocConfig,
         },
