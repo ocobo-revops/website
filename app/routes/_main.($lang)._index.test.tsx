@@ -3,10 +3,14 @@
  *
  * Covers the three observable behaviors of `loader` in
  * `_main.($lang)._index.tsx`:
- *  1. EN happy path — `fetchStories('en')` returns 200 → testimonials emitted.
- *  2. FR happy path — `fetchStories('fr')` returns 200 → testimonials emitted.
- *  3. EN → FR fallback — `fetchStories('en')` returns ≠ 200, `fetchStories('fr')`
- *     returns 200 → testimonials still emitted from the FR result.
+ *  1. EN happy path — `fetchStories('en')` returns 200 → EN testimonials emitted.
+ *     Note: the loader fires the FR fallback in parallel (perf #153), so two
+ *     `fetchStories` calls are expected even when EN succeeds.
+ *  2. FR happy path — `fetchStories('fr')` returns 200 → testimonials emitted,
+ *     no wasted fallback call.
+ *  3. EN → FR fallback — both fetches fire concurrently; `fetchStories('en')`
+ *     returns ≠ 200 → testimonials emitted from the FR result.
+ *  4. Parallelism — both fetches register before either resolves.
  *
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
@@ -64,7 +68,15 @@ afterEach(() => {
 
 describe('homepage loader', () => {
   it('returns testimonials and EN meta when fetchStories(en) succeeds', async () => {
-    fetchStoriesMock.mockResolvedValueOnce([200, 'success', [storyEntry()]]);
+    // Loader fires EN and FR in parallel (perf #153); EN result wins because
+    // its status is 200, so testimonials reflect the EN entry.
+    fetchStoriesMock
+      .mockResolvedValueOnce([200, 'success', [storyEntry()]])
+      .mockResolvedValueOnce([
+        200,
+        'success',
+        [storyEntry({ slug: 'fr-only', quotes: ['Ignored'] })],
+      ]);
 
     const { loader } = await import('./_main.($lang)._index');
     const outcome = await invokeLoader(loader, {
@@ -72,7 +84,9 @@ describe('homepage loader', () => {
       params: { lang: 'en' },
     });
 
-    expect(fetchStoriesMock).toHaveBeenCalledExactlyOnceWith('en');
+    expect(fetchStoriesMock).toHaveBeenCalledTimes(2);
+    expect(fetchStoriesMock).toHaveBeenNthCalledWith(1, 'en');
+    expect(fetchStoriesMock).toHaveBeenNthCalledWith(2, 'fr');
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
     expect(outcome.data.title).toBe('en:meta.title');
@@ -129,6 +143,41 @@ describe('homepage loader', () => {
     if (outcome.type !== 'data') return;
     expect(outcome.data.testimonials).toHaveLength(1);
     expect(outcome.data.testimonials[0].slug).toBe('fallback');
+  });
+
+  it('fires fetchStories(lang) and fetchStories("fr") in parallel for non-FR locales', async () => {
+    // Use deferred promises so we can observe both calls fire before either
+    // resolves — sequential `await fetchStories(lang); await fetchStories('fr')`
+    // would only register the second call after the first settles.
+    let resolveEn!: (value: [number, string, unknown]) => void;
+    let resolveFr!: (value: [number, string, unknown]) => void;
+    const enPromise = new Promise<[number, string, unknown]>((r) => {
+      resolveEn = r;
+    });
+    const frPromise = new Promise<[number, string, unknown]>((r) => {
+      resolveFr = r;
+    });
+
+    fetchStoriesMock
+      .mockReturnValueOnce(enPromise)
+      .mockReturnValueOnce(frPromise);
+
+    const { loader } = await import('./_main.($lang)._index');
+    const loaderPromise = invokeLoader(loader, {
+      url: 'http://test.local/en',
+      params: { lang: 'en' },
+    });
+
+    // Let the loader run up to its first await point.
+    await new Promise((r) => setImmediate(r));
+
+    expect(fetchStoriesMock).toHaveBeenCalledTimes(2);
+    expect(fetchStoriesMock).toHaveBeenNthCalledWith(1, 'en');
+    expect(fetchStoriesMock).toHaveBeenNthCalledWith(2, 'fr');
+
+    resolveEn([200, 'success', [storyEntry()]]);
+    resolveFr([200, 'success', [storyEntry({ slug: 'fr-only' })]]);
+    await loaderPromise;
   });
 
   it('does not fall back when fetchStories("fr") returns ≠ 200 (no infinite retry)', async () => {
