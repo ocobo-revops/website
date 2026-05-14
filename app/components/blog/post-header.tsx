@@ -5,6 +5,7 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 import { badge, text } from '@ocobo/styled-system/recipes';
 
+import { OptimizedImage } from '~/components/ui/optimized-image';
 import type { BlogpostFrontmatter } from '~/types';
 import { getTag } from '~/utils/labels';
 
@@ -89,12 +90,10 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
         </span>
       </div>
 
-      <img
+      <OptimizedImage
         src={item.image}
         alt=""
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
+        priority
         className={css({
           display: 'block',
           width: '100%',
