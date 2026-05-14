@@ -1052,4 +1052,79 @@ real URLs.
 PR done — merged 96ccda9, lane unapplied. Awaiting 1–2 days of RUM
 data before closing #165 (see resumption checklist above).
 
+---
 
+## Feature: Loader test harness + homepage coverage (#131, PRD #121)
+
+Specs: gh issue #131 (PRD #121 — Testing strategy)
+Branch: feat/loader-test-harness
+Created: 2026-05-14
+Status: PR not opened yet — local lane only.
+
+Key decisions before code:
+- Tagged-union outcome (`{ type: 'data' | 'response' }`) so tests can
+  branch on data vs Response without try/catch noise. Captures both
+  thrown Responses (RR redirects, getLang 404) and returned Responses.
+- Co-locate route tests next to the route (`*.test.tsx` beside route
+  file) rather than under `app/test/routes/`; exclude `*.test.ts(x)`
+  from `flatRoutes()` scan via `ignoredRouteFiles`.
+- Mock `~/modules/content` (`fetchStories`) + `~/localization/i18n.server`
+  (`getFixedT` stub) + `~/modules/feature-flags`. Single-entry mock
+  sidesteps `shuffleArray`/`Math.random` non-determinism (assert by slug).
+
+Resumption checklist:
+- `but push`, open PR against main, link #131 + #121.
+- After merge: #131 closed unblocks #153 (homepage N+1 EN→FR refactor).
+- Reuse harness for #145 (blog + jobs detail loader coverage) and #144
+  (sitemap loader coverage).
+
+### Slice #131-1 — 4a2a40b
+
+Loader harness + self-tests.
+
+Files:
+- app/test/loader-harness.ts (new — `invokeLoader<T>` + `LoaderOutcome<T>`)
+- app/test/loader-harness.test.ts (new — 5 cases: data, thrown Response,
+  returned Response, non-Response throw rethrow, args passthrough)
+
+Decisions / deviations:
+- `unstable_pattern` required on `LoaderFunctionArgs` in RR v7; populated
+  with the request URL. Tests don't and shouldn't read it.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ harness tests 5/5 ✅
+
+### Slice #131-2 — 4a6d38c
+
+`flatRoutes({ ignoredRouteFiles: ['**/*.test.{ts,tsx}'] })`.
+
+Files:
+- app/routes.ts (add `ignoredRouteFiles` option)
+
+Decisions / deviations:
+- Without this, `react-router typegen` emits `+types/<route>.test.ts`
+  shims and `vitest` then fails to find suites in them.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test:run 22/22 ✅
+
+### Slice #131-3 — e804362
+
+Homepage loader: 4 cases via harness.
+
+Files:
+- app/routes/_main.($lang)._index.test.tsx (new — EN happy, FR happy,
+  EN→FR fallback when fetchStories(en) ≠ 200, no infinite retry when FR
+  itself ≠ 200)
+
+Decisions / deviations:
+- Dynamic `await import('./_main.($lang)._index')` so `vi.mock()` hoists
+  before the loader module evaluates its imports (top-level `import` is
+  still hoisted above `vi.mock`, but using the dynamic form is the
+  pattern Vitest docs recommend for module-scope mocks affecting the
+  unit under test).
+- Single-entry mock list — `shuffleArray` + `quotes[random]` collapse to
+  deterministic output; assert by slug + quote string.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test:run 22 files / 306
+tests ✅
+
+Next ⏭️ open PR (#131) → after merge, pick #153 (homepage N+1).
