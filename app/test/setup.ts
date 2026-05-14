@@ -8,7 +8,22 @@ import { cleanup } from '@testing-library/react';
 import { toHaveNoViolations } from 'jest-axe';
 import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from 'vitest';
 
-// Ark UI / floating-ui require ResizeObserver and scrollTo which JSDOM omits
+// Ark UI / floating-ui require ResizeObserver, scrollTo, and matchMedia which JSDOM omits
+if (typeof window.matchMedia === 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+}
 if (typeof global.ResizeObserver === 'undefined') {
   global.ResizeObserver = class {
     observe(): void {

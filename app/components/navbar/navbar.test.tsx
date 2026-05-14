@@ -1,41 +1,20 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { fireEvent, render, screen, userEvent, waitFor } from '~/test/utils';
 
 import { Navbar } from './navbar';
-
-// MobileMenu reads window.matchMedia to close on lg breakpoint — JSDOM omits this API
-beforeEach(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: vi.fn().mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    })),
-  });
-});
 
 describe('Navbar', () => {
   it('renders the navigation element and top-level items', () => {
     render(<Navbar />);
 
     expect(screen.getByRole('navigation')).toBeInTheDocument();
-
-    // Direct-link items
     expect(
       screen.getByRole('link', { name: 'Notre Offre' }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: 'Success Stories' }),
     ).toBeInTheDocument();
-
-    // Dropdown trigger buttons
     expect(
       screen.getByRole('button', { name: /méthode/i }),
     ).toBeInTheDocument();
@@ -45,6 +24,7 @@ describe('Navbar', () => {
     expect(
       screen.getByRole('button', { name: /ressources/i }),
     ).toBeInTheDocument();
+    expect(screen.getByTestId('nav-cta')).toBeInTheDocument();
   });
 
   it('mobile hamburger opens the navigation drawer', async () => {
