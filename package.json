@@ -58,6 +58,7 @@
     "@pandacss/preset-panda": "^1.8.1",
     "@pandacss/types": "^1.8.1",
     "@react-router/dev": "^7.8.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest-axe": "^3.5.9",

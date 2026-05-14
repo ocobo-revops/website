@@ -3,6 +3,7 @@
  * This file runs before all test files and sets up global test environment
  */
 
+import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { toHaveNoViolations } from 'jest-axe';
 import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from 'vitest';

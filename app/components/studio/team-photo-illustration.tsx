@@ -5,6 +5,8 @@ import { css } from '@ocobo/styled-system/css';
 import { hstack } from '@ocobo/styled-system/patterns';
 import { card, text } from '@ocobo/styled-system/recipes';
 
+import { OptimizedImage } from '~/components/ui/optimized-image';
+
 export const TeamPhotoIllustration = () => {
   const { t } = useTranslation('studio');
 
@@ -135,14 +137,12 @@ export const TeamPhotoIllustration = () => {
             },
           )}`}
         >
-          <img
+          <OptimizedImage
             src="/images/studio.jpg"
             alt={t('hero.photoAlt')}
             width={4032}
             height={3024}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
+            priority
             className={css({
               width: 'full',
               height: 'auto',

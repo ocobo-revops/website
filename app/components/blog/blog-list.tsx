@@ -7,6 +7,7 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 import { button, text } from '@ocobo/styled-system/recipes';
 
+import { OptimizedImage } from '~/components/ui/optimized-image';
 import type { ResolvedAuthor } from '~/modules/content/members';
 import type { BlogpostFrontmatter, MarkdocFile } from '~/types';
 import { url } from '~/utils/url';
@@ -113,12 +114,10 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
               minH: { base: '56', md: 'auto' },
             })}
           >
-            <img
+            <OptimizedImage
               src={featured.frontmatter.image}
               alt=""
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
+              priority
               className={css({
                 position: 'absolute',
                 inset: 0,
