@@ -22,7 +22,9 @@ import { getLang } from '~/utils/lang';
 
 import { ErrorMessage } from './components/ErrorMessage';
 import { useSetViewportHeight } from './hooks/useSetViewportHeight';
+import { getContentSource, parseFontsCdnHost } from './modules/env.server';
 import { getDisabledPages } from './modules/feature-flags';
+import { getPreconnectLinks } from './modules/preconnect-links';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
@@ -60,6 +62,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
     shouldLoadScript:
       isProduction || process.env.SHOULD_LOAD_TRACKING_SCRIPTS === 'true',
     shouldLoadAgo: Boolean(process.env.AGO_API_KEY),
+    preconnectLinks: getPreconnectLinks(
+      getContentSource(),
+      parseFontsCdnHost(),
+    ),
   };
 }
 
@@ -112,6 +118,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {loaderData?.preconnectLinks?.map((link) => (
+          <link
+            key={`${link.rel}-${link.href}`}
+            rel={link.rel}
+            href={link.href}
+            crossOrigin={
+              link.rel === 'preconnect' ? link.crossOrigin : undefined
+            }
+          />
+        ))}
         {!loaderData?.isProduction && <meta name="robots" content="noindex" />}
         <Meta />
         <Links />
