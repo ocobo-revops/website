@@ -23,6 +23,7 @@ import { getLang } from '~/utils/lang';
 import { ErrorMessage } from './components/ErrorMessage';
 import { useSetViewportHeight } from './hooks/useSetViewportHeight';
 import { getDisabledPages } from './modules/feature-flags';
+import { getPreconnectLinks } from './modules/preconnect-links';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
@@ -50,6 +51,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const locale = getLang(params);
   const isProduction = process.env.NODE_ENV === 'production';
 
+  const contentSource =
+    process.env.CONTENT_SOURCE === 'github' ? 'github' : 'locale';
+
   return {
     locale,
     isProduction,
@@ -60,6 +64,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
     shouldLoadScript:
       isProduction || process.env.SHOULD_LOAD_TRACKING_SCRIPTS === 'true',
     shouldLoadAgo: Boolean(process.env.AGO_API_KEY),
+    preconnectLinks: getPreconnectLinks(
+      contentSource,
+      process.env.FONTS_CDN_HOST,
+    ),
   };
 }
 
@@ -112,6 +120,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {loaderData?.preconnectLinks?.map((link) => (
+          <link
+            key={`${link.rel}-${link.href}`}
+            rel={link.rel}
+            href={link.href}
+            crossOrigin={link.crossOrigin}
+          />
+        ))}
         {!loaderData?.isProduction && <meta name="robots" content="noindex" />}
         <Meta />
         <Links />
