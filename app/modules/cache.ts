@@ -1,9 +1,9 @@
 /**
  * Cache strategy for React Router loaders
  *
- * - Local filesystem: No caching
- * - GitHub content: Vercel Edge Cache
- * - Testing: ?refresh=1 bypasses cache
+ * - GitHub source: Vercel Edge Cache (s-maxage + SWR)
+ * - Locale source: no headers emitted — no CDN in front, browser defaults apply
+ * - ?refresh=1 bypasses cache (no-store) regardless of source
  */
 
 import type { LoaderFunctionArgs } from 'react-router';
@@ -52,10 +52,11 @@ function buildCacheControl(strategy: CacheStrategy): string {
   return `s-maxage=${maxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
 }
 
-/**
- * Get cache headers for GitHub content or local filesystem
- */
-export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
+/** Returns cache headers to set on the response, or `{}` when no CDN headers are needed. */
+export function getCacheHeaders(
+  strategy: CacheStrategy,
+  bypassCache = false,
+): Record<string, string> {
   if (bypassCache) {
     return {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
