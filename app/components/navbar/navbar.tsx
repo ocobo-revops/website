@@ -185,6 +185,7 @@ export function Navbar() {
                   to={item.path!}
                   variant="solid"
                   size="sm"
+                  data-testid="nav-cta"
                   className={css({
                     display: 'none',
                     lg: { display: 'flex' },

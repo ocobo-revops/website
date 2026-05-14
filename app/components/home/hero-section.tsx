@@ -125,6 +125,7 @@ export const HeroSection = () => {
                 to={getLocalizedPath(url.contact)}
                 variant="primary"
                 size="lg"
+                data-testid="hero-cta"
               >
                 {t('hero.cta')}
               </ButtonLink>
