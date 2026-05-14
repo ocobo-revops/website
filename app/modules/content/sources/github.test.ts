@@ -211,6 +211,46 @@ describe('GitHubContentSource — fetchSingle', () => {
     expect(state).toBe('source_error');
     expect(data).toBeUndefined();
   });
+
+  it('returns validation_error when frontmatter fails the validator', async () => {
+    // Markdown without `name` or `date` — isValid returns false, safeParse
+    // returns { success: false }, ContentValidationError is thrown → 422.
+    server.use(
+      http.get(fileUrl('bad-fm'), () =>
+        HttpResponse.text(`---\ntitle: Only Title\n---\nContent.\n`),
+      ),
+    );
+
+    const source = makeSource();
+    const [status, state, data] = await source.fetchSingle(
+      PATH,
+      'bad-fm',
+      storyValidator,
+    );
+
+    expect(status).toBe(422);
+    expect(state).toBe('validation_error');
+    expect(data).toBeUndefined();
+  });
+
+  it('returns ignored (404) when frontmatter has ignore:true', async () => {
+    server.use(
+      http.get(fileUrl('draft'), () =>
+        HttpResponse.text(`---\nignore: true\n---\nContent.\n`),
+      ),
+    );
+
+    const source = makeSource();
+    const [status, state, data] = await source.fetchSingle(
+      PATH,
+      'draft',
+      storyValidator,
+    );
+
+    expect(status).toBe(404);
+    expect(state).toBe('ignored');
+    expect(data).toBeUndefined();
+  });
 });
 
 describe('GitHubContentSource — fetchMultiple', () => {
