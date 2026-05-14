@@ -20,6 +20,10 @@ styled-system-studio
 ## Test coverage
 /coverage
 
+## Playwright
+/playwright-report
+/test-results
+
 ## Claude Code
 .claude
 
