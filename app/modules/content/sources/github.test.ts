@@ -1,4 +1,7 @@
 // @vitest-environment node
+// Why node: jsdom replaces the global fetch after MSW's server.listen() patches
+// it, which prevents MSW from intercepting requests. Node env keeps the patched
+// fetch intact for the duration of the test file.
 
 /**
  * Integration tests for GitHubContentSource.
