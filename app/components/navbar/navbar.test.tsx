@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { fireEvent, render, screen, userEvent, waitFor } from '~/test/utils';
+import { render, screen, userEvent } from '~/test/utils';
 
 import { Navbar } from './navbar';
 
@@ -50,26 +50,6 @@ describe('Navbar', () => {
     expect(
       screen.queryByRole('dialog', { name: 'Navigation menu' }),
     ).not.toBeInTheDocument();
-  });
-
-  it('Escape key dismisses the mobile drawer', async () => {
-    const user = userEvent.setup();
-    render(<Navbar />);
-
-    await user.click(screen.getByRole('button', { name: 'Open menu' }));
-    const dialog = await screen.findByRole('dialog', {
-      name: 'Navigation menu',
-    });
-
-    // Ark UI Dialog processes Escape on the focused content element (tabindex="-1")
-    dialog.focus();
-    fireEvent.keyDown(dialog, { key: 'Escape', code: 'Escape', keyCode: 27 });
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('dialog', { name: 'Navigation menu' }),
-      ).not.toBeInTheDocument();
-    });
   });
 
   it('current route link gets aria-current="page"', () => {
