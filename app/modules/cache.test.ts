@@ -18,10 +18,19 @@ vi.mock('./env.server', () => ({
 
 const mockGetPrivateEnvVars = vi.mocked(getPrivateEnvVars);
 
+const makeEnv = (
+  readContentFrom: 'locale' | 'github',
+): ReturnType<typeof getPrivateEnvVars> => ({
+  env: 'development',
+  readContentFrom,
+  githubAccessToken: 'token',
+  githubBranch: 'main',
+  githubRepoAPIUrl: 'https://api.github.com/repos/test/test/contents',
+  localeRepoAPIUrl: '/local/path',
+});
+
 const mockEnv = (readContentFrom: 'locale' | 'github') =>
-  mockGetPrivateEnvVars.mockReturnValue({
-    readContentFrom,
-  } as ReturnType<typeof getPrivateEnvVars>);
+  mockGetPrivateEnvVars.mockReturnValue(makeEnv(readContentFrom));
 
 function makeRequest(url: string): Request {
   return new Request(url);
@@ -153,9 +162,8 @@ describe('getCacheStrategyForPath', () => {
     expect(getCacheStrategyForPath('/en')).toBe('static');
   });
 
-  // Documents current prefix-match behaviour: /blogger matches /blog
-  it('/blogger → blogPost (startsWith match, no route like this exists)', () => {
-    expect(getCacheStrategyForPath('/blogger')).toBe('blogPost');
+  it('/blogger → static (segment-aware match, not a blog route)', () => {
+    expect(getCacheStrategyForPath('/blogger')).toBe('static');
   });
 });
 

@@ -93,6 +93,8 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
       <OptimizedImage
         src={item.image}
         alt=""
+        width={1200}
+        height={630}
         priority
         className={css({
           display: 'block',

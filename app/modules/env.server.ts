@@ -21,10 +21,23 @@ export function parseFontsCdnHost(): string | undefined {
   if (!raw) return undefined;
   try {
     const url = new URL(raw);
-    if (url.protocol !== 'https:') return undefined;
-    if (url.pathname !== '/' && url.pathname !== '') return undefined;
+    if (url.protocol !== 'https:') {
+      console.warn(
+        `[env] FONTS_CDN_HOST ignored: must be an https origin. Got: ${raw}`,
+      );
+      return undefined;
+    }
+    if (url.pathname !== '/' && url.pathname !== '') {
+      console.warn(
+        `[env] FONTS_CDN_HOST ignored: must be an origin without a path. Got: ${raw}`,
+      );
+      return undefined;
+    }
     return url.origin;
   } catch {
+    console.warn(
+      `[env] FONTS_CDN_HOST ignored: could not parse as a URL. Got: ${raw}`,
+    );
     return undefined;
   }
 }

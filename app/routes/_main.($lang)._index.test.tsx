@@ -25,6 +25,8 @@ const getFixedTMock = vi.fn(
   async (lang: string, _ns?: string) => (key: string) => `${lang}:${key}`,
 );
 
+// Only fetchStories is imported from this module by the route — sync factory is
+// sufficient. If a new import is added from ~/modules/content, extend this mock.
 vi.mock('~/modules/content', () => ({
   fetchStories: (...args: unknown[]) => fetchStoriesMock(...args),
 }));
@@ -172,8 +174,9 @@ describe('homepage loader', () => {
       params: { lang: 'en' },
     });
 
-    // Let the loader run up to its first await point.
-    await new Promise((r) => setImmediate(r));
+    // Let the loader run through its async setup (redirectWithLocale + getFixedT)
+    // before checking mock calls. setTimeout(0) = macrotask, cross-env safe.
+    await new Promise((r) => setTimeout(r, 0));
 
     expect(fetchStoriesMock).toHaveBeenCalledTimes(2);
     expect(fetchStoriesMock).toHaveBeenNthCalledWith(1, 'en');

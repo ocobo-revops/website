@@ -9,7 +9,9 @@ function SmokeButton() {
 describe('test setup smoke', () => {
   it('renders a component through the helper', () => {
     render(<SmokeButton />);
-    expect(screen.getByRole('button', { name: 'Smoke me' })).toBeDefined();
+    expect(
+      screen.getByRole('button', { name: 'Smoke me' }),
+    ).toBeInTheDocument();
   });
 
   it('exposes user-event and reacts to a click', async () => {

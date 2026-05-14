@@ -104,11 +104,14 @@ export function getCacheStrategyForPath(pathname: string): CacheStrategy {
   // Remove language prefix if present
   const pathWithoutLang = pathname.replace(/^\/(en|fr)/, '') || '/';
 
-  if (pathWithoutLang.startsWith('/blog')) {
+  if (pathWithoutLang === '/blog' || pathWithoutLang.startsWith('/blog/')) {
     return 'blogPost';
   }
 
-  if (pathWithoutLang.startsWith('/clients')) {
+  if (
+    pathWithoutLang === '/clients' ||
+    pathWithoutLang.startsWith('/clients/')
+  ) {
     return 'story';
   }
 

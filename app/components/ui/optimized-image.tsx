@@ -1,12 +1,17 @@
-interface OptimizedImageProps {
+type OptimizedImageBase = {
   src: string;
   alt: string;
-  // Provide width + height when known — prevents CLS by reserving layout space
-  width?: number;
-  height?: number;
-  priority?: boolean;
   className?: string;
-}
+};
+
+// When priority=true, width+height are required to prevent CLS on non-absolute images.
+type OptimizedImageProps =
+  | (OptimizedImageBase & { priority: true; width: number; height: number })
+  | (OptimizedImageBase & {
+      priority?: false;
+      width?: number;
+      height?: number;
+    });
 
 function OptimizedImage({
   src,
