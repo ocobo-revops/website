@@ -15,7 +15,7 @@
  *     if (outcome.type === 'response') expect(outcome.response.status).toBe(301);
  */
 
-import { type LoaderFunctionArgs, redirect } from 'react-router';
+import { type LoaderFunctionArgs, data, redirect } from 'react-router';
 import { describe, expect, it } from 'vitest';
 
 import { invokeLoader } from './loader-harness';
@@ -59,6 +59,19 @@ describe('invokeLoader', () => {
     };
 
     await expect(invokeLoader(loader)).rejects.toThrow('boom');
+  });
+
+  it('unwraps react-router data() wrapper so tests access payload directly', async () => {
+    const loader = async (_args: LoaderFunctionArgs) =>
+      data({ hello: 'world' }, { status: 200 });
+
+    const outcome = await invokeLoader(loader);
+
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    // If the duck-typing guard breaks (RR renames the discriminator), this will
+    // return { data: { hello: 'world' } } nested — catch the regression here.
+    expect(outcome.data).toEqual({ hello: 'world' });
   });
 
   it('passes synthesized request and params through to the loader', async () => {
