@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
@@ -28,9 +28,13 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
   const { t } = useTranslation('blog');
   const [podcastsOnly, setPodcastsOnly] = useState(false);
 
-  const filteredItems = podcastsOnly
-    ? items.filter((item) => Boolean(item.frontmatter.podcastId))
-    : items;
+  const filteredItems = useMemo(
+    () =>
+      podcastsOnly
+        ? items.filter((item) => Boolean(item.frontmatter.podcastId))
+        : items,
+    [podcastsOnly, items],
+  );
 
   if (items.length === 0) {
     return (
@@ -117,6 +121,8 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
             <OptimizedImage
               src={featured.frontmatter.image}
               alt=""
+              width={1200}
+              height={630}
               priority
               className={css({
                 position: 'absolute',
