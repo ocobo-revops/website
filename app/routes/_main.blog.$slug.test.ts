@@ -1,7 +1,7 @@
 /**
  * Loader tests for the blog detail route.
  *
- * Covers the observable behaviors of `loader` in `_main.blog.$slug.tsx`:
+ * Covers the observable behaviours of `loader` in `_main.blog.$slug.tsx`:
  *  1. 404 when slug is missing from params
  *  2. 404 when `fetchBlogpost` returns a non-200 status
  *  3. Happy path: article, toc, intro, and author returned
@@ -106,13 +106,10 @@ describe('blog detail loader', () => {
 
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
-    // loader returns data() wrapper — actual payload is at .data
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payload = (outcome.data as any).data;
-    expect(payload.article).toBe(article);
-    expect(payload.toc).toEqual([{ id: 'test', children: [] }]);
-    expect(payload.intro).toBe('Intro paragraph.');
-    expect(payload.author).toBeNull();
+    expect(outcome.data.article).toBe(article);
+    expect(outcome.data.toc).toEqual([{ id: 'test', children: [] }]);
+    expect(outcome.data.intro).toBe('Intro paragraph.');
+    expect(outcome.data.author).toBeNull();
   });
 
   it('uses frontmatter.exerpt as intro when set', async () => {
@@ -129,9 +126,7 @@ describe('blog detail loader', () => {
 
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payload = (outcome.data as any).data;
-    expect(payload.intro).toBe('Explicit excerpt text.');
+    expect(outcome.data.intro).toBe('Explicit excerpt text.');
     expect(extractFirstParagraphMock).not.toHaveBeenCalled();
   });
 
@@ -150,10 +145,19 @@ describe('blog detail loader', () => {
 
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payload = (outcome.data as any).data;
-    expect(payload.intro).toBe('Extracted paragraph.');
+    expect(outcome.data.intro).toBe('Extracted paragraph.');
     expect(extractFirstParagraphMock).toHaveBeenCalledOnce();
+  });
+
+  it('throws 404 when lang param is invalid', async () => {
+    const { loader } = await import('./_main.blog.$slug');
+    const outcome = await invokeLoader(loader, {
+      params: { slug: 'test', lang: 'de' },
+    });
+
+    expect(outcome.type).toBe('response');
+    if (outcome.type !== 'response') return;
+    expect(outcome.response.status).toBe(404);
   });
 
   it('calls fetchBlogpost with EN lang when lang param is en', async () => {

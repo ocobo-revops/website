@@ -1,7 +1,7 @@
 /**
  * Loader tests for the jobs detail route.
  *
- * Covers the observable behaviors of `loader` in `_main.($lang).jobs.$slug.tsx`:
+ * Covers the observable behaviours of `loader` in `_main.($lang).jobs.$slug.tsx`:
  *  1. Redirect to `/{lang}/jobs` when slug is missing (FR and EN)
  *  2. Redirect when `fetchJob` returns a non-200 status
  *  3. Redirect when job status is `draft`
@@ -178,6 +178,17 @@ describe('jobs detail loader', () => {
     expect(data.slug).toBe('revops-consultant');
     expect(data.sections).toBe(fakeSections);
     expect(data.ld).toBe('{}');
+  });
+
+  it('throws 404 when lang param is invalid', async () => {
+    const { loader } = await import('./_main.($lang).jobs.$slug');
+    const outcome = await invokeLoader(loader, {
+      params: { slug: 'test', lang: 'de' },
+    });
+
+    expect(outcome.type).toBe('response');
+    if (outcome.type !== 'response') return;
+    expect(outcome.response.status).toBe(404);
   });
 
   it('returns job data with lang=en on happy path (EN)', async () => {
