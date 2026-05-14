@@ -42,6 +42,27 @@ beforeAll(() => {
 beforeEach(() => {
   vi.clearAllMocks();
 
+  // window.matchMedia is absent from JSDOM; re-stub after clearAllMocks so
+  // components that call it (e.g. MobileMenu's breakpoint listener) get a
+  // working mock on every test regardless of which file runs before this one.
+  // The typeof guard prevents a ReferenceError in @vitest-environment node files.
+  if (typeof window !== 'undefined') {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      configurable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  }
+
   process.env.NODE_ENV = 'test';
   process.env.GITHUB_ACCOUNT = 'test-account';
   process.env.GITHUB_REPO = 'test-repo';
