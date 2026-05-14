@@ -45,11 +45,16 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   const lang = getLang(args.params);
   const t = await i18nServer.getFixedT(lang, 'home');
 
-  let [status, _state, storiesData] = await fetchStories(lang);
+  // Stories only exist in French — fire the localized fetch and the FR
+  // fallback in parallel so the EN homepage doesn't pay a sequential RTT.
+  const [primary, fallback] = await Promise.all([
+    fetchStories(lang),
+    lang === 'fr' ? Promise.resolve(null) : fetchStories('fr'),
+  ]);
 
-  // Stories only exist in French — fall back to French quotes for other languages
-  if (status !== 200 && lang !== 'fr') {
-    [status, _state, storiesData] = await fetchStories('fr');
+  let [status, _state, storiesData] = primary;
+  if (status !== 200 && fallback) {
+    [status, _state, storiesData] = fallback;
   }
 
   let testimonials: Testimonial[] = [];

@@ -1128,3 +1128,51 @@ Checks: pnpm check ✅ pnpm typecheck ✅ pnpm test:run 22 files / 306
 tests ✅
 
 Next ⏭️ open PR (#131) → after merge, pick #153 (homepage N+1).
+
+---
+
+## Feature: Homepage N+1 EN→FR parallel fallback (#153, PRD #120)
+
+Specs: gh issue #153 (PRD #120 — Performance)
+Branch: feat/perf-153-parallel-fallback
+Created: 2026-05-14
+Status: local lane, not yet pushed.
+
+Key decisions before code:
+- Keep the `fetchStories(lang)` → `fetchStories('fr')` fallback semantics
+  identical (status !== 200 ⇒ use FR). Only change is wire-level: fire
+  both fetches in parallel via `Promise.all`. FR locale skips the second
+  fetch (`Promise.resolve(null)`) to preserve the single-call contract
+  asserted by the no-infinite-retry test.
+- Reuse the existing loader test file from #131 rather than spinning up
+  a parallelism-specific spec. Added one deferred-promise test for the
+  parallelism contract; updated the EN happy-path expectation to two
+  calls with rationale in the file header (AC #3 allows it).
+
+Resumption checklist:
+- `but push`, open PR against main, link #153 + #120.
+- After merge: recheck Speed Insights EN homepage TTFB on 2026-05-16
+  for the -1s target (AC #4 ties back to #1 baseline).
+
+### Slice #153-1 — 3ae6fd4
+
+Parallel EN+FR fetch with status-based selection.
+
+Files:
+- app/routes/_main.($lang)._index.tsx (loader: `Promise.all` over
+  `fetchStories(lang)` + conditional FR fallback; primary result wins
+  on status 200, fallback used otherwise)
+- app/routes/_main.($lang)._index.test.tsx (new test: deferred
+  promises assert both fetches register before either resolves;
+  EN happy-path now expects two calls; file header rewritten)
+
+Decisions / deviations:
+- `lang === 'fr' ? Promise.resolve(null) : fetchStories('fr')` keeps the
+  FR-only call count at 1 — matches the no-infinite-retry test and
+  avoids a wasted refetch when the localized fetch is already FR.
+- Used `!`-suffix non-null assertions for the test's deferred
+  resolvers to satisfy Biome's `noEmptyBlockStatements` cleanly.
+
+Checks: pnpm check ✅ pnpm typecheck ✅ loader tests 5/5 ✅
+
+Next ⏭️ push lane + open PR linking #153 + #120.
