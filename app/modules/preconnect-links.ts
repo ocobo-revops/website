@@ -1,8 +1,6 @@
-export type PreconnectLink = {
-  rel: 'preconnect' | 'dns-prefetch';
-  href: string;
-  crossOrigin?: 'anonymous';
-};
+export type PreconnectLink =
+  | { rel: 'preconnect'; href: string; crossOrigin?: 'anonymous' }
+  | { rel: 'dns-prefetch'; href: string };
 
 export const GITHUB_RAW_HOST = 'https://raw.githubusercontent.com';
 

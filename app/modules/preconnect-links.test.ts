@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { GITHUB_RAW_HOST, getPreconnectLinks } from './preconnect-links';
+import {
+  GITHUB_RAW_HOST,
+  type PreconnectLink,
+  getPreconnectLinks,
+} from './preconnect-links';
+
+type PreconnectOnly = Extract<PreconnectLink, { rel: 'preconnect' }>;
 
 describe('getPreconnectLinks', () => {
   describe('GitHub raw host', () => {
@@ -64,14 +70,24 @@ describe('getPreconnectLinks', () => {
   describe('link attributes', () => {
     it('sets crossOrigin anonymous on preconnect links', () => {
       const links = getPreconnectLinks('github');
-      const preconnect = links.find((l) => l.rel === 'preconnect');
+      const preconnect = links.find(
+        (l): l is PreconnectOnly => l.rel === 'preconnect',
+      );
       expect(preconnect?.crossOrigin).toBe('anonymous');
     });
 
-    it('does not set crossOrigin on dns-prefetch links', () => {
+    it('does not carry crossOrigin on dns-prefetch links', () => {
       const links = getPreconnectLinks('github');
       const dnsPrefetch = links.find((l) => l.rel === 'dns-prefetch');
-      expect(dnsPrefetch?.crossOrigin).toBeUndefined();
+      expect(dnsPrefetch).toBeDefined();
+      expect('crossOrigin' in (dnsPrefetch ?? {})).toBe(false);
+    });
+  });
+
+  describe('edge cases', () => {
+    it('treats empty string fontsCdnHost as absent', () => {
+      const links = getPreconnectLinks('locale', '');
+      expect(links).toHaveLength(0);
     });
   });
 });

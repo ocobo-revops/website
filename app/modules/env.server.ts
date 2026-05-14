@@ -4,6 +4,32 @@ import { ConfigurationError } from './errors';
 import type { PrivateEnvVars, PublicEnvVars } from './types';
 
 /**
+ * Returns the resolved content source without requiring GitHub credentials.
+ * In production always returns 'github'; in dev reads CONTENT_SOURCE.
+ */
+export function getContentSource(): 'locale' | 'github' {
+  if (process.env.NODE_ENV === 'production') return 'github';
+  return process.env.CONTENT_SOURCE === 'github' ? 'github' : 'locale';
+}
+
+/**
+ * Validates and returns FONTS_CDN_HOST as an https origin.
+ * Returns undefined when unset or invalid (soft failure — optional var).
+ */
+export function parseFontsCdnHost(): string | undefined {
+  const raw = process.env.FONTS_CDN_HOST;
+  if (!raw) return undefined;
+  try {
+    const url = new URL(raw);
+    if (url.protocol !== 'https:') return undefined;
+    if (url.pathname !== '/' && url.pathname !== '') return undefined;
+    return url.origin;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Get environment variables that are safe to expose to the client
  * These variables can be included in the browser bundle
  */
