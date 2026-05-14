@@ -83,20 +83,28 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
             </p>
           )}
           <PageMarkdownContainer content={article.content} />
-          {selectArticleFooter(article.frontmatter) === 'youtube' && (
-            <PlayerYoutube
-              id={article.frontmatter.youtubeId!}
-              className={css({ mt: 8 })}
-            />
-          )}
-          {selectArticleFooter(article.frontmatter) === 'podcast' && (
-            <AushaPlayer
-              podcastId={article.frontmatter.podcastId}
-              showId={article.frontmatter.podcastShowId}
-              title={t('player.podcast.title')}
-              className={css({ mt: 8 })}
-            />
-          )}
+          {(() => {
+            const footer = selectArticleFooter(article.frontmatter);
+            if (footer.type === 'youtube') {
+              return (
+                <PlayerYoutube
+                  id={footer.youtubeId}
+                  className={css({ mt: 8 })}
+                />
+              );
+            }
+            if (footer.type === 'podcast') {
+              return (
+                <AushaPlayer
+                  podcastId={footer.podcastId}
+                  showId={footer.showId}
+                  title={t('player.podcast.title')}
+                  className={css({ mt: 8 })}
+                />
+              );
+            }
+            return null;
+          })()}
           {author && (
             <div
               className={css({
