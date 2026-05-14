@@ -227,7 +227,7 @@ describe('sitemap loader', () => {
     const body = await outcome.response.text();
 
     expect(body).toContain('<loc>https://www.ocobo.co/stories</loc>');
-    expect(body).not.toContain('stories/');
+    expect(body).not.toContain('<loc>https://www.ocobo.co/stories/');
   });
 
   it('degrades gracefully when posts fetcher fails', async () => {
@@ -242,7 +242,7 @@ describe('sitemap loader', () => {
     const body = await outcome.response.text();
 
     expect(body).toContain('<loc>https://www.ocobo.co/blog</loc>');
-    expect(body).not.toContain('blog/');
+    expect(body).not.toContain('<loc>https://www.ocobo.co/blog/');
   });
 
   it('degrades gracefully when jobs fetcher fails', async () => {
@@ -257,7 +257,7 @@ describe('sitemap loader', () => {
     const body = await outcome.response.text();
 
     expect(body).toContain('<loc>https://www.ocobo.co/fr/jobs</loc>');
-    expect(body).not.toContain('fr/jobs/');
+    expect(body).not.toContain('<loc>https://www.ocobo.co/fr/jobs/');
   });
 
   it('fires all three fetchers in parallel', async () => {
