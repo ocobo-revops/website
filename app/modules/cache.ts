@@ -74,11 +74,8 @@ export function getCacheHeaders(strategy: CacheStrategy, bypassCache = false) {
     };
   }
 
-  // Local filesystem: no caching
-  return {
-    'Cache-Control': 'no-cache',
-    'Vercel-CDN-Cache-Control': 'no-cache',
-  };
+  // Locale source: no CDN involved, emit no cache headers
+  return {};
 }
 
 /**

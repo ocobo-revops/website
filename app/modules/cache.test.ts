@@ -73,15 +73,15 @@ describe('getCacheHeaders', () => {
   describe('locale content source', () => {
     beforeEach(() => mockEnv('locale'));
 
-    it('returns no-cache for all strategies', () => {
+    it('returns no headers — no CDN in locale mode', () => {
       const headers = getCacheHeaders('blogPost');
-      expect(headers['Cache-Control']).toBe('no-cache');
-      expect(headers['Vercel-CDN-Cache-Control']).toBe('no-cache');
+      expect(headers).toEqual({});
     });
 
-    it('does not include Vary header', () => {
-      const headers = getCacheHeaders('static');
-      expect(headers).not.toHaveProperty('Vary');
+    it('returns no headers for any strategy', () => {
+      expect(getCacheHeaders('static')).toEqual({});
+      expect(getCacheHeaders('story')).toEqual({});
+      expect(getCacheHeaders('job')).toEqual({});
     });
   });
 
@@ -113,9 +113,9 @@ describe('getCacheHeaders', () => {
       });
     });
 
-    it('falls back to no-cache (treats as locale source)', () => {
+    it('falls back to empty headers (treats as locale source)', () => {
       const headers = getCacheHeaders('static');
-      expect(headers['Cache-Control']).toBe('no-cache');
+      expect(headers).toEqual({});
     });
   });
 });
