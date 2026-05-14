@@ -46,6 +46,7 @@ export const ContactHero = () => {
         <FrenchText>{t('eyebrow')}</FrenchText>
       </span>
       <h1
+        data-testid="contact-heading"
         className={cx(
           text({ variant: 'display-xl', color: 'dark' }),
           css({ mb: '8' }),
