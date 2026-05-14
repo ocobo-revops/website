@@ -43,13 +43,13 @@ function shuffleArray<T>(array: readonly T[]): T[] {
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
   const lang = getLang(args.params);
-  const t = await i18nServer.getFixedT(lang, 'home');
-
-  // Stories only exist in French — fire the localized fetch and the FR
-  // fallback in parallel so the EN homepage doesn't pay a sequential RTT.
-  const [primary, fallback] = await Promise.all([
-    fetchStories(lang),
-    lang === 'fr' ? Promise.resolve(null) : fetchStories('fr'),
+  // All three are independent — i18n + both story fetches start in parallel.
+  const [t, [primary, fallback]] = await Promise.all([
+    i18nServer.getFixedT(lang, 'home'),
+    Promise.all([
+      fetchStories(lang),
+      lang === 'fr' ? Promise.resolve(null) : fetchStories('fr'),
+    ]),
   ]);
 
   let [status, _state, storiesData] = primary;

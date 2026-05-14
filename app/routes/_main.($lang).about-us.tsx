@@ -30,9 +30,10 @@ import { url, getImageOgFullPath } from '~/utils/url';
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
   const lang = getLang(args.params);
-  const t = await i18nServer.getFixedT(lang, 'about');
-
-  const registry = await loadMemberRegistry();
+  const [t, registry] = await Promise.all([
+    i18nServer.getFixedT(lang, 'about'),
+    loadMemberRegistry(),
+  ]);
   const members: TeamSectionMember[] = getFeaturedAboutMembers(registry).map(
     (m) => ({
       slug: m.slug,
