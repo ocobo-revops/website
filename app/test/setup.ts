@@ -8,6 +8,29 @@ import { cleanup } from '@testing-library/react';
 import { toHaveNoViolations } from 'jest-axe';
 import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from 'vitest';
 
+// Ark UI / floating-ui require ResizeObserver and scrollTo which JSDOM omits
+if (typeof global.ResizeObserver === 'undefined') {
+  global.ResizeObserver = class {
+    observe(): void {
+      return;
+    }
+    unobserve(): void {
+      return;
+    }
+    disconnect(): void {
+      return;
+    }
+  };
+}
+if (
+  typeof HTMLElement !== 'undefined' &&
+  typeof HTMLElement.prototype.scrollTo === 'undefined'
+) {
+  HTMLElement.prototype.scrollTo = function (): void {
+    return;
+  };
+}
+
 import { server } from './msw/server';
 
 expect.extend(toHaveNoViolations);
