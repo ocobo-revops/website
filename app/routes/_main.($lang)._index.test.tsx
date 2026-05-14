@@ -21,6 +21,9 @@ import { invokeLoader } from '~/test/loader-harness';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 const fetchStoriesMock = vi.fn();
+const getFixedTMock = vi.fn(
+  async (lang: string, _ns?: string) => (key: string) => `${lang}:${key}`,
+);
 
 vi.mock('~/modules/content', () => ({
   fetchStories: (...args: unknown[]) => fetchStoriesMock(...args),
@@ -28,7 +31,7 @@ vi.mock('~/modules/content', () => ({
 
 vi.mock('~/localization/i18n.server', () => ({
   default: {
-    getFixedT: async (lang: string) => (key: string) => `${lang}:${key}`,
+    getFixedT: (lang: string, ns: string) => getFixedTMock(lang, ns),
   },
 }));
 
@@ -64,6 +67,7 @@ function storyEntry(
 
 afterEach(() => {
   fetchStoriesMock.mockReset();
+  getFixedTMock.mockClear();
 });
 
 describe('homepage loader', () => {
@@ -193,5 +197,31 @@ describe('homepage loader', () => {
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
     expect(outcome.data.testimonials).toEqual([]);
+  });
+
+  it('fires getFixedT in parallel with fetchStories calls', async () => {
+    // getFixedT and fetchStories are independent — they must start concurrently.
+    // If sequential, fetchStories would only be called after getFixedT resolves.
+    let resolveT!: (fn: (key: string) => string) => void;
+    const tPromise = new Promise<(key: string) => string>((r) => {
+      resolveT = r;
+    });
+
+    getFixedTMock.mockImplementationOnce(() => tPromise);
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+
+    const { loader } = await import('./_main.($lang)._index');
+    const loaderPromise = invokeLoader(loader, {
+      url: 'http://test.local/fr',
+      params: { lang: 'fr' },
+    });
+
+    await new Promise((r) => setImmediate(r));
+
+    // fetchStories must have fired even though getFixedT has not resolved yet.
+    expect(fetchStoriesMock).toHaveBeenCalledTimes(1);
+
+    resolveT((key: string) => `fr:${key}`);
+    await loaderPromise;
   });
 });

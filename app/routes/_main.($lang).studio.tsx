@@ -25,9 +25,10 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
   throwIfDisabled('studio');
   const lang = getLang(args.params);
-  const t = await i18nServer.getFixedT(lang, 'studio');
-
-  const registry = await loadMemberRegistry();
+  const [t, registry] = await Promise.all([
+    i18nServer.getFixedT(lang, 'studio'),
+    loadMemberRegistry(),
+  ]);
 
   return {
     title: t('meta.title'),

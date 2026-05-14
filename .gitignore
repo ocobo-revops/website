@@ -29,3 +29,7 @@ styled-system-studio
 
 ## QA temp files
 /qa
+
+## Playwright
+/playwright-report
+/test-results
