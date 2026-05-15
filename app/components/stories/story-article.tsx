@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from 'lucide-react';
+import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { Await, NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
@@ -23,13 +24,13 @@ import { PlayerYoutube } from '../PlayerYoutube';
 interface StoryArticleProps {
   article: MarkdocFile<StoryFrontmatter>;
   resolvedTools?: Tool[];
-  resolvedTeam?: Member[];
+  resolvedTeam: Promise<Member[]>;
 }
 
 const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
   article,
   resolvedTools = [],
-  resolvedTeam = [],
+  resolvedTeam,
 }) => {
   const { t } = useTranslation();
   return (
@@ -76,7 +77,11 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
             />
           )}
           <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
-          <StoryTeamBlock members={resolvedTeam} />
+          <Suspense fallback={null}>
+            <Await resolve={resolvedTeam}>
+              {(team) => <StoryTeamBlock members={team} />}
+            </Await>
+          </Suspense>
         </LayoutPost.Main>
       </LayoutPost.Root>
 

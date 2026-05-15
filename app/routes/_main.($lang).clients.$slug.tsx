@@ -22,12 +22,10 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [[status, _state, article], toolRegistry, memberRegistry] =
-      await Promise.all([
-        fetchStory(slug, getLang(params)),
-        loadToolRegistry(),
-        loadMemberRegistry(),
-      ]);
+    const [[status, _state, article], toolRegistry] = await Promise.all([
+      fetchStory(slug, getLang(params)),
+      loadToolRegistry(),
+    ]);
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
@@ -37,9 +35,8 @@ export const loader = createHybridLoader(
       .map((toolSlug) => resolveTool(toolSlug, toolRegistry))
       .filter((t): t is NonNullable<typeof t> => t !== null);
 
-    const resolvedTeam = resolveTeam(
-      article.frontmatter.team ?? [],
-      memberRegistry,
+    const resolvedTeam = loadMemberRegistry().then((memberRegistry) =>
+      resolveTeam(article.frontmatter.team ?? [], memberRegistry),
     );
 
     return data(
