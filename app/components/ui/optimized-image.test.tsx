@@ -2,7 +2,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { OptimizedImage } from './optimized-image';
 
@@ -57,6 +57,14 @@ describe('OptimizedImage', () => {
   it('forwards className to the <img>', () => {
     render(<OptimizedImage {...base} className="my-class" />);
     expect(screen.getByRole('img')).toHaveClass('my-class');
+  });
+
+  it('forwards onError handler to the <img>', async () => {
+    const onError = vi.fn();
+    render(<OptimizedImage {...base} onError={onError} />);
+    const img = screen.getByRole('img');
+    img.dispatchEvent(new Event('error'));
+    expect(onError).toHaveBeenCalledTimes(1);
   });
 
   describe('SSR output', () => {
