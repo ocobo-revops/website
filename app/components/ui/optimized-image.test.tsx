@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -59,11 +59,10 @@ describe('OptimizedImage', () => {
     expect(screen.getByRole('img')).toHaveClass('my-class');
   });
 
-  it('forwards onError handler to the <img>', async () => {
+  it('forwards onError handler to the <img>', () => {
     const onError = vi.fn();
     render(<OptimizedImage {...base} onError={onError} />);
-    const img = screen.getByRole('img');
-    img.dispatchEvent(new Event('error'));
+    fireEvent.error(screen.getByRole('img'));
     expect(onError).toHaveBeenCalledTimes(1);
   });
 

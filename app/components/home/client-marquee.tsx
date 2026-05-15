@@ -88,6 +88,8 @@ export const ClientMarquee = ({
             <OptimizedImage
               src={client.logo}
               alt={client.name || 'Client logo'}
+              width={120}
+              height={32}
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}

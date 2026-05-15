@@ -167,6 +167,8 @@ const ClientCarousel: React.FunctionComponent<{
                 <OptimizedImage
                   src={item.src}
                   alt={item.title}
+                  width={140}
+                  height={40}
                   className={css({
                     maxH: '30px',
                     maxW: 'full',

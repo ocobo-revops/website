@@ -79,7 +79,6 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
           <OptimizedImage
             src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
             alt=""
-            aria-hidden="true"
             priority={index < 4}
             width={600}
             height={375}
