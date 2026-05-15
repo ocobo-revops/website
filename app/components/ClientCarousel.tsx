@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { css } from '@ocobo/styled-system/css';
 import { ASSETS_BASE_URL } from '~/config/assets';
 
+import { OptimizedImage } from './ui/optimized-image';
+
 import { useWindowSize } from '~/hooks/useWindowSize';
 
 const items = [
@@ -162,11 +164,11 @@ const ClientCarousel: React.FunctionComponent<{
                   justifyContent: 'center',
                 })}
               >
-                <img
+                <OptimizedImage
                   src={item.src}
                   alt={item.title}
-                  loading="lazy"
-                  decoding="async"
+                  width={140}
+                  height={40}
                   className={css({
                     maxH: '30px',
                     maxW: 'full',

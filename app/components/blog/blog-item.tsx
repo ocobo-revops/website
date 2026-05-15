@@ -15,6 +15,7 @@ import { url } from '~/utils/url';
 import { FrenchText } from '../typography/french-text';
 import { Avatar } from '../ui/Avatar';
 import { Tag } from '../ui/Tag';
+import { OptimizedImage } from '../ui/optimized-image';
 
 interface BlogItemProps {
   item: MarkdocFile<BlogpostFrontmatter>['frontmatter'];
@@ -102,11 +103,11 @@ const BlogItem: React.FunctionComponent<BlogItemProps> = React.memo(
               bg: 'gray.50',
             })}
           >
-            <img
+            <OptimizedImage
               src={item.image}
               alt={item.title}
-              loading="lazy"
-              decoding="async"
+              width={1200}
+              height={630}
               className={css({ w: 'full', h: 'full', objectFit: 'cover' })}
             />
           </div>

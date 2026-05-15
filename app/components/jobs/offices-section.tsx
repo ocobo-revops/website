@@ -6,6 +6,7 @@ import { grid, hstack } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
+import { OptimizedImage } from '~/components/ui/optimized-image';
 
 const OFFICE_PHOTOS = [
   {
@@ -78,9 +79,11 @@ export function OfficesSection() {
                 css({ rounded: '2xl', overflow: 'hidden' }),
               )}
             >
-              <img
+              <OptimizedImage
                 src={photo.src}
                 alt={photo.alt}
+                width={800}
+                height={600}
                 className={css({
                   w: 'full',
                   aspectRatio: '4/3',
@@ -109,9 +112,11 @@ export function OfficesSection() {
             }),
           )}
         >
-          <img
+          <OptimizedImage
             src="/images/jobs/rooftop.jpeg"
             alt="Bureaux Ocobo — rooftop"
+            width={1200}
+            height={800}
             className={css({
               w: 'full',
               h: { base: '48', md: 'full' },

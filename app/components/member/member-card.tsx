@@ -8,6 +8,8 @@ import { Linkedin } from 'lucide-react';
 
 import type { Member } from '~/modules/content/members';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 type MemberCardProps = {
   member: Member;
   contextLabel?: string;
@@ -69,7 +71,7 @@ export function MemberCard({ member, contextLabel }: MemberCardProps) {
             {initials}
           </div>
           {!imgFailed && (
-            <img
+            <OptimizedImage
               src={member.avatar}
               alt={member.name}
               width={100}

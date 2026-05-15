@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { OptimizedImage } from './optimized-image';
 
@@ -57,6 +57,13 @@ describe('OptimizedImage', () => {
   it('forwards className to the <img>', () => {
     render(<OptimizedImage {...base} className="my-class" />);
     expect(screen.getByRole('img')).toHaveClass('my-class');
+  });
+
+  it('forwards onError handler to the <img>', () => {
+    const onError = vi.fn();
+    render(<OptimizedImage {...base} onError={onError} />);
+    fireEvent.error(screen.getByRole('img'));
+    expect(onError).toHaveBeenCalledTimes(1);
   });
 
   describe('SSR output', () => {

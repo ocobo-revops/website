@@ -2,6 +2,7 @@ type OptimizedImageBase = {
   src: string;
   alt: string;
   className?: string;
+  onError?: React.ReactEventHandler<HTMLImageElement>;
 };
 
 // When priority=true, width+height are required to prevent CLS on non-absolute images.
@@ -20,6 +21,7 @@ function OptimizedImage({
   height,
   priority = false,
   className,
+  onError,
 }: OptimizedImageProps) {
   return (
     <img
@@ -28,6 +30,7 @@ function OptimizedImage({
       width={width}
       height={height}
       className={className}
+      onError={onError}
       {...(priority
         ? { loading: 'eager', fetchPriority: 'high' }
         : { loading: 'lazy', decoding: 'async' })}

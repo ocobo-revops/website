@@ -4,6 +4,8 @@ import type React from 'react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { card, text } from '@ocobo/styled-system/recipes';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
 interface TeamMemberCardProps {
@@ -59,9 +61,11 @@ export const TeamMemberCard: React.FC<TeamMemberCardProps> = ({
           avatarBorderStyles[color],
         )}
       >
-        <img
+        <OptimizedImage
           src={imageSrc}
           alt={name}
+          width={128}
+          height={128}
           className={css({ w: 'full', h: 'full', objectFit: 'cover' })}
         />
       </div>
