@@ -165,10 +165,9 @@ describe('jobs detail loader', () => {
 
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
-    const data = outcome.data as {
+    const data = outcome.data as unknown as {
       job: typeof job;
       sections: typeof fakeSections;
-      contact: null;
       lang: string;
       slug: string;
       ld: string;
@@ -189,6 +188,37 @@ describe('jobs detail loader', () => {
     expect(outcome.type).toBe('response');
     if (outcome.type !== 'response') return;
     expect(outcome.response.status).toBe(404);
+  });
+
+  it('returns contact as a deferred promise that resolves to the resolved member', async () => {
+    const job = jobEntry();
+    const resolvedContact = {
+      slug: 'jerome-boileux',
+      name: 'Jérôme Boileux',
+      role: 'Founder',
+    };
+    fetchJobMock.mockResolvedValueOnce([200, 'success', job]);
+    loadMemberRegistryMock.mockResolvedValueOnce({
+      'jerome-boileux': resolvedContact,
+    });
+    resolveMemberMock.mockReturnValueOnce(resolvedContact);
+    extractJobSectionsMock.mockReturnValueOnce(fakeSections);
+    buildJobPostingLdMock.mockReturnValueOnce({});
+    serializeJsonLdMock.mockReturnValueOnce('{}');
+
+    const { loader } = await import('./_main.($lang).jobs.$slug');
+    const outcome = await invokeLoader(loader, {
+      url: 'http://test.local/jobs/revops-consultant',
+      params: { slug: 'revops-consultant' },
+    });
+
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    const data = outcome.data as { contact: unknown; ld: string };
+    expect(data.contact).toBeInstanceOf(Promise);
+    await expect(data.contact).resolves.toEqual(resolvedContact);
+    // ld stays sync — crawlers need JSON-LD on critical path
+    expect(typeof data.ld).toBe('string');
   });
 
   it('returns job data with lang=en on happy path (EN)', async () => {

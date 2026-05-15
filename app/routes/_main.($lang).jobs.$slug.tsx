@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import {
+  Await,
   type LoaderFunctionArgs,
   type MetaFunction,
   redirect,
@@ -36,10 +38,7 @@ export const loader = createHybridLoader(
       return redirect(`/${lang}/jobs`);
     }
 
-    const [[status, , job], registry] = await Promise.all([
-      fetchJob(slug, lang),
-      loadMemberRegistry(),
-    ]);
+    const [status, , job] = await fetchJob(slug, lang);
 
     if (status !== 200 || !job) {
       return redirect(`/${lang}/jobs`);
@@ -50,7 +49,9 @@ export const loader = createHybridLoader(
     }
 
     const sections = extractJobSections(job.content);
-    const contact = resolveMember(job.frontmatter.hiringContact, registry);
+    const contact = loadMemberRegistry().then((registry) =>
+      resolveMember(job.frontmatter.hiringContact, registry),
+    );
     const { origin } = new URL(request.url);
     const ld = serializeJsonLd(
       buildJobPostingLd(job.frontmatter, origin, slug, lang),
@@ -136,18 +137,24 @@ export default function JobDetail() {
               </div>
             </div>
 
-            {contact && (
-              <div
-                className={css({
-                  mt: '24',
-                  pt: '12',
-                  borderTopWidth: '1px',
-                  borderColor: 'gray.100',
-                })}
-              >
-                <HiringContact contact={contact} />
-              </div>
-            )}
+            <Suspense fallback={null}>
+              <Await resolve={contact}>
+                {(resolvedContact) =>
+                  resolvedContact && (
+                    <div
+                      className={css({
+                        mt: '24',
+                        pt: '12',
+                        borderTopWidth: '1px',
+                        borderColor: 'gray.100',
+                      })}
+                    >
+                      <HiringContact contact={resolvedContact} />
+                    </div>
+                  )
+                }
+              </Await>
+            </Suspense>
 
             <ApplyCta
               applyEmail={frontmatter.applyEmail}
