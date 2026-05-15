@@ -107,7 +107,7 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
             return null;
           })()}
           <Suspense fallback={null}>
-            <Await resolve={author}>
+            <Await resolve={author} errorElement={null}>
               {(resolvedAuthor) =>
                 resolvedAuthor && (
                   <div

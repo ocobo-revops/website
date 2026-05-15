@@ -22,6 +22,7 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
+    const memberRegistryPromise = loadMemberRegistry();
     const [[status, _state, article], toolRegistry] = await Promise.all([
       fetchStory(slug, getLang(params)),
       loadToolRegistry(),
@@ -35,7 +36,7 @@ export const loader = createHybridLoader(
       .map((toolSlug) => resolveTool(toolSlug, toolRegistry))
       .filter((t): t is NonNullable<typeof t> => t !== null);
 
-    const resolvedTeam = loadMemberRegistry().then((memberRegistry) =>
+    const resolvedTeam = memberRegistryPromise.then((memberRegistry) =>
       resolveTeam(article.frontmatter.team ?? [], memberRegistry),
     );
 

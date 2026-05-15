@@ -78,7 +78,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
           )}
           <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />
           <Suspense fallback={null}>
-            <Await resolve={resolvedTeam}>
+            <Await resolve={resolvedTeam} errorElement={null}>
               {(team) => <StoryTeamBlock members={team} />}
             </Await>
           </Suspense>

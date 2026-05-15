@@ -38,6 +38,7 @@ export const loader = createHybridLoader(
       return redirect(`/${lang}/jobs`);
     }
 
+    const registryPromise = loadMemberRegistry();
     const [status, , job] = await fetchJob(slug, lang);
 
     if (status !== 200 || !job) {
@@ -49,7 +50,7 @@ export const loader = createHybridLoader(
     }
 
     const sections = extractJobSections(job.content);
-    const contact = loadMemberRegistry().then((registry) =>
+    const contact = registryPromise.then((registry) =>
       resolveMember(job.frontmatter.hiringContact, registry),
     );
     const { origin } = new URL(request.url);
@@ -138,7 +139,7 @@ export default function JobDetail() {
             </div>
 
             <Suspense fallback={null}>
-              <Await resolve={contact}>
+              <Await resolve={contact} errorElement={null}>
                 {(resolvedContact) =>
                   resolvedContact && (
                     <div

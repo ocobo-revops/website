@@ -23,6 +23,7 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
+    const registryPromise = loadMemberRegistry();
     const [status, _state, article] = await fetchBlogpost(
       slug,
       getLang(params),
@@ -36,7 +37,7 @@ export const loader = createHybridLoader(
     const toc = extractToc(ast);
     const intro =
       article.frontmatter.exerpt ?? extractFirstParagraph(ast) ?? null;
-    const author = loadMemberRegistry().then((registry) =>
+    const author = registryPromise.then((registry) =>
       resolveMember(article.frontmatter.author, registry),
     );
 
