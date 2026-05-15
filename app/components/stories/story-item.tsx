@@ -11,6 +11,8 @@ import type { Tool } from '~/modules/content';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { url } from '~/utils/url';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 import { FrenchText } from '../typography/french-text';
 
 interface StoryItemProps {
@@ -74,12 +76,11 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
             flexShrink: 0,
           })}
         >
-          <img
+          <OptimizedImage
             src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
             alt=""
             aria-hidden="true"
-            loading={index < 4 ? 'eager' : 'lazy'}
-            decoding="async"
+            priority={index < 4}
             width={600}
             height={375}
             className={cx(
@@ -112,11 +113,9 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 }),
               )}
             >
-              <img
+              <OptimizedImage
                 src={featuredTool.iconUrl}
                 alt={featuredTool.name}
-                loading="lazy"
-                decoding="async"
                 width={28}
                 height={28}
                 className={css({
@@ -189,11 +188,9 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 alignItems: 'center',
               })}
             >
-              <img
+              <OptimizedImage
                 src={`${ASSETS_BASE_URL}/clients/${slug}-white.png`}
                 alt={item.name}
-                loading="lazy"
-                decoding="async"
                 width={96}
                 height={32}
                 className={css({
@@ -274,14 +271,11 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                     })}
                   >
                     {tool.iconUrl ? (
-                      <img
+                      <OptimizedImage
                         src={tool.iconUrl}
                         alt=""
-                        aria-hidden="true"
                         width={12}
                         height={12}
-                        loading="lazy"
-                        decoding="async"
                         className={css({
                           w: '[12px]',
                           h: '[12px]',

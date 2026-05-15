@@ -1,6 +1,8 @@
 import { css } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 interface Client {
   name: string;
   logo: string;
@@ -83,11 +85,9 @@ export const ClientMarquee = ({
             key={`${client.name}-${idx}`}
             className={`${center()} ${css({ px: { base: '10', md: '14' } })}`}
           >
-            <img
+            <OptimizedImage
               src={client.logo}
               alt={client.name || 'Client logo'}
-              loading="lazy"
-              decoding="async"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}

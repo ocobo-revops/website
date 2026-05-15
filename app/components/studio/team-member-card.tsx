@@ -4,6 +4,8 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 import type { MemberTrack } from '~/modules/schemas';
 
 type TrackColor = 'yellow' | 'coral' | 'mint';
@@ -108,9 +110,11 @@ export const TeamMemberCard = ({
           photoBorderStyles[color],
         )}
       >
-        <img
+        <OptimizedImage
           src={avatar}
           alt={name}
+          width={128}
+          height={128}
           className={css({
             width: 'full',
             height: 'full',

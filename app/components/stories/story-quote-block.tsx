@@ -4,6 +4,8 @@ import { flex } from '@ocobo/styled-system/patterns';
 import { ASSETS_BASE_URL } from '~/config/assets';
 import type { StoryFrontmatter } from '~/types';
 
+import { OptimizedImage } from '../ui/optimized-image';
+
 import { FrenchText } from '../typography/french-text';
 
 interface StoryQuoteBlockProps {
@@ -45,11 +47,11 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
           flexShrink: 0,
         })}
       >
-        <img
+        <OptimizedImage
           src={`${ASSETS_BASE_URL}/clients/${slug}-avatar.png`}
           alt={item.speaker}
-          loading="lazy"
-          decoding="async"
+          width={600}
+          height={375}
           className={css({ w: 'full', h: 'full', objectFit: 'cover' })}
         />
       </div>
