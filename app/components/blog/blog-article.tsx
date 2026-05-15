@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from 'lucide-react';
+import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
+import { Await, NavLink } from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
@@ -24,7 +25,7 @@ interface BlogArticleProps {
   article: MarkdocFile<BlogpostFrontmatter>;
   toc: TocEntry[];
   intro: string | null;
-  author: Member | null;
+  author: Promise<Member | null>;
 }
 
 const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
@@ -105,30 +106,36 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
             }
             return null;
           })()}
-          {author && (
-            <div
-              className={css({
-                mt: '16',
-                pt: '12',
-                borderTopWidth: '1px',
-                borderColor: 'gray.100',
-              })}
-            >
-              <div
-                className={css({
-                  fontSize: 'xs',
-                  fontWeight: 'black',
-                  textTransform: 'uppercase',
-                  letterSpacing: 'widest',
-                  color: 'gray.400',
-                  mb: '6',
-                })}
-              >
-                {t('author.heading')}
-              </div>
-              <MemberCard member={author} />
-            </div>
-          )}
+          <Suspense fallback={null}>
+            <Await resolve={author} errorElement={null}>
+              {(resolvedAuthor) =>
+                resolvedAuthor && (
+                  <div
+                    className={css({
+                      mt: '16',
+                      pt: '12',
+                      borderTopWidth: '1px',
+                      borderColor: 'gray.100',
+                    })}
+                  >
+                    <div
+                      className={css({
+                        fontSize: 'xs',
+                        fontWeight: 'black',
+                        textTransform: 'uppercase',
+                        letterSpacing: 'widest',
+                        color: 'gray.400',
+                        mb: '6',
+                      })}
+                    >
+                      {t('author.heading')}
+                    </div>
+                    <MemberCard member={resolvedAuthor} />
+                  </div>
+                )
+              }
+            </Await>
+          </Suspense>
         </LayoutPost.Main>
       </LayoutPost.Root>
     </div>

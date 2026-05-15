@@ -91,7 +91,7 @@ describe('blog detail loader', () => {
     expect(outcome.response.status).toBe(404);
   });
 
-  it('returns article, toc, intro, and author on happy path', async () => {
+  it('returns article, toc, and intro synchronously on happy path', async () => {
     const article = blogEntry();
     fetchBlogpostMock.mockResolvedValueOnce([200, 'success', article]);
     loadMemberRegistryMock.mockResolvedValueOnce({});
@@ -109,7 +109,32 @@ describe('blog detail loader', () => {
     expect(outcome.data.article).toBe(article);
     expect(outcome.data.toc).toEqual([{ id: 'test', children: [] }]);
     expect(outcome.data.intro).toBe('Intro paragraph.');
-    expect(outcome.data.author).toBeNull();
+  });
+
+  it('returns author as a deferred promise that resolves to the resolved member', async () => {
+    const article = blogEntry();
+    const resolvedAuthor = {
+      slug: 'jerome-boileux',
+      name: 'Jérôme Boileux',
+      role: 'Founder',
+    };
+    fetchBlogpostMock.mockResolvedValueOnce([200, 'success', article]);
+    loadMemberRegistryMock.mockResolvedValueOnce({
+      'jerome-boileux': resolvedAuthor,
+    });
+    resolveMemberMock.mockReturnValueOnce(resolvedAuthor);
+    extractTocMock.mockReturnValueOnce([]);
+    extractFirstParagraphMock.mockReturnValueOnce(null);
+
+    const { loader } = await import('./_main.blog.$slug');
+    const outcome = await invokeLoader(loader, {
+      params: { slug: 'test-slug' },
+    });
+
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    expect(outcome.data.author).toBeInstanceOf(Promise);
+    await expect(outcome.data.author).resolves.toEqual(resolvedAuthor);
   });
 
   it('uses frontmatter.exerpt as intro when set', async () => {

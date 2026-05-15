@@ -23,10 +23,11 @@ export const loader = createHybridLoader(
       throw new Response('Not Found', { status: 404 });
     }
 
-    const [[status, _state, article], registry] = await Promise.all([
-      fetchBlogpost(slug, getLang(params)),
-      loadMemberRegistry(),
-    ]);
+    const registryPromise = loadMemberRegistry();
+    const [status, _state, article] = await fetchBlogpost(
+      slug,
+      getLang(params),
+    );
 
     if (status !== 200 || !article) {
       throw new Response('Not Found', { status: 404 });
@@ -36,7 +37,9 @@ export const loader = createHybridLoader(
     const toc = extractToc(ast);
     const intro =
       article.frontmatter.exerpt ?? extractFirstParagraph(ast) ?? null;
-    const author = resolveMember(article.frontmatter.author, registry);
+    const author = registryPromise.then((registry) =>
+      resolveMember(article.frontmatter.author, registry),
+    );
 
     return data(
       { article, toc, intro, author },
