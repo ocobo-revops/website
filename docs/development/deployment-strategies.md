@@ -1,4 +1,4 @@
-# Vercel Branch-Specific Content Deployment Strategy
+# Vercel branch-specific content deployment strategy
 
 This document outlines how to configure Vercel deployments to target specific branches of the ocobo-posts repository, allowing for content testing and preview environments.
 
