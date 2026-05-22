@@ -32,7 +32,6 @@
     "@react-router/node": "^7.8.1",
     "@react-router/serve": "^7.8.1",
     "@vercel/analytics": "^1.5.0",
-    "@vercel/blob": "^1.1.1",
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^12.23.12",
     "i18next": "^25.3.6",
