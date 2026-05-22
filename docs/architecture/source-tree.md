@@ -143,9 +143,8 @@ ocobo-website/
 │   └── svg-loaders/              # ⏳ Loading animation SVGs
 │
 ├── scripts/                      # 🔧 Build and maintenance scripts
-│   ├── migrate-to-blob.js        # 📦 Asset migration to Vercel Blob
-│   ├── update-frontmatter.js     # 📝 Content metadata updater
-│   └── github-actions-workflow.yml # 🚀 CI/CD configuration
+│   ├── download-jobs-photos.mjs  # 📥 Pull job photos from Notion CDN
+│   └── perf/                     # 🏎️ Performance benchmarks
 │
 ├── docs/                         # 📚 Project documentation
 ├── build/                        # 🏗️ Production build output
