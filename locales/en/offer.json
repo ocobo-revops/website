@@ -223,37 +223,37 @@
       "logoRows": [
         [
           {
-            "src": "/images/team/aude.jpg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/aude-cadiot.jpg",
             "alt": "Aude"
           },
           {
-            "src": "/images/team/clara.jpg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/clara-lecarrie.jpg",
             "alt": "Clara"
           },
           {
-            "src": "/images/team/corentin.jpeg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/corentin-guerin.jpeg",
             "alt": "Corentin"
           },
           {
-            "src": "/images/team/damien.jpg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/damien-robert.jpg",
             "alt": "Damien"
           }
         ],
         [
           {
-            "src": "/images/team/domitille.jpeg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/domitille-raimbault.jpeg",
             "alt": "Domitille"
           },
           {
-            "src": "/images/team/dorian.jpg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/dorian-cutullic.jpg",
             "alt": "Dorian"
           },
           {
-            "src": "/images/team/ethel.jpeg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/ethel-gosset.jpeg",
             "alt": "Ethel"
           },
           {
-            "src": "/images/team/louis.jpg",
+            "src": "https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team/louis-strauss.jpg",
             "alt": "Louis"
           }
         ]
