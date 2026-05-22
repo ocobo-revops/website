@@ -32,7 +32,13 @@ function OptimizedImage({
       className={className}
       onError={onError}
       {...(priority
-        ? { loading: 'eager', fetchPriority: 'high' }
+        ? ({
+            loading: 'eager',
+            // React 18.3.1's DOM allow-list lacks fetchPriority — keep it
+            // lowercase so it ships as the standard HTML attribute without
+            // triggering the unknown-prop dev warning.
+            fetchpriority: 'high',
+          } as React.ImgHTMLAttributes<HTMLImageElement>)
         : { loading: 'lazy', decoding: 'async' })}
     />
   );

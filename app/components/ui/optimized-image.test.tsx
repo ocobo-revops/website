@@ -67,10 +67,9 @@ describe('OptimizedImage', () => {
   });
 
   describe('SSR output', () => {
-    it('emits fetchPriority=high and loading=eager in SSR HTML when priority', () => {
+    it('emits fetchpriority=high and loading=eager in SSR HTML when priority', () => {
       const html = renderToString(<OptimizedImage {...base} priority />);
-      // React 18.3 preserves camelCase in SSR output; browsers read it case-insensitively
-      expect(html).toContain('fetchPriority="high"');
+      expect(html).toContain('fetchpriority="high"');
       expect(html).toContain('loading="eager"');
     });
 
