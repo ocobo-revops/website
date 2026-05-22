@@ -27,6 +27,10 @@ styled-system-studio
 ## Claude Code
 .claude
 
+## Editor / agent scaffolding (BMAD, etc.)
+.agent/
+.cursor/
+
 ## QA temp files
 /qa
 
