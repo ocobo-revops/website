@@ -20,6 +20,7 @@ pnpm dev
 ### 📚 For Developers
 
 - **[Getting Started](docs/development/getting-started.md)** - Complete setup and development guide
+- **[Two-repo content pipeline](docs/architecture/two-repo-content-pipeline.md)** - How `ocobo-revops/posts` (content) and this repo (website) relate
 - **[Official Documentation](docs/)** - Comprehensive project documentation
 
 ### 🤖 For AI Agents

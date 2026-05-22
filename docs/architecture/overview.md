@@ -4,6 +4,8 @@
 
 OCOBO is a modern React Router v7 application following a **component-based layered architecture** with a **server-first** approach for optimal performance.
 
+Content (markdown, assets) lives in a separate repository (`ocobo-revops/posts`). For the full picture of how the two repos relate, see **[Two-repo content pipeline](two-repo-content-pipeline.md)**.
+
 ## Architectural Principles
 
 ### 1. Server-Side First
