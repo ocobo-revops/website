@@ -33,7 +33,7 @@ export const ComparatifSection = ({
         <div className={css({ textAlign: 'center', mb: '16' })}>
           <h2
             className={cx(
-              text({ variant: 'display-lg' }),
+              text({ variant: 'display-lg', color: 'white' }),
               css({ fontSize: '4xl', mb: '4' }),
             )}
           >
