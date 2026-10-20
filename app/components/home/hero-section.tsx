@@ -33,6 +33,7 @@ export const HeroSection = () => {
         >
           <HeroSplit.Content>
             <h1
+              data-testid="hero-heading"
               className={cx(
                 text({ variant: 'display-xl', color: 'dark' }),
                 css({

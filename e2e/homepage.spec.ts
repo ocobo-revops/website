@@ -8,9 +8,7 @@ test.describe('homepage golden path', () => {
 
   test('hero heading is visible', async ({ page }) => {
     await page.goto('/');
-    await expect(
-      page.getByRole('heading', { name: /architecture/i }).first(),
-    ).toBeVisible();
+    await expect(page.getByTestId('hero-heading')).toBeVisible();
   });
 
   test('primary CTA is visible and links to contact', async ({ page }) => {
@@ -60,8 +58,6 @@ test.describe('english locale smoke test', () => {
 
   test('/en/ hero heading is visible', async ({ page }) => {
     await page.goto('/en/');
-    await expect(
-      page.getByRole('heading', { name: /architecture/i }).first(),
-    ).toBeVisible();
+    await expect(page.getByTestId('hero-heading')).toBeVisible();
   });
 });
