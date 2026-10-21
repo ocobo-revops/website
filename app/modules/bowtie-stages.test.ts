@@ -1,6 +1,17 @@
+import { createInstance } from 'i18next';
 import { describe, expect, it } from 'vitest';
 
-import { STAGE_IDS, getStageStates, isStageId } from './bowtie-stages';
+import { languages, resources } from '~/localization/resources';
+
+import {
+  BOWTIE_NAMESPACE,
+  MILESTONE_PREFIX_KEY,
+  STAGE_IDS,
+  STAGE_LABEL_FIELDS,
+  getStageLabelKey,
+  getStageStates,
+  isStageId,
+} from './bowtie-stages';
 
 describe('STAGE_IDS', () => {
   it('lists the seven Stage ids shared with the posts repo, in bow tie order', () => {
@@ -57,6 +68,34 @@ describe('getStageStates', () => {
   it('accepts a Set and ignores duplicates', () => {
     expect(getStageStates(new Set(['closing']))).toEqual(
       getStageStates(['closing', 'closing']),
+    );
+  });
+});
+
+describe('stage labels', () => {
+  const translators = languages.map((lng) => {
+    const i18n = createInstance();
+    i18n.init({ lng, resources, initAsync: false });
+    return [lng, i18n.getFixedT(lng, BOWTIE_NAMESPACE)] as const;
+  });
+
+  it.each(translators)('resolves every stage field in %s', (_lng, t) => {
+    for (const id of STAGE_IDS) {
+      for (const field of STAGE_LABEL_FIELDS) {
+        const key = getStageLabelKey(id, field);
+        expect(t(key), key).not.toBe(key);
+        expect(t(key).trim(), key).not.toBe('');
+      }
+    }
+  });
+
+  it.each(translators)('resolves the Milestone prefix in %s', (_lng, t) => {
+    expect(t(MILESTONE_PREFIX_KEY)).not.toBe(MILESTONE_PREFIX_KEY);
+  });
+
+  it('builds keys from the Stage id and the field', () => {
+    expect(getStageLabelKey('discovery', 'kpiTitle')).toBe(
+      'stages.discovery.kpiTitle',
     );
   });
 });

@@ -1,0 +1,54 @@
+{
+  "milestonePrefix": "Milestone",
+  "stages": {
+    "demand-generation": {
+      "label": "Demand generation",
+      "milestone": "MQL",
+      "kpiTitle": "MQL volume and cost per MQL",
+      "kpiShort": "Cost per MQL",
+      "description": "How many qualified prospects marketing generates, and at what cost."
+    },
+    "discovery": {
+      "label": "Discovery",
+      "milestone": "SQL",
+      "kpiTitle": "MQL to SQL conversion rate",
+      "kpiShort": "MQL to SQL",
+      "description": "The share of leads that sales accepts and actually works."
+    },
+    "negotiation": {
+      "label": "Negotiation",
+      "milestone": "SQO",
+      "kpiTitle": "Win rate and cycle length",
+      "kpiShort": "Win rate",
+      "description": "How many qualified opportunities close, and how fast."
+    },
+    "closing": {
+      "label": "Closing",
+      "milestone": "New customer",
+      "kpiTitle": "New signed revenue (ACV)",
+      "kpiShort": "Signed ACV",
+      "description": "The average value of a new contract, and how predictable it is."
+    },
+    "onboarding": {
+      "label": "Onboarding",
+      "milestone": "Active customer",
+      "kpiTitle": "Time to value",
+      "kpiShort": "Time to value",
+      "description": "The time between signature and the first value the customer sees."
+    },
+    "adoption": {
+      "label": "Adoption",
+      "milestone": "Active",
+      "kpiTitle": "Adoption rate and health score",
+      "kpiShort": "Adoption",
+      "description": "Customers who really use what they bought."
+    },
+    "expansion": {
+      "label": "Expansion",
+      "milestone": "Upsell, cross-sell",
+      "kpiTitle": "NRR (net revenue retention)",
+      "kpiShort": "NRR",
+      "description": "How much more your customer base brings in from one year to the next."
+    }
+  }
+}

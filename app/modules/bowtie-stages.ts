@@ -45,3 +45,23 @@ export function getStageStates(
     state: active.has(id) ? 'active' : 'inactive',
   }));
 }
+
+/** Labels live in the `bowtie` locale namespace, French and English. */
+export const BOWTIE_NAMESPACE = 'bowtie';
+
+export const STAGE_LABEL_FIELDS = [
+  'label',
+  'milestone',
+  'kpiTitle',
+  'kpiShort',
+  'description',
+] as const;
+
+export type StageLabelField = (typeof STAGE_LABEL_FIELDS)[number];
+
+/** Shared prefix shown before a stage's Milestone ("Jalon" in French). */
+export const MILESTONE_PREFIX_KEY = 'milestonePrefix';
+
+export function getStageLabelKey(id: StageId, field: StageLabelField): string {
+  return `stages.${id}.${field}`;
+}

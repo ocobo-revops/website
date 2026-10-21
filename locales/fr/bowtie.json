@@ -1,0 +1,54 @@
+{
+  "milestonePrefix": "Jalon",
+  "stages": {
+    "demand-generation": {
+      "label": "Génération de demande",
+      "milestone": "MQL",
+      "kpiTitle": "Volume de MQL et coût par MQL",
+      "kpiShort": "Coût par MQL",
+      "description": "Combien de prospects qualifiés le marketing génère, et à quel coût."
+    },
+    "discovery": {
+      "label": "Découverte",
+      "milestone": "SQL",
+      "kpiTitle": "Taux de conversion MQL vers SQL",
+      "kpiShort": "MQL vers SQL",
+      "description": "La part des leads que la vente accepte et travaille réellement."
+    },
+    "negotiation": {
+      "label": "Négociation",
+      "milestone": "SQO",
+      "kpiTitle": "Win rate et durée du cycle",
+      "kpiShort": "Win rate",
+      "description": "Combien d'opportunités qualifiées se signent, et en combien de temps."
+    },
+    "closing": {
+      "label": "Signature",
+      "milestone": "Nouveau client",
+      "kpiTitle": "Nouveau chiffre signé (ACV)",
+      "kpiShort": "ACV signé",
+      "description": "La valeur moyenne d'un nouveau contrat, et sa prévisibilité."
+    },
+    "onboarding": {
+      "label": "Onboarding",
+      "milestone": "Client actif",
+      "kpiTitle": "Time to value",
+      "kpiShort": "Time to value",
+      "description": "Le délai entre la signature et la première valeur perçue par le client."
+    },
+    "adoption": {
+      "label": "Adoption",
+      "milestone": "Actif",
+      "kpiTitle": "Taux d'adoption et score de santé",
+      "kpiShort": "Adoption",
+      "description": "Les clients qui utilisent vraiment ce qu'ils ont acheté."
+    },
+    "expansion": {
+      "label": "Expansion",
+      "milestone": "Upsell, cross-sell",
+      "kpiTitle": "NRR (rétention nette du revenu)",
+      "kpiShort": "NRR",
+      "description": "Ce que votre base client rapporte de plus d'une année sur l'autre."
+    }
+  }
+}
