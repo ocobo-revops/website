@@ -1,4 +1,4 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 import { hstack } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
@@ -23,7 +23,7 @@ const kpiContent = css({
 });
 
 const kpiLabel = css({ color: 'white/75' });
-const kpiTitle = css({ fontWeight: 'bold', fontSize: 'body' });
+const kpiTitle = cx(text({ variant: 'body' }), css({ fontWeight: 'bold' }));
 
 export function TooltipSection() {
   return (

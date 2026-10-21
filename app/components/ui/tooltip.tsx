@@ -1,7 +1,8 @@
 import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip';
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 
@@ -10,7 +11,10 @@ type TooltipProps = {
   content: ReactNode;
   /** Trigger contents, rendered inside a `<button>` unless `asChild` is set. */
   children: ReactNode;
-  /** Use the single child element as the trigger. It must be focusable. */
+  /**
+   * Use the single child element as the trigger. It must be a focusable HTML
+   * element, not an SVG one: the tooltip renders next to it.
+   */
   asChild?: boolean;
   placement?: TooltipPlacement;
   className?: string;
@@ -37,8 +41,6 @@ const contentStyles = css({
   borderColor: 'white/12',
   rounded: '2xl',
   shadow: 'window',
-  fontSize: 'caption',
-  lineHeight: 'body',
   textAlign: 'left',
 });
 
@@ -52,7 +54,10 @@ const contentStyles = css({
  *
  * The content renders next to its trigger, not in a portal, so it stays in the
  * trigger's landmark and reading order. The fixed positioning strategy keeps
- * it clear of `overflow: hidden` ancestors.
+ * it clear of `overflow: hidden` ancestors. Place the trigger where a `<div>`
+ * is valid: not inside an `<svg>` or a `<p>`.
+ *
+ * The content stays open while the pointer is over it (WCAG 1.4.13).
  */
 export function Tooltip({
   content,
@@ -63,11 +68,16 @@ export function Tooltip({
   triggerClassName,
 }: TooltipProps) {
   const [open, setOpen] = useState(false);
-  // True while the tooltip stays open because of a click or tap, so a second
-  // click closes it. One opened by hover or focus stays open on a click.
+  // True once a click or tap opened the tooltip, so a second click closes it.
+  // A click on a tooltip opened by hover or focus leaves it open. Moving the
+  // pointer away still closes it, whatever opened it.
   const openedByClick = useRef(false);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  // Element ids rather than refs: an `asChild` trigger may not forward refs.
+  const baseId = useId();
+  const ids = {
+    trigger: `${baseId}trigger`,
+    positioner: `${baseId}positioner`,
+  };
 
   const changeOpen = (next: boolean) => {
     if (!next) openedByClick.current = false;
@@ -88,8 +98,8 @@ export function Tooltip({
     const closeOnOutsidePointer = (event: PointerEvent) => {
       const target = event.target;
       if (!(target instanceof Node)) return;
-      if (triggerRef.current?.contains(target)) return;
-      if (contentRef.current?.contains(target)) return;
+      if (document.getElementById(ids.trigger)?.contains(target)) return;
+      if (document.getElementById(ids.positioner)?.contains(target)) return;
       openedByClick.current = false;
       setOpen(false);
     };
@@ -97,11 +107,13 @@ export function Tooltip({
     return () => {
       document.removeEventListener('pointerdown', closeOnOutsidePointer);
     };
-  }, [open]);
+  }, [open, ids.trigger, ids.positioner]);
 
   return (
     <ArkTooltip.Root
+      ids={ids}
       open={open}
+      interactive
       onOpenChange={(details) => changeOpen(details.open)}
       closeOnClick={false}
       openDelay={200}
@@ -110,8 +122,8 @@ export function Tooltip({
       unmountOnExit
     >
       <ArkTooltip.Trigger
-        ref={triggerRef}
         asChild={asChild}
+        type={asChild ? undefined : 'button'}
         className={cx(triggerStyles, triggerClassName)}
         onClick={handleClick}
       >
@@ -119,8 +131,7 @@ export function Tooltip({
       </ArkTooltip.Trigger>
       <ArkTooltip.Positioner>
         <ArkTooltip.Content
-          ref={contentRef}
-          className={cx(contentStyles, className)}
+          className={cx(text({ variant: 'small' }), contentStyles, className)}
         >
           {content}
         </ArkTooltip.Content>

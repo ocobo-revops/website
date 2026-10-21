@@ -81,6 +81,50 @@ describe('Tooltip', () => {
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
   });
 
+  it('closes on a second touch tap', async () => {
+    const user = userEvent.setup();
+    const trigger = renderTooltip();
+
+    await user.pointer({ keys: '[TouchA]', target: trigger });
+    await screen.findByRole('tooltip');
+    await user.pointer({ keys: '[TouchA]', target: trigger });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  it('stays open while the pointer moves onto it', async () => {
+    const user = userEvent.setup();
+    const trigger = renderTooltip();
+
+    await user.hover(trigger);
+    const tooltip = await screen.findByRole('tooltip');
+    await user.hover(tooltip);
+    // Longer than the close delay, so a pending close would have run.
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    expect(screen.getByRole('tooltip')).toBeInTheDocument();
+  });
+
+  it('closes on Escape after a tap opened it', async () => {
+    const user = userEvent.setup();
+    const trigger = renderTooltip();
+
+    await user.pointer({ keys: '[TouchA]', target: trigger });
+    await screen.findByRole('tooltip');
+    await user.keyboard('{Escape}');
+
+    await waitFor(() => {
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders a trigger that does not submit forms', () => {
+    const trigger = renderTooltip();
+    expect(trigger).toHaveAttribute('type', 'button');
+  });
+
   it('closes on Escape', async () => {
     const user = userEvent.setup();
     const trigger = renderTooltip();
