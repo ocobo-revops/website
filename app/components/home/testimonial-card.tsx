@@ -50,7 +50,8 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
         borderColor: 'white/10',
         shadow: '2xl',
         overflow: 'hidden',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'auto',
+        backdropBlur: 'xs',
       })} group ${className}`}
     >
       <div
@@ -62,7 +63,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           userSelect: 'none',
           pointerEvents: 'none',
           transition: 'transform',
-          transitionDuration: '1000ms',
+          transitionDuration: '[1000ms]',
           _groupHover: { transform: 'scale(1.1)' },
         })}
       >
@@ -123,7 +124,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
                   overflow: 'hidden',
                   transform: 'rotate(3deg)',
                   transition: 'transform',
-                  transitionDuration: '500ms',
+                  transitionDuration: 'slowest',
                   _groupHover: { transform: 'rotate(0deg)' },
                 }),
               )}
@@ -189,7 +190,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
                   align: 'center',
                   gap: '4',
                   transition: 'colors',
-                  transitionDuration: '300ms',
+                  transitionDuration: 'slow',
                   _hover: { color: 'ocobo.yellow' },
                 }),
                 css({ color: 'white/40' }),
@@ -201,7 +202,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
                 size={14}
                 className={css({
                   transition: 'transform',
-                  transitionDuration: '300ms',
+                  transitionDuration: 'slow',
                   _groupHover: { transform: 'translateX(8px)' },
                 })}
               />

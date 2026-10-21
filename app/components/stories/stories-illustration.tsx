@@ -12,8 +12,8 @@ const StoriesIllustration: React.FunctionComponent = () => {
       className={`${center()} ${css({
         position: 'relative',
         w: 'full',
-        maxW: '540px',
-        aspectRatio: '1',
+        maxW: '[540px]',
+        aspectRatio: 'square',
         overflow: 'visible',
       })}`}
     >
@@ -24,7 +24,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
           opacity: 0.05,
           pointerEvents: 'none',
           backgroundImage:
-            'radial-gradient(#212323 1px, transparent 1px), linear-gradient(rgba(33,35,35,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(33,35,35,0.1) 1px, transparent 1px)',
+            '[radial-gradient(#212323 1px, transparent 1px), linear-gradient(rgba(33,35,35,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(33,35,35,0.1) 1px, transparent 1px)]',
           backgroundSize: '40px 40px, 80px 80px, 80px 80px',
         })}
       />
@@ -182,7 +182,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
           height="120"
           className={css({
             animation: 'float-gentle',
-            animationDelay: '1.2s',
+            animationDelay: '[1.2s]',
           })}
         >
           <div
@@ -244,7 +244,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
           height="120"
           className={css({
             animation: 'float-gentle',
-            animationDelay: '2.5s',
+            animationDelay: '[2.5s]',
           })}
         >
           <div
@@ -306,7 +306,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
           height="160"
           className={css({
             animation: 'float-gentle',
-            animationDelay: '0.6s',
+            animationDelay: '[0.6s]',
           })}
         >
           <div
@@ -403,7 +403,7 @@ const StoriesIllustration: React.FunctionComponent = () => {
             fill="#FE9C87"
             className={css({
               animation: 'pulse',
-              animationDelay: '1.5s',
+              animationDelay: '[1.5s]',
             })}
           />
           <path

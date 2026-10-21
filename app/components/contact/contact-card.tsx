@@ -19,7 +19,8 @@ const inputBaseStyles = {
   fontSize: 'base',
   fontFamily: 'body',
   outline: 'none',
-  transition: 'background 0.2s, border-color 0.2s',
+  transition: 'colors',
+  transitionDuration: 'normal',
   _focus: {
     bg: 'white',
     borderColor: 'ocobo.dark',
@@ -32,7 +33,7 @@ const labelBaseStyles = {
   fontSize: 'xs',
   fontWeight: 'bold',
   textTransform: 'uppercase',
-  letterSpacing: '0.2em',
+  letterSpacing: 'tag',
   color: 'gray.500',
   mb: '2',
 } as const;
@@ -90,7 +91,8 @@ const formScopedStyles = css({
     border: 'none',
     cursor: 'pointer',
     boxShadow: 'xl',
-    transition: 'background 0.2s, box-shadow 0.2s, transform 0.2s',
+    transition: 'common',
+    transitionDuration: 'normal',
     _hover: {
       bg: 'black',
       boxShadow: '2xl',
@@ -120,8 +122,8 @@ export const ContactCard = ({ children }: ContactCardProps) => {
       <div
         className={css({
           position: 'absolute',
-          top: 0,
-          left: 0,
+          top: '0',
+          left: '0',
           w: 'full',
           h: '1',
           bgGradient: 'to-r',

@@ -62,10 +62,13 @@ export function FormSection() {
           />
         </div>
         <div className={field}>
-          <Label htmlFor="email_error" className={css({})}>
+          <Label htmlFor="fruit_select" className={css({})}>
             Select
           </Label>
-          <Select.Root collection={fruitCollection}>
+          <Select.Root
+            collection={fruitCollection}
+            ids={{ trigger: 'fruit_select' }}
+          >
             <Select.Trigger>
               <Select.Value placeholder="Select a fruit" />
             </Select.Trigger>

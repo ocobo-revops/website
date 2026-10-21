@@ -82,6 +82,7 @@ const items = [
   },
 ];
 
+// Mirrored as literal tokens in the css() calls below (static extraction).
 const itemWidth = 140;
 const itemGap = 16;
 
@@ -121,7 +122,7 @@ const ClientCarousel: React.FunctionComponent<{
           <p
             className={css({
               textStyle: 'heading2',
-              mb: 6,
+              mb: '6',
             })}
           >
             {t('clients.title')}
@@ -131,7 +132,7 @@ const ClientCarousel: React.FunctionComponent<{
           className={css({
             overflow: 'hidden',
             position: 'relative',
-            width: '100%',
+            width: 'full',
             textAlign: 'left',
           })}
         >
@@ -139,9 +140,9 @@ const ClientCarousel: React.FunctionComponent<{
             className={css({
               display: 'inline-flex',
               alignItems: 'center',
-              gap: itemGap + 'px',
+              gap: '4',
               w: 'auto',
-              px: itemGap + 'px',
+              px: '4',
             })}
             animate={{
               x: [0, -delta + 'px'],
@@ -156,8 +157,8 @@ const ClientCarousel: React.FunctionComponent<{
               <li
                 key={item.src + i}
                 className={css({
-                  w: itemWidth,
-                  h: '40px',
+                  w: '[140px]',
+                  h: '10',
                   flexShrink: 0,
                   display: 'flex',
                   alignItems: 'center',
@@ -170,7 +171,7 @@ const ClientCarousel: React.FunctionComponent<{
                   width={140}
                   height={40}
                   className={css({
-                    maxH: '30px',
+                    maxH: '[30px]',
                     maxW: 'full',
                     w: 'auto',
                     objectFit: 'contain',

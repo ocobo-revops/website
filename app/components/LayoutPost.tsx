@@ -69,7 +69,8 @@ const Aside: React.FunctionComponent<
                 h: '24',
                 bg: 'ocobo.yellow/10',
                 rounded: 'full',
-                filter: 'blur(32px)',
+                filter: 'auto',
+                blur: '2xl',
                 pointerEvents: 'none',
               })}
             />

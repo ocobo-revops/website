@@ -42,7 +42,7 @@ const Hero = () => {
               fontWeight: 'bold',
               color: 'ocobo.dark',
               mb: '10',
-              lineHeight: '0.95',
+              lineHeight: 'none',
               letterSpacing: 'tight',
               whiteSpace: 'pre-line',
             })}

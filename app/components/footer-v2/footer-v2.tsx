@@ -41,7 +41,7 @@ const focusRing = css({
     outlineWidth: '2px',
     outlineStyle: 'solid',
     outlineColor: 'white',
-    outlineOffset: '2px',
+    outlineOffset: '0.5',
   },
 });
 

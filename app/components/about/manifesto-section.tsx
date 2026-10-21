@@ -72,7 +72,7 @@ export const ManifestoSection = () => {
           top: '0',
           left: '0',
           w: 'full',
-          h: '1px',
+          h: '[1px]',
           bgGradient: 'to-r',
           gradientFrom: 'transparent',
           gradientVia: 'white/10',
@@ -85,7 +85,7 @@ export const ManifestoSection = () => {
           bottom: '0',
           left: '0',
           w: 'full',
-          h: '1px',
+          h: '[1px]',
           bgGradient: 'to-r',
           gradientFrom: 'transparent',
           gradientVia: 'white/10',
@@ -95,28 +95,30 @@ export const ManifestoSection = () => {
       <div
         className={css({
           position: 'absolute',
-          top: '50%',
+          top: '[50%]',
           left: '0',
           w: '32',
           h: '32',
           bg: 'ocobo.yellow/10',
           rounded: 'full',
           transform: 'translateX(-50%)',
-          filter: 'blur(48px)',
+          filter: 'auto',
+          blur: '2xl',
           opacity: '0.5',
         })}
       />
       <div
         className={css({
           position: 'absolute',
-          top: '25%',
+          top: '[25%]',
           right: '0',
           w: '40',
           h: '40',
           bg: 'ocobo.sky/10',
           rounded: 'full',
           transform: 'translateX(50%)',
-          filter: 'blur(48px)',
+          filter: 'auto',
+          blur: '2xl',
           opacity: '0.5',
         })}
       />
@@ -239,7 +241,8 @@ export const ManifestoSection = () => {
               borderColor: 'white/10',
               shadow: '2xl',
               overflow: 'hidden',
-              backdropFilter: 'blur(4px)',
+              backdropFilter: 'auto',
+              backdropBlur: 'xs',
             })}
           >
             <div
@@ -343,7 +346,7 @@ export const ManifestoSection = () => {
                   css({
                     fontSize: { base: '2xl', md: '4xl' },
                     textTransform: 'uppercase',
-                    letterSpacing: '0.3em',
+                    letterSpacing: 'label',
                     lineHeight: 'tight',
                   }),
                 )}

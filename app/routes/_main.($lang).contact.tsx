@@ -38,7 +38,7 @@ export default function Index() {
   return (
     <section className={section()}>
       <Container>
-        <Grid columns={{ base: 1, lg: 2 }} gap="5rem">
+        <Grid columns={{ base: 1, lg: 2 }} gap="20">
           <GridItem>
             <ContactHero />
           </GridItem>

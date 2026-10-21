@@ -4,6 +4,7 @@ import type React from 'react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 import { card, text } from '@ocobo/styled-system/recipes';
+import type { ColorToken } from '@ocobo/styled-system/tokens';
 
 type ThemeColor = 'yellow' | 'mint' | 'sky' | 'coral' | 'dark';
 
@@ -16,7 +17,7 @@ interface FeatureCardProps {
   className?: string;
 }
 
-const colourStyles: Record<ThemeColor, { bg: string; text: string }> = {
+const colourStyles: Record<ThemeColor, { bg: ColorToken; text: ColorToken }> = {
   yellow: { bg: 'ocobo.yellow.light', text: 'ocobo.yellow' },
   mint: { bg: 'ocobo.mint.light', text: 'ocobo.mint' },
   sky: { bg: 'ocobo.sky.light', text: 'ocobo.sky' },
@@ -48,7 +49,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           p: '12',
           aspectRatio: 'square',
           transition: 'all',
-          transitionDuration: '500ms',
+          transitionDuration: 'slowest',
           textAlign: 'center',
           _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
         }),
@@ -63,7 +64,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           opacity: '0',
           rounded: '2xl',
           transition: 'opacity',
-          transitionDuration: '300ms',
+          transitionDuration: 'slow',
           _groupHover: { opacity: '0.1' },
         })}
       />
@@ -73,7 +74,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           mb: '8',
           color: styles.text,
           transition: 'all',
-          transitionDuration: '500ms',
+          transitionDuration: 'slowest',
           _groupHover: { transform: 'scale(1.1) rotate(6deg)' },
         })}
       >
@@ -102,7 +103,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
             mb: '3',
             letterSpacing: 'tighter',
             transition: 'colors',
-            transitionDuration: '300ms',
+            transitionDuration: 'slow',
             _groupHover: { color: styles.text },
           }),
         )}
@@ -116,7 +117,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           fontWeight: 'bold',
           fontSize: 'sm',
           textTransform: 'uppercase',
-          letterSpacing: '0.2em',
+          letterSpacing: 'tag',
         })}
       >
         {description}
@@ -128,7 +129,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
           bottom: '6',
           opacity: '0',
           transition: 'opacity',
-          transitionDuration: '300ms',
+          transitionDuration: 'slow',
           _groupHover: { opacity: '0.2' },
         })}
       >

@@ -31,7 +31,8 @@ export function AboutOcoboSection() {
           h: '24',
           bg: 'ocobo.yellow/10',
           rounded: 'full',
-          filter: 'blur(32px)',
+          filter: 'auto',
+          blur: '2xl',
         })}
       />
       <div className={css({ position: 'relative', zIndex: 10 })}>

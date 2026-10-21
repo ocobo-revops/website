@@ -12,7 +12,7 @@ const PlayerYoutube: React.FunctionComponent<{
       <div
         className={css({
           overflow: 'hidden',
-          pb: '56.25%',
+          pb: '[56.25%]',
           position: 'relative',
           h: '0',
         })}
@@ -24,8 +24,8 @@ const PlayerYoutube: React.FunctionComponent<{
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
           className={css({
-            w: '100%',
-            h: '100%',
+            w: 'full',
+            h: 'full',
             position: 'absolute',
             top: '0',
             left: '0',

@@ -5,6 +5,7 @@ import { NavLink } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 import { badge, card, section, text } from '@ocobo/styled-system/recipes';
+import type { ColorToken } from '@ocobo/styled-system/tokens';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
@@ -20,7 +21,7 @@ type Intervention = {
   description: string;
 };
 
-const COLOR_MAP: Record<Intervention['badgeColor'], string> = {
+const COLOR_MAP: Record<Intervention['badgeColor'], ColorToken> = {
   yellow: 'ocobo.yellow',
   sky: 'ocobo.sky',
   mint: 'ocobo.mint',
@@ -34,7 +35,7 @@ const cardStyle = cx(
     position: 'relative',
     overflow: 'hidden',
     transition: 'all',
-    transitionDuration: '300ms',
+    transitionDuration: 'slow',
     _hover: {
       shadow: '2xl',
       translateY: '-1',
@@ -89,7 +90,7 @@ export const InterventionsSection = () => {
               <NavLink
                 key={item.badge}
                 to={getLocalizedPath(`${url.offer}#${anchor}`)}
-                className={`group ${cardStyle} ${css({ textDecoration: 'none', color: 'inherit' })}`}
+                className={`group ${cardStyle} ${css({ textDecoration: 'none', color: 'current' })}`}
               >
                 <div className={css({ mb: '8' })}>
                   <span
@@ -152,7 +153,7 @@ export const InterventionsSection = () => {
                     color,
                     opacity: '0',
                     transition: 'opacity',
-                    transitionDuration: '300ms',
+                    transitionDuration: 'slow',
                     _groupHover: { opacity: '1' },
                   })}
                 >

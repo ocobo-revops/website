@@ -52,6 +52,7 @@ const items = [
   },
 ];
 
+// Mirrored as literal tokens in the css() calls below (static extraction).
 const itemWidth = 150;
 const itemGap = 32;
 
@@ -74,16 +75,16 @@ const ToolCarousel = () => {
       className={css({
         overflow: 'hidden',
         position: 'relative',
-        width: '100%',
+        width: 'full',
       })}
     >
       <motion.ul
         className={css({
           display: 'inline-flex',
           alignItems: 'center',
-          gap: itemGap + 'px',
+          gap: '8',
           w: 'auto',
-          px: itemGap + 'px',
+          px: '8',
         })}
         animate={{
           x: [0, -delta + 'px', 0],
@@ -98,7 +99,7 @@ const ToolCarousel = () => {
           <li
             key={item.src + i}
             className={css({
-              width: itemWidth,
+              width: '[150px]',
               flexShrink: 0,
             })}
           >
@@ -106,8 +107,8 @@ const ToolCarousel = () => {
               src={item.src}
               alt={item.title}
               className={css({
-                maxHeight: 50,
-                maxWidth: 150,
+                maxHeight: '[50px]',
+                maxWidth: '[150px]',
                 display: 'block',
                 mx: 'auto',
               })}

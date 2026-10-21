@@ -30,7 +30,7 @@ const StoryCtaBlock: React.FunctionComponent = () => {
           position: 'absolute',
           inset: '0',
           opacity: 0.1,
-          backgroundImage: 'radial-gradient(#212323 1px, transparent 1px)',
+          backgroundImage: '[radial-gradient(#212323 1px, transparent 1px)]',
           backgroundSize: '30px 30px',
           pointerEvents: 'none',
         })}
@@ -49,7 +49,7 @@ const StoryCtaBlock: React.FunctionComponent = () => {
             fontWeight: 'black',
             fontSize: 'xs',
             textTransform: 'uppercase',
-            letterSpacing: '0.4em',
+            letterSpacing: 'label',
             mb: '8',
             display: 'inline-block',
             opacity: 0.4,

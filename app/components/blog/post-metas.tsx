@@ -29,7 +29,7 @@ const sectionCss = css({
   bg: 'sky.light',
   borderColor: 'sky',
   borderBottom: 'thin',
-  p: 6,
+  p: '6',
   _last: {
     borderBottom: 'none',
   },
@@ -48,19 +48,23 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
     <div
       className={cx(
         card({ padding: 'sm' }),
-        css({ mb: 8, p: '0', overflow: 'hidden' }),
+        css({ mb: '8', p: '0', overflow: 'hidden' }),
         className,
       )}
     >
       <div className={sectionCss}>
         <div
-          className={flex({ gap: 3, fontWeight: 'bold', alignItems: 'center' })}
+          className={flex({
+            gap: '3',
+            fontWeight: 'bold',
+            alignItems: 'center',
+          })}
         >
           {resolvedAuthor.avatar && (
             <Avatar
               src={resolvedAuthor.avatar}
               alt=""
-              className={circle({ size: '32px' })}
+              className={circle({ size: '8' })}
             />
           )}
           <span>{resolvedAuthor.name}</span>
@@ -81,19 +85,19 @@ const PostMetas: React.FunctionComponent<BlogpostMetasProps> = ({
         </div>
       </div>
       <div className={sectionCss}>
-        <div className={flex({ gap: 3, alignItems: 'center' })}>
+        <div className={flex({ gap: '3', alignItems: 'center' })}>
           <CalendarDaysIcon className={iconCss} />
           {formatDate(item.date, i18n.language || 'fr')}
         </div>
       </div>
       <div className={sectionCss}>
-        <div className={flex({ gap: 3, alignItems: 'center' })}>
+        <div className={flex({ gap: '3', alignItems: 'center' })}>
           <CoffeeIcon className={iconCss} />
           {item.read}
         </div>
       </div>
       <div className={sectionCss}>
-        <div className={flex({ gap: 3 })}>
+        <div className={flex({ gap: '3' })}>
           <TagsIcon className={iconCss} />
           <ul>
             {item.tags.map((tag) => {

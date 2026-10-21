@@ -63,7 +63,8 @@ export const TeamMemberCard = ({
           position: 'relative',
           overflow: 'hidden',
           rounded: 'xl',
-          transition: 'all 300ms',
+          transition: 'all',
+          transitionDuration: 'slow',
           _hover: { shadow: 'xl', transform: 'translateY(-4px)' },
         }),
         animate
@@ -77,13 +78,14 @@ export const TeamMemberCard = ({
           text({ variant: 'display-label' }),
           css({
             position: 'absolute',
-            top: 0,
-            right: 0,
+            top: '0',
+            right: '0',
             px: '4',
             py: '1.5',
             roundedBottomLeft: 'xl',
             shadow: 'sm',
-            transition: 'all 300ms',
+            transition: 'all',
+            transitionDuration: 'slow',
           }),
           badgeBgStyles[color],
         )}
@@ -103,7 +105,8 @@ export const TeamMemberCard = ({
             overflow: 'hidden',
             borderWidth: '4px',
             borderColor: 'gray.50',
-            transition: 'all 500ms',
+            transition: 'all',
+            transitionDuration: 'slowest',
             shadow: 'sm',
             bg: 'gray.50',
           }),
@@ -119,9 +122,11 @@ export const TeamMemberCard = ({
             width: 'full',
             height: 'full',
             objectFit: 'cover',
-            filter: 'grayscale(1)',
-            transition: 'all 500ms',
-            _groupHover: { filter: 'grayscale(0)' },
+            filter: 'auto',
+            grayscale: '1',
+            transition: 'all',
+            transitionDuration: 'slowest',
+            _groupHover: { filter: 'auto', grayscale: '0' },
           })}
         />
       </div>
@@ -139,7 +144,7 @@ export const TeamMemberCard = ({
             fontWeight: 'black',
             color: 'gray.400',
             textTransform: 'uppercase',
-            letterSpacing: '0.2em',
+            letterSpacing: 'tag',
             mb: '4',
             height: '6',
           })}`}
@@ -153,7 +158,7 @@ export const TeamMemberCard = ({
             fontSize: 'sm',
             mb: '6',
             lineHeight: 'relaxed',
-            minH: '4rem',
+            minH: '16',
             fontWeight: 'medium',
           })}
         >
@@ -164,7 +169,7 @@ export const TeamMemberCard = ({
           <div
             className={`${center()} ${css({
               pt: '4',
-              borderTop: '1px solid',
+              borderTop: 'thin',
               borderColor: 'gray.50',
             })}`}
           >
@@ -175,7 +180,8 @@ export const TeamMemberCard = ({
               aria-label={`${name} LinkedIn`}
               className={css({
                 color: 'gray.300',
-                transition: 'color 200ms',
+                transition: 'colors',
+                transitionDuration: 'normal',
                 _hover: { color: 'ocobo.dark' },
               })}
             >

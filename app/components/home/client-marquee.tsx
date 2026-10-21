@@ -99,7 +99,7 @@ export const ClientMarquee = ({
                 objectFit: 'contain',
                 opacity: '0.4',
                 transition: 'opacity',
-                transitionDuration: '300ms',
+                transitionDuration: 'slow',
                 cursor: 'default',
                 userSelect: 'none',
                 _hover: { opacity: '1' },

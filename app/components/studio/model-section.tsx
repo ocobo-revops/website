@@ -39,9 +39,9 @@ export const ModelSection = () => {
       <div
         className={css({
           position: 'absolute',
-          inset: 0,
+          inset: '0',
           opacity: 0.03,
-          backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)',
+          backgroundImage: '[radial-gradient(#ffffff 1px, transparent 1px)]',
           backgroundSize: '40px 40px',
         })}
       />
@@ -75,7 +75,8 @@ export const ModelSection = () => {
                   p: '10',
                   rounded: 'xl',
                   shadow: 'xl',
-                  transition: 'transform 300ms',
+                  transition: 'transform',
+                  transitionDuration: 'slow',
                   _hover: { transform: 'translateY(-4px)' },
                 })}
               >

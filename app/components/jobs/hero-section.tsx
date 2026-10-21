@@ -85,7 +85,7 @@ export function HeroSection() {
                       bg: 'ocobo.dark',
                       color: 'white',
                       p: '8',
-                      aspectRatio: '1',
+                      aspectRatio: 'square',
                       rounded: '3xl',
                       shadow: 'xl',
                     },
@@ -120,12 +120,14 @@ export function HeroSection() {
                     fetchPriority="high"
                     className={css({
                       w: 'full',
-                      aspectRatio: '1',
+                      aspectRatio: 'square',
                       objectFit: 'cover',
                       rounded: '3xl',
-                      filter: 'grayscale(100%)',
-                      transition: 'all 500ms',
-                      _groupHover: { filter: 'grayscale(0)' },
+                      filter: 'auto',
+                      grayscale: '1',
+                      transition: 'all',
+                      transitionDuration: 'slowest',
+                      _groupHover: { filter: 'auto', grayscale: '0' },
                     })}
                   />
                 </div>
@@ -147,12 +149,14 @@ export function HeroSection() {
                     decoding="async"
                     className={css({
                       w: 'full',
-                      aspectRatio: '1',
+                      aspectRatio: 'square',
                       objectFit: 'cover',
                       rounded: '3xl',
-                      filter: 'grayscale(100%)',
-                      transition: 'all 500ms',
-                      _groupHover: { filter: 'grayscale(0)' },
+                      filter: 'auto',
+                      grayscale: '1',
+                      transition: 'all',
+                      transitionDuration: 'slowest',
+                      _groupHover: { filter: 'auto', grayscale: '0' },
                     })}
                   />
                 </div>
@@ -161,7 +165,7 @@ export function HeroSection() {
                     {
                       bg: 'ocobo.yellow',
                       p: '8',
-                      aspectRatio: '1',
+                      aspectRatio: 'square',
                       rounded: '3xl',
                       shadow: 'xl',
                     },

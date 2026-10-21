@@ -55,7 +55,7 @@ export function OfficesSection() {
               fontSize: 'xs',
               fontWeight: 'black',
               textTransform: 'uppercase',
-              letterSpacing: '0.2em',
+              letterSpacing: 'tag',
               color: 'ocobo.dark',
               borderBottomWidth: '2px',
               borderColor: 'ocobo.yellow',
@@ -86,12 +86,14 @@ export function OfficesSection() {
                 height={600}
                 className={css({
                   w: 'full',
-                  aspectRatio: '4/3',
+                  aspectRatio: 'landscape',
                   objectFit: 'cover',
                   rounded: '2xl',
-                  filter: 'grayscale(100%)',
-                  transition: 'all 500ms',
-                  _groupHover: { filter: 'grayscale(0)' },
+                  filter: 'auto',
+                  grayscale: '1',
+                  transition: 'all',
+                  transitionDuration: 'slowest',
+                  _groupHover: { filter: 'auto', grayscale: '0' },
                 })}
               />
             </div>
@@ -121,10 +123,12 @@ export function OfficesSection() {
               w: 'full',
               h: { base: '48', md: 'full' },
               objectFit: 'cover',
-              filter: 'grayscale(100%)',
+              filter: 'auto',
+              grayscale: '1',
               display: { base: 'none', md: 'block' },
-              transition: 'all 500ms',
-              _groupHover: { filter: 'grayscale(0)' },
+              transition: 'all',
+              transitionDuration: 'slowest',
+              _groupHover: { filter: 'auto', grayscale: '0' },
             })}
           />
           <div
@@ -139,7 +143,7 @@ export function OfficesSection() {
             <h3
               className={cx(
                 text({ variant: 'display-sm', color: 'dark' }),
-                css({ lineHeight: '1.05', whiteSpace: 'pre-line', mb: '4' }),
+                css({ lineHeight: 'heading', whiteSpace: 'pre-line', mb: '4' }),
               )}
             >
               {t('about.coffee.title')}

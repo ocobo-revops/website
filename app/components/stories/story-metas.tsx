@@ -94,7 +94,7 @@ const StoryMetas: React.FunctionComponent<StoryMetasProps> = ({
           fontWeight: 'black',
           fontSize: 'xs',
           textTransform: 'uppercase',
-          letterSpacing: '0.4em',
+          letterSpacing: 'label',
           color: 'ocobo.dark',
           mb: '8',
         })}

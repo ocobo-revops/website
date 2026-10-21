@@ -55,7 +55,7 @@ export const ScopeCard: React.FC<ScopeCardProps> = ({
           borderColor: 'gray.100',
           p: '8',
           transition: 'all',
-          transitionDuration: '300ms',
+          transitionDuration: 'slow',
           rounded: 'xl',
         }),
         hoverStyles[color],

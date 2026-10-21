@@ -24,7 +24,7 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
     return (
       <div
         className={css({
-          py: { base: 12, lg: 24 },
+          py: { base: '12', lg: '24' },
           textAlign: 'center',
           color: 'gray.600',
         })}
@@ -45,14 +45,14 @@ const StoryList: React.FunctionComponent<StoryListProps> = ({ items }) => {
   return (
     <ul
       className={css({
-        py: { base: 6, lg: 12 },
+        py: { base: '6', lg: '12' },
         display: 'grid',
         gridTemplateColumns: {
           base: '1fr',
           md: 'repeat(2, 1fr)',
           lg: 'repeat(3, 1fr)',
         },
-        gap: 8,
+        gap: '8',
         alignItems: 'stretch',
       })}
     >

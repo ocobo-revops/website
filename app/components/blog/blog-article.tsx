@@ -90,7 +90,7 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
               return (
                 <PlayerYoutube
                   id={footer.youtubeId}
-                  className={css({ mt: 8 })}
+                  className={css({ mt: '8' })}
                 />
               );
             }
@@ -100,7 +100,7 @@ const BlogArticle: React.FunctionComponent<BlogArticleProps> = ({
                   podcastId={footer.podcastId}
                   showId={footer.showId}
                   title={t('player.podcast.title')}
-                  className={css({ mt: 8 })}
+                  className={css({ mt: '8' })}
                 />
               );
             }

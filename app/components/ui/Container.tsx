@@ -7,11 +7,11 @@ const baseStyles = {
 
 const containerStyles = {
   default: css({ ...baseStyles, maxW: '7xl' }),
-  narrow: css({ ...baseStyles, maxW: '56rem' }),
+  narrow: css({ ...baseStyles, maxW: '4xl' }),
   defaultMobileFull: css({ ...baseStyles, maxW: { base: 'full', md: '7xl' } }),
   narrowMobileFull: css({
     ...baseStyles,
-    maxW: { base: 'full', md: '56rem' },
+    maxW: { base: 'full', md: '4xl' },
   }),
 };
 

@@ -39,7 +39,8 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
           h: '32',
           rounded: '3xl',
           overflow: 'hidden',
-          filter: 'grayscale(100%)',
+          filter: 'auto',
+          grayscale: '1',
           borderWidth: '4px',
           borderColor: 'white',
           shadow: 'xl',
@@ -73,7 +74,7 @@ const StoryQuoteBlock: React.FunctionComponent<StoryQuoteBlockProps> = ({
             fontWeight: 'black',
             color: 'ocobo.mint',
             textTransform: 'uppercase',
-            letterSpacing: '0.3em',
+            letterSpacing: 'label',
             mb: '4',
           })}
         >

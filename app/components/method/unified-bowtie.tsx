@@ -45,7 +45,7 @@ export const UnifiedBowtie = () => {
         className={css({
           position: 'relative',
           w: 'full',
-          aspectRatio: { base: '21/9', md: '28/9' },
+          aspectRatio: { base: '[21/9]', md: '[28/9]' },
         })}
       >
         <div
@@ -117,7 +117,7 @@ export const UnifiedBowtie = () => {
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.3em',
+                letterSpacing: 'label',
               })}
             >
               {loops.acquisition}
@@ -143,7 +143,7 @@ export const UnifiedBowtie = () => {
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.3em',
+                letterSpacing: 'label',
               })}
             >
               {loops.expansion}
@@ -206,7 +206,7 @@ export const UnifiedBowtie = () => {
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {center.line1}
@@ -221,7 +221,7 @@ export const UnifiedBowtie = () => {
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {center.line2}
@@ -243,7 +243,7 @@ export const UnifiedBowtie = () => {
             className={css({
               fontFamily: 'display',
               textTransform: 'uppercase',
-              letterSpacing: '0.2em',
+              letterSpacing: 'tag',
             })}
           >
             <text x="40" y="240" textAnchor="start" dx="5">

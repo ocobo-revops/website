@@ -19,7 +19,7 @@ export const ExperienceLogos = () => {
       <p
         className={css({
           textTransform: 'uppercase',
-          letterSpacing: '0.3em',
+          letterSpacing: 'label',
           fontSize: 'base',
           fontWeight: 'semibold',
           color: 'ocobo.dark/30',
@@ -46,11 +46,14 @@ export const ExperienceLogos = () => {
               h: '6',
               w: 'auto',
               objectFit: 'contain',
-              filter: 'grayscale(1)',
+              filter: 'auto',
+              grayscale: '1',
               opacity: 0.3,
-              transition: 'all 0.3s ease',
+              transition: 'all',
+              transitionDuration: 'slow',
               _hover: {
-                filter: 'grayscale(0)',
+                filter: 'auto',
+                grayscale: '0',
                 opacity: 1,
               },
             })}

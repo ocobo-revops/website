@@ -48,13 +48,9 @@ import { select } from '@ocobo/styled-system/recipes';
 // Ark UI uses styled() directly, no @shadow-panda/style-context needed
 const StyledRoot = styled(ArkSelect.Root);
 const StyledControl = styled(ArkSelect.Control);
-const StyledTrigger = styled(ArkSelect.Trigger);
 const StyledValueText = styled(ArkSelect.ValueText);
 const StyledIndicator = styled(ArkSelect.Indicator);
 const StyledPositioner = styled(ArkSelect.Positioner);
-const StyledContent = styled(ArkSelect.Content);
-const StyledItemGroup = styled(ArkSelect.ItemGroup);
-const StyledItemGroupLabel = styled(ArkSelect.ItemGroupLabel);
 const StyledItem = styled(ArkSelect.Item);
 const StyledItemText = styled(ArkSelect.ItemText);
 const StyledItemIndicator = styled(ArkSelect.ItemIndicator);
@@ -66,12 +62,12 @@ const TriggerBase = React.forwardRef<
   const styles = select();
   return (
     <StyledControl>
-      <StyledTrigger ref={ref} className={styles.trigger} {...props}>
+      <ArkSelect.Trigger ref={ref} className={styles.trigger} {...props}>
         <StyledValueText className={styles.value}>{children}</StyledValueText>
         <StyledIndicator>
           <ChevronDown className={css({ opacity: '0.5', h: '4', w: '4' })} />
         </StyledIndicator>
-      </StyledTrigger>
+      </ArkSelect.Trigger>
     </StyledControl>
   );
 });
@@ -87,7 +83,7 @@ const ContentBase = React.forwardRef<
   return (
     <Portal>
       <StyledPositioner>
-        <StyledContent
+        <ArkSelect.Content
           ref={ref}
           className={styles.content}
           data-position={position}
@@ -96,7 +92,7 @@ const ContentBase = React.forwardRef<
           <div className={styles.viewport} data-position={position}>
             {children}
           </div>
-        </StyledContent>
+        </ArkSelect.Content>
       </StyledPositioner>
     </Portal>
   );
@@ -130,7 +126,7 @@ const GroupBase = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ArkSelect.ItemGroup>
 >((props, ref) => {
   const styles = select();
-  return <StyledItemGroup ref={ref} className={styles.group} {...props} />;
+  return <ArkSelect.ItemGroup ref={ref} className={styles.group} {...props} />;
 });
 GroupBase.displayName = 'SelectGroup';
 
@@ -139,7 +135,9 @@ const LabelBase = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ArkSelect.ItemGroupLabel>
 >((props, ref) => {
   const styles = select();
-  return <StyledItemGroupLabel ref={ref} className={styles.label} {...props} />;
+  return (
+    <ArkSelect.ItemGroupLabel ref={ref} className={styles.label} {...props} />
+  );
 });
 LabelBase.displayName = 'SelectLabel';
 

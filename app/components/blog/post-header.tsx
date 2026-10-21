@@ -51,7 +51,7 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
             fontSize: { base: '3xl', md: '4xl', lg: '6xl' },
             fontWeight: 'black',
             letterSpacing: 'tight',
-            lineHeight: '1.05',
+            lineHeight: 'heading',
             mb: '10',
           }),
         )}
@@ -61,7 +61,7 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
 
       <div
         className={cx(
-          flex({ gap: 8, justify: 'center', align: 'center', wrap: 'wrap' }),
+          flex({ gap: '8', justify: 'center', align: 'center', wrap: 'wrap' }),
           css({
             fontSize: 'xs',
             fontWeight: 'bold',
@@ -98,11 +98,11 @@ const PostHeader: React.FunctionComponent<BlogpostHeaderProps> = ({ item }) => {
         priority
         className={css({
           display: 'block',
-          width: '100%',
+          width: 'full',
           height: 'auto',
           objectFit: 'cover',
           borderRadius: '2xl',
-          aspectRatio: '16/7',
+          aspectRatio: '[16/7]',
         })}
       />
     </header>

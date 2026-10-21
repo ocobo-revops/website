@@ -32,7 +32,7 @@ export const ValuesSection = () => {
           {t('values.title')}
         </h2>
 
-        <div className={grid({ columns: { base: 1, md: 2 }, gap: 12 })}>
+        <div className={grid({ columns: { base: 1, md: 2 }, gap: '12' })}>
           {values.map((value) => (
             <ValueCard
               key={value.title}

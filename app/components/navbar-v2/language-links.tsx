@@ -21,7 +21,7 @@ const toneStyles = {
       outlineWidth: '2px',
       outlineStyle: 'solid',
       outlineColor: 'dark',
-      outlineOffset: '2px',
+      outlineOffset: '0.5',
     },
   }),
   light: css({
@@ -32,7 +32,7 @@ const toneStyles = {
       outlineWidth: '2px',
       outlineStyle: 'solid',
       outlineColor: 'white',
-      outlineOffset: '2px',
+      outlineOffset: '0.5',
     },
   }),
 };

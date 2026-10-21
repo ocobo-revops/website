@@ -61,7 +61,7 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
               fontSize: 'base',
               fontWeight: 'bold',
               textTransform: 'uppercase',
-              letterSpacing: '0.2em',
+              letterSpacing: 'tag',
             })}
           >
             {t('stack.tagline')}

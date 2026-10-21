@@ -81,7 +81,7 @@ export function JobList({ jobs, lang }: JobListProps) {
                   display: 'block',
                   '& .arrow-box': {
                     transition: 'all',
-                    transitionDuration: '500ms',
+                    transitionDuration: 'slowest',
                   },
                   '&:hover .arrow-box': {
                     bg: 'ocobo.dark',
@@ -104,7 +104,7 @@ export function JobList({ jobs, lang }: JobListProps) {
                     css({
                       p: { base: '8', md: '12' },
                       transition: 'all',
-                      transitionDuration: '500ms',
+                      transitionDuration: 'slowest',
                       position: 'relative',
                       overflow: 'hidden',
                       _hover: { shadow: 'lg' },
@@ -122,7 +122,7 @@ export function JobList({ jobs, lang }: JobListProps) {
                         w: '1.5',
                         h: 'full',
                         transition: 'all',
-                        transitionDuration: '500ms',
+                        transitionDuration: 'slowest',
                         opacity: 0,
                       }),
                       highlightBarClasses[index % 4],

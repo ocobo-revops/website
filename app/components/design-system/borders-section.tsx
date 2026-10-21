@@ -16,7 +16,7 @@ export function BordersSection() {
         <li className={css({ bleft: 'mint' })}>
           Gagnez en performance avec des stratégies et des process de pointe
         </li>
-        <li className={css({ bleft: ' coral' })}>
+        <li className={css({ bleft: 'coral' })}>
           Gagnez en performance avec des stratégies et des process de pointe
         </li>
       </ul>

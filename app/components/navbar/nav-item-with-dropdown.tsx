@@ -38,7 +38,7 @@ export function NavItemWithDropdown({
       fontWeight: 'bold',
       cursor: 'pointer',
       transition: 'all',
-      transitionDuration: '300ms',
+      transitionDuration: 'slow',
       color: isOpen || isCurrentPath ? 'ocobo.dark' : 'gray.500',
       _hover: { color: 'ocobo.dark' },
     }),
@@ -59,7 +59,8 @@ export function NavItemWithDropdown({
           <ChevronDown
             size={14}
             className={css({
-              transition: 'transform 0.3s',
+              transition: 'transform',
+              transitionDuration: 'slow',
               opacity: isOpen ? 0.6 : 0.3,
               transform: isOpen ? 'rotate(180deg)' : 'rotate(0)',
             })}
@@ -69,7 +70,7 @@ export function NavItemWithDropdown({
       <Menu.Positioner>
         <Menu.Content
           className={css({
-            w: '380px',
+            w: '[380px]',
             bg: 'white',
             rounded: '3xl',
             p: '2',
@@ -78,7 +79,8 @@ export function NavItemWithDropdown({
             borderColor: 'gray.100',
             overflow: 'hidden',
             outline: 'none',
-            transition: 'all 0.3s',
+            transition: 'all',
+            transitionDuration: 'slow',
             '&[data-state="open"]': {
               opacity: 1,
               transform: 'translateY(0)',

@@ -94,7 +94,7 @@ export const LeviersSection = () => {
                       p: '10',
                       flexGrow: '1',
                       transition: 'all',
-                      transitionDuration: '500',
+                      transitionDuration: 'slowest',
                       overflow: 'hidden',
                       _hover: {
                         shadow: '2xl',
@@ -182,7 +182,7 @@ export const LeviersSection = () => {
                   {lever.logoRows?.length ? (
                     <div
                       className={vstack({
-                        h: lever.key === 'studio' ? '96px' : '48px',
+                        h: lever.key === 'studio' ? '24' : '12',
                         justify: 'flex-start',
                         gap: '3',
                         alignItems: 'flex-start',
@@ -193,14 +193,13 @@ export const LeviersSection = () => {
                           key={`${lever.key}-row-${rowIndex}`}
                           className={`${hstack({ gap: lever.key === 'studio' ? '3' : '4' })} ${css(
                             {
-                              filter:
-                                lever.key === 'studio'
-                                  ? 'none'
-                                  : 'grayscale(1)',
+                              filter: 'auto',
+                              grayscale: lever.key === 'studio' ? '0' : '1',
                               opacity: lever.key === 'studio' ? '0.7' : '0.4',
                               _groupHover: {
                                 opacity: '1',
-                                filter: 'grayscale(0)',
+                                filter: 'auto',
+                                grayscale: '0',
                               },
                               transition: 'all',
                             },
@@ -231,7 +230,7 @@ export const LeviersSection = () => {
                       className={flex({
                         wrap: 'wrap',
                         gap: '2',
-                        h: '48px',
+                        h: '12',
                         alignContent: 'flex-start',
                       })}
                     >

@@ -19,7 +19,7 @@ const ScrollProgressBar: React.FunctionComponent<ScrollProgressBarProps> = ({
       style={{ scaleX }}
       className={cx(
         css({
-          h: '5px',
+          h: '[5px]',
           w: 'full',
           position: 'sticky',
           top: {

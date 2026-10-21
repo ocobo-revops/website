@@ -13,13 +13,13 @@ const linkBase = css({
   display: 'block',
   fontSize: 'sm',
   fontWeight: 'medium',
-  lineHeight: '1.4',
+  lineHeight: 'sm',
   py: '1',
   pl: '4',
   borderLeftWidth: '2px',
   textDecoration: 'none',
   transition: 'all',
-  transitionDuration: '300ms',
+  transitionDuration: 'slow',
 });
 
 const linkInactive = css({
@@ -44,19 +44,22 @@ const BlogToc: React.FunctionComponent<BlogTocProps> = ({ entries }) => {
   if (entries.length === 0) return null;
 
   return (
-    <nav aria-label={t('toc.label')} className={css({ mb: 4 })}>
+    <nav aria-label={t('toc.label')} className={css({ mb: '4' })}>
       <ul
         className={css({
           listStyle: 'none',
-          p: 0,
-          m: 0,
+          p: '0',
+          m: '0',
           display: 'flex',
           flexDir: 'column',
           gap: '3',
         })}
       >
         {entries.map((entry) => (
-          <li key={entry.id} className={css({ pl: entry.level === 3 ? 3 : 0 })}>
+          <li
+            key={entry.id}
+            className={css({ pl: entry.level === 3 ? '3' : '0' })}
+          >
             <a
               href={`#${entry.id}`}
               className={cx(

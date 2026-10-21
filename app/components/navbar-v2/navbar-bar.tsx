@@ -119,10 +119,10 @@ export function NavbarBar({
           w: 'full',
           mx: 'auto',
           borderWidth: '1px',
-          transitionProperty: 'all',
+          transition: 'all',
           transitionTimingFunction: 'smooth',
           transitionDuration: '[700ms]',
-          _motionReduce: { transition: 'none' },
+          _motionReduce: { transitionDuration: 'instant' },
         }),
         barStyles[state],
       )}
@@ -152,10 +152,10 @@ export function NavbarBar({
             className={cx(
               css({
                 w: 'auto',
-                transitionProperty: 'height',
+                transitionProperty: 'size',
                 transitionTimingFunction: 'smooth',
                 transitionDuration: '[700ms]',
-                _motionReduce: { transition: 'none' },
+                _motionReduce: { transitionDuration: 'instant' },
               }),
               logoHeight[logoKey],
             )}

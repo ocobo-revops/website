@@ -27,7 +27,7 @@ export const HeroSection = () => {
               text({ variant: 'display-xl', color: 'dark' }),
               css({
                 mb: '8',
-                lineHeight: '0.9',
+                lineHeight: 'none',
               }),
             )}
           >

@@ -55,7 +55,7 @@ export default function Index() {
     <div>
       <BlogHero />
       <Container>
-        <React.Suspense fallback={<Loader className={css({ h: '75vh' })} />}>
+        <React.Suspense fallback={<Loader className={css({ h: '[75vh]' })} />}>
           <Await resolve={posts}>{(posts) => <BlogList items={posts} />}</Await>
         </React.Suspense>
       </Container>

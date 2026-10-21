@@ -73,7 +73,7 @@ const StoryArticle: React.FunctionComponent<StoryArticleProps> = ({
           {article.frontmatter.youtubeId && (
             <PlayerYoutube
               id={article.frontmatter.youtubeId}
-              className={css({ mt: 8 })}
+              className={css({ mt: '8' })}
             />
           )}
           <StoryQuoteBlock item={article.frontmatter} slug={article.slug} />

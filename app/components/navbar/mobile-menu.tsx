@@ -133,7 +133,7 @@ function MobileNavItem({
   const headingStyles = css({
     fontFamily: 'display',
     fontSize: '2xl',
-    fontWeight: '900',
+    fontWeight: 'black',
     display: 'block',
     letterSpacing: 'tight',
     color: 'ocobo.dark',

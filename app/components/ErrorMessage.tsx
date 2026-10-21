@@ -19,14 +19,14 @@ const Message: React.FunctionComponent<
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 'calc(100vh - 452px)',
+        height: '[calc(100vh - 452px)]',
       })}
     >
       <BombIcon className={css({ h: '8', w: '8' })} />
       <h1
         className={css({
           textStyle: 'heading2',
-          mt: 4,
+          mt: '4',
         })}
       >
         {t('error.title')}

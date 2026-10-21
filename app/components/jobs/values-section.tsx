@@ -80,7 +80,7 @@ export function ValuesSection() {
                     rounded: '3xl',
                     borderWidth: '1px',
                     transition: 'all',
-                    transitionDuration: '500ms',
+                    transitionDuration: 'slowest',
                     _hover: { shadow: 'xl' },
                   }),
                   cardClass,

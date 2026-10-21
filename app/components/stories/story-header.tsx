@@ -27,7 +27,7 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
             css({
               fontSize: { base: '4xl', md: '5xl', lg: '6xl' },
               letterSpacing: 'tight',
-              lineHeight: '0.95',
+              lineHeight: 'none',
             }),
           )}
         >
@@ -46,7 +46,7 @@ const StoryHeader: React.FunctionComponent<StoryHeaderProps> = ({
             shadow: '2xl',
             transform: 'rotate(2deg)',
             transition: 'transform',
-            transitionDuration: '500ms',
+            transitionDuration: 'slowest',
             _hover: { transform: 'rotate(0deg)' },
           })}
         >

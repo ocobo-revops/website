@@ -40,7 +40,7 @@ export const HeroSection = () => {
                   mb: '10',
                   opacity: '0',
                   animation: 'hero-reveal',
-                  animationDelay: '0.1s',
+                  animationDelay: 'faster',
                   animationFillMode: 'forwards',
                 }),
               )}
@@ -64,7 +64,7 @@ export const HeroSection = () => {
                 maxW: 'xl',
                 opacity: '0',
                 animation: 'hero-reveal',
-                animationDelay: '0.2s',
+                animationDelay: 'normal',
                 animationFillMode: 'forwards',
               })}
             >
@@ -87,7 +87,7 @@ export const HeroSection = () => {
                 py: '1.5',
                 opacity: '0',
                 animation: 'hero-reveal',
-                animationDelay: '0.3s',
+                animationDelay: 'slow',
                 animationFillMode: 'forwards',
               })}
             >
@@ -117,7 +117,7 @@ export const HeroSection = () => {
               })} ${css({
                 opacity: '0',
                 animation: 'hero-reveal',
-                animationDelay: '0.4s',
+                animationDelay: 'slower',
                 animationFillMode: 'forwards',
               })}`}
             >

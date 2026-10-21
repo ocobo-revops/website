@@ -7,7 +7,7 @@ export const Breadcrumb = styled('div', {
     textStyle: 'small',
     color: 'gray',
     position: 'absolute',
-    top: '-2rem',
+    top: '-8',
 
     '& a': {
       color: 'gray',
@@ -16,11 +16,11 @@ export const Breadcrumb = styled('div', {
         textDecoration: 'underline',
       },
       '& + a': {
-        ml: 1,
+        ml: '1',
         '&::before': {
           content: '"\\00BB"',
           display: 'inline-block',
-          mx: 1,
+          mx: '1',
         },
       },
     },

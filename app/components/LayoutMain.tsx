@@ -24,7 +24,7 @@ export function LayoutMain({ children }: LayoutMainProps) {
           pt: { base: '24', md: '28', lg: '32' },
         })}
       >
-        <React.Suspense fallback={<Loader className={css({ h: '300px' })} />}>
+        <React.Suspense fallback={<Loader className={css({ h: '[300px]' })} />}>
           {children}
         </React.Suspense>
       </div>

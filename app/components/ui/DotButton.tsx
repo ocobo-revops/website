@@ -21,7 +21,7 @@ export const DotButton: React.FunctionComponent<DotButtonProps> = ({
         className={css({
           fill: isActive ? 'current' : 'white',
           stroke: 'current',
-          width: '12px',
+          width: '3',
         })}
         viewBox="0 0 24 24"
       >

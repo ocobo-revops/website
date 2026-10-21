@@ -18,9 +18,10 @@ export const carousel = definePattern({
       position: 'relative',
       display: 'flex',
       alignItems: 'center',
-      gap: '2rem',
-      scrollSnapType: 'x mandatory',
-      scrollbarWidth: hideScrollbar ? 'none' : 'auto',
+      gap: '8',
+      scrollSnapType: 'x',
+      scrollSnapStrictness: 'mandatory',
+      scrollbarWidth: hideScrollbar ? '[none]' : '[auto]',
       WebkitOverflowScrolling: 'touch',
       '&::-webkit-scrollbar': {
         display: hideScrollbar ? 'none' : 'block',

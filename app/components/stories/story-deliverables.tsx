@@ -43,7 +43,8 @@ const StoryDeliverables: React.FunctionComponent<StoryDeliverablesProps> = ({
           h: '32',
           bg: 'ocobo.mint/10',
           rounded: 'full',
-          filter: 'blur(48px)',
+          filter: 'auto',
+          blur: '2xl',
           pointerEvents: 'none',
         })}
       />
@@ -53,7 +54,7 @@ const StoryDeliverables: React.FunctionComponent<StoryDeliverablesProps> = ({
           fontWeight: 'black',
           fontSize: 'xs',
           textTransform: 'uppercase',
-          letterSpacing: '0.4em',
+          letterSpacing: 'label',
           color: 'white/40',
           mb: '8',
           position: 'relative',
