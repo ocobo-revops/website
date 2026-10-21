@@ -1,6 +1,7 @@
 {
   "language.fr": "Français",
   "language.en": "English",
+  "flipCard.flip": "Flip card: {{label}}",
   "language.switch": "Choose language",
   "language.fr.short": "FR",
   "language.en.short": "EN",
