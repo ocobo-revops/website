@@ -18,7 +18,7 @@ export const ArchitecturalGrid = () => {
       className={css({
         position: 'relative',
         w: 'full',
-        maxW: '500px',
+        maxW: '[500px]',
         animation: 'float-grid',
       })}
     >
@@ -43,7 +43,7 @@ export const ArchitecturalGrid = () => {
               text({ variant: 'display-label', color: 'dark' }),
               css({
                 color: 'ocobo.dark/40',
-                letterSpacing: '0.6em',
+                letterSpacing: 'label',
                 mb: '4',
                 whiteSpace: 'nowrap',
                 writingMode: 'vertical-lr',
@@ -61,7 +61,7 @@ export const ArchitecturalGrid = () => {
           </div>
           <div
             className={css({
-              w: '1px',
+              w: '[1px]',
               bg: 'ocobo.dark/20',
               flexGrow: 1,
               transformOrigin: 'top',
@@ -91,26 +91,26 @@ export const ArchitecturalGrid = () => {
             {[
               {
                 label: blockLabels[0],
-                color: 'ocobo.yellow',
-                bg: 'ocobo.yellow.light',
+                color: 'ocobo.yellow' as const,
+                bg: 'ocobo.yellow.light' as const,
                 delay: '0.4s',
               },
               {
                 label: blockLabels[1],
-                color: 'ocobo.sky',
-                bg: 'ocobo.sky.light',
+                color: 'ocobo.sky' as const,
+                bg: 'ocobo.sky.light' as const,
                 delay: '0.5s',
               },
               {
                 label: blockLabels[2],
-                color: 'ocobo.mint',
-                bg: 'ocobo.mint.light',
+                color: 'ocobo.mint' as const,
+                bg: 'ocobo.mint.light' as const,
                 delay: '0.6s',
               },
               {
                 label: blockLabels[3],
-                color: 'ocobo.coral',
-                bg: 'ocobo.coral.light',
+                color: 'ocobo.coral' as const,
+                bg: 'ocobo.coral.light' as const,
                 delay: '0.7s',
               },
             ].map((item) => (
@@ -124,7 +124,7 @@ export const ArchitecturalGrid = () => {
                   borderWidth: '1px',
                   borderColor: 'ocobo.dark',
                   transition: 'transform',
-                  transitionDuration: '300ms',
+                  transitionDuration: 'slow',
                   cursor: 'pointer',
                   _hover: { transform: 'translateY(-4px)' },
                 })} group`}
@@ -136,7 +136,7 @@ export const ArchitecturalGrid = () => {
                     css({
                       fontSize: { base: 'xs', md: 'sm' },
                       transition: 'colors',
-                      transitionDuration: '300ms',
+                      transitionDuration: 'slow',
                       _groupHover: { color: item.color },
                     }),
                   )}

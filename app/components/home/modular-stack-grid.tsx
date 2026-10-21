@@ -71,7 +71,7 @@ export const ModularStackGrid = ({
               rounded: { base: 'xl', md: '2xl' },
               borderWidth: '1px',
               transition: 'all',
-              transitionDuration: '500ms',
+              transitionDuration: 'slowest',
               ...(item.type === 'logo'
                 ? {
                     bg: 'white',
@@ -120,11 +120,16 @@ export const ModularStackGrid = ({
                     w: { base: '6', md: '8' },
                     h: { base: '6', md: '8' },
                     objectFit: 'contain',
-                    filter: 'grayscale(100%)',
+                    filter: 'auto',
+                    grayscale: '1',
                     opacity: '0.6',
                     transition: 'all',
-                    transitionDuration: '300ms',
-                    _groupHover: { filter: 'grayscale(0%)', opacity: '1' },
+                    transitionDuration: 'slow',
+                    _groupHover: {
+                      filter: 'auto',
+                      grayscale: '0',
+                      opacity: '1',
+                    },
                   })}
                 />
                 {showLabels && item.label && (
@@ -144,7 +149,7 @@ export const ModularStackGrid = ({
                 className={css({
                   color: 'gray.200',
                   transition: 'colors',
-                  transitionDuration: '300ms',
+                  transitionDuration: 'slow',
                   _groupHover: { color: 'ocobo.yellow' },
                 })}
               />
@@ -162,7 +167,8 @@ export const ModularStackGrid = ({
           h: '24',
           bg: 'ocobo.yellow/5',
           rounded: 'full',
-          filter: 'blur(32px)',
+          filter: 'auto',
+          blur: '2xl',
           zIndex: '-10',
         })}
       />

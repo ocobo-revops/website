@@ -41,7 +41,7 @@ const PhilosophyCard = ({
         rounded: 'xl',
         shadow: 'xl',
         transition: 'transform',
-        transitionDuration: '300ms',
+        transitionDuration: 'slow',
         _hover: { transform: 'translateY(-4px)' },
         '& .icon-box': { transition: 'colors' },
         ...hoverStyles[hoverColor],
@@ -91,7 +91,7 @@ export const PhilosophySection = () => {
           position: 'absolute',
           inset: '0',
           opacity: 0.03,
-          backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)',
+          backgroundImage: '[radial-gradient(#ffffff 1px, transparent 1px)]',
           backgroundSize: '40px 40px',
         })}
       />

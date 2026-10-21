@@ -43,7 +43,7 @@ const socialButtonStyles = cx(
     rounded: 'full',
     bg: 'gray.800',
     transition: 'all',
-    transitionDuration: '300ms',
+    transitionDuration: 'slow',
     _hover: { bg: 'white', color: 'ocobo.dark' },
   }),
 );

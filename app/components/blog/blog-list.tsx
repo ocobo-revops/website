@@ -40,7 +40,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
     return (
       <div
         className={css({
-          py: { base: 12, lg: 24 },
+          py: { base: '12', lg: '24' },
           textAlign: 'center',
           color: 'gray.600',
         })}
@@ -61,7 +61,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
   const [featured, ...rest] = filteredItems;
 
   return (
-    <div className={css({ py: { base: 8, lg: 16 } })}>
+    <div className={css({ py: { base: '8', lg: '16' } })}>
       {/* Filter toggle */}
       <div
         className={`${flex({ gap: '2', wrap: 'wrap' })} ${css({ mb: '10' })}`}
@@ -126,7 +126,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
               priority
               className={css({
                 position: 'absolute',
-                inset: 0,
+                inset: '0',
                 w: 'full',
                 h: 'full',
                 objectFit: 'cover',
@@ -136,7 +136,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
             <div
               className={css({
                 position: 'absolute',
-                inset: 0,
+                inset: '0',
                 bgGradient: 'to-r',
                 gradientFrom: 'ocobo.dark/90',
                 gradientTo: 'transparent',
@@ -154,7 +154,7 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
                 color: 'ocobo.dark',
                 px: '3',
                 py: '1',
-                rounded: 'base',
+                rounded: 'lg',
                 fontSize: 'xs',
                 fontWeight: 'bold',
                 textTransform: 'uppercase',

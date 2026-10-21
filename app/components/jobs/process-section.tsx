@@ -70,10 +70,10 @@ export function ProcessSection() {
             <div
               className={css({
                 position: 'absolute',
-                left: '50%',
+                left: '[50%]',
                 top: '0',
                 bottom: '0',
-                w: '1.5px',
+                w: '[1.5px]',
                 bg: 'gray.200',
                 transform: 'translateX(-50%)',
                 display: { base: 'none', md: 'block' },
@@ -86,7 +86,7 @@ export function ProcessSection() {
                 left: '6',
                 top: '0',
                 bottom: '0',
-                w: '1.5px',
+                w: '[1.5px]',
                 bg: 'gray.200',
                 md: { display: 'none' },
               })}
@@ -115,7 +115,7 @@ export function ProcessSection() {
                     <div
                       className={css({
                         position: 'absolute',
-                        left: { base: '6', md: '50%' },
+                        left: { base: '6', md: '[50%]' },
                         w: '4',
                         h: '4',
                         bg: 'white',
@@ -209,7 +209,7 @@ export function ProcessSection() {
                               color: 'ocobo.coral',
                               mb: '3',
                               textTransform: 'uppercase',
-                              letterSpacing: '0.2em',
+                              letterSpacing: 'tag',
                             })}
                           >
                             {step.duration}

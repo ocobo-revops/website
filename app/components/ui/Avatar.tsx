@@ -9,7 +9,7 @@ const Avatar: React.FunctionComponent<AvatarProps> = ({
 }) => {
   return (
     <img
-      className={className ?? circle({ size: '70px' })}
+      className={className ?? circle({ size: '[70px]' })}
       alt={alt}
       {...props}
     />

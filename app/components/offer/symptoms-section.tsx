@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex, hstack } from '@ocobo/styled-system/patterns';
 import { card, text } from '@ocobo/styled-system/recipes';
+import type { ColorToken } from '@ocobo/styled-system/tokens';
 
 import { Container } from '../ui/Container';
 import { PyramidSection } from './pyramid-section';
@@ -16,7 +17,7 @@ type RoleData = {
 
 type PyramidData = Record<RoleKey, RoleData>;
 
-const ROLE_ORDER: { key: RoleKey; color: string }[] = [
+const ROLE_ORDER: { key: RoleKey; color: ColorToken }[] = [
   { key: 'ceo', color: 'ocobo.coral' },
   { key: 'managers', color: 'ocobo.yellow' },
   { key: 'teams', color: 'ocobo.sky' },

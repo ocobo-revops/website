@@ -56,7 +56,7 @@ export function MemberCard({ member, contextLabel }: MemberCardProps) {
           <div
             aria-hidden="true"
             className={cx(
-              circle({ size: '100px' }),
+              circle({ size: '[100px]' }),
               text({ variant: 'display-md', color: 'dark' }),
               css({
                 bg: 'gray.100',
@@ -64,7 +64,7 @@ export function MemberCard({ member, contextLabel }: MemberCardProps) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                inset: 0,
+                inset: '0',
               }),
             )}
           >
@@ -76,13 +76,15 @@ export function MemberCard({ member, contextLabel }: MemberCardProps) {
               alt={member.name}
               width={100}
               height={100}
-              className={`${circle({ size: '100px' })} ${css({
+              className={`${circle({ size: '[100px]' })} ${css({
                 objectFit: 'cover',
-                filter: 'grayscale(100%)',
+                filter: 'auto',
+                grayscale: '1',
                 position: 'relative',
                 zIndex: 1,
-                transition: 'all 500ms',
-                _groupHover: { filter: 'grayscale(0)' },
+                transition: 'all',
+                transitionDuration: 'slowest',
+                _groupHover: { filter: 'auto', grayscale: '0' },
               })}`}
               onError={() => setImgFailed(true)}
             />
@@ -90,14 +92,14 @@ export function MemberCard({ member, contextLabel }: MemberCardProps) {
         </div>
 
         {/* Content */}
-        <div className={css({ flex: 1 })}>
+        <div className={css({ flex: '1' })}>
           <div
             className={cx(
               text({ variant: 'display-sm', color: 'dark' }),
               css({
                 fontSize: { base: '2xl', md: '3xl' },
                 letterSpacing: 'tight',
-                lineHeight: '1.1',
+                lineHeight: '4xl',
               }),
             )}
           >

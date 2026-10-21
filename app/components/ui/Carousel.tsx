@@ -55,10 +55,10 @@ const Item: React.FunctionComponent<
     className={cx(
       css({
         position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        top: '0',
+        left: '0',
+        right: '0',
+        bottom: '0',
       }),
       className,
     )}
@@ -97,8 +97,8 @@ const Root = <T extends { id: string }>({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '200px',
-            color: 'gray.medium',
+            minHeight: '[200px]',
+            color: 'gray',
           }),
           className,
         )}
@@ -149,9 +149,9 @@ const Root = <T extends { id: string }>({
             display: 'flex',
             justifyContent: 'space-between',
             position: 'absolute',
-            top: '50%',
-            left: 0,
-            translateY: '-50%',
+            top: '[50%]',
+            left: '0',
+            translateY: '[-50%]',
             zIndex: 2,
             px: '4',
           })}

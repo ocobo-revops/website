@@ -17,7 +17,7 @@ export const AttioPillarsIllustration = ({
       className={`${center()} ${css({
         position: 'relative',
         w: 'full',
-        maxW: '520px',
+        maxW: '[520px]',
         aspectRatio: 'square',
         overflow: 'visible',
       })}`}
@@ -81,7 +81,7 @@ export const AttioPillarsIllustration = ({
               strokeWidth="1.5"
               className={css({
                 transition: 'all',
-                transitionDuration: '500ms',
+                transitionDuration: 'slowest',
                 shadow: 'sm',
                 _groupHover: { transform: 'translateY(-4px)' },
               })}
@@ -111,7 +111,7 @@ export const AttioPillarsIllustration = ({
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {label1}
@@ -143,7 +143,7 @@ export const AttioPillarsIllustration = ({
               strokeWidth="1.5"
               className={css({
                 transition: 'all',
-                transitionDuration: '500ms',
+                transitionDuration: 'slowest',
                 shadow: 'sm',
                 _groupHover: { transform: 'translateY(-4px)' },
               })}
@@ -173,7 +173,7 @@ export const AttioPillarsIllustration = ({
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {label2}
@@ -205,7 +205,7 @@ export const AttioPillarsIllustration = ({
               strokeWidth="1.5"
               className={css({
                 transition: 'all',
-                transitionDuration: '500ms',
+                transitionDuration: 'slowest',
                 shadow: 'sm',
                 _groupHover: { transform: 'translateY(4px)' },
               })}
@@ -235,7 +235,7 @@ export const AttioPillarsIllustration = ({
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {label3}
@@ -267,7 +267,7 @@ export const AttioPillarsIllustration = ({
               strokeWidth="1.5"
               className={css({
                 transition: 'all',
-                transitionDuration: '500ms',
+                transitionDuration: 'slowest',
                 shadow: 'sm',
                 _groupHover: { transform: 'translateY(4px)' },
               })}
@@ -297,7 +297,7 @@ export const AttioPillarsIllustration = ({
               className={css({
                 fontFamily: 'display',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               })}
             >
               {label4}

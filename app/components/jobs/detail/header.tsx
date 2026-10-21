@@ -51,7 +51,7 @@ export function Header({ frontmatter, lang }: HeaderProps) {
             css({
               fontSize: { base: '4xl', md: '6xl' },
               mb: '10',
-              lineHeight: '1.05',
+              lineHeight: 'heading',
             }),
           )}
         >

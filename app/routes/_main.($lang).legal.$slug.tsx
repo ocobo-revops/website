@@ -48,7 +48,7 @@ export default function LegalPage() {
   return (
     <article
       className={css({
-        padding: '2rem 0',
+        py: '8',
       })}
     >
       <PageMarkdownContainer content={page.content} />

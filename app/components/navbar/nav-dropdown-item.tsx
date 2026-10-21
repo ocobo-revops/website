@@ -104,9 +104,10 @@ export const NavDropdownItem = React.forwardRef<
       cursor: 'pointer',
       outline: 'none',
       _focus: {
-        outline: '2px solid',
+        outlineWidth: '2px',
+        outlineStyle: 'solid',
         outlineColor: 'ocobo.dark',
-        outlineOffset: '2px',
+        outlineOffset: '0.5',
       },
     }),
     hoverStyles[color],

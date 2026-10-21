@@ -114,7 +114,7 @@ export const EcosystemSection = () => {
           className={`${grid({
             columns: { base: 1, md: 2, lg: 3 },
             gap: '8',
-          })} ${css({ transition: 'all', transitionDuration: '500ms' })}`}
+          })} ${css({ transition: 'all', transitionDuration: 'slowest' })}`}
         >
           {filtered.map((partner) => (
             <PartnerCardFromData

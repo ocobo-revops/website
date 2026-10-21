@@ -42,17 +42,34 @@ const iconBgStyles: Record<ThemeColor, string> = {
 const bulletStyles: Record<ThemeColor, string> = {
   yellow: css({
     bg: 'ocobo.yellow',
-    ring: '4px',
+    outlineWidth: '4px',
+    outlineStyle: 'solid',
     ringColor: 'ocobo.yellow.light',
   }),
-  mint: css({ bg: 'ocobo.mint', ring: '4px', ringColor: 'ocobo.mint.light' }),
-  sky: css({ bg: 'ocobo.sky', ring: '4px', ringColor: 'ocobo.sky.light' }),
+  mint: css({
+    bg: 'ocobo.mint',
+    outlineWidth: '4px',
+    outlineStyle: 'solid',
+    ringColor: 'ocobo.mint.light',
+  }),
+  sky: css({
+    bg: 'ocobo.sky',
+    outlineWidth: '4px',
+    outlineStyle: 'solid',
+    ringColor: 'ocobo.sky.light',
+  }),
   coral: css({
     bg: 'ocobo.coral',
-    ring: '4px',
+    outlineWidth: '4px',
+    outlineStyle: 'solid',
     ringColor: 'ocobo.coral.light',
   }),
-  dark: css({ bg: 'ocobo.dark', ring: '4px', ringColor: 'gray.200' }),
+  dark: css({
+    bg: 'ocobo.dark',
+    outlineWidth: '4px',
+    outlineStyle: 'solid',
+    ringColor: 'gray.200',
+  }),
 };
 
 export const PillarCard: React.FC<PillarCardProps> = ({
@@ -74,7 +91,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
           borderTopWidth: '8px',
           shadow: 'card',
           transition: 'all',
-          transitionDuration: '300ms',
+          transitionDuration: 'slow',
           position: 'relative',
           _hover: { shadow: 'xl', transform: 'translateY(-4px)' },
         }),
@@ -139,7 +156,7 @@ export const PillarCard: React.FC<PillarCardProps> = ({
           className={cx(
             text({ variant: 'display-label' }),
             css({
-              letterSpacing: '0.2em',
+              letterSpacing: 'tag',
               color: 'ocobo.dark/40',
               display: 'block',
               mb: '6',

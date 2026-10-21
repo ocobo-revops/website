@@ -14,7 +14,7 @@ export const DataIllustration = () => {
           position: 'relative',
           w: 'full',
           maxW: '3xl',
-          h: { base: '280px', md: '420px' },
+          h: { base: '[280px]', md: '[420px]' },
           mx: 'auto',
           p: '4',
         })}`}
@@ -26,7 +26,7 @@ export const DataIllustration = () => {
               position: 'relative',
               w: 'full',
               h: 'full',
-              bg: '#FCFAF5',
+              bg: 'gray.50',
               p: { base: '6', md: '8' },
               shadow: 'soft-lg',
               overflow: 'hidden',
@@ -184,7 +184,7 @@ export const DataIllustration = () => {
                 fontSize: { base: 'xl', md: '2xl' },
                 mb: '3',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
               }),
             )}
           >

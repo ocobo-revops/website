@@ -139,7 +139,7 @@ export const MethodeSection = () => {
             fontSize: 'xs',
             fontWeight: 'bold',
             textTransform: 'uppercase',
-            letterSpacing: '0.2em',
+            letterSpacing: 'tag',
             color: 'gray.400',
             textAlign: 'center',
             mb: '8',

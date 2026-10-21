@@ -10,7 +10,7 @@ const Loader: React.FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = ({
         css({
           display: 'grid',
           placeContent: 'center',
-          minHeight: '250px',
+          minHeight: '[250px]',
         }),
         className,
       )}

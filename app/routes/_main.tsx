@@ -22,8 +22,9 @@ export default function Index() {
           navigation.state === 'loading'
             ? css({
                 opacity: '0.25',
-                transition: 'opacity 200ms',
-                transitionDelay: '200ms',
+                transition: 'opacity',
+                transitionDuration: 'normal',
+                transitionDelay: 'normal',
               })
             : ''
         }

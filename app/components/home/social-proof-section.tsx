@@ -50,14 +50,15 @@ export const SocialProofSection = ({
       <div
         className={css({
           position: 'absolute',
-          top: '50%',
+          top: '[50%]',
           left: '0',
           w: '64',
           h: '64',
           bg: 'ocobo.yellow/5',
           rounded: 'full',
           transform: 'translateX(-50%)',
-          filter: 'blur(48px)',
+          filter: 'auto',
+          blur: '2xl',
           opacity: '0.3',
         })}
       />

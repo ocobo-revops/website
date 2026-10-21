@@ -26,7 +26,7 @@ const getLinkStyles = (isDropdownActive: boolean, isCurrent: boolean) =>
       fontWeight: 'bold',
       cursor: 'pointer',
       transition: 'all',
-      transitionDuration: '300ms',
+      transitionDuration: 'slow',
       color: isDropdownActive || isCurrent ? 'ocobo.dark' : 'gray.500',
       _hover: { color: 'ocobo.dark' },
       textDecoration: 'none',
@@ -71,13 +71,14 @@ export function Navbar() {
         className={css({
           position: 'relative',
           w: 'full',
-          maxW: scrolled ? '1024px' : '1280px',
+          maxW: scrolled ? '5xl' : '7xl',
           transition: 'all',
-          transitionDuration: '700ms',
-          transitionTimingFunction: 'cubic-bezier(0.23,1,0.32,1)',
+          transitionDuration: '[700ms]',
+          transitionTimingFunction: 'smooth',
           pointerEvents: 'auto',
           bg: scrolled ? 'white/90' : 'transparent',
-          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          backdropFilter: scrolled ? 'auto' : '[none]',
+          backdropBlur: 'md',
           borderWidth: '1px',
           borderColor: scrolled ? 'gray.100' : 'transparent',
           shadow: scrolled ? 'lg' : 'none',
@@ -94,7 +95,7 @@ export function Navbar() {
             justifyContent: 'space-between',
             alignItems: 'center',
             position: 'relative',
-            h: '48px',
+            h: '12',
           })}
         >
           {/* Logo */}
@@ -111,11 +112,11 @@ export function Navbar() {
               alt="Ocobo"
               className={css({
                 transition: 'all',
-                transitionDuration: '700ms',
-                h: scrolled ? '28px' : '40px',
+                transitionDuration: '[700ms]',
+                h: scrolled ? '7' : '10',
                 w: 'auto',
                 lg: {
-                  h: scrolled ? '32px' : '46px',
+                  h: scrolled ? '8' : '[46px]',
                 },
               })}
             />
@@ -126,7 +127,7 @@ export function Navbar() {
               className={css({
                 color: 'gray',
                 position: 'absolute',
-                left: '50%',
+                left: '[50%]',
                 transform: 'translateX(-50%)',
               })}
             />

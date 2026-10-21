@@ -26,27 +26,27 @@ const cardStyles = css({
   borderColor: 'gray.100',
   p: '8',
   transition: 'all',
-  transitionDuration: '300ms',
+  transitionDuration: 'slow',
   position: 'relative',
   overflow: 'hidden',
   rounded: 'xl',
   h: 'full',
   _hover: { shadow: 'xl', transform: 'translateY(-4px)' },
-  '& .logo-img': { transition: 'all', transitionDuration: '500ms' },
-  '&:hover .logo-img': { filter: 'grayscale(0)', opacity: 1 },
+  '& .logo-img': { transition: 'all', transitionDuration: 'slowest' },
+  '&:hover .logo-img': { filter: 'auto', grayscale: '0', opacity: 1 },
   '& .cat-badge': { transition: 'all' },
   '&:hover .cat-badge': { bg: 'ocobo.dark', color: 'white' },
   '& .tag': { transition: 'all' },
   '&:hover .tag': { borderColor: 'ocobo.dark/10', color: 'ocobo.dark' },
   '& .separator': { transition: 'opacity' },
   '&:hover .separator': { opacity: 1 },
-  '& .cert-img': { transition: 'all', transitionDuration: '500ms' },
-  '&:hover .cert-img': { filter: 'grayscale(0)' },
+  '& .cert-img': { transition: 'all', transitionDuration: 'slowest' },
+  '&:hover .cert-img': { filter: 'auto', grayscale: '0' },
   '& .tech-label': { transition: 'colors' },
   '&:hover .tech-label': { color: 'ocobo.mint' },
   '& .tech-icon': { transition: 'opacity' },
   '&:hover .tech-icon': { opacity: 1 },
-  '& .external-link': { transition: 'all', transitionDuration: '300ms' },
+  '& .external-link': { transition: 'all', transitionDuration: 'slow' },
   '&:hover .external-link': { transform: 'translateX(4px)' },
 });
 
@@ -115,7 +115,8 @@ const Header = ({
             maxW: 'full',
             maxH: 'full',
             objectFit: 'contain',
-            filter: 'grayscale(100%)',
+            filter: 'auto',
+            grayscale: '1',
             opacity: 0.6,
           })}`}
         />
@@ -160,7 +161,7 @@ const Body = ({ name, tags, description }: BodyProps) => {
       </h3>
       <div
         className={`${flex({ wrap: 'wrap', gap: '1.5' })} ${css({
-          h: '48px',
+          h: '12',
           mb: '4',
           alignContent: 'start',
           overflow: 'hidden',
@@ -192,7 +193,7 @@ const Body = ({ name, tags, description }: BodyProps) => {
           fontSize: 'sm',
           lineHeight: 'relaxed',
           fontWeight: 'medium',
-          minH: '4rem',
+          minH: '16',
         })}
       >
         {description}
@@ -233,7 +234,7 @@ const Footer = ({ certificationLogo, name, status, url }: FooterProps) => {
         h: '12',
       })}`}
     >
-      <div className={css({ flex: 1 })}>
+      <div className={css({ flex: '1' })}>
         {certificationLogo ? (
           <div className={flex({ align: 'center', gap: '2' })}>
             <img
@@ -243,7 +244,8 @@ const Footer = ({ certificationLogo, name, status, url }: FooterProps) => {
                 h: '10',
                 w: 'auto',
                 objectFit: 'contain',
-                filter: 'grayscale(100%)',
+                filter: 'auto',
+                grayscale: '1',
               })}`}
             />
           </div>

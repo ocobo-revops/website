@@ -26,7 +26,7 @@ const HeroSplitRoot: React.FC<HeroSplitProps> = ({
       className={`${flex({
         direction: { base: 'column', lg: 'row' },
         align: { lg: 'center' },
-        gap: { base: String(gap), lg: String(gap) },
+        gap: { base: `${gap}` as const, lg: `${gap}` as const },
       })} ${className}`}
     >
       {children}

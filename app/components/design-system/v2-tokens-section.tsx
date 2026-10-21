@@ -263,7 +263,8 @@ export function V2TokensSection() {
             css({
               w: '40',
               boxShadow: 'rest',
-              transition: 'transform 0.4s, box-shadow 0.4s',
+              transition: 'common',
+              transitionDuration: 'slower',
               transitionTimingFunction: 'smooth',
               _hover: { transform: 'translateY(-4px)', boxShadow: 'hover' },
             }),

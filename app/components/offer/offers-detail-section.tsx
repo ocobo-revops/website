@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 import { badge, text } from '@ocobo/styled-system/recipes';
+import type { ColorToken } from '@ocobo/styled-system/tokens';
 
 import { Container } from '../ui/Container';
 import { SectionHeader } from './section-header';
@@ -27,13 +28,13 @@ type Service = {
   items: ServiceItem[];
 };
 
-const COLOR_TOKEN_MAP: Record<ServiceColor, string> = {
+const COLOR_TOKEN_MAP: Record<ServiceColor, ColorToken> = {
   yellow: 'ocobo.yellow',
   sky: 'ocobo.sky',
   mint: 'ocobo.mint',
 };
 
-const LIGHT_TOKEN_MAP: Record<ServiceColor, string> = {
+const LIGHT_TOKEN_MAP: Record<ServiceColor, ColorToken> = {
   yellow: 'ocobo.yellow.light',
   sky: 'ocobo.sky.light',
   mint: 'ocobo.mint.light',
@@ -136,7 +137,7 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
             borderColor: 'gray.100',
             p: { base: '8', md: '10' },
             transition: 'all',
-            transitionDuration: '300ms',
+            transitionDuration: 'slow',
             rounded: 'xl',
             _hover: { shadow: '2xl', borderColor: colorToken },
           })}`}
@@ -199,7 +200,9 @@ export const OffersDetailSection = () => {
           {services.map((service, index) => (
             <Fragment key={service.title}>
               {index > 0 && (
-                <div className={css({ w: 'full', h: '1px', bg: 'gray.100' })} />
+                <div
+                  className={css({ w: 'full', h: '[1px]', bg: 'gray.100' })}
+                />
               )}
               <ServiceCard service={service} />
             </Fragment>

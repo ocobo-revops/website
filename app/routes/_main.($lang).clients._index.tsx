@@ -85,7 +85,7 @@ export default function Index() {
       <Hero />
       <ClientCarousel />
       <Container>
-        <React.Suspense fallback={<Loader className={css({ h: '300px' })} />}>
+        <React.Suspense fallback={<Loader className={css({ h: '[300px]' })} />}>
           <Await resolve={stories}>
             {(stories) => <StoryList items={stories} />}
           </Await>

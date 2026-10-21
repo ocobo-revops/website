@@ -31,7 +31,7 @@ export const PyramidSection = () => {
         w: 'full',
         maxW: '6xl',
         mx: 'auto',
-        h: '620px',
+        h: '[620px]',
       })}
     >
       <svg

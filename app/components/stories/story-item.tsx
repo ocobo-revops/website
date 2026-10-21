@@ -31,18 +31,19 @@ const cardClass = css({
   rounded: '3xl',
   p: '6',
   transition: 'all',
-  transitionDuration: '500ms',
+  transitionDuration: 'slowest',
   overflow: 'hidden',
   h: 'full',
   _hover: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
   _focusWithin: { shadow: 'soft-lg', transform: 'translateY(-8px)' },
-  '& .main-img': { transition: 'all', transitionDuration: '700ms' },
+  '& .main-img': { transition: 'all', transitionDuration: '[700ms]' },
   '&:hover .main-img, &:focus-within .main-img': {
-    filter: 'grayscale(0)',
+    filter: 'auto',
+    grayscale: '0',
     opacity: 1,
     transform: 'scale(1.05)',
   },
-  '& .logo-overlay': { transition: 'all', transitionDuration: '500ms' },
+  '& .logo-overlay': { transition: 'all', transitionDuration: 'slowest' },
   '&:hover .logo-overlay, &:focus-within .logo-overlay': {
     opacity: 1,
     transform: 'translateY(0)',
@@ -66,7 +67,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
           to={storyUrl}
           className={css({
             position: 'relative',
-            aspectRatio: '16/10',
+            aspectRatio: '[16/10]',
             overflow: 'hidden',
             rounded: '2xl',
             bg: 'gray.50',
@@ -88,7 +89,8 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 w: 'full',
                 h: 'full',
                 objectFit: 'cover',
-                filter: 'grayscale(100%)',
+                filter: 'auto',
+                grayscale: '1',
                 opacity: 0.8,
               }),
             )}
@@ -136,7 +138,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 fontSize: 'xs',
                 fontWeight: 'black',
                 textTransform: 'uppercase',
-                letterSpacing: '0.2em',
+                letterSpacing: 'tag',
                 color: 'ocobo.dark',
               })}
             >
@@ -200,7 +202,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                 })}
               />
             </div>
-            <div className={css({ flex: 1, minW: 0 })}>
+            <div className={css({ flex: '1', minW: '0' })}>
               <span
                 className={css({
                   fontSize: 'xs',
@@ -243,7 +245,7 @@ const StoryItem: React.FunctionComponent<StoryItemProps> = React.memo(
                   fontSize: 'xs',
                   fontWeight: 'black',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.3em',
+                  letterSpacing: 'label',
                   color: 'gray.400',
                   mb: '2',
                 })}

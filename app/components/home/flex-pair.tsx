@@ -33,7 +33,7 @@ const FlexPairRoot: React.FC<FlexPairProps> = ({
   return (
     <div
       className={`${flex({
-        gap: String(gap),
+        gap: `${gap}` as const,
         align: alignMap[align],
       })} ${className}`}
     >

@@ -16,7 +16,7 @@ export function Container({ children }: HTMLAttributes<HTMLElement>) {
       className={css({
         '& p, h3, h4, h5, h6, ol, ul, blockquote': {
           '& + *': {
-            mt: '1em',
+            mt: '[1em]',
           },
         },
       })}
@@ -104,7 +104,7 @@ export function Heading({ children, level = 2, ...props }: HeadingProps) {
       className={css({
         textStyle: 'medium',
         fontWeight: 'bold',
-        maxW: { base: '100%', lg: '3/4' },
+        maxW: { base: 'full', lg: '3/4' },
       })}
     >
       {children}
@@ -141,8 +141,8 @@ export function List({ children, ordered, ...props }: ListProps) {
         className={css({
           textStyle: 'medium',
           listStyleType: 'decimal',
-          pl: '1em',
-          maxW: { base: '100%', lg: '3/4' },
+          pl: '[1em]',
+          maxW: { base: 'full', lg: '3/4' },
         })}
         {...props}
       >
@@ -155,8 +155,8 @@ export function List({ children, ordered, ...props }: ListProps) {
       className={css({
         textStyle: 'medium',
         listStyleType: 'disc',
-        pl: '1em',
-        maxW: { base: '100%', lg: '3/4' },
+        pl: '[1em]',
+        maxW: { base: 'full', lg: '3/4' },
       })}
       {...props}
     >
@@ -172,9 +172,9 @@ export function ListItem({
   return (
     <li
       className={css({
-        mb: '0.5em',
+        mb: '[0.5em]',
         _last: {
-          mb: 0,
+          mb: '0',
         },
       })}
       {...props}
@@ -195,7 +195,7 @@ export function Paragraph({
         textStyle: 'medium',
         color: 'gray.700',
         lineHeight: 'relaxed',
-        maxW: { base: '100%', lg: '3/4' },
+        maxW: { base: 'full', lg: '3/4' },
       })}
     >
       {children}
@@ -252,10 +252,10 @@ export function Quote({ children, author, url, ...props }: QuoteProps) {
           iconSizeMd,
           css({
             display: 'inline-block',
-            mr: '0.5em',
+            mr: '[0.5em]',
             color: 'mint',
-            float: 'left',
-            translateY: '4px',
+            float: 'start',
+            translateY: '1',
           }),
         )}
       />

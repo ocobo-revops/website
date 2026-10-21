@@ -7,8 +7,8 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '1rem',
-    pt: '1rem',
+    gap: '4',
+    pt: '4',
   },
 });
 

@@ -16,7 +16,7 @@ export function Container({ children }: React.HTMLAttributes<HTMLElement>) {
       className={css({
         '& p, h3, h4, h5, h6, ol, ul, blockquote': {
           '& + *': {
-            mt: '1em',
+            mt: '[1em]',
           },
         },
       })}
@@ -137,7 +137,7 @@ export function List({ children, ordered, ...props }: ListProps) {
         className={css({
           textStyle: 'medium',
           listStyleType: 'decimal',
-          pl: '1em',
+          pl: '[1em]',
         })}
         {...props}
       >
@@ -150,7 +150,7 @@ export function List({ children, ordered, ...props }: ListProps) {
       className={css({
         textStyle: 'medium',
         listStyleType: 'disc',
-        pl: '1em',
+        pl: '[1em]',
       })}
       {...props}
     >
@@ -166,9 +166,9 @@ export function ListItem({
   return (
     <li
       className={css({
-        mb: '0.5em',
+        mb: '[0.5em]',
         _last: {
-          mb: 0,
+          mb: '0',
         },
       })}
       {...props}
@@ -203,14 +203,14 @@ export function Table({
       {...props}
       className={css({
         borderCollapse: 'collapse',
-        maxWidth: '100%',
-        mb: '2em',
+        maxWidth: 'full',
+        mb: '[2em]',
         textStyle: 'small',
         '& th, & td': {
-          border: '1px solid',
+          border: 'thin',
           borderColor: 'gray',
-          py: '0.5em',
-          px: '0.5em',
+          py: '[0.5em]',
+          px: '[0.5em]',
         },
       })}
     >
@@ -258,10 +258,10 @@ export function Quote({ children, author, url, ...props }: QuoteProps) {
           css({ h: '4', w: '4' }),
           css({
             display: 'inline-block',
-            mr: '0.5em',
+            mr: '[0.5em]',
             color: 'sky',
-            float: 'left',
-            translateY: '4px',
+            float: 'start',
+            translateY: '1',
           }),
         )}
       />
@@ -302,8 +302,8 @@ export function Callout({
   return (
     <div
       className={css({
-        p: 4,
-        mb: 4,
+        p: '4',
+        mb: '4',
         bleft: 'sky',
         bg: 'sky.light',
       })}
@@ -361,8 +361,8 @@ export function HubspotForm({ formId }: HubspotFormProps) {
     <div
       className={cx(
         css({
-          p: 4,
-          mb: 4,
+          p: '4',
+          mb: '4',
           bleft: 'mint',
           bg: 'mint.light',
         }),

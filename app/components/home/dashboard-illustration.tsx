@@ -7,7 +7,7 @@ export const DashboardIllustration = () => {
       className={`${center()} ${css({
         position: 'relative',
         w: 'full',
-        maxW: '580px',
+        maxW: '[580px]',
         aspectRatio: 'square',
         opacity: '0',
         animation: 'hero-reveal',
@@ -17,15 +17,15 @@ export const DashboardIllustration = () => {
       <div
         className={`${center()} ${css({
           position: 'absolute',
-          top: '8%',
-          left: '38%',
-          w: '110px',
-          h: '110px',
+          top: '[8%]',
+          left: '[38%]',
+          w: '[110px]',
+          h: '[110px]',
           rounded: 'full',
           bg: 'ocobo.mint/80',
           transform: 'rotate(12deg)',
           transition: 'transform',
-          transitionDuration: '1000ms',
+          transitionDuration: '[1000ms]',
           _hover: { transform: 'rotate(45deg)' },
         })}`}
       >
@@ -46,10 +46,10 @@ export const DashboardIllustration = () => {
       <div
         className={css({
           position: 'absolute',
-          top: '12%',
-          right: '12%',
-          w: '90px',
-          h: '90px',
+          top: '[12%]',
+          right: '[12%]',
+          w: '[90px]',
+          h: '[90px]',
           bg: 'ocobo.coral/80',
           transform: 'rotate(-6deg)',
           rounded: 'sm',
@@ -59,10 +59,10 @@ export const DashboardIllustration = () => {
       <div
         className={css({
           position: 'absolute',
-          top: '42%',
-          left: '5%',
-          w: '85px',
-          h: '100px',
+          top: '[42%]',
+          left: '[5%]',
+          w: '[85px]',
+          h: '[100px]',
           bg: 'ocobo.yellow/80',
           transform: 'rotate(3deg)',
           rounded: 'sm',
@@ -72,10 +72,10 @@ export const DashboardIllustration = () => {
       <div
         className={css({
           position: 'absolute',
-          bottom: '8%',
-          left: '48%',
-          w: '100px',
-          h: '100px',
+          bottom: '[8%]',
+          left: '[48%]',
+          w: '[100px]',
+          h: '[100px]',
           rounded: 'full',
           bg: 'ocobo.sky/80',
         })}

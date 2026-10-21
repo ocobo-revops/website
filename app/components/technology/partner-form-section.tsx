@@ -69,7 +69,7 @@ const SuccessMessage = ({ onReset }: { onReset: () => void }) => {
         className={`${center()} ${css({
           w: '20',
           h: '20',
-          bg: 'ocobo.mintLight',
+          bg: 'mint.light',
           color: 'ocobo.mint',
           rounded: 'full',
           mx: 'auto',
@@ -237,7 +237,7 @@ const PartnerFormFields = ({ onSubmit }: { onSubmit: () => void }) => {
           color: 'white',
           fontWeight: 'black',
           textTransform: 'uppercase',
-          letterSpacing: '0.25em',
+          letterSpacing: 'label',
           fontSize: 'xs',
           rounded: 'none',
           transition: 'all',
@@ -343,8 +343,10 @@ export const PartnerFormSection = () => {
                   left: '0',
                   w: 'full',
                   h: '1.5',
-                  background:
-                    'linear-gradient(to right, token(colors.ocobo.yellow), token(colors.ocobo.sky), token(colors.ocobo.mint))',
+                  bgGradient: 'to-r',
+                  gradientFrom: 'ocobo.yellow',
+                  gradientVia: 'ocobo.sky',
+                  gradientTo: 'ocobo.mint',
                 })}
               />
 
