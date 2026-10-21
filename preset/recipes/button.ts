@@ -103,6 +103,30 @@ export const button = defineRecipe({
           outlineColor: 'currentColor',
         },
       },
+      secondary: {
+        bg: 'transparent',
+        color: 'dark',
+        borderColor: 'line',
+        _hover: {
+          borderColor: 'dark',
+        },
+        _focusVisible: {
+          outlineColor: 'dark',
+        },
+      },
+      link: {
+        bg: 'transparent',
+        color: 'dark',
+        textDecoration: 'underline',
+        textUnderlineOffset: '4px',
+        _hover: {
+          textDecorationColor: 'currentColor',
+          bg: 'transparent',
+        },
+        _focusVisible: {
+          outlineColor: 'dark',
+        },
+      },
       yellow: {
         bg: 'ocobo.yellow',
         color: 'ocobo.dark',
@@ -135,6 +159,12 @@ export const button = defineRecipe({
       },
     },
   },
+  // The text link is a call to action without a box: size sets its font only.
+  compoundVariants: [
+    { variant: 'link', size: 'sm', css: { px: '0', py: '0' } },
+    { variant: 'link', size: 'md', css: { px: '0', py: '0' } },
+    { variant: 'link', size: 'lg', css: { px: '0', py: '0' } },
+  ],
   defaultVariants: {
     variant: 'primary',
     size: 'md',
