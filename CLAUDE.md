@@ -41,7 +41,7 @@ After recipe edits, also run the raw Panda CLI to rebuild atomic CSS: `pnpm pand
 - **i18n required** — every user-facing string lives in `locales/fr/*.json` and `locales/en/*.json`. Never hardcode UI copy.
 - **SSR first** — assume server render + client hydration. Guard browser-only APIs (`window`, `document`) behind `useEffect` or `typeof window !== 'undefined'`.
 - **Check the component inventory** before creating a new component — many homepage/offer/method blocks already exist. See [docs/development/component-inventory.md](docs/development/component-inventory.md).
-- **Follow ADR-0001** — typography goes through `text()`, sections through `section()`, cards through `card()`. The ADR is auto-loaded below (§7).
+- **Follow ADR-0001 and ADR-0002**: typography goes through `text()`, sections through `section()`, cards through `card()`, values come from the v2 tokens. The rules are summarised below (§7).
 - **Named exports only**, no default exports. **Kebab-case filenames** for new files (existing PascalCase files keep their names until refactored).
 - **No barrel files** (`index.ts` re-exports) — import directly from the module file.
 - **Small files** — ~400 lines typical, 800 max.
@@ -103,14 +103,17 @@ Deeper detail → [docs/api/contracts.md](docs/api/contracts.md), [docs/api/data
 
 ## 7. Design system rules
 
-### ADR-0001 decisions (inline, load-bearing)
+### Design system rules (ADR 0001, amended by ADR 0002)
 
-- **Typography**: use `text({ variant: ... })`. Never `fontFamily: 'display'` inline outside `preset/`. Variants: `display-2xl | xl | lg | lg-bold | section | md | md-bold | sm | heading | card | label`, plus `subtitle`, `body`, `label`. Base names use `fontWeight: black`; `-bold` suffix uses `fontWeight: bold`. `display-xl` is the named exception (uses `bold`).
-- **Sectioning**: `<section className={section({ bg, padding })}>` wrapping `<Container>`. Never inline `maxW: '7xl'` + `mx: 'auto'` containers.
-- **Cards**: use `card()` (variants `shadow: none|sm|card|elevated`, `padding.xl`). Never inline `rounded + border + shadow`.
-- **Legacy recipes deleted**: `icon`, `link`, `subtitle` no longer exist. Old `icon({ size })` maps to token `css({ h, w })`. Reintroducing a legacy-style single-concern recipe needs a new ADR.
+The preset carries the v2 values from the redesign mockup ([ADR 0002](docs/adr/0002-design-system-v2.md)). Older token and variant names still resolve, to the closest v2 value. New and redesigned code uses only the names below.
 
-Appendix (known inline exceptions, deferred per-feature occurrences, full mapping tables) → [docs/adr/0001-design-system-adoption-policy.md](docs/adr/0001-design-system-adoption-policy.md). Read it when touching a file flagged in those tables, or before proposing to bend any of the four rules above.
+- **Typography**: use `text({ variant: ... })`. Never `fontFamily: 'display'` inline outside `preset/`. Six kept variants, one per v2 size: `display-xl` (Display, Bermia 900, 44 to 72px), `display-lg` (H2, Bermia 900, 34 to 48px), `display-md-bold` (H3, Bornia 700, 24px), `body` (Bornia 400, 17px), `small` (Bornia 500, 14px), `label` (11px uppercase, .3em). The other `display-*`, `subtitle` and `display-label` names are aliases, deleted in J6: do not add call sites.
+- **Sectioning**: `<section className={section({ bg, padding })}>` wrapping `<Container>`. `padding: 'lg'` (default) is 112px from 1024px, 80px from 768px, 64px below; `md` is the 80px compact spacing. Never inline `maxW: '7xl'` + `mx: 'auto'` containers.
+- **Cards**: use `card()` (variants `shadow: none|sm|card|elevated`, `padding: sm|md|lg|xl`, `radius: md|lg`). Default is 28px padding, `line` border, `rest` shadow, 16px radius. Never inline `rounded + border + shadow`.
+- **Tokens**: radii `lg` (8px), `2xl` (16px), `3xl` (24px), `full`. Shadows `rest`, `hover`, `window`; `offset` is the one named exception. Greys are zinc: `gray` is the muted text, `line` the hairline border. Enjeu colours are `enjeu.<rp|se|sc|cx|sy|ai>` with `.light`. `gradients.ai` and `gradients.ai-text` are for AI content only, gradient text at display and H2 sizes only. A value off the scale snaps to the nearest token; a new need gets a named token, never a raw value.
+- **Legacy recipes deleted**: `icon`, `link`, `subtitle` no longer exist. Old `icon({ size })` maps to token `css({ h, w })`. The text link becomes a `button` variant (ADR 0002). Reintroducing a single-concern recipe needs a new ADR.
+
+Full mapping of old names to v2 values, and the gap decisions, are in ADR 0002 ("J1 mapping"). Known inline exceptions and deferred per-feature occurrences are in [docs/adr/0001-design-system-adoption-policy.md](docs/adr/0001-design-system-adoption-policy.md). Read them when touching a file flagged in those tables, or before proposing to bend any rule above. `/design-system` shows every v2 token.
 
 ### Panda CSS traps (Claude-specific gotchas)
 
