@@ -1,6 +1,7 @@
 {
   "language.fr": "Français",
   "language.en": "Anglais",
+  "flipCard.flip": "Retourner la carte : {{label}}",
   "navigation.offer": "Notre Offre",
   "navigation.stories": "Success Stories",
   "navigation.method.title": "Méthode",

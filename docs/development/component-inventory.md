@@ -39,6 +39,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **ScrollArea** | `ScrollArea.tsx` | Custom scrollable areas | Ark UI ScrollArea |
 | **DotButton** | `DotButton.tsx` | Carousel navigation dots | Custom styling |
 | **DotPagination** | `DotPagination.tsx` | Pagination indicator | Custom implementation |
+| **FlipCard** | `flip-card.tsx` | Fixed-height card that turns over with its button, a tap or a mouse hover; the hidden face is `inert` | `flipCard` slot recipe |
 
 ### Display Components
 | Component | File | Purpose | Dependencies |

@@ -68,6 +68,10 @@ export const tokens = defineTokens({
     ai: { value: 'linear-gradient(90deg, #FE9C87, #F1CF25)' },
     'ai-text': { value: 'linear-gradient(90deg, #F16C4E, #B88F00)' },
   },
+  // `instant` turns a transition off under reduced motion without a raw value.
+  durations: {
+    instant: { value: '0ms' },
+  },
   easings: {
     smooth: { value: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
   },

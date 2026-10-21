@@ -7,6 +7,7 @@ import { ButtonBadgeEyebrowSections } from '~/components/design-system/button-ba
 import { ButtonsSection } from '~/components/design-system/buttons-section';
 import { CardRecipeSection } from '~/components/design-system/card-recipe-section';
 import { ColorsSection } from '~/components/design-system/colors-section';
+import { FlipCardSection } from '~/components/design-system/flip-card-section';
 import { FormSection } from '~/components/design-system/form-section';
 import { GridSection } from '~/components/design-system/grid-section';
 import { IconsSection } from '~/components/design-system/icons-section';
@@ -52,6 +53,7 @@ export default function Index() {
       <IconsSection />
       <IllustrationsSection />
       <CardRecipeSection />
+      <FlipCardSection />
       <GridSection />
     </Container>
   );
