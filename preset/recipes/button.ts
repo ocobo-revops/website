@@ -104,7 +104,7 @@ export const button = defineRecipe({
         },
       },
       secondary: {
-        bg: 'white',
+        bg: 'background',
         color: 'foreground',
         borderColor: 'gray.300',
         _hover: {
