@@ -21,7 +21,11 @@ The offer page, the blog (`librairie` in the mockup) and customer stories (`clie
 
 ### Tokens are aligned on the whole site first
 
-The v2 tokens and type scale apply to every page in J1, the first delivery step, before any page is redesigned. Pages that keep their current style get them at the same time. The changes will show on every page; each one is reviewed and corrected, not avoided. Redesigns then ship page by page on a single system. The changes are reviewed by hand on the Vercel preview of the J1 PR, route by route, in French and English, on desktop and mobile. An automated screenshot comparison would flag every page at once, so it adds nothing here; whether one guards the later page redesigns is decided before J2. We rejected moving pages to v2 one at a time, which keeps two systems alive for the whole migration, and keeping the old values for the three pages above, which keeps them forever.
+The v2 tokens and type scale apply to every page in J1, the first delivery step, before any page is redesigned. Pages that keep their current style get them at the same time. The changes will show on every page; each one is reviewed and corrected, not avoided. Redesigns then ship page by page on a single system. The changes are reviewed by hand on the Vercel preview of the J1 PR, route by route, in French and English, on desktop and mobile. An automated screenshot comparison would flag every page at once, so it adds nothing here. It does not guard the later page redesigns either (see below). We rejected moving pages to v2 one at a time, which keeps two systems alive for the whole migration, and keeping the old values for the three pages above, which keeps them forever.
+
+### No screenshot comparison guards the redesigns
+
+From J2 to J5, a change to a shared recipe can alter a page that is not being redesigned: the offer page, the blog, customer stories, legal pages and contact. No automated screenshot comparison guards them. The existing e2e smoke test stays as it is: nine checks on the home, the contact page with its HubSpot form, and the English home. It runs in CI and is not a required check. #242 (redesigned home live) updates its home and navbar selectors when it switches the home on. Regressions on the other pages are caught by reviewing them on the Vercel preview of each PR that changes a shared recipe or component. We rejected a screenshot guard on every route, and one on the five pages above only: both need the `posts` content pinned in CI, baselines generated on Linux and maintained through every redesign, for a check that `main` cannot enforce today. We also rejected turning the e2e tests off for the migration: they cost nothing until #242 and they cover the contact page. The choice is reviewed at J6, once the v1 navbar and footer are deleted.
 
 ### The `text()` variants keep their names and take v2 values
 
@@ -87,8 +91,8 @@ FlipCard, PersonCard, Tooltip and Tabs are done only when they work with a keybo
 - Recipe changes: `button` gains `secondary` and `link`; `badge` gains an `ai` variant and an `xs` size; a new `flipCard` slot recipe with a `person` variant; a new `Eyebrow` component.
 - `strictTokens` is on and `pnpm typecheck` is a required CI check from J1. The about 240 raw values in `app/` are cleaned up in the same step.
 - J1 needs a written route checklist (French and English, desktop and mobile) for the manual review on the Vercel preview.
-- Before J2: decide whether screenshot comparisons guard the pages that are not being redesigned.
-- J6 deletes the alias variant names.
+- No screenshot comparison from J2 to J5. The e2e smoke test stays, and #242 updates its selectors. Each PR that changes a shared recipe or component is reviewed on the pages that are not being redesigned.
+- J6 deletes the alias variant names, and reviews whether e2e coverage or screenshot comparisons should be added.
 - ADR 0001 is outdated on four points: its 96px section example, its "six live recipes" inventory, the deleted `link` recipe (now a `button` variant) and its lack of an automated check. The design system rules in `CLAUDE.md` are updated in J1 to match this ADR.
 - Ocobo confirms two visual choices before the pages that use them ship: the Revenue Systems grey, and the darkened gradient text.
 - Review checks that the AI gradient appears on AI content only.
