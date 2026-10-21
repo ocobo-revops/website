@@ -2,11 +2,11 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
+import { ShowcaseSection } from './showcase-section';
+
 // Design system v2 tokens (ADR 0002). Every class below is a static literal
 // so Panda extracts it; see CLAUDE.md §7.
 
-const block = css({ py: '8', mt: '4', borderTop: 'thin', borderColor: 'line' });
-const blockTitle = cx(text({ variant: 'display-md-bold' }), css({ mb: '6' }));
 const caption = css({ fontSize: 'caption', color: 'gray' });
 const swatch = css({
   h: '16',
@@ -129,8 +129,7 @@ const surface = css({
 export function V2TokensSection() {
   return (
     <>
-      <section className={block}>
-        <h2 className={blockTitle}>Type scale (v2)</h2>
+      <ShowcaseSection title="Type scale (v2)">
         <ul
           className={css({
             display: 'flex',
@@ -147,10 +146,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Greys and line</h2>
+      <ShowcaseSection title="Greys and line">
         <ul className={grid({ columns: { base: 3, md: 9 }, gap: '4' })}>
           {greys.map((item) => (
             <li key={item.name} className={tile}>
@@ -159,10 +157,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Enjeu colours</h2>
+      <ShowcaseSection title="Enjeu colours">
         <ul className={grid({ columns: { base: 2, md: 6 }, gap: '4' })}>
           {enjeux.map((item) => (
             <li key={item.key} className={tile}>
@@ -176,10 +173,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>AI gradients</h2>
+      <ShowcaseSection title="AI gradients">
         <div
           className={css({
             h: '4',
@@ -201,10 +197,9 @@ export function V2TokensSection() {
           Revenue AI
         </p>
         <p className={caption}>gradients.ai-text (display and H2 only)</p>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Radii</h2>
+      <ShowcaseSection title="Radii">
         <ul className={grid({ columns: { base: 2, md: 4 }, gap: '6' })}>
           {radii.map((item) => (
             <li key={item.name} className={tile}>
@@ -215,10 +210,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Shadows</h2>
+      <ShowcaseSection title="Shadows">
         <ul className={grid({ columns: { base: 1, md: 3 }, gap: '8' })}>
           {shadows.map((item) => (
             <li key={item.name} className={tile}>
@@ -227,10 +221,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Font sizes and letter spacings</h2>
+      <ShowcaseSection title="Font sizes and letter spacings">
         <ul
           className={css({
             display: 'flex',
@@ -261,10 +254,9 @@ export function V2TokensSection() {
             </li>
           ))}
         </ul>
-      </section>
+      </ShowcaseSection>
 
-      <section className={block}>
-        <h2 className={blockTitle}>Easing</h2>
+      <ShowcaseSection title="Easing">
         <div
           className={cx(
             surface,
@@ -280,7 +272,7 @@ export function V2TokensSection() {
         <p className={cx(caption, css({ mt: '3' }))}>
           easings.smooth · cubic-bezier(.2, .8, .2, 1), hover the card
         </p>
-      </section>
+      </ShowcaseSection>
     </>
   );
 }
