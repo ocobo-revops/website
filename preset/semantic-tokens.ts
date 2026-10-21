@@ -102,10 +102,10 @@ export const semanticTokens = defineSemanticTokens({
         _dark: '{colors.gray}',
       },
     },
-    // One colour per enjeu (ADR 0002), keyed like the posts frontmatter.
+    // One colour per challenge (ADR 0002), keyed like the posts frontmatter.
     // DEFAULT is the accent, light the tinted background. Revenue AI also
     // uses `gradients.ai` for decoration.
-    enjeu: {
+    challenge: {
       rp: {
         DEFAULT: { value: '{colors.coral}' },
         light: { value: '{colors.coral.light}' },

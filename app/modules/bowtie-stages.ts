@@ -1,11 +1,12 @@
 /**
  * Bow tie stage model: the seven stages of the revenue cycle, shared by the
- * method page, the enjeu pages and the enjeu schema (`bowtie.activeStages`).
+ * method page, the challenge pages and the challenge schema
+ * (`bowtie.activeStages`).
  */
 
 /**
  * Frozen list, in bow tie order. The posts repo keeps a copy to validate
- * enjeu files: a change needs a PR in both repos (ocobo-revops/posts#94).
+ * challenge files: a change needs a PR in both repos (ocobo-revops/posts#94).
  */
 export const STAGE_IDS = [
   'demand-generation',

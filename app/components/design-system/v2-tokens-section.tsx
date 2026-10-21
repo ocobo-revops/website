@@ -51,42 +51,42 @@ const greys = [
   { name: 'line', className: css({ bg: 'line' }) },
 ];
 
-const enjeux = [
+const challenges = [
   {
     key: 'rp',
     label: 'Revenue Performance',
-    accent: css({ bg: 'enjeu.rp' }),
-    tint: css({ bg: 'enjeu.rp.light' }),
+    accent: css({ bg: 'challenge.rp' }),
+    tint: css({ bg: 'challenge.rp.light' }),
   },
   {
     key: 'se',
     label: 'Sales Experience',
-    accent: css({ bg: 'enjeu.se' }),
-    tint: css({ bg: 'enjeu.se.light' }),
+    accent: css({ bg: 'challenge.se' }),
+    tint: css({ bg: 'challenge.se.light' }),
   },
   {
     key: 'sc',
     label: 'Sales Compensation',
-    accent: css({ bg: 'enjeu.sc' }),
-    tint: css({ bg: 'enjeu.sc.light' }),
+    accent: css({ bg: 'challenge.sc' }),
+    tint: css({ bg: 'challenge.sc.light' }),
   },
   {
     key: 'cx',
     label: 'Customer Experience',
-    accent: css({ bg: 'enjeu.cx' }),
-    tint: css({ bg: 'enjeu.cx.light' }),
+    accent: css({ bg: 'challenge.cx' }),
+    tint: css({ bg: 'challenge.cx.light' }),
   },
   {
     key: 'sy',
     label: 'Revenue Systems',
-    accent: css({ bg: 'enjeu.sy' }),
-    tint: css({ bg: 'enjeu.sy.light' }),
+    accent: css({ bg: 'challenge.sy' }),
+    tint: css({ bg: 'challenge.sy.light' }),
   },
   {
     key: 'ai',
     label: 'Revenue AI',
-    accent: css({ bg: 'enjeu.ai' }),
-    tint: css({ bg: 'enjeu.ai.light' }),
+    accent: css({ bg: 'challenge.ai' }),
+    tint: css({ bg: 'challenge.ai.light' }),
   },
 ];
 
@@ -159,16 +159,16 @@ export function V2TokensSection() {
         </ul>
       </ShowcaseSection>
 
-      <ShowcaseSection title="Enjeu colours">
+      <ShowcaseSection title="Challenge colours">
         <ul className={grid({ columns: { base: 2, md: 6 }, gap: '4' })}>
-          {enjeux.map((item) => (
+          {challenges.map((item) => (
             <li key={item.key} className={tile}>
               <span className={css({ display: 'flex', gap: '2' })}>
                 <span className={cx(swatch, item.accent)} />
                 <span className={cx(swatch, item.tint)} />
               </span>
               <span className={caption}>
-                enjeu.{item.key} · {item.label}
+                challenge.{item.key} · {item.label}
               </span>
             </li>
           ))}

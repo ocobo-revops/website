@@ -99,11 +99,11 @@ describe('NavbarBar', () => {
     expect(method).toHaveAttribute('aria-expanded', 'false');
   });
 
-  it('renders the enjeu slot before the production menu', async () => {
+  it('renders the challenge slot before the production menu', async () => {
     const user = userEvent.setup();
     const leadingItems: NavItem[] = [
       {
-        key: 'enjeux',
+        key: 'challenges',
         label: 'Vos enjeux',
         path: null,
         dropdown: [
@@ -119,14 +119,15 @@ describe('NavbarBar', () => {
     ];
     render(<NavbarBar scrolled={false} leadingItems={leadingItems} />);
     const nav = mainNav();
-    const enjeux = within(nav).getByRole('button', { name: 'Vos enjeux' });
+    const challenges = within(nav).getByRole('button', { name: 'Vos enjeux' });
     const offer = within(nav).getByRole('link', { name: 'Notre Offre' });
 
     expect(
-      enjeux.compareDocumentPosition(offer) & Node.DOCUMENT_POSITION_FOLLOWING,
+      challenges.compareDocumentPosition(offer) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
 
-    await user.click(enjeux);
+    await user.click(challenges);
     expect(
       within(nav).getByRole('link', { name: 'Revenue Process' }),
     ).toHaveAttribute('href', '/fr/enjeux/rp');

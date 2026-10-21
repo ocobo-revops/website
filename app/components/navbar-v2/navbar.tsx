@@ -6,7 +6,7 @@ import { NavbarBar } from './navbar-bar';
 import { useScrolled } from './use-scrolled';
 
 type NavbarV2Props = {
-  /** Enjeu entry slot (#237), see `NavbarBar`. */
+  /** Challenge entry slot (#237), see `NavbarBar`. */
   leadingItems?: NavItem[];
 };
 

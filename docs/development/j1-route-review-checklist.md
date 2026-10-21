@@ -138,7 +138,7 @@ Keep their style; not locale-prefixed, so FR views only.
 
 | Change | Views checked | Status |
 |---|---|---|
-| New v2 tokens block: type scale, greys, enjeu colours, AI gradients, radii, shadows, font sizes, letter spacings, easing | | |
+| New v2 tokens block: type scale, greys, challenge colours, AI gradients, radii, shadows, font sizes, letter spacings, easing | | |
 | `gradients.ai-text` title readable on white | | |
 | Coral border sample now renders (#217) | | |
 | Form section: the Select label now targets the Select trigger (#217) | | |
