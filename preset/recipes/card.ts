@@ -11,9 +11,9 @@ export const card = defineRecipe({
   variants: {
     padding: {
       sm: { p: '4' },
-      md: { p: '6' },
-      lg: { p: '8' },
-      xl: { p: { base: '8', md: '12' } },
+      md: { p: '7' },
+      lg: { p: { base: '7', md: '10' } },
+      xl: { p: { base: '7', md: '12' } },
     },
     radius: {
       md: { borderRadius: '2xl' },
@@ -27,15 +27,15 @@ export const card = defineRecipe({
       true: {
         borderWidth: '1px',
         borderStyle: 'solid',
-        borderColor: 'gray.100',
+        borderColor: 'line',
       },
       false: {},
     },
     shadow: {
       none: { boxShadow: 'none' },
-      sm: { boxShadow: 'sm' },
-      card: { boxShadow: 'card' },
-      elevated: { boxShadow: 'xl' },
+      sm: { boxShadow: 'rest' },
+      card: { boxShadow: 'rest' },
+      elevated: { boxShadow: 'hover' },
     },
   },
   defaultVariants: {

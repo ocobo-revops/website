@@ -1,61 +1,42 @@
 import { defineTextStyles } from '@pandacss/dev';
 
-export const textStyles = defineTextStyles({
-  heading1: {
-    value: {
-      fontFamily: 'header',
-      fontWeight: 400,
-      fontSize: { base: '1.625rem', lg: '2.75rem', '2xl': '3.25rem' },
-      lineHeight: 1.1,
-    },
-  },
+// Legacy text styles mapped onto the v2 type scale (ADR 0002). New code uses
+// the text() recipe instead.
+const h2 = {
+  fontFamily: 'display',
+  fontWeight: 900,
+  fontSize: 'h2',
+  lineHeight: 'heading',
+  letterSpacing: 'tight',
+};
 
-  heading2: {
-    value: {
-      fontFamily: 'header',
-      fontWeight: 400,
-      fontSize: { base: '1.125rem', lg: '1.8rem', '2xl': '2rem' },
-      lineHeight: 1.2,
-    },
-  },
-  heading3: {
-    value: {
-      fontFamily: 'body',
-      fontWeight: 700,
-      fontSize: { base: '1.25rem', lg: '1.25rem', '2xl': '1.375rem' },
-      lineHeight: 1.3,
-    },
-  },
+const h3 = {
+  fontFamily: 'body',
+  fontWeight: 700,
+  fontSize: 'h3',
+  lineHeight: 'snug',
+};
+
+const body = {
+  fontFamily: 'body',
+  fontWeight: 400,
+  fontSize: 'body',
+  lineHeight: 'body',
+};
+
+export const textStyles = defineTextStyles({
+  heading1: { value: h2 },
+  heading2: { value: h2 },
+  heading3: { value: h3 },
   small: {
     value: {
       fontFamily: 'body',
-      fontWeight: 400,
-      fontSize: { base: '0.75rem', lg: '0.875rem', '2xl': '1rem' },
-      lineHeight: 1.3,
+      fontWeight: 500,
+      fontSize: 'sm',
+      lineHeight: 'normal',
     },
   },
-  medium: {
-    value: {
-      fontFamily: 'body',
-      fontWeight: 400,
-      fontSize: { base: '1rem', lg: '1.125rem', '2xl': '1.25rem' },
-      lineHeight: 1.3,
-    },
-  },
-  large: {
-    value: {
-      fontFamily: 'body',
-      fontWeight: 400,
-      fontSize: { base: '1rem', lg: '1.25rem', '2xl': '1.375rem' },
-      lineHeight: 1.3,
-    },
-  },
-  nav: {
-    value: {
-      fontFamily: 'body',
-      fontWeight: 400,
-      fontSize: '1rem',
-      lineHeight: 1,
-    },
-  },
+  medium: { value: body },
+  large: { value: body },
+  nav: { value: { ...body, lineHeight: 1 } },
 });
