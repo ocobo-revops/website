@@ -15,6 +15,7 @@ import { styled } from '@ocobo/styled-system/jsx';
 import { grid, hstack, vstack } from '@ocobo/styled-system/patterns';
 import { button, card } from '@ocobo/styled-system/recipes';
 
+import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
 import { Container } from '~/components/ui/Container';
 import { Illustration } from '~/components/ui/Illustration';
 import { Input } from '~/components/ui/Input';
@@ -106,6 +107,7 @@ export default function Index() {
       >
         <h1 className={css({ textStyle: 'heading1' })}>Design System</h1>
       </header>
+      <V2TokensSection />
       <Section>
         <h2 className={sectionTitle}>Logo</h2>
         <Logocobo width="300" />
