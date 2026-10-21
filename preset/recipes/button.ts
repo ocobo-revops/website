@@ -52,25 +52,25 @@ export const button = defineRecipe({
         },
       },
       solid: {
-        bg: 'dark',
-        color: 'white',
+        bg: 'foreground',
+        color: 'background',
         _hover: {
-          bg: 'dark/80',
+          bg: 'foreground/80',
         },
         _focusVisible: {
-          outlineColor: 'white',
+          outlineColor: 'background',
         },
       },
       outline: {
         bg: 'transparent',
-        color: 'dark',
-        borderColor: 'dark',
+        color: 'foreground',
+        borderColor: 'foreground',
         _hover: {
-          bg: 'dark',
-          color: 'white',
+          bg: 'foreground',
+          color: 'background',
         },
         _focusVisible: {
-          outlineColor: 'dark',
+          outlineColor: 'foreground',
         },
       },
       white: {
