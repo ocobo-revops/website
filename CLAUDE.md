@@ -32,7 +32,11 @@ Variants (`check:fix`, `check:error`, `build:analyze`, `start`, etc.) live in `p
 
 After recipe edits, also run the raw Panda CLI to rebuild atomic CSS: `pnpm panda cssgen --clean`.
 
-**Before declaring work done**: `pnpm check && pnpm typecheck` must be green. Run tests when logic changed.
+**Before declaring work done**:
+
+- `pnpm check && pnpm typecheck` must be green. Run tests when logic changed.
+- Run a code review of the branch diff (for example a code-reviewer sub-agent) and fix its findings before marking the PR ready.
+- If the PR changes a shared recipe or component, list in its description the pages that are not being redesigned and that it can alter (offer, blog, customer stories, legal, contact), to review on the Vercel preview ([ADR 0002](docs/adr/0002-design-system-v2.md)). If it changes `preset/`, rerun [the J1 route checklist](docs/development/j1-route-review-checklist.md).
 
 ---
 
