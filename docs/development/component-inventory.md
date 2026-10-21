@@ -170,6 +170,9 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **Needs** | `Needs.tsx` | Needs assessment | Reusable |
 | **Team** | `Team.tsx` | Team presentation | Reusable |
 
+### Design system showcase (`app/components/design-system/`)
+One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`). The route `app/routes/design-system.tsx` only lists them in order. A new showcase section is a new module plus one line in the route.
+
 ## Layout Components (Root Level)
 
 ### Application Layout
