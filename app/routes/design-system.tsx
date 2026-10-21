@@ -14,6 +14,7 @@ import { IconsSection } from '~/components/design-system/icons-section';
 import { IllustrationsSection } from '~/components/design-system/illustrations-section';
 import { LogoSection } from '~/components/design-system/logo-section';
 import { MetaPillSection } from '~/components/design-system/meta-pill-section';
+import { TooltipSection } from '~/components/design-system/tooltip-section';
 import { TypographySection } from '~/components/design-system/typography-section';
 import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
 import { Container } from '~/components/ui/Container';
@@ -55,6 +56,7 @@ export default function Index() {
       <CardRecipeSection />
       <FlipCardSection />
       <GridSection />
+      <TooltipSection />
     </Container>
   );
 }
