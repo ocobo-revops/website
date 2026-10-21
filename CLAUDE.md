@@ -271,4 +271,4 @@ Read at most one or two relevant docs per task.
 - Calling content `sources/` modules directly — go through `app/modules/content/api.ts`.
 - Inline DS violations (`fontFamily: 'display'`, raw `maxW: '7xl'` containers, raw `border + rounded + shadow`) — reviewers will reject under ADR-0001.
 - Skipping `pnpm typecheck` because `pnpm check` passed — Biome doesn't typecheck.
-- Squash-merging PRs from feature lanes — breaks GitButler integration detection. Default `--merge`, not `--squash` or `--rebase`, unless asked.
+- Squash-merging PRs: it collapses the branch's atomic commits into one. Default `--merge`, not `--squash` or `--rebase`, unless asked.
