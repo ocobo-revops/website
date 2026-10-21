@@ -13,6 +13,7 @@ import { IllustrationsSection } from '~/components/design-system/illustrations-s
 import { LogoSection } from '~/components/design-system/logo-section';
 import { MetaPillSection } from '~/components/design-system/meta-pill-section';
 import { TypographySection } from '~/components/design-system/typography-section';
+import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
 import { Container } from '~/components/ui/Container';
 import { getMetaTags } from '~/utils/metatags';
 
@@ -38,6 +39,7 @@ export default function Index() {
       >
         <h1 className={css({ textStyle: 'heading1' })}>Design System</h1>
       </header>
+      <V2TokensSection />
       <LogoSection />
       <TypographySection />
       <ColorsSection />

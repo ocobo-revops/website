@@ -19,11 +19,18 @@ export const tokens = defineTokens({
   aspectRatios,
   borders,
 
+  // v2 scale (ADR 0002): S 8px, M 16px, L 24px and full. Every older name
+  // keeps working and takes the closest v2 value.
   radii: {
-    full: { value: '9999px' },
+    none: { value: '0' },
+    sm: { value: '0.5rem' },
+    md: { value: '0.5rem' },
+    lg: { value: '0.5rem' },
     radius: { value: '0.5rem' },
+    xl: { value: '1rem' },
     '2xl': { value: '1rem' },
     '3xl': { value: '1.5rem' },
+    full: { value: '9999px' },
   },
   fontWeights,
   lineHeights,
@@ -31,43 +38,38 @@ export const tokens = defineTokens({
   letterSpacings,
   fontSizes,
   colors,
+  // v2 scale (ADR 0002): rest, hover and window. Every older name keeps
+  // working and points at the closest v2 shadow. `offset` is the one named
+  // exception; `outline` and `ring` are focus rings, not elevation.
   shadows: {
-    base: { value: '0px 4px 50px 0px rgba(0, 0, 0, 0.12)' },
-    inner: { value: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)' },
-    outline: { value: '0 0 0 3px rgba(66, 153, 225, 0.5)' },
-    sm: {
-      value: [
-        '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-        '0 1px 2px -1px rgb(0 0 0 / 0.1)',
-      ],
-    },
-    md: {
-      value: [
-        '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-        '0 2px 4px -2px rgb(0 0 0 / 0.1)',
-      ],
-    },
-    lg: {
-      value: [
-        '0 10px 15px -3px rgb(0 0 0 / 0.1)',
-        '0 4px 6px -4px rgb(0 0 0 / 0.1)',
-      ],
-    },
-    xl: {
-      value: [
-        '0 20px 25px -5px rgb(0 0 0 / 0.1)',
-        '0 8px 10px -6px rgb(0 0 0 / 0.1)',
-      ],
-    },
-    '2xl': { value: '0 25px 50px -12px rgb(0 0 0 / 0.25)' },
+    rest: { value: '0 15px 40px -20px rgba(33, 35, 35, 0.12)' },
+    hover: { value: '0 22px 44px -24px rgba(33, 35, 35, 0.24)' },
+    window: { value: '0 30px 60px -26px rgba(33, 35, 35, 0.45)' },
+    base: { value: '{shadows.rest}' },
+    sm: { value: '{shadows.rest}' },
+    md: { value: '{shadows.rest}' },
+    card: { value: '{shadows.rest}' },
+    soft: { value: '{shadows.rest}' },
+    lg: { value: '{shadows.hover}' },
+    xl: { value: '{shadows.hover}' },
+    'soft-md': { value: '{shadows.hover}' },
+    'soft-lg': { value: '{shadows.hover}' },
+    '2xl': { value: '{shadows.window}' },
+    dark: { value: '{shadows.window}' },
+    inner: { value: 'none' },
     none: { value: 'none' },
-    soft: { value: '0 8px 20px -10px rgba(0,0,0,0.08)' },
-    'soft-md': { value: '0 15px 40px -10px rgba(0,0,0,0.12)' },
-    'soft-lg': { value: '0 25px 60px -15px rgba(0,0,0,0.15)' },
-    dark: { value: '0 30px 100px -20px rgba(0,0,0,0.5)' },
-    card: { value: '0 15px 50px -15px rgba(0,0,0,0.05)' },
+    outline: { value: '0 0 0 3px rgba(66, 153, 225, 0.5)' },
     ring: { value: '0 0 0 10px #fcfcfc' },
     offset: { value: '8px 8px 0px 0px rgba(33,35,35,1)' },
+  },
+  // AI topics only (ADR 0002). `ai-text` is darkened so each end reaches 3:1
+  // on white; gradient text is allowed at display and H2 sizes only.
+  gradients: {
+    ai: { value: 'linear-gradient(90deg, #FE9C87, #F1CF25)' },
+    'ai-text': { value: 'linear-gradient(90deg, #F16C4E, #B88F00)' },
+  },
+  easings: {
+    smooth: { value: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
   },
   blurs: {
     base: { value: '8px' },

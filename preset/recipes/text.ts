@@ -5,86 +5,109 @@ export const text = defineRecipe({
   description: 'Typography component styles',
   base: {},
   variants: {
+    // v2 type scale (ADR 0002): six sizes. Kept names are display-xl,
+    // display-lg, display-md-bold, body, small and label; every other name
+    // takes the value of its size and is retired page by page.
     variant: {
-      'display-2xl': {
-        fontFamily: 'display',
-        fontSize: { base: '4xl', md: '6xl' },
-        fontWeight: 'black',
-        letterSpacing: 'tight',
-      },
+      // Display
       'display-xl': {
         fontFamily: 'display',
-        fontSize: { base: '5xl', md: '6xl' },
-        fontWeight: 'bold',
-        lineHeight: '0.95',
+        fontSize: 'display',
+        fontWeight: 'black',
+        lineHeight: 'none',
         letterSpacing: 'tight',
       },
+      'display-2xl': {
+        fontFamily: 'display',
+        fontSize: 'display',
+        fontWeight: 'black',
+        lineHeight: 'none',
+        letterSpacing: 'tight',
+      },
+      // H2
       'display-lg': {
         fontFamily: 'display',
-        fontSize: { base: '4xl', md: '5xl' },
+        fontSize: 'h2',
         fontWeight: 'black',
+        lineHeight: 'heading',
         letterSpacing: 'tight',
       },
       'display-lg-bold': {
         fontFamily: 'display',
-        fontSize: { base: '4xl', md: '5xl' },
-        fontWeight: 'bold',
+        fontSize: 'h2',
+        fontWeight: 'black',
+        lineHeight: 'heading',
         letterSpacing: 'tight',
       },
       'display-section': {
         fontFamily: 'display',
-        fontSize: { base: '3xl', md: '5xl' },
-        fontWeight: 'bold',
-        lineHeight: 'tight',
+        fontSize: 'h2',
+        fontWeight: 'black',
+        lineHeight: 'heading',
+        letterSpacing: 'tight',
       },
       'display-sm': {
         fontFamily: 'display',
-        fontSize: { base: '3xl', md: '4xl' },
+        fontSize: 'h2',
         fontWeight: 'black',
+        lineHeight: 'heading',
         letterSpacing: 'tight',
-      },
-      'display-md': {
-        fontFamily: 'display',
-        fontSize: '2xl',
-        fontWeight: 'black',
-      },
-      'display-md-bold': {
-        fontFamily: 'display',
-        fontSize: '2xl',
-        fontWeight: 'bold',
       },
       'display-heading': {
         fontFamily: 'display',
-        fontSize: { base: '2xl', md: '3xl' },
+        fontSize: 'h2',
+        fontWeight: 'black',
+        lineHeight: 'heading',
+        letterSpacing: 'tight',
+      },
+      // H3
+      'display-md-bold': {
+        fontFamily: 'body',
+        fontSize: 'h3',
         fontWeight: 'bold',
+        lineHeight: 'snug',
+      },
+      'display-md': {
+        fontFamily: 'body',
+        fontSize: 'h3',
+        fontWeight: 'bold',
+        lineHeight: 'snug',
       },
       'display-card': {
-        fontFamily: 'display',
-        fontSize: 'xl',
+        fontFamily: 'body',
+        fontSize: 'h3',
         fontWeight: 'bold',
+        lineHeight: 'snug',
       },
-      'display-label': {
-        fontFamily: 'display',
-        fontSize: 'xs',
-        fontWeight: 'black',
-        letterSpacing: 'widest',
-        textTransform: 'uppercase',
+      // Body
+      body: {
+        fontSize: 'body',
+        fontWeight: 'normal',
+        lineHeight: 'body',
       },
       subtitle: {
-        fontSize: 'xl',
-        lineHeight: 'relaxed',
-        fontWeight: 'medium',
+        fontSize: 'body',
+        fontWeight: 'normal',
+        lineHeight: 'body',
       },
-      body: {
-        fontSize: 'base',
-        lineHeight: 'relaxed',
+      // Small
+      small: {
+        fontSize: 'sm',
         fontWeight: 'medium',
+        lineHeight: 'normal',
       },
+      // Label
       label: {
-        fontSize: 'xs',
-        letterSpacing: '0.3em',
+        fontSize: 'label',
+        fontWeight: 'bold',
+        letterSpacing: 'label',
         textTransform: 'uppercase',
-        fontWeight: 'semibold',
+      },
+      'display-label': {
+        fontSize: 'label',
+        fontWeight: 'bold',
+        letterSpacing: 'label',
+        textTransform: 'uppercase',
       },
     },
     color: {

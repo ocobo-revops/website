@@ -1,9 +1,11 @@
 # ADR 0001 — Design system adoption policy
 
 **Date:** 2026-05-05
-**Status:** Accepted
+**Status:** Accepted, amended by [ADR 0002](0002-design-system-v2.md)
 **Deciders:** Jerome Boileux
 **Related issues:** #81, #86–#94
+
+> **Amended by ADR 0002 (design system v2).** The four rules below still hold. Four points are outdated: recipe values now follow the v2 scale (the 96px section example is now 112px), new recipes and variants extend the "six live recipes" inventory, the text link returns as a `button` variant and not as the deleted `link` recipe, and raw values are refused at type check (#217) instead of by review alone. Read ADR 0002 for current values.
 
 ---
 

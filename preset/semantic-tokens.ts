@@ -102,17 +102,40 @@ export const semanticTokens = defineSemanticTokens({
         _dark: '{colors.gray}',
       },
     },
+    // One colour per enjeu (ADR 0002), keyed like the posts frontmatter.
+    // DEFAULT is the accent, light the tinted background. Revenue AI also
+    // uses `gradients.ai` for decoration.
+    enjeu: {
+      rp: {
+        DEFAULT: { value: '{colors.coral}' },
+        light: { value: '{colors.coral.light}' },
+      },
+      se: {
+        DEFAULT: { value: '{colors.mint}' },
+        light: { value: '{colors.mint.light}' },
+      },
+      sc: {
+        DEFAULT: { value: '{colors.yellow}' },
+        light: { value: '{colors.yellow.light}' },
+      },
+      cx: {
+        DEFAULT: { value: '{colors.sky}' },
+        light: { value: '{colors.sky.light}' },
+      },
+      sy: {
+        DEFAULT: { value: '#767676' },
+        light: { value: '{colors.gray.light}' },
+      },
+      ai: {
+        DEFAULT: { value: '{colors.coral}' },
+        light: { value: '{colors.coral.light}' },
+      },
+    },
   },
   borders: {
     base: { value: '1px solid {colors.gray.light}' },
     input: { value: '1px solid {colors.input}' },
     destructive: { value: '1px solid {colors.destructive}' },
-  },
-  radii: {
-    xl: { value: `calc({radii.radius} + 4px)` },
-    lg: { value: `{radii.radius}` },
-    md: { value: `calc({radii.radius} - 2px)` },
-    sm: { value: 'calc({radii.radius} - 4px)' },
   },
   animations: {
     'accordion-down': { value: 'accordion-down 0.2s ease-out' },

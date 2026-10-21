@@ -31,21 +31,27 @@ From J2 to J5, a change to a shared recipe can alter a page that is not being re
 
 The v2 scale has five sizes: Display (Bermia 900, 64 to 72px), H2 (Bermia 900, 34 to 48px, one size), H3 (Bornia 700, 24px), Body (Bornia 400, 17px, line height 1.6) and Small (Bornia 500, 14px). The existing variants keep their names and call sites; each takes the values of the closest v2 size. Several names therefore share one size. We rejected new role-named variants, which would mean migrating about 120 call sites.
 
-J1 also picks one existing name per v2 size as the name to keep. Redesigned pages use only those five names, and J6 deletes the other names and migrates their remaining call sites, mostly on the offer page, the blog and stories. We rejected keeping the aliases for good, which leaves a porting agent five names for one style.
+J1 also picks one existing name per v2 size as the name to keep, plus `label` for eyebrows and tags. That makes six kept names: `display-xl` (Display), `display-lg` (H2), `display-md-bold` (H3), `body` (Body), `small` (Small) and `label`. Each was the name with the most call sites for its size. No existing variant was close to Small (every body-size name sat at 16px or more), so `small` is a new variant with no call sites yet. Redesigned pages use only those six names, and J6 deletes the other names and migrates their remaining call sites, mostly on the offer page, the blog and stories. We rejected keeping the aliases for good, which leaves a porting agent five names for one style. The full mapping is in "J1 mapping" below.
 
 The legacy `textStyles` (`heading1` to `heading3`, `large`, `medium`, `small`, `nav`, about twenty call sites) follow the same rule; `heading2` (18 to 32px, weight 400) takes the v2 H2 values.
 
+The `label` variant keeps its .3em letter spacing, which is also the mockup pill's. The mockup eyebrow and tag use .16em. J1 keeps .3em so existing labels do not change, and adds the `tag` letter spacing (.16em) for the redesign. The `Eyebrow` component work (#221) settles which one eyebrows use.
+
 The `gray` scale becomes zinc throughout. `gray.DEFAULT` and `gray.light` still hold the default Tailwind greys (#767676, #F5F5F5); they take #71717A and #F4F4F5. The zinc steps the mockup uses without a token (#E4E4E7, #D4D4D8, #3F3F46) become `gray.200`, `gray.300` and `gray.700`.
 
-Visible effects across the site: body text drops from weight 500 to 400, card titles (`display-card`) move from Bermia to Bornia, and the muted grey changes from #767676 to #71717A.
+Visible effects across the site: body text drops from weight 500 to 400 and grows from 16 to 17px, every H3 name (`display-md`, `display-md-bold`, `display-card`) moves from Bermia to Bornia, `display-xl` moves from weight 700 to 900, and the muted grey changes from #767676 to #71717A.
 
 ### The `section()` and `card()` defaults take v2 values in J1
 
-The `section` recipe's default spacing goes from 96px to the mockup's 112px, and its `md` size becomes the 80px compact spacing. The `card` recipe takes the four v2 radii and the mockup card padding. Every page gets longer by about 16px per section, reviewed with the type changes. We rejected changing the recipe defaults page by page, which keeps two spacing rhythms until the last redesign.
+The `section` recipe's default spacing goes from 96px to the mockup's 112px from 1024px up, and its `md` size becomes the 80px compact spacing. Both follow the mockup's mobile rules: 80px from 768px, 64px below. The `card` recipe takes the v2 radii, the mockup card padding (28px, and 40 or 48px from 768px for the large sizes), the `line` hairline border and the rest shadow. Every page gets longer by about 16px per section, reviewed with the type changes. We rejected changing the recipe defaults page by page, which keeps two spacing rhythms until the last redesign.
 
 ### Four radii and three shadows, behind the existing token names
 
-The v2 scale has four radii plus `full`, and three shadows: rest, hover and window. Production uses eight radius tokens and nine shadow tokens; they keep their names and take the closest v2 value, as the `text()` variants do. When a mockup page is ported, any radius or shadow outside the scale snaps to the nearest token: the mockup writes about 910 radii inline, about 280 of them off its own scale, and those values are export noise. An element that loses its character once snapped gets one more named token, never a raw value. We rejected widening the scale to every value the mockup uses, which drops the rule, and applying the scale to new components only, which keeps two scales.
+The v2 scale has four radius values: S 8px, M 16px, L 24px and `full`, and three shadows: rest, hover and window. Production uses eight radius tokens and nine shadow tokens; they keep their names and take the closest v2 value, as the `text()` variants do. When a mockup page is ported, any radius or shadow outside the scale snaps to the nearest token: the mockup writes about 910 radii inline, about 280 of them off its own scale, and those values are export noise. An element that loses its character once snapped gets one more named token, never a raw value.
+
+Two names had no obvious v2 value. `xl` (12px) sits halfway between S and M; it takes M, because most of its uses are cards and v2 cards are M. The `offset` shadow (a hard 8px offset with no blur, on the offer page and stories) has no close v2 shadow and loses its character once snapped, so it stays as it is: it is the one named exception. `inner` has no v2 inset and becomes `none`. The `outline` and `ring` shadows are focus rings, not elevation, and keep their values.
+
+We rejected widening the scale to every value the mockup uses, which drops the rule, and applying the scale to new components only, which keeps two scales.
 
 ### The text link is a `button` variant
 
@@ -63,11 +69,11 @@ A `flipCard` slot recipe carries the flip mechanism and its accessibility once, 
 
 The mockup writes its coral to yellow gradient inline 75 times, in 14 variants. Two tokens remain: `gradients.ai` for backgrounds and decoration, and `gradients.ai-text` for gradient text. Every other variant (angles, transparent tints, conic spinner, radial halo) snaps to one of them. Only AI content uses them; review checks this, since no tool can tell what a page is about. We rejected a single token, which leaves gradient text unreadable on light backgrounds, and one token per effect, which widens the scale for decoration.
 
-Neither the mockup gradient nor its darkened text version reaches 3:1 on white at either end (2.0 to 2.8 for coral, 1.5 to 2.2 for yellow). `gradients.ai-text` is therefore darkened until each end reaches 3:1 on white, and gradient text is allowed only at display and H2 sizes. On dark backgrounds `gradients.ai` passes as it is. We rejected keeping the mockup values, which breaks the accessibility rule below, and dropping gradient text on light backgrounds, which removes a recurring brand element.
+Neither the mockup gradient nor its darkened text version reaches 3:1 on white at either end (2.0 to 2.8 for coral, 1.5 to 2.2 for yellow). `gradients.ai-text` is therefore darkened until each end reaches 3:1 on white (#F16C4E at 3.00:1, #B88F00 at 3.01:1, from #FE9C87 and #F1CF25), and gradient text is allowed only at display and H2 sizes. On dark backgrounds `gradients.ai` passes as it is. We rejected keeping the mockup values, which breaks the accessibility rule below, and dropping gradient text on light backgrounds, which removes a recurring brand element.
 
 ### Enjeu colours mark identity; coral and yellow keep fixed roles
 
-Each enjeu has one colour, defined once in the website as a semantic token with its light tint: Sales Experience mint, Customer Experience sky, Revenue Performance coral, Sales Compensation yellow, Revenue Systems grey (shade to be confirmed by Ocobo), Revenue AI the AI gradient. It marks identity only: pills, workstream card backs, expert labels, the bow tie. Symptom bullets stay coral and the diagnostic block stays yellow on every enjeu page, as the mockup does on five pages out of six: coral stands for the problem, yellow for Ocobo's call to action. Revenue AI uses coral, the start of its gradient, wherever a solid colour is needed (pills, rings, tints). We rejected colouring every element by enjeu, which would make the Revenue Systems diagnostic grey and would need a solid stand-in for the gradient everywhere.
+Each enjeu has one colour, defined once in the website as a semantic token with its light tint: Sales Experience mint, Customer Experience sky, Revenue Performance coral, Sales Compensation yellow, Revenue Systems grey (shade to be confirmed by Ocobo), Revenue AI the AI gradient. It marks identity only: pills, workstream card backs, expert labels, the bow tie. Symptom bullets stay coral and the diagnostic block stays yellow on every enjeu page, as the mockup does on five pages out of six: coral stands for the problem, yellow for Ocobo's call to action. Revenue AI uses coral, the start of its gradient, wherever a solid colour is needed (pills, rings, tints). The tokens are `enjeu.<key>` and `enjeu.<key>.light`, keyed like the posts frontmatter: `rp`, `se`, `sc`, `cx`, `sy`, `ai`. Until Ocobo confirms the Revenue Systems shade, `enjeu.sy` is the mockup's #767676 on the `gray.light` tint. We rejected colouring every element by enjeu, which would make the Revenue Systems diagnostic grey and would need a solid stand-in for the gradient everywhere.
 
 ### Raw values are refused at type check
 
@@ -82,11 +88,60 @@ FlipCard, PersonCard, Tooltip and Tabs are done only when they work with a keybo
 - An animation that plays on its own has a pause control.
 - Copy that says "Survolez" (hover) gets a wording that also fits touch and keyboard.
 
+### J1 mapping
+
+The tables below record the value each existing name takes in J1. The kept names are in bold.
+
+| `text()` variant | v2 size | Values |
+|---|---|---|
+| **`display-xl`**, `display-2xl` | Display | Bermia 900, `fontSizes.display` (44 to 72px), line height 1 |
+| **`display-lg`**, `display-lg-bold`, `display-section`, `display-sm`, `display-heading` | H2 | Bermia 900, `fontSizes.h2` (34 to 48px), line height 1.05 |
+| **`display-md-bold`**, `display-md`, `display-card` | H3 | Bornia 700, `fontSizes.h3` (24px) |
+| **`body`**, `subtitle` | Body | Bornia 400, `fontSizes.body` (17px), line height 1.6 |
+| **`small`** (new) | Small | Bornia 500, `fontSizes.sm` (14px) |
+| **`label`**, `display-label` | Label | 700, `fontSizes.label` (11px), `letterSpacings.label` (.3em), uppercase |
+
+`display-heading` (30px on desktop) and `display-sm` (36px) map to H2, because they sit closer to 34px than to 24px. The `textStyles` follow: `heading1` and `heading2` take H2, `heading3` takes H3, `large` and `medium` take Body, `small` takes Small, and `nav` takes Body with line height 1.
+
+| Radius token | Before | v2 |
+|---|---|---|
+| `sm`, `md`, `lg`, `radius` | 4, 6, 8, 8px | S 8px |
+| `xl`, `2xl` | 12, 16px | M 16px |
+| `3xl` | 24px | L 24px |
+| `full` | 9999px | unchanged |
+| `none` (new) | not a token, so `rounded: 'none'` wrote invalid CSS | 0 |
+
+Redesigned pages use `lg`, `2xl`, `3xl` and `full`.
+
+| Shadow token | v2 |
+|---|---|
+| `rest` (new), `base`, `sm`, `md`, `card`, `soft` | `0 15px 40px -20px rgba(33,35,35,.12)` |
+| `hover` (new), `lg`, `xl`, `soft-md`, `soft-lg` | `0 22px 44px -24px rgba(33,35,35,.24)` |
+| `window` (new), `2xl`, `dark` | `0 30px 60px -26px rgba(33,35,35,.45)` |
+| `inner` | `none` |
+| `offset`, `outline`, `ring` | unchanged |
+
+Redesigned pages use `rest`, `hover` and `window`.
+
+| Recipe variant | v2 |
+|---|---|
+| `section` `padding: lg` (default) | 64px, 80px from 768px, 112px from 1024px |
+| `section` `padding: md` | 64px, 80px from 768px |
+| `section` `padding: sm` | unchanged (48px, 64px from 768px) |
+| `card` `padding: md` (default) | 28px |
+| `card` `padding: lg` | 28px, 40px from 768px |
+| `card` `padding: xl` | 28px, 48px from 768px |
+| `card` border | `colors.line` (#ECECEE) |
+| `card` `shadow: sm` (default), `card` | `rest` |
+| `card` `shadow: elevated` | `hover` |
+
+New tokens without a v2 role in the existing names: `fontSizes.caption` (13px) and `fontSizes.micro` (10px), `letterSpacings.tag` (.16em) and `letterSpacings.chip` (.08em), `lineHeights.heading` (1.05) and `lineHeights.body` (1.6), `easings.smooth`.
+
 ---
 
 ## Consequences
 
-- J1 is one change to `preset/` that every page sees: v2 values for the `text()` variants, `textStyles`, `section()`, `card()`, radii, shadows and the `gray` scale, plus the five kept variant names.
+- J1 is one change to `preset/` that every page sees: v2 values for the `text()` variants, `textStyles`, `section()`, `card()`, radii, shadows and the `gray` scale, plus the six kept variant names.
 - New tokens: `colors.line`, `gray.200`, `gray.300`, `gray.700`, `gradients.ai`, `gradients.ai-text`, three shadows, enjeu semantic tokens with their light tints, font sizes 24, 17, 13, 11 and 10px, letter spacings .3em, .16em and .08em, and the `cubic-bezier(.2,.8,.2,1)` easing.
 - Recipe changes: `button` gains `secondary` and `link`; `badge` gains an `ai` variant and an `xs` size; a new `flipCard` slot recipe with a `person` variant; a new `Eyebrow` component.
 - `strictTokens` is on and `pnpm typecheck` is a required CI check from J1. The about 240 raw values in `app/` are cleaned up in the same step.

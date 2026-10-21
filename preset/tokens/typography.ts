@@ -16,6 +16,14 @@ export const fontSizes: Tokens['fontSizes'] = {
   '7xl': { value: '4.5rem' },
   '8xl': { value: '6rem' },
   '9xl': { value: '8rem' },
+  // v2 type scale (ADR 0002). Display and H2 are fluid; Small is `sm`.
+  display: { value: 'clamp(2.75rem, 5vw, 4.5rem)' },
+  h2: { value: 'clamp(2.125rem, 3.6vw, 3rem)' },
+  h3: { value: '1.5rem' },
+  body: { value: '1.0625rem' },
+  caption: { value: '0.8125rem' },
+  label: { value: '0.6875rem' },
+  micro: { value: '0.625rem' },
 };
 
 export const fontWeights: Tokens['fontWeights'] = {
@@ -37,6 +45,10 @@ export const letterSpacings: Tokens['letterSpacings'] = {
   wide: { value: '0.025em' },
   wider: { value: '0.05em' },
   widest: { value: '0.1em' },
+  // v2 uppercase tracking: label and pill, tag, small chip
+  label: { value: '0.3em' },
+  tag: { value: '0.16em' },
+  chip: { value: '0.08em' },
 };
 
 export const lineHeights: Tokens['lineHeights'] = {
@@ -56,6 +68,9 @@ export const lineHeights: Tokens['lineHeights'] = {
   '4xl': { value: '1.1' },
   '5xl': { value: '1' },
   '6xl': { value: '1' },
+  // v2 type scale: H2 and Body
+  heading: { value: '1.05' },
+  body: { value: '1.6' },
 };
 
 export const fonts: Tokens['fonts'] = {

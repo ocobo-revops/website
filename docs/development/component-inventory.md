@@ -256,10 +256,26 @@ Active Panda CSS recipes — use these before reaching for inline `css()`.
 |--------|------|-------------|
 | `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label — colour variants (`yellow`, `mint`, `sky`, `coral`), sizes `sm`/`lg` |
 | `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles — variants (`primary`, `solid`, `outline`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
-| `card` | [`preset/recipes/card.ts`](../../preset/recipes/card.ts) | Bordered card surface — tone `default`/`tinted`, padding `md`/`lg`, radius `md`/`lg`, border toggle |
+| `card` | [`preset/recipes/card.ts`](../../preset/recipes/card.ts) | Bordered card surface (v2: `line` border, 28px padding, `rest` shadow). Tone `white`/`tinted`, padding `sm`/`md`/`lg`/`xl`, radius `md` (M 16px) / `lg` (L 24px), shadow `none`/`sm`/`card`/`elevated`, border toggle |
 | `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
-| `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background + vertical padding — `bg` tokens, padding `sm`/`md`/`lg` |
-| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | Typography scale — `display-2xl`, `display-lg`, `display-lg-bold`, `display-section`, `display-sm`, `display-md`, `display-md-bold`, `display-heading`, `display-card`, `display-label`, `subtitle`, `body`, `label` variants with colour tokens. `display-label`: xs display-font uppercase label (track badges, caption badges) |
+| `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background and vertical padding: `bg` tokens, padding `sm`, `md` (v2 compact, 80px) and `lg` (v2 standard, 112px from 1024px) |
+| `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | v2 type scale (ADR 0002). Use the six kept names: `display-xl` (Display), `display-lg` (H2), `display-md-bold` (H3), `body`, `small`, `label`. The other names (`display-2xl`, `display-lg-bold`, `display-section`, `display-sm`, `display-heading`, `display-md`, `display-card`, `subtitle`, `display-label`) are aliases with the same values, deleted in J6. Colour variants unchanged |
+
+### Design system v2 tokens
+
+Defined in `preset/tokens/` and `preset/semantic-tokens.ts`, shown on `/design-system`. ADR 0002 has the full mapping from older names.
+
+| Group | Tokens to use |
+|-------|---------------|
+| Greys | `gray` (#71717A, muted text), `gray.light`, `gray.50` to `gray.700` (zinc), `line` (#ECECEE hairline) |
+| Enjeu colours | `enjeu.rp`, `enjeu.se`, `enjeu.sc`, `enjeu.cx`, `enjeu.sy`, `enjeu.ai`, each with `.light` tint |
+| Gradients | `gradients.ai` (decoration, `bgGradient`), `gradients.ai-text` (`textGradient`, display and H2 only). AI content only |
+| Radii | `lg` (S 8px), `2xl` (M 16px), `3xl` (L 24px), `full` |
+| Shadows | `rest`, `hover`, `window`; `offset` is the one named exception |
+| Font sizes | `display`, `h2`, `h3` (24px), `body` (17px), `sm` (14px), `caption` (13px), `label` (11px), `micro` (10px) |
+| Letter spacings | `label` (.3em), `tag` (.16em), `chip` (.08em) |
+| Line heights | `heading` (1.05), `body` (1.6) |
+| Easing | `smooth` (`cubic-bezier(.2,.8,.2,1)`) |
 
 ### Section composition pattern
 
@@ -294,7 +310,7 @@ The canonical pattern for page sections: `section()` recipe on the `<section>` e
 All bordered card surfaces use the `card()` recipe. Do not write inline `rounded` + `border` + `shadow` combinations.
 
 ```tsx
-// Default card (white, border, shadow, padding md, radius md)
+// Default card (white, line border, rest shadow, padding md 28px, radius md 16px)
 <div className={card()}>...</div>
 
 // Tinted background
@@ -319,7 +335,7 @@ All bordered card surfaces use the `card()` recipe. Do not write inline `rounded
 
 ### Panda CSS Recipes Used
 
-Six live recipes (see table above): `badge`, `button`, `card`, `iconBox`, `section`, `text`. The `_legacy/` folder (`icon`, `link`, `subtitle`, `button`) was deleted in issue #94. See `docs/adr/0001-design-system-adoption-policy.md`.
+Six live recipes (see table above): `badge`, `button`, `card`, `iconBox`, `section`, `text`. Their values follow ADR 0002 (design system v2) since J1 (#216). The `_legacy/` folder (`icon`, `link`, `subtitle`, `button`) was deleted in issue #94. See `docs/adr/0001-design-system-adoption-policy.md`.
 
 ### Ark UI Components
 - **Accordion**: Expandable content sections

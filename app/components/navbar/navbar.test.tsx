@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { render, screen, userEvent } from '~/test/utils';
+import { render, screen, userEvent, waitFor } from '~/test/utils';
 
 import { Navbar } from './navbar';
 
@@ -47,9 +47,12 @@ describe('Navbar', () => {
 
     await user.click(screen.getByRole('button', { name: 'Close menu' }));
 
-    expect(
-      screen.queryByRole('dialog', { name: 'Navigation menu' }),
-    ).not.toBeInTheDocument();
+    // Ark's presence unmounts the dialog asynchronously after close.
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('dialog', { name: 'Navigation menu' }),
+      ).not.toBeInTheDocument(),
+    );
   });
 
   it('current route link gets aria-current="page"', () => {
