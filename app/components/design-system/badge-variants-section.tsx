@@ -11,23 +11,22 @@ const row = css({
   py: '2',
 });
 
-const variants = ['yellow', 'mint', 'sky', 'coral', 'ai'] as const;
-const sizes = ['xs', 'sm', 'lg'] as const;
-
+// Literal recipe calls on purpose: Panda extracts variants from static
+// values only.
 export function BadgeVariantsSection() {
   return (
     <ShowcaseSection title="Badge: ai variant and xs size">
-      {sizes.map((size) => (
-        <ul key={size} className={row}>
-          {variants.map((variant) => (
-            <li key={variant}>
-              <span className={badge({ variant, size })}>
-                {variant} {size}
-              </span>
-            </li>
-          ))}
-        </ul>
-      ))}
+      <ul className={row}>
+        <li className={badge({ variant: 'ai', size: 'xs' })}>ai xs</li>
+        <li className={badge({ variant: 'ai', size: 'sm' })}>ai sm</li>
+        <li className={badge({ variant: 'ai', size: 'lg' })}>ai lg</li>
+      </ul>
+      <ul className={row}>
+        <li className={badge({ variant: 'yellow', size: 'xs' })}>yellow xs</li>
+        <li className={badge({ variant: 'mint', size: 'xs' })}>mint xs</li>
+        <li className={badge({ variant: 'sky', size: 'xs' })}>sky xs</li>
+        <li className={badge({ variant: 'coral', size: 'xs' })}>coral xs</li>
+      </ul>
       <p className={css({ color: 'gray', fontSize: 'sm', mt: '2' })}>
         The ai variant is for AI content only.
       </p>

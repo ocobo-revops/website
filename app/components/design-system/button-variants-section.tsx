@@ -1,10 +1,7 @@
 import { css, cx } from '@ocobo/styled-system/css';
-import { styled } from '@ocobo/styled-system/jsx';
 import { button } from '@ocobo/styled-system/recipes';
 
 import { ShowcaseSection } from './showcase-section';
-
-const Button = styled('button', button);
 
 const row = css({
   display: 'flex',
@@ -13,30 +10,60 @@ const row = css({
   p: '4',
 });
 
-const sizes = ['sm', 'md', 'lg'] as const;
-
+// Literal recipe calls on purpose: Panda extracts variants from static values
+// only, and does not follow `styled('button', button)` props.
 function Variants() {
   return (
     <>
       <li className={row}>
-        {sizes.map((size) => (
-          <Button key={size} variant="secondary" size={size}>
-            secondary {size}
-          </Button>
-        ))}
-        <Button variant="secondary" disabled>
+        <button
+          type="button"
+          className={button({ variant: 'secondary', size: 'sm' })}
+        >
+          secondary sm
+        </button>
+        <button
+          type="button"
+          className={button({ variant: 'secondary', size: 'md' })}
+        >
+          secondary md
+        </button>
+        <button
+          type="button"
+          className={button({ variant: 'secondary', size: 'lg' })}
+        >
+          secondary lg
+        </button>
+        <button
+          type="button"
+          className={button({ variant: 'secondary' })}
           disabled
-        </Button>
+        >
+          disabled
+        </button>
       </li>
       <li className={row}>
-        {sizes.map((size) => (
-          <Button key={size} variant="link" size={size}>
-            link {size}
-          </Button>
-        ))}
-        <Button variant="link" disabled>
+        <button
+          type="button"
+          className={button({ variant: 'link', size: 'sm' })}
+        >
+          link sm
+        </button>
+        <button
+          type="button"
+          className={button({ variant: 'link', size: 'md' })}
+        >
+          link md
+        </button>
+        <button
+          type="button"
+          className={button({ variant: 'link', size: 'lg' })}
+        >
+          link lg
+        </button>
+        <button type="button" className={button({ variant: 'link' })} disabled>
           disabled
-        </Button>
+        </button>
       </li>
     </>
   );
