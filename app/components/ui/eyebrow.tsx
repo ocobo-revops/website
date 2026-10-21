@@ -14,14 +14,19 @@ const dotColors = {
 const dot = css({
   display: 'inline-block',
   flexShrink: 0,
-  h: '[7px]',
-  w: '[7px]',
+  h: 'dot',
+  w: 'dot',
   rounded: 'full',
 });
 
 const root = cx(
   text({ variant: 'label', color: 'muted' }),
-  css({ display: 'inline-flex', alignItems: 'center', gap: '2' }),
+  css({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '2',
+    letterSpacing: 'tag',
+  }),
 );
 
 type EyebrowProps = {

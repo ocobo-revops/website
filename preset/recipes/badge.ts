@@ -36,10 +36,10 @@ export const badge = defineRecipe({
     },
     size: {
       xs: {
-        px: '3',
+        px: '2.5',
         py: '1',
         fontSize: 'micro',
-        letterSpacing: 'tag',
+        letterSpacing: 'label',
       },
       sm: {
         px: '4',

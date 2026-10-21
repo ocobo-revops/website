@@ -104,27 +104,27 @@ export const button = defineRecipe({
         },
       },
       secondary: {
-        bg: 'transparent',
-        color: 'dark',
-        borderColor: 'line',
+        bg: 'white',
+        color: 'foreground',
+        borderColor: 'gray.300',
         _hover: {
-          borderColor: 'dark',
+          borderColor: 'foreground',
         },
         _focusVisible: {
-          outlineColor: 'dark',
+          outlineColor: 'foreground',
         },
       },
       link: {
         bg: 'transparent',
-        color: 'dark',
+        color: 'foreground',
         textDecoration: 'underline',
+        textDecorationColor: 'gray.300',
         textUnderlineOffset: '4px',
         _hover: {
           textDecorationColor: 'currentColor',
-          bg: 'transparent',
         },
         _focusVisible: {
-          outlineColor: 'dark',
+          outlineColor: 'foreground',
         },
       },
       yellow: {
@@ -159,12 +159,9 @@ export const button = defineRecipe({
       },
     },
   },
-  // The text link is a call to action without a box: size sets its font only.
-  compoundVariants: [
-    { variant: 'link', size: 'sm', css: { px: '0', py: '0' } },
-    { variant: 'link', size: 'md', css: { px: '0', py: '0' } },
-    { variant: 'link', size: 'lg', css: { px: '0', py: '0' } },
-  ],
+  // The text link has no box: horizontal padding goes, vertical padding stays
+  // so the touch target keeps its height.
+  compoundVariants: [{ variant: 'link', css: { px: '0' } }],
   defaultVariants: {
     variant: 'primary',
     size: 'md',
