@@ -25,7 +25,7 @@ export const utilities: Config['utilities'] = {
     },
     bleft: {
       className: 'bleft',
-      values: ['yellow', 'sky', 'mint', ' coral'],
+      values: ['yellow', 'sky', 'mint', 'coral'],
       transform(value) {
         return {
           paddingLeft: '1rem',
