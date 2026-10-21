@@ -104,8 +104,8 @@ export function NavDisclosure({
         hidden={!isOpen}
         className={css({
           position: 'absolute',
-          top: '100%',
-          left: '50%',
+          top: '[100%]',
+          left: '[50%]',
           transform: 'translateX(-50%)',
           mt: '7',
           w: 'sm',

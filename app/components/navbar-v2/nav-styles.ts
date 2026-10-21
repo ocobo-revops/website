@@ -60,7 +60,7 @@ export const topLinkStyles = cx(
       outlineWidth: '2px',
       outlineStyle: 'solid',
       outlineColor: 'dark',
-      outlineOffset: '2px',
+      outlineOffset: '0.5',
     },
   }),
 );
@@ -70,6 +70,6 @@ export const focusRing = css({
     outlineWidth: '2px',
     outlineStyle: 'solid',
     outlineColor: 'dark',
-    outlineOffset: '2px',
+    outlineOffset: '0.5',
   },
 });

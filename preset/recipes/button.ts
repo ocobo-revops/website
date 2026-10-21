@@ -13,7 +13,8 @@ export const button = defineRecipe({
     fontWeight: 'semibold',
     letterSpacing: 'wide',
     cursor: 'pointer',
-    transition: 'all 0.3s',
+    transition: 'all',
+    transitionDuration: 'slow',
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'transparent',
@@ -21,7 +22,7 @@ export const button = defineRecipe({
     _focusVisible: {
       outlineWidth: '2px',
       outlineStyle: 'solid',
-      outlineOffset: '2px',
+      outlineOffset: '0.5',
     },
     _disabled: {
       pointerEvents: 'none',
@@ -29,7 +30,8 @@ export const button = defineRecipe({
       opacity: 0.5,
     },
     '& > svg': {
-      transition: 'transform 0.3s',
+      transition: 'transform',
+      transitionDuration: 'slow',
     },
     _hover: {
       '& > svg': {
