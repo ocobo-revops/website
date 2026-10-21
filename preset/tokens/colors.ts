@@ -38,13 +38,20 @@ export const colors = {
     light: { value: '#FFF5F2' },
     dark: { value: '#af4934' },
   },
+  // Zinc scale (ADR 0002). DEFAULT is the muted text grey, light the tinted
+  // background.
   gray: {
-    DEFAULT: { value: '#767676' },
-    light: { value: '#F5F5F5' },
+    DEFAULT: { value: '#71717A' },
+    light: { value: '#F4F4F5' },
     50: { value: '#FAFAFA' },
     100: { value: '#F4F4F5' },
+    200: { value: '#E4E4E7' },
+    300: { value: '#D4D4D8' },
     400: { value: '#A1A1AA' },
     500: { value: '#71717A' },
     600: { value: '#52525B' },
+    700: { value: '#3F3F46' },
   },
+  // Hairline border of v2 cards and dividers
+  line: { value: '#ECECEE' },
 };
