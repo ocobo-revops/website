@@ -103,6 +103,30 @@ export const button = defineRecipe({
           outlineColor: 'currentColor',
         },
       },
+      secondary: {
+        bg: 'white',
+        color: 'foreground',
+        borderColor: 'gray.300',
+        _hover: {
+          borderColor: 'foreground',
+        },
+        _focusVisible: {
+          outlineColor: 'foreground',
+        },
+      },
+      link: {
+        bg: 'transparent',
+        color: 'foreground',
+        textDecoration: 'underline',
+        textDecorationColor: 'gray.300',
+        textUnderlineOffset: '4px',
+        _hover: {
+          textDecorationColor: 'currentColor',
+        },
+        _focusVisible: {
+          outlineColor: 'foreground',
+        },
+      },
       yellow: {
         bg: 'ocobo.yellow',
         color: 'ocobo.dark',
@@ -135,6 +159,9 @@ export const button = defineRecipe({
       },
     },
   },
+  // The text link has no box: horizontal padding goes, vertical padding stays
+  // so the touch target keeps its height.
+  compoundVariants: [{ variant: 'link', css: { px: '0' } }],
   defaultVariants: {
     variant: 'primary',
     size: 'md',

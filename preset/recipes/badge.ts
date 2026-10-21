@@ -28,8 +28,19 @@ export const badge = defineRecipe({
         color: 'dark',
         bg: 'coral',
       },
+      // AI content only (ADR 0002).
+      ai: {
+        color: 'dark',
+        bgGradient: 'ai',
+      },
     },
     size: {
+      xs: {
+        px: '2.5',
+        py: '1',
+        fontSize: 'micro',
+        letterSpacing: 'label',
+      },
       sm: {
         px: '4',
         py: '1.5',

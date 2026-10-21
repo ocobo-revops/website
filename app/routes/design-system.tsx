@@ -3,15 +3,19 @@ import type { MetaFunction } from 'react-router';
 import { css } from '@ocobo/styled-system/css';
 
 import { BordersSection } from '~/components/design-system/borders-section';
+import { ButtonBadgeEyebrowSections } from '~/components/design-system/button-badge-eyebrow-sections';
 import { ButtonsSection } from '~/components/design-system/buttons-section';
 import { CardRecipeSection } from '~/components/design-system/card-recipe-section';
 import { ColorsSection } from '~/components/design-system/colors-section';
+import { FlipCardSection } from '~/components/design-system/flip-card-section';
 import { FormSection } from '~/components/design-system/form-section';
 import { GridSection } from '~/components/design-system/grid-section';
 import { IconsSection } from '~/components/design-system/icons-section';
 import { IllustrationsSection } from '~/components/design-system/illustrations-section';
 import { LogoSection } from '~/components/design-system/logo-section';
 import { MetaPillSection } from '~/components/design-system/meta-pill-section';
+import { NavbarFooterSection } from '~/components/design-system/navbar-footer-section';
+import { TooltipSection } from '~/components/design-system/tooltip-section';
 import { TypographySection } from '~/components/design-system/typography-section';
 import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
 import { Container } from '~/components/ui/Container';
@@ -44,13 +48,17 @@ export default function Index() {
       <TypographySection />
       <ColorsSection />
       <ButtonsSection />
+      <ButtonBadgeEyebrowSections />
+      <NavbarFooterSection />
       <BordersSection />
       <FormSection />
       <MetaPillSection />
       <IconsSection />
       <IllustrationsSection />
       <CardRecipeSection />
+      <FlipCardSection />
       <GridSection />
+      <TooltipSection />
     </Container>
   );
 }

@@ -35,7 +35,7 @@ J1 also picks one existing name per v2 size as the name to keep, plus `label` fo
 
 The legacy `textStyles` (`heading1` to `heading3`, `large`, `medium`, `small`, `nav`, about twenty call sites) follow the same rule; `heading2` (18 to 32px, weight 400) takes the v2 H2 values.
 
-The `label` variant keeps its .3em letter spacing, which is also the mockup pill's. The mockup eyebrow and tag use .16em. J1 keeps .3em so existing labels do not change, and adds the `tag` letter spacing (.16em) for the redesign. The `Eyebrow` component work (#221) settles which one eyebrows use.
+The `label` variant keeps its .3em letter spacing, which is also the mockup pill's. The mockup eyebrow and tag use .16em. J1 keeps .3em so existing labels do not change, and adds the `tag` letter spacing (.16em) for the redesign. `Eyebrow` (#221) uses the `tag` letter spacing, as the mockup does, on top of the `label` variant. Its colour is `gray` (#71717A, 4.8:1 on white), not the mockup's #A1A1AA, which reaches only 2.6:1 and fails AA at 11px. The `xs` badge takes 10px horizontal padding (`2.5`) and the `label` spacing, the nearest token to the mockup's .25em. The `secondary` button takes a white background and a `gray.300` border; the `link` button keeps its vertical padding so its target stays above 24px.
 
 The `gray` scale becomes zinc throughout. `gray.DEFAULT` and `gray.light` still hold the default Tailwind greys (#767676, #F5F5F5); they take #71717A and #F4F4F5. The zinc steps the mockup uses without a token (#E4E4E7, #D4D4D8, #3F3F46) become `gray.200`, `gray.300` and `gray.700`.
 
