@@ -44,7 +44,8 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
 | **Avatar** | `Avatar.tsx` | User profile images | Image handling |
-| **Tag** | `Tag.tsx` | Content tags and labels | Panda styling |
+| **Tag** | `Tag.tsx` | Content tags and labels (blog chip, keeps its own style) | Panda styling |
+| **Eyebrow** | `eyebrow.tsx` | `label` text variant, optional 7px coloured dot (`dotColor`) | `text` recipe |
 | **Illustration** | `Illustration.tsx` | SVG illustrations | Custom wrapper |
 | **Logocobo** | `Logocobo.tsx` | Company logo component | SVG assets |
 
@@ -254,8 +255,8 @@ Active Panda CSS recipes — use these before reaching for inline `css()`.
 
 | Recipe | File | Description |
 |--------|------|-------------|
-| `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label — colour variants (`yellow`, `mint`, `sky`, `coral`), sizes `sm`/`lg` |
-| `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles — variants (`primary`, `solid`, `outline`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
+| `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label: colour variants (`yellow`, `mint`, `sky`, `coral`, `ai` for AI content only), sizes `xs`/`sm`/`lg` |
+| `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles: variants (`primary`, `solid`, `outline`, `secondary`, `link`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
 | `card` | [`preset/recipes/card.ts`](../../preset/recipes/card.ts) | Bordered card surface (v2: `line` border, 28px padding, `rest` shadow). Tone `white`/`tinted`, padding `sm`/`md`/`lg`/`xl`, radius `md` (M 16px) / `lg` (L 24px), shadow `none`/`sm`/`card`/`elevated`, border toggle |
 | `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
 | `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background and vertical padding: `bg` tokens, padding `sm`, `md` (v2 compact, 80px) and `lg` (v2 standard, 112px from 1024px) |

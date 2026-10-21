@@ -14,6 +14,8 @@ const largeSizes = {
   '7xl': { value: '80rem' },
   '8xl': { value: '82rem' },
   prose: { value: '65ch' },
+  // Eyebrow dot (ADR 0002): the mockup's 7px, on no spacing step.
+  dot: { value: '7px' },
 };
 
 export const sizes = {
