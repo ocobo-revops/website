@@ -27,7 +27,8 @@ These come from the preset and show up everywhere. Check them once on Home, then
 | Shadows snap to rest, hover or window; the hard `offset` shadow is unchanged | |
 | Eyebrow letter spacing: .2em becomes .16em (`tag`); .25em, .4em and .6em become .3em (`label`) (#217) | |
 | Decorative blurs: 32px and 48px both become 40px (`2xl`) (#217) | |
-| Transitions that used `ease` take the Panda default curve; durations unchanged (#217) | |
+| Transitions that used `ease` or `ease-in-out` take the Panda default curve, cubic-bezier(0.4, 0, 0.2, 1); durations unchanged (#217) | |
+| Transitions written for one or two properties now use the `colors` or `common` preset, which animates a wider property set (team member card, team photo corners, contact inputs and button, design system tokens block) (#217) | |
 
 ## Routes
 
@@ -115,7 +116,7 @@ Keep their style; not locale-prefixed, so FR views only.
 |---|---|---|
 | Post cards: card padding, border and shadow | | |
 | Post prose at body size; author card | | |
-| Post card tag: 8px radius and 12px font (the old radius was invalid, so corners were square) (#217) | | |
+| Post card tag: 8px radius (the old radius was invalid, so corners were square) (#217) | | |
 | Blog index highlighted post badge: 8px radius (the old `base` radius did not resolve) (#217) | | |
 
 ### Contact (`/contact`, `/en/contact`)

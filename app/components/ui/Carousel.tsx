@@ -151,7 +151,7 @@ const Root = <T extends { id: string }>({
             position: 'absolute',
             top: '[50%]',
             left: '0',
-            translateY: '[-50%]',
+            translateY: '-1/2',
             zIndex: 2,
             px: '4',
           })}

@@ -69,7 +69,7 @@ const SuccessMessage = ({ onReset }: { onReset: () => void }) => {
         className={`${center()} ${css({
           w: '20',
           h: '20',
-          bg: 'mint.light',
+          bg: 'ocobo.mint.light',
           color: 'ocobo.mint',
           rounded: 'full',
           mx: 'auto',
