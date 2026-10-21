@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Project guide for Claude Code and any other coding agent working on the Ocobo website. Curated entry point — agent-specific rules + pointers into `docs/`. `AGENTS.md` is a symlink to this file.
+Project guide for Claude Code and any other coding agent working on the Ocobo website. Curated entry point - agent-specific rules + pointers into `docs/`. `AGENTS.md` is a symlink to this file.
 
 ---
 
@@ -9,11 +9,11 @@ Project guide for Claude Code and any other coding agent working on the Ocobo we
 Ocobo is a RevOps consulting platform. The website is a React Router v7 (formerly Remix) full-stack app, server-rendered on Vercel Edge.
 
 - **Framework**: React Router v7, file-based routing via `@react-router/fs-routes`, SSR on Vercel Edge with stale-while-revalidate.
-- **Styling**: Panda CSS — atomic, zero-runtime, type-safe. UI primitives from Ark UI.
+- **Styling**: Panda CSS - atomic, zero-runtime, type-safe. UI primitives from Ark UI.
 - **Content**: Markdoc + Zod, sourced from a sibling GitHub repo (or local filesystem in dev).
 - **i18n**: `react-i18next` / `remix-i18next`. FR default, EN at `/en/*`.
 
-Other versions/deps live in `package.json` — read it if a version matters to the task.
+Other versions/deps live in `package.json` - read it if a version matters to the task.
 
 ---
 
@@ -25,7 +25,7 @@ pnpm dev:github           # Dev server, GitHub API content
 pnpm check                # Biome lint + format
 pnpm typecheck            # react-router typegen && tsc
 pnpm test                 # Vitest (watch); test:run for single, test:coverage for coverage
-pnpm prepare              # panda codegen — required after token/recipe changes
+pnpm prepare              # panda codegen - required after token/recipe changes
 ```
 
 Variants (`check:fix`, `check:error`, `build:analyze`, `start`, etc.) live in `package.json` scripts.
@@ -42,21 +42,21 @@ After recipe edits, also run the raw Panda CLI to rebuild atomic CSS: `pnpm pand
 
 ## 3. Golden rules
 
-- **i18n required** — every user-facing string lives in `locales/fr/*.json` and `locales/en/*.json`. Never hardcode UI copy.
-- **SSR first** — assume server render + client hydration. Guard browser-only APIs (`window`, `document`) behind `useEffect` or `typeof window !== 'undefined'`.
-- **Check the component inventory** before creating a new component — many homepage/offer/method blocks already exist. See [docs/development/component-inventory.md](docs/development/component-inventory.md).
+- **i18n required** - every user-facing string lives in `locales/fr/*.json` and `locales/en/*.json`. Never hardcode UI copy.
+- **SSR first** - assume server render + client hydration. Guard browser-only APIs (`window`, `document`) behind `useEffect` or `typeof window !== 'undefined'`.
+- **Check the component inventory** before creating a new component - many homepage/offer/method blocks already exist. See [docs/development/component-inventory.md](docs/development/component-inventory.md).
 - **Follow ADR-0001 and ADR-0002**: typography goes through `text()`, sections through `section()`, cards through `card()`, values come from the v2 tokens. The rules are summarised below (§7).
 - **Named exports only**, no default exports. **Kebab-case filenames** for new files (existing PascalCase files keep their names until refactored).
-- **No barrel files** (`index.ts` re-exports) — import directly from the module file.
-- **Small files** — ~400 lines typical, 800 max.
-- **Immutability** — return new objects, don't mutate.
+- **No barrel files** (`index.ts` re-exports) - import directly from the module file.
+- **Small files** - ~400 lines typical, 800 max.
+- **Immutability** - return new objects, don't mutate.
 - **No new top-level docs** unless explicitly requested. Update the relevant doc under `docs/`.
 
 ---
 
 ## 4. Source-of-truth files
 
-Read these before inferring data structures, env shape, or content pipelines. Cheap to keep inline — they're the things Claude needs to know exist on every task.
+Read these before inferring data structures, env shape, or content pipelines. Cheap to keep inline - they're the things Claude needs to know exist on every task.
 
 | Concern | File |
 |---------|------|
@@ -82,10 +82,10 @@ Read these before inferring data structures, env shape, or content pipelines. Ch
 
 - File-based via `@react-router/fs-routes` (`flatRoutes()` in [app/routes.ts](app/routes.ts)).
 - `_main.tsx` is a thin shell: wraps `<Outlet>` with `LayoutMain` (which carries the navbar/footer) plus an opacity transition during navigation, and exports an `ErrorBoundary`. The header/footer/skip-link live inside `LayoutMain`, not here.
-- `_main.($lang).<path>.tsx` — optional `($lang)` segment captures `en`; absence means French. Derive language via `app/utils/lang.ts`, not by parsing params directly.
+- `_main.($lang).<path>.tsx` - optional `($lang)` segment captures `en`; absence means French. Derive language via `app/utils/lang.ts`, not by parsing params directly.
 - Blog and media routes are not locale-prefixed.
 - SEO routes use bracket-escaped extensions: `robots[.txt].tsx`, `sitemap[.xml].tsx`.
-- Loaders wrap their fetcher in `createHybridLoader` from [app/modules/cache.ts](app/modules/cache.ts) for consistency, **but the strategy argument is currently a no-op** — the function is pass-through and kept for backward compatibility. Cache headers are applied centrally in `app/entry.server.tsx`, using `getCacheStrategyForPath(pathname)` to map URL → strategy (`/blog*` → `blogPost`, `/clients*` → `story`, else `static`). When adding a new content section, extend that mapping rather than passing a strategy to the loader.
+- Loaders wrap their fetcher in `createHybridLoader` from [app/modules/cache.ts](app/modules/cache.ts) for consistency, **but the strategy argument is currently a no-op** - the function is pass-through and kept for backward compatibility. Cache headers are applied centrally in `app/entry.server.tsx`, using `getCacheStrategyForPath(pathname)` to map URL → strategy (`/blog*` → `blogPost`, `/clients*` → `story`, else `static`). When adding a new content section, extend that mapping rather than passing a strategy to the loader.
 
 Full route map + tree analysis → [docs/architecture/source-tree.md](docs/architecture/source-tree.md).
 
@@ -97,9 +97,9 @@ Full route map + tree analysis → [docs/architecture/source-tree.md](docs/archi
 - **Local**: `~/projects/ocobo-posts/` (path via `localeRepoAPIUrl`).
 - **GitHub**: `@octokit/rest`, branch via `GITHUB_BRANCH` (e.g. `offers` to preview placeholders).
 - Markdown + frontmatter → Markdoc → Zod validation → loader.
-- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) — never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, plus generic `fetchContent`/`fetchContents` for custom types.
-- Return shape is `ContentResult<T>` = `ActionResult<ContentFetchState, T>` — a tuple destructured as `[statusCode, state, data]` where `state` is one of `'success' | 'not_found' | 'validation_error' | 'source_error' | 'ignored'`. Routes branch on `statusCode !== 200`.
-- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`) — built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts).
+- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, plus generic `fetchContent`/`fetchContents` for custom types.
+- Return shape is `ContentResult<T>` = `ActionResult<ContentFetchState, T>` - a tuple destructured as `[statusCode, state, data]` where `state` is one of `'success' | 'not_found' | 'validation_error' | 'source_error' | 'ignored'`. Routes branch on `statusCode !== 200`.
+- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`) - built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts).
 
 Deeper detail → [docs/api/contracts.md](docs/api/contracts.md), [docs/api/data-models.md](docs/api/data-models.md).
 
@@ -121,14 +121,14 @@ Full mapping of old names to v2 values, and the gap decisions, are in ADR 0002 (
 
 ### Panda CSS traps (Claude-specific gotchas)
 
-**Static analysis trap**. Panda extracts class names statically. Dynamic values inside `css()` do not get extracted — only the default branch ships. Always use static literal values per branch:
+**Static analysis trap**. Panda extracts class names statically. Dynamic values inside `css()` do not get extracted - only the default branch ships. Always use static literal values per branch:
 
 ```tsx
-// BAD — only the default border colour will exist in the bundle
+// BAD - only the default border colour will exist in the bundle
 const map = { yellow: 'ocobo.yellow', sky: 'ocobo.sky' };
 css({ borderTopColor: map[color] });
 
-// GOOD — each css() call has static literals; combine with cx() at runtime
+// GOOD - each css() call has static literals; combine with cx() at runtime
 const borderStyles = {
   yellow: css({ borderTopColor: 'ocobo.yellow' }),
   sky: css({ borderTopColor: 'ocobo.sky' }),
@@ -157,7 +157,7 @@ pnpm panda cssgen --clean
 
 ## 8. Components (summary)
 
-Before creating anything: look in `app/components/<feature>/` (section blocks per page) and `app/components/ui/` (primitives) — most things already exist. Notable shared pieces: `ButtonLink` (navigation), `MemberCard` (profile card), and the two markdown wrappers (`markdown-container.tsx` for content articles, `PageMarkdownContainer.tsx` for static pages).
+Before creating anything: look in `app/components/<feature>/` (section blocks per page) and `app/components/ui/` (primitives) - most things already exist. Notable shared pieces: `ButtonLink` (navigation), `MemberCard` (profile card), and the two markdown wrappers (`markdown-container.tsx` for content articles, `PageMarkdownContainer.tsx` for static pages).
 
 Full catalogue → [docs/development/component-inventory.md](docs/development/component-inventory.md).
 
@@ -176,7 +176,7 @@ Full catalogue → [docs/development/component-inventory.md](docs/development/co
 - Local filesystem source: no cache.
 - GitHub source: cache + `Vercel-CDN-Cache-Control` mirror + `Vary: Accept-Language`.
 - `?refresh=1` bypasses cache entirely (`shouldBypassCache(request)`).
-- `createHybridLoader` is kept as a wrapper for legacy reasons — its strategy argument is currently ignored.
+- `createHybridLoader` is kept as a wrapper for legacy reasons - its strategy argument is currently ignored.
 
 Deeper detail → [docs/development/cache-strategy.md](docs/development/cache-strategy.md), [docs/development/deployment-strategies.md](docs/development/deployment-strategies.md).
 
@@ -205,12 +205,12 @@ Deeper detail → [docs/development/cache-strategy.md](docs/development/cache-st
 ## 12. Code style & tooling
 
 - **Biome 1.9.4** ([biome.json](biome.json)). Indent 2 spaces, single quotes JS, double quotes JSX, semicolons always, trailing commas everywhere, line width 80.
-- `noUnusedVariables` / `noUnusedImports` are errors. `organizeImports` is on — let Biome resolve order.
+- `noUnusedVariables` / `noUnusedImports` are errors. `organizeImports` is on - let Biome resolve order.
 - Excluded from Biome: `@ocobo`, `build`, `node_modules`, `public`, `.react-router`, `coverage`.
-- TS strict mode. `react-router typegen` populates `.react-router/types/` — never edit those.
+- TS strict mode. `react-router typegen` populates `.react-router/types/` - never edit those.
 - No default exports anywhere new. Kebab-case for new files.
 - Functional-first; small pure helpers in `app/utils/`. Avoid classes.
-- pnpm only — never npm or yarn.
+- pnpm only - never npm or yarn.
 
 ---
 
@@ -225,11 +225,11 @@ Defined by [app/modules/types.ts](app/modules/types.ts), loaded in [app/modules/
 | `GITHUB_ACCOUNT` / `GITHUB_REPO` / `GITHUB_ACCESS_TOKEN` | when `github` | Content repo coordinates + PAT (repo scope) |
 | `GITHUB_BRANCH` | no | Defaults to `main`; use `offers` to preview placeholder offers |
 
-There is no env var for the local filesystem content path — when `CONTENT_SOURCE=locale`, the filesystem source uses its built-in default path (check the `filesystem` source under `app/modules/content/sources/` before tweaking).
+There is no env var for the local filesystem content path - when `CONTENT_SOURCE=locale`, the filesystem source uses its built-in default path (check the `filesystem` source under `app/modules/content/sources/` before tweaking).
 
-Optional integrations (HubSpot, Ago, analytics) load lazily — check `env.server.ts` and `app/utils/hubspot.ts`.
+Optional integrations (HubSpot, Ago, analytics) load lazily - check `env.server.ts` and `app/utils/hubspot.ts`.
 
-Use `.env.local` for dev. Never commit secrets. Server-only vars must never be imported by client modules — keep them behind `*.server.ts` boundaries.
+Use `.env.local` for dev. Never commit secrets. Server-only vars must never be imported by client modules - keep them behind `*.server.ts` boundaries.
 
 ---
 
@@ -270,12 +270,12 @@ Read at most one or two relevant docs per task.
 
 ## 16. Common pitfalls
 
-- Forgetting `pnpm prepare` after editing tokens or recipes — JSX classes will be missing.
-- Dynamic-value `css()` calls (§7) — only the default branch ships.
+- Forgetting `pnpm prepare` after editing tokens or recipes - JSX classes will be missing.
+- Dynamic-value `css()` calls (§7) - only the default branch ships.
 - Adding new strings without updating both `locales/fr/` and `locales/en/`.
-- Using `document` / `window` outside `useEffect` — breaks SSR.
+- Using `document` / `window` outside `useEffect` - breaks SSR.
 - Importing `*.server.ts` files from client-rendered modules.
-- Calling content `sources/` modules directly — go through `app/modules/content/api.ts`.
-- Inline DS violations (`fontFamily: 'display'`, raw `maxW: '7xl'` containers, raw `border + rounded + shadow`) — reviewers will reject under ADR-0001.
-- Skipping `pnpm typecheck` because `pnpm check` passed — Biome doesn't typecheck.
+- Calling content `sources/` modules directly - go through `app/modules/content/api.ts`.
+- Inline DS violations (`fontFamily: 'display'`, raw `maxW: '7xl'` containers, raw `border + rounded + shadow`) - reviewers will reject under ADR-0001.
+- Skipping `pnpm typecheck` because `pnpm check` passed - Biome doesn't typecheck.
 - Squash-merging PRs: it collapses the branch's atomic commits into one. Default `--merge`, not `--squash` or `--rebase`, unless asked.
