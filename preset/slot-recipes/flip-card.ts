@@ -88,7 +88,7 @@ export const flipCard = defineSlotRecipe({
     },
   },
   variants: {
-    // Fixed heights: `md` for tool cards, `lg` for the home enjeu cards.
+    // Fixed heights: `md` for tool cards, `lg` for the home challenge cards.
     size: {
       md: { root: { h: '72' } },
       lg: { root: { h: 'lg' } },

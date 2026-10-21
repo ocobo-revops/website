@@ -63,7 +63,7 @@ The mockup eyebrow (`.ds-eyebrow`) and tag (`.ds-tag`) are the same uppercase te
 
 ### One flip card recipe; `PersonCard` and `MemberCard` coexist
 
-A `flipCard` slot recipe carries the flip mechanism and its accessibility once, for the home enjeu cards and the person cards alike. `PersonCard` is its `person` variant: photo on the front, contribution on the back. It serves the redesigned pages (team, enjeu pages, about-us). `MemberCard` stays on the blog, stories and job pages, which keep their style, and takes the v2 tokens. We rejected replacing `MemberCard` everywhere, which would restyle the blog and stories, and a separate person recipe, which would copy the flip mechanism.
+A `flipCard` slot recipe carries the flip mechanism and its accessibility once, for the home challenge cards and the person cards alike. `PersonCard` is its `person` variant: photo on the front, contribution on the back. It serves the redesigned pages (team, challenge pages, about-us). `MemberCard` stays on the blog, stories and job pages, which keep their style, and takes the v2 tokens. We rejected replacing `MemberCard` everywhere, which would restyle the blog and stories, and a separate person recipe, which would copy the flip mechanism.
 
 ### The AI gradient is two tokens, reserved for AI topics
 
@@ -71,9 +71,9 @@ The mockup writes its coral to yellow gradient inline 75 times, in 14 variants. 
 
 Neither the mockup gradient nor its darkened text version reaches 3:1 on white at either end (2.0 to 2.8 for coral, 1.5 to 2.2 for yellow). `gradients.ai-text` is therefore darkened until each end reaches 3:1 on white (#F16C4E at 3.00:1, #B88F00 at 3.01:1, from #FE9C87 and #F1CF25), and gradient text is allowed only at display and H2 sizes. On dark backgrounds `gradients.ai` passes as it is. We rejected keeping the mockup values, which breaks the accessibility rule below, and dropping gradient text on light backgrounds, which removes a recurring brand element.
 
-### Enjeu colours mark identity; coral and yellow keep fixed roles
+### Challenge colours mark identity; coral and yellow keep fixed roles
 
-Each enjeu has one colour, defined once in the website as a semantic token with its light tint: Sales Experience mint, Customer Experience sky, Revenue Performance coral, Sales Compensation yellow, Revenue Systems grey (shade to be confirmed by Ocobo), Revenue AI the AI gradient. It marks identity only: pills, workstream card backs, expert labels, the bow tie. Symptom bullets stay coral and the diagnostic block stays yellow on every enjeu page, as the mockup does on five pages out of six: coral stands for the problem, yellow for Ocobo's call to action. Revenue AI uses coral, the start of its gradient, wherever a solid colour is needed (pills, rings, tints). The tokens are `enjeu.<key>` and `enjeu.<key>.light`, keyed like the posts frontmatter: `rp`, `se`, `sc`, `cx`, `sy`, `ai`. Until Ocobo confirms the Revenue Systems shade, `enjeu.sy` is the mockup's #767676 on the `gray.light` tint. We rejected colouring every element by enjeu, which would make the Revenue Systems diagnostic grey and would need a solid stand-in for the gradient everywhere.
+Each challenge (French: enjeu) has one colour, defined once in the website as a semantic token with its light tint: Sales Experience mint, Customer Experience sky, Revenue Performance coral, Sales Compensation yellow, Revenue Systems grey (shade to be confirmed by Ocobo), Revenue AI the AI gradient. It marks identity only: pills, workstream card backs, expert labels, the bow tie. Symptom bullets stay coral and the diagnostic block stays yellow on every challenge page, as the mockup does on five pages out of six: coral stands for the problem, yellow for Ocobo's call to action. Revenue AI uses coral, the start of its gradient, wherever a solid colour is needed (pills, rings, tints). The tokens are `challenge.<key>` and `challenge.<key>.light`, keyed like the posts frontmatter: `rp`, `se`, `sc`, `cx`, `sy`, `ai`. Until Ocobo confirms the Revenue Systems shade, `challenge.sy` is the mockup's #767676 on the `gray.light` tint. We rejected colouring every element by challenge, which would make the Revenue Systems diagnostic grey and would need a solid stand-in for the gradient everywhere.
 
 ### Raw values are refused at type check
 
@@ -142,7 +142,7 @@ New tokens without a v2 role in the existing names: `fontSizes.caption` (13px) a
 ## Consequences
 
 - J1 is one change to `preset/` that every page sees: v2 values for the `text()` variants, `textStyles`, `section()`, `card()`, radii, shadows and the `gray` scale, plus the six kept variant names.
-- New tokens: `colors.line`, `gray.200`, `gray.300`, `gray.700`, `gradients.ai`, `gradients.ai-text`, three shadows, enjeu semantic tokens with their light tints, font sizes 24, 17, 13, 11 and 10px, letter spacings .3em, .16em and .08em, and the `cubic-bezier(.2,.8,.2,1)` easing.
+- New tokens: `colors.line`, `gray.200`, `gray.300`, `gray.700`, `gradients.ai`, `gradients.ai-text`, three shadows, challenge semantic tokens with their light tints, font sizes 24, 17, 13, 11 and 10px, letter spacings .3em, .16em and .08em, and the `cubic-bezier(.2,.8,.2,1)` easing.
 - Recipe changes: `button` gains `secondary` and `link`; `badge` gains an `ai` variant and an `xs` size; a new `flipCard` slot recipe with a `person` variant; a new `Eyebrow` component.
 - `strictTokens` is on and `pnpm typecheck` is a required CI check from J1. The about 240 raw values in `app/` are cleaned up in the same step.
 - J1 needs a written route checklist (French and English, desktop and mobile) for the manual review on the Vercel preview.

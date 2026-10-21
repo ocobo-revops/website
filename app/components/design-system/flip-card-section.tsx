@@ -14,7 +14,7 @@ const pill = css({
   px: '4',
   py: '1.5',
   borderRadius: 'full',
-  bg: 'enjeu.se',
+  bg: 'challenge.se',
 });
 const backLabel = cx(text({ variant: 'label' }), css({ color: 'gray.300' }));
 const steps = css({
@@ -25,7 +25,7 @@ const steps = css({
   flex: '1',
   fontWeight: 'semibold',
 });
-const stepNumber = css({ color: 'enjeu.se', mr: '2' });
+const stepNumber = css({ color: 'challenge.se', mr: '2' });
 const footerLink = css({
   mt: '4',
   fontWeight: 'semibold',
@@ -47,7 +47,7 @@ export function FlipCardSection() {
       <p className={caption}>
         Flips with its button (Enter or Space), a tap on the card, or a mouse
         hover. The hidden face is inert. Fixed height: size md (tool cards) or
-        lg (home enjeu cards).
+        lg (home challenge cards).
       </p>
       <div className={grid({ columns: { base: 1, md: 2 }, gap: '8' })}>
         <FlipCard

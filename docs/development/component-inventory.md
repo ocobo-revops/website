@@ -270,7 +270,7 @@ Defined in `preset/tokens/` and `preset/semantic-tokens.ts`, shown on `/design-s
 | Group | Tokens to use |
 |-------|---------------|
 | Greys | `gray` (#71717A, muted text), `gray.light`, `gray.50` to `gray.700` (zinc), `line` (#ECECEE hairline) |
-| Enjeu colours | `enjeu.rp`, `enjeu.se`, `enjeu.sc`, `enjeu.cx`, `enjeu.sy`, `enjeu.ai`, each with `.light` tint |
+| Challenge colours | `challenge.rp`, `challenge.se`, `challenge.sc`, `challenge.cx`, `challenge.sy`, `challenge.ai`, each with `.light` tint |
 | Gradients | `gradients.ai` (decoration, `bgGradient`), `gradients.ai-text` (`textGradient`, display and H2 only). AI content only |
 | Radii | `lg` (S 8px), `2xl` (M 16px), `3xl` (L 24px), `full` |
 | Shadows | `rest`, `hover`, `window`; `offset` is the one named exception |

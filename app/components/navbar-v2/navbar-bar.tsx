@@ -26,7 +26,7 @@ type NavbarBarProps = {
    */
   layout?: NavbarLayout;
   /**
-   * Entries rendered before the production menu. Reserved for the enjeu
+   * Entries rendered before the production menu. Reserved for the challenge
    * entry (#237), wired when v2 is switched on (#242).
    */
   leadingItems?: NavItem[];
