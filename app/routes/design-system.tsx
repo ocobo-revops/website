@@ -3,6 +3,7 @@ import type { MetaFunction } from 'react-router';
 import { css } from '@ocobo/styled-system/css';
 
 import { BordersSection } from '~/components/design-system/borders-section';
+import { BowtieSection } from '~/components/design-system/bowtie-section';
 import { ButtonBadgeEyebrowSections } from '~/components/design-system/button-badge-eyebrow-sections';
 import { ButtonsSection } from '~/components/design-system/buttons-section';
 import { CardRecipeSection } from '~/components/design-system/card-recipe-section';
@@ -64,6 +65,7 @@ export default function Index() {
       <GridSection />
       <TooltipSection />
       <TabsSection />
+      <BowtieSection />
       <MotionSection />
     </Container>
   );
