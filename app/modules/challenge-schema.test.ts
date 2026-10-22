@@ -188,12 +188,22 @@ describe('challenge unknown keys', () => {
     ]);
   });
 
-  // Both come in #230, with the matching posts schema change.
+  // Both come in #230, with the matching posts schema change. The test checks
+  // the key is unknown, so it fails as soon as the schema knows it.
   it.each<[string, Path]>([
     ['partner', ['partner']],
     ['aiBridge.demo', ['aiBridge', 'demo']],
-  ])('rejects %s until #230', (_, path) => {
-    expect(issuesOf(withValue(complete, path, {}))).not.toEqual([]);
+  ])('rejects %s as an unknown key until #230', (key, path) => {
+    const result = ChallengeFrontmatterSchema.safeParse(
+      withValue(complete, path, {}),
+    );
+    expect(result.error?.issues).toEqual([
+      expect.objectContaining({
+        code: 'unrecognized_keys',
+        path: path.slice(0, -1),
+        keys: [key.split('.').pop()],
+      }),
+    ]);
   });
 
   it('rejects an unknown key in a nested object', () => {
