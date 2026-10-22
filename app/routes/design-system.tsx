@@ -14,6 +14,7 @@ import { IconsSection } from '~/components/design-system/icons-section';
 import { IllustrationsSection } from '~/components/design-system/illustrations-section';
 import { LogoSection } from '~/components/design-system/logo-section';
 import { MetaPillSection } from '~/components/design-system/meta-pill-section';
+import { MotionSection } from '~/components/design-system/motion-section';
 import { NavbarFooterSection } from '~/components/design-system/navbar-footer-section';
 import { TabsSection } from '~/components/design-system/tabs-section';
 import { TooltipSection } from '~/components/design-system/tooltip-section';
@@ -61,6 +62,7 @@ export default function Index() {
       <GridSection />
       <TooltipSection />
       <TabsSection />
+      <MotionSection />
     </Container>
   );
 }
