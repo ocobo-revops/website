@@ -2,6 +2,8 @@
   "language.fr": "Français",
   "language.en": "English",
   "flipCard.flip": "Flip card: {{label}}",
+  "tabs.pause": "Pause autoplay",
+  "tabs.play": "Resume autoplay",
   "language.switch": "Choose language",
   "language.fr.short": "FR",
   "language.en.short": "EN",

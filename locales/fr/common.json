@@ -2,6 +2,8 @@
   "language.fr": "Français",
   "language.en": "Anglais",
   "flipCard.flip": "Retourner la carte : {{label}}",
+  "tabs.pause": "Mettre en pause le défilement",
+  "tabs.play": "Reprendre le défilement",
   "language.switch": "Choisir la langue",
   "language.fr.short": "FR",
   "language.en.short": "EN",
