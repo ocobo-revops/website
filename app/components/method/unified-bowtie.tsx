@@ -1,310 +1,442 @@
+import { Check, RefreshCw } from 'lucide-react';
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
-type DiagramLoops = {
-  acquisition: string;
-  expansion: string;
+import { Tooltip } from '~/components/ui/tooltip';
+import {
+  BOWTIE_NAMESPACE,
+  MILESTONE_PREFIX_KEY,
+  STAGE_IDS,
+  type StageId,
+  type StageWithState,
+  getStageLabelKey,
+  getStageStates,
+} from '~/modules/bowtie-stages';
+
+import {
+  BOWTIE_VIEWBOX,
+  FLOW_LINES,
+  columnSlice,
+  flowPath,
+} from './bowtie-layout';
+
+/** Challenge colours, keyed like the `challenge.<id>` tokens. */
+export type BowtieChallenge = 'rp' | 'se' | 'sc' | 'cx' | 'sy' | 'ai';
+
+type UnifiedBowtieProps = {
+  /** Stages drawn at full strength. Every stage when omitted. */
+  activeStages?: Iterable<StageId>;
+  /** Tints the active stages and shows their KPI chips. Neutral when omitted. */
+  challenge?: BowtieChallenge;
 };
 
-type DiagramCenter = {
-  line1: string;
-  line2: string;
+// One static class per challenge: Panda only ships literal values (CLAUDE.md,
+// static analysis trap). The root sets the palette, and every challenge colour
+// below reads it as `colorPalette`. Revenue AI's token is coral, the start of
+// its gradient.
+const challengePalette: Record<BowtieChallenge, string> = {
+  rp: css({ colorPalette: 'challenge.rp' }),
+  se: css({ colorPalette: 'challenge.se' }),
+  sc: css({ colorPalette: 'challenge.sc' }),
+  cx: css({ colorPalette: 'challenge.cx' }),
+  sy: css({ colorPalette: 'challenge.sy' }),
+  ai: css({ colorPalette: 'challenge.ai' }),
 };
 
-type DiagramFlow = {
-  left: string[];
-  right: string[];
+const flowStroke = css({ stroke: 'colorPalette' });
+const paletteBorder = css({ borderColor: 'colorPalette' });
+const paletteDot = css({ bg: 'colorPalette' });
+
+const tooltipAccent = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'colorPalette',
+});
+// An inactive stage gets the light grey of its centre line, so that it never
+// reads as Revenue Systems' grey.
+const tooltipAccentInactive = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'gray.300',
+});
+
+const VIEWBOX = `0 0 ${BOWTIE_VIEWBOX.width} ${BOWTIE_VIEWBOX.height}`;
+
+const stageGrid = css({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(7, minmax(0, 1fr))',
+});
+
+const flowSvg = css({ position: 'absolute', top: '0', h: 'full' });
+
+const centreLine = css({
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  left: '[50%]',
+  borderLeftWidth: '1px',
+  borderLeftStyle: 'dashed',
+});
+const centreLineState = {
+  active: css({ borderLeftColor: 'gray.300' }),
+  inactive: css({ borderLeftColor: 'gray.100' }),
 };
 
-export const UnifiedBowtie = () => {
-  const { t } = useTranslation('method');
-  const loops = t('scope.diagram.loops', {
-    returnObjects: true,
-  }) as DiagramLoops;
-  const center = t('scope.diagram.center', {
-    returnObjects: true,
-  }) as DiagramCenter;
-  const flow = t('scope.diagram.flow', { returnObjects: true }) as DiagramFlow;
-  const stages = t('scope.diagram.stages', { returnObjects: true }) as string[];
+const stageTrigger = css({
+  display: 'flex',
+  justifyContent: 'center',
+  w: 'full',
+  h: 'full',
+  // Clears the drawing (`h: '48'`) plus 1rem.
+  pt: '52',
+  pb: '1',
+  px: '1',
+  rounded: 'lg',
+  bg: 'transparent',
+  textAlign: 'center',
+});
+
+const stageLabel = cx(
+  text({ variant: 'label' }),
+  css({ letterSpacing: 'chip', fontWeight: 'bold' }),
+);
+const labelState = {
+  active: css({ color: 'gray.600' }),
+  emphasis: css({ color: 'dark' }),
+  inactive: css({ color: 'gray' }),
+};
+
+const chip = cx(
+  text({ variant: 'small' }),
+  css({
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '1.5',
+    px: '2.5',
+    py: '1',
+    bg: 'white',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    rounded: 'full',
+    // Dark text: the challenge shades fail contrast on white.
+    color: 'dark',
+    whiteSpace: 'nowrap',
+  }),
+);
+
+const kpiContent = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2',
+});
+const kpiLabel = css({ color: 'white/75' });
+const kpiTitle = cx(
+  text({ variant: 'body', color: 'white' }),
+  css({ fontWeight: 'bold' }),
+);
+
+const centred = css({
+  position: 'absolute',
+  top: '[50%]',
+  left: '[50%]',
+  transform: 'translate(-50%, -50%)',
+});
+
+// Active labels are dark with a challenge; without one, only closing is.
+function labelClass(stage: StageWithState, challenge?: BowtieChallenge) {
+  if (stage.state === 'inactive') return labelState.inactive;
+  if (challenge || stage.id === 'closing') return labelState.emphasis;
+  return labelState.active;
+}
+
+/**
+ * The revenue bow tie: flow lines converge on the closing knot, then fan out
+ * again, over the seven stages of the model. Active stages carry the colour,
+ * inactive ones keep the grey lines. Each stage label opens a tooltip with
+ * its KPI and Milestone, on hover, keyboard focus and tap. With a challenge,
+ * KPI chips sit under the active stages.
+ */
+export const UnifiedBowtie = ({
+  activeStages = STAGE_IDS,
+  challenge,
+}: UnifiedBowtieProps) => {
+  const { t } = useTranslation(BOWTIE_NAMESPACE);
+  // Unique per instance: several bow ties can share a page.
+  const gradientId = `${useId()}flow`;
+  const stages = getStageStates(activeStages);
+  const label = (id: StageId) => t(getStageLabelKey(id, 'label'));
+  const paths = FLOW_LINES.map(flowPath);
 
   return (
     <div
-      className={css({
-        position: 'relative',
-        w: 'full',
-        maxW: '7xl',
-        mx: 'auto',
-        py: '12',
-        px: '4',
-        overflow: 'visible',
-        display: { base: 'none', md: 'block' },
-      })}
-    >
-      <div
-        className={css({
+      role="group"
+      aria-label={t('title')}
+      className={cx(
+        challenge && challengePalette[challenge],
+        css({
           position: 'relative',
           w: 'full',
-          aspectRatio: { base: '[21/9]', md: '[28/9]' },
-        })}
-      >
+          maxW: '7xl',
+          mx: 'auto',
+          py: '12',
+          px: '4',
+          display: { base: 'none', md: 'block' },
+        }),
+      )}
+    >
+      <div className={css({ position: 'relative' })}>
         <div
-          className={css({ position: 'absolute', inset: '0', opacity: '0.03' })}
-          style={{
-            backgroundImage: 'radial-gradient(#212323 1px, transparent 1px)',
-            backgroundSize: '20px 20px',
-          }}
-        />
-
-        <svg
-          viewBox="0 0 1200 350"
+          aria-hidden="true"
           className={css({
-            w: 'full',
-            h: 'full',
-            overflow: 'visible',
-            color: 'ocobo.dark',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            right: '0',
+            h: '48',
           })}
-          fill="none"
         >
-          <defs>
-            <linearGradient
-              id="blueprintGradient"
-              x1="0%"
-              y1="0%"
-              x2="100%"
-              y2="0%"
-            >
-              <stop offset="0%" stopColor="#212323" stopOpacity="0.01" />
-              <stop offset="50%" stopColor="#212323" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#212323" stopOpacity="0.01" />
-            </linearGradient>
-            <marker
-              id="arrowhead"
-              markerWidth="10"
-              markerHeight="7"
-              refX="0"
-              refY="3.5"
-              orient="auto"
-            >
-              <polygon
-                points="0 0, 10 3.5, 0 7"
-                fill="currentColor"
-                fillOpacity="0.2"
-              />
-            </marker>
-          </defs>
-
-          <g
-            stroke="currentColor"
-            strokeWidth="1"
-            strokeOpacity="0.1"
+          <svg
+            viewBox={VIEWBOX}
+            preserveAspectRatio="none"
             fill="none"
-          >
-            <path d="M 350,110 C 300,50 150,50 100,110" strokeDasharray="3 3" />
-            <path
-              d="M 100,240 C 150,300 300,300 350,240"
-              strokeDasharray="3 3"
-              markerEnd="url(#arrowhead)"
-            />
-            <text
-              x="225"
-              y="45"
-              textAnchor="middle"
-              fill="currentColor"
-              fillOpacity="0.35"
-              fontSize="12"
-              fontWeight="900"
-              className={css({
-                fontFamily: 'display',
-                textTransform: 'uppercase',
-                letterSpacing: 'label',
-              })}
-            >
-              {loops.acquisition}
-            </text>
-
-            <path
-              d="M 850,110 C 900,50 1050,50 1100,110"
-              strokeDasharray="3 3"
-            />
-            <path
-              d="M 1100,240 C 1050,300 900,300 850,240"
-              strokeDasharray="3 3"
-              markerEnd="url(#arrowhead)"
-            />
-            <text
-              x="975"
-              y="45"
-              textAnchor="middle"
-              fill="currentColor"
-              fillOpacity="0.35"
-              fontSize="12"
-              fontWeight="900"
-              className={css({
-                fontFamily: 'display',
-                textTransform: 'uppercase',
-                letterSpacing: 'label',
-              })}
-            >
-              {loops.expansion}
-            </text>
-          </g>
-
-          <path
-            d="M40,60 L540,140 L540,210 L40,290 Z"
-            fill="white"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            strokeOpacity="0.2"
-          />
-          <path
-            d="M1160,60 L660,140 L660,210 L1160,290 Z"
-            fill="white"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            strokeOpacity="0.2"
-          />
-
-          <path
-            d="M40,60 L540,140 L540,210 L40,290 Z"
-            fill="url(#blueprintGradient)"
-          />
-          <path
-            d="M1160,60 L660,140 L660,210 L1160,290 Z"
-            fill="url(#blueprintGradient)"
-          />
-
-          <g
-            stroke="currentColor"
-            strokeWidth="0.5"
-            strokeDasharray="4 4"
-            strokeOpacity="0.15"
-          >
-            <line x1="206" y1="40" x2="206" y2="310" />
-            <line x1="373" y1="40" x2="373" y2="310" />
-            <line x1="826" y1="40" x2="826" y2="310" />
-            <line x1="993" y1="40" x2="993" y2="310" />
-          </g>
-
-          <g>
-            <rect
-              x="540"
-              y="125"
-              width="120"
-              height="100"
-              fill="currentColor"
-              rx="4"
-              className={css({ shadow: 'lg' })}
-            />
-            <text
-              x="600"
-              y="165"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontWeight="900"
-              className={css({
-                fontFamily: 'display',
-                textTransform: 'uppercase',
-                letterSpacing: 'tag',
-              })}
-            >
-              {center.line1}
-            </text>
-            <text
-              x="600"
-              y="185"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontWeight="900"
-              className={css({
-                fontFamily: 'display',
-                textTransform: 'uppercase',
-                letterSpacing: 'tag',
-              })}
-            >
-              {center.line2}
-            </text>
-            <circle
-              cx="600"
-              cy="125"
-              r="3"
-              fill="#9ADBBA"
-              className={css({ animation: 'pulse' })}
-            />
-          </g>
-
-          <g
-            fill="currentColor"
-            fillOpacity="0.45"
-            fontSize="13"
-            fontWeight="900"
             className={css({
-              fontFamily: 'display',
-              textTransform: 'uppercase',
-              letterSpacing: 'tag',
+              position: 'absolute',
+              inset: '0',
+              w: 'full',
+              h: 'full',
+              stroke: 'line',
             })}
           >
-            <text x="40" y="240" textAnchor="start" dx="5">
-              {flow.left[0]}
-            </text>
-            <text x="206" y="220" textAnchor="middle">
-              {flow.left[1]}
-            </text>
-            <text x="373" y="200" textAnchor="middle">
-              {flow.left[2]}
-            </text>
+            <defs>
+              <linearGradient
+                id={gradientId}
+                gradientUnits="userSpaceOnUse"
+                x1="0"
+                y1="0"
+                x2={BOWTIE_VIEWBOX.width}
+                y2="0"
+              >
+                <stop offset="0%" stopColor="var(--colors-mint)" />
+                <stop offset="35%" stopColor="var(--colors-coral)" />
+                <stop offset="65%" stopColor="var(--colors-yellow)" />
+                <stop offset="100%" stopColor="var(--colors-sky)" />
+              </linearGradient>
+            </defs>
+            {paths.map((d) => (
+              <path
+                key={d}
+                d={d}
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+            ))}
+          </svg>
 
-            <text x="826" y="200" textAnchor="middle">
-              {flow.right[0]}
-            </text>
-            <text x="993" y="220" textAnchor="middle">
-              {flow.right[1]}
-            </text>
-            <text x="1160" y="240" textAnchor="end" dx="-5">
-              {flow.right[2]}
-            </text>
-          </g>
-
-          <g
-            className={css({ fontFamily: 'display' })}
-            fontSize="13"
-            fontWeight="900"
-            fill="currentColor"
-            letterSpacing="0.05em"
+          <div
+            className={cx(stageGrid, css({ position: 'absolute', inset: '0' }))}
           >
-            <text x="123" y="175" textAnchor="middle">
-              {stages[0]}
-            </text>
-            <text x="123" y="192" textAnchor="middle">
-              {stages[1]}
-            </text>
-            <text x="289" y="185" textAnchor="middle">
-              {stages[2]}
-            </text>
-            <text x="456" y="185" textAnchor="middle">
-              {stages[3]}
-            </text>
-            <text x="743" y="185" textAnchor="middle">
-              {stages[4]}
-            </text>
-            <text x="909" y="185" textAnchor="middle">
-              {stages[5]}
-            </text>
-            <text x="1076" y="185" textAnchor="middle">
-              {stages[6]}
-            </text>
-          </g>
+            {stages.map((stage, index) => (
+              <div
+                key={stage.id}
+                data-stage-column={stage.id}
+                data-state={stage.state}
+                className={css({ position: 'relative', overflow: 'hidden' })}
+              >
+                <span
+                  className={cx(centreLine, centreLineState[stage.state])}
+                />
+                {stage.state === 'active' && (
+                  <svg
+                    data-stage-tint={challenge ?? 'neutral'}
+                    viewBox={VIEWBOX}
+                    preserveAspectRatio="none"
+                    fill="none"
+                    className={cx(flowSvg, challenge && flowStroke)}
+                    style={columnSlice(index, stages.length)}
+                    stroke={challenge ? undefined : `url(#${gradientId})`}
+                  >
+                    {paths.map((d) => (
+                      <path
+                        key={d}
+                        d={d}
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    ))}
+                  </svg>
+                )}
+              </div>
+            ))}
+          </div>
 
-          <g stroke="currentColor" strokeOpacity="0.2" strokeWidth="1">
-            <path d="M206,60 v-6 m-3,3 h6" />
-            <path d="M373,85 v-6 m-3,3 h6" />
-            <path d="M826,85 v-6 m-3,3 h6" />
-            <path d="M993,60 v-6 m-3,3 h6" />
-          </g>
-        </svg>
+          {challenge ? (
+            <span
+              className={cx(
+                centred,
+                css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  h: '14',
+                  w: '14',
+                  rounded: 'full',
+                  bg: 'dark',
+                  color: 'white',
+                }),
+              )}
+            >
+              <span
+                className={cx(
+                  paletteBorder,
+                  css({
+                    position: 'absolute',
+                    inset: '-1.5',
+                    rounded: 'full',
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    animation: 'pulse',
+                    // Stops before 5 seconds, so it needs no pause control
+                    // (WCAG 2.2.2).
+                    animationIterationCount: '3',
+                    _motionReduce: { animation: '[none]' },
+                  }),
+                )}
+              />
+              <Check className={css({ h: '6', w: '6' })} strokeWidth={3} />
+            </span>
+          ) : (
+            <span
+              className={cx(
+                centred,
+                css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  h: '10',
+                  w: '10',
+                  rounded: 'full',
+                  bg: 'dark',
+                  borderWidth: '6px',
+                  borderStyle: 'solid',
+                  borderColor: 'white',
+                  boxSizing: 'content-box',
+                }),
+              )}
+            >
+              <span
+                className={css({
+                  h: '3',
+                  w: '3',
+                  rounded: 'full',
+                  bgGradient: 'ai',
+                })}
+              />
+            </span>
+          )}
+
+          {/* The expansion loop feeds revenue back into the bow tie. It sits
+              at six sevenths, between the adoption and expansion columns. */}
+          <span
+            className={css({
+              position: 'absolute',
+              top: '[50%]',
+              left: '[85.714%]',
+              transform: 'translate(-50%, -50%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              h: '6',
+              w: '6',
+              rounded: 'full',
+              bg: 'white',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'line',
+              color: 'gray',
+            })}
+          >
+            <RefreshCw className={css({ h: '3', w: '3' })} />
+          </span>
+        </div>
+
+        <ul className={cx(stageGrid, css({ position: 'relative' }))}>
+          {stages.map((stage) => (
+            <li key={stage.id}>
+              <Tooltip
+                className={
+                  challenge
+                    ? stage.state === 'active'
+                      ? tooltipAccent
+                      : tooltipAccentInactive
+                    : undefined
+                }
+                asChild
+                content={
+                  <span className={kpiContent} data-stage-kpi={stage.id}>
+                    <span className={kpiLabel}>
+                      {t(MILESTONE_PREFIX_KEY)} ·{' '}
+                      {t(getStageLabelKey(stage.id, 'milestone'))}
+                    </span>
+                    <span className={kpiTitle}>
+                      {t(getStageLabelKey(stage.id, 'kpiTitle'))}
+                    </span>
+                    <span>{t(getStageLabelKey(stage.id, 'description'))}</span>
+                  </span>
+                }
+              >
+                <button
+                  type="button"
+                  data-stage-trigger={stage.id}
+                  className={stageTrigger}
+                >
+                  <span
+                    className={cx(stageLabel, labelClass(stage, challenge))}
+                  >
+                    {label(stage.id)}
+                  </span>
+                  {stage.state === 'inactive' && (
+                    <span className={css({ srOnly: true })}>
+                      , {t('inactive')}
+                    </span>
+                  )}
+                </button>
+              </Tooltip>
+            </li>
+          ))}
+        </ul>
       </div>
+
+      {challenge && (
+        <ul className={cx(stageGrid, css({ mt: '3' }))}>
+          {stages.map((stage) => (
+            <li
+              key={stage.id}
+              aria-hidden={stage.state === 'active' ? undefined : true}
+              className={css({ display: 'flex', justifyContent: 'center' })}
+            >
+              {stage.state === 'active' && (
+                <span
+                  data-stage-chip={stage.id}
+                  className={cx(chip, paletteBorder)}
+                >
+                  <span
+                    className={cx(
+                      css({ h: '1.5', w: '1.5', rounded: 'full' }),
+                      paletteDot,
+                    )}
+                  />
+                  <span className={css({ srOnly: true })}>
+                    {label(stage.id)},{' '}
+                  </span>
+                  {t(getStageLabelKey(stage.id, 'kpiShort'))}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

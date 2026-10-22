@@ -1,4 +1,6 @@
 {
+  "title": "The revenue bow tie",
+  "inactive": "stage out of scope",
   "milestonePrefix": "Milestone",
   "stages": {
     "demand-generation": {

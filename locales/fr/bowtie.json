@@ -1,4 +1,6 @@
 {
+  "title": "Le nœud papillon du revenu",
+  "inactive": "étape hors périmètre",
   "milestonePrefix": "Jalon",
   "stages": {
     "demand-generation": {

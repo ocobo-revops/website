@@ -13,8 +13,8 @@ import { grid } from '@ocobo/styled-system/patterns';
 import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '../ui/Container';
+import { LegacyBowtie } from './legacy-bowtie';
 import { ScopeCard } from './scope-card';
-import { UnifiedBowtie } from './unified-bowtie';
 
 type ScopeColor = 'yellow' | 'sky' | 'mint' | 'coral' | 'dark';
 
@@ -65,7 +65,7 @@ export const ScopeSection = () => {
           {t('scope.subtitle')}
         </p>
 
-        <UnifiedBowtie />
+        <LegacyBowtie />
 
         <h3
           className={cx(
