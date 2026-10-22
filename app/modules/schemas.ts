@@ -8,6 +8,8 @@
 
 import { z } from 'zod';
 
+import { CHALLENGE_KEYS } from './challenge-schema';
+
 /**
  * Common validation schemas that can be reused
  */
@@ -172,24 +174,61 @@ export type MemberTrack = z.infer<typeof MemberTrackSchema>;
 /**
  * Team member frontmatter schema — one file per person in `team/<slug>.md`
  */
-export const MemberFrontmatterSchema = z.object({
-  name: CommonSchemas.nonEmptyString,
-  role: z.object({
-    fr: CommonSchemas.nonEmptyString,
-    en: CommonSchemas.nonEmptyString,
-  }),
-  track: MemberTrackSchema,
-  linkedin: z.string().url().optional(),
-  avatar: z.string().url(),
-  displayOrder: z.number().int(),
-  active: z.boolean().default(true),
-  bio: z.object({
-    fr: CommonSchemas.nonEmptyString,
-    en: CommonSchemas.nonEmptyString,
-  }),
-  featuredOnAboutUs: z.boolean().default(false),
-  color: MemberColorSchema.optional(),
-});
+export const MemberFrontmatterSchema = z
+  .object({
+    name: CommonSchemas.nonEmptyString,
+    role: z.object({
+      fr: CommonSchemas.nonEmptyString,
+      en: CommonSchemas.nonEmptyString,
+    }),
+    track: MemberTrackSchema,
+    linkedin: z.string().url().optional(),
+    avatar: z.string().url(),
+    displayOrder: z.number().int(),
+    active: z.boolean().default(true),
+    bio: z.object({
+      fr: CommonSchemas.nonEmptyString,
+      en: CommonSchemas.nonEmptyString,
+    }),
+    featuredOnAboutUs: z.boolean().default(false),
+    color: MemberColorSchema.optional(),
+    // Expert fields: all optional, absent for people who are not challenge
+    // experts. Mirrors the posts repo (`scripts/schemas/team-member.schema.js`,
+    // ocobo-revops/posts#95). Caps apply to the raw text, as published, so no
+    // trim; `\S` rejects blank values.
+    challenge: z.enum(CHALLENGE_KEYS).optional(),
+    contribution: z
+      .object({
+        fr: z.string().regex(/\S/).max(100),
+        en: z.string().regex(/\S/).max(100),
+      })
+      .optional(),
+    tools: z
+      .array(z.string().min(1))
+      .min(1)
+      .max(8)
+      .refine((slugs) => new Set(slugs).size === slugs.length, {
+        message: 'tools must not contain duplicates',
+      })
+      .optional(),
+    previousCompanies: z
+      .array(z.string().regex(/\S/).max(30))
+      .min(1)
+      .max(3)
+      .optional(),
+  })
+  .superRefine((member, ctx) => {
+    if (member.challenge === undefined) return;
+    for (const field of ['contribution', 'tools'] as const) {
+      if (member[field] === undefined) {
+        ctx.addIssue({
+          code: 'custom',
+          path: [field],
+          message: `${field} is required when challenge is set`,
+        });
+      }
+    }
+  });
 
 /**
  * Tool frontmatter schema — one file per tool in `tools/<slug>.md`
