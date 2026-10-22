@@ -1,8 +1,8 @@
 /**
  * @vitest-environment jsdom
  *
- * Challenge page route (#233): the loader through the `invokeLoader`
- * harness, then the page with sections left out.
+ * Challenge page route (#233, #234): the loader through the
+ * `invokeLoader` harness, then the page with sections left out.
  */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -147,7 +147,7 @@ function renderPage(
 }
 
 describe('challenge page', () => {
-  it('renders the four sections in order', () => {
+  it('renders the sections in order', () => {
     renderPage(fixture.frontmatter);
 
     const headings = screen
@@ -159,6 +159,8 @@ describe('challenge page', () => {
     expect(headings).toEqual([
       'The number lives in the heads of a few people. Nowhere else.',
       'Who it is for',
+      'What we build',
+      'How we work',
       fixture.frontmatter.diagnostic.question,
     ]);
     const ctas = screen.getAllByRole('link', {
@@ -186,6 +188,56 @@ describe('challenge page', () => {
     expect(screen.getByText('Who it is for')).toBeInTheDocument();
   });
 
+  it('links the secondary hero CTA to the workstreams', () => {
+    renderPage(fixture.frontmatter);
+
+    expect(screen.getByRole('link', { name: 'What we build' })).toHaveAttribute(
+      'href',
+      '#chantiers',
+    );
+    expect(document.getElementById('chantiers')).not.toBeNull();
+    expect(
+      screen.getAllByRole('button', { name: /^Flip card/ }).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it('drops the workstreams and their CTA when every deliverable is a placeholder', () => {
+    const { frontmatter } = fixture;
+    renderPage({
+      ...frontmatter,
+      workstreams: {
+        ...frontmatter.workstreams,
+        items: frontmatter.workstreams.items.map((item) => ({
+          ...item,
+          deliverable: '[Deliverable]',
+        })),
+      },
+    });
+
+    expect(document.getElementById('chantiers')).toBeNull();
+    expect(
+      screen.queryByRole('link', { name: 'What we build' }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText('How we work')).toBeInTheDocument();
+  });
+
+  it('drops the method when every step text is a placeholder', () => {
+    const { frontmatter } = fixture;
+    renderPage({
+      ...frontmatter,
+      method: {
+        ...frontmatter.method,
+        steps: frontmatter.method.steps.map((step) => ({
+          ...step,
+          text: '[Step]',
+        })),
+      },
+    });
+
+    expect(screen.queryByText('How we work')).not.toBeInTheDocument();
+    expect(screen.queryByText('[Step]')).not.toBeInTheDocument();
+  });
+
   it('drops the hero CTA when the diagnostic block is absent', () => {
     const { frontmatter } = fixture;
     renderPage({
@@ -198,6 +250,11 @@ describe('challenge page', () => {
       screen.queryByRole('link', { name: 'Make my forecast reliable' }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText('[Question]')).not.toBeInTheDocument();
+    // The workstreams CTA stays, alone and secondary.
+    expect(screen.getByRole('link', { name: 'What we build' })).toHaveAttribute(
+      'href',
+      '#chantiers',
+    );
   });
 
   it('renders the French file with the French labels', () => {
@@ -210,6 +267,27 @@ describe('challenge page', () => {
     expect(
       screen.getByRole('heading', { level: 2, name: 'Pour qui' }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Comment nous travaillons',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByRole('heading', { level: 3, name: 'Diagnostic' }),
+    ).toHaveLength(1);
+  });
+
+  it('keeps the file override of the method headings', () => {
+    const revenueAi = loadChallengeFixture('fr', 'revenue-ai');
+    renderPage(revenueAi.frontmatter, 'fr');
+
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Le Revenue AI Sprint' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'Comment nous travaillons' }),
+    ).not.toBeInTheDocument();
   });
 
   it('keeps an h1 when the hero title is a placeholder', () => {
