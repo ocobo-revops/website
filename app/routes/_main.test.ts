@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import type { ShouldRevalidateFunctionArgs } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { invokeLoader } from '~/test/loader-harness';
 
@@ -45,6 +45,28 @@ async function challengesFor(contentRoot: string, lang?: string) {
 }
 
 describe('_main loader', () => {
+  beforeEach(() => {
+    // Challenges are disabled by default: enable every page.
+    vi.stubEnv('DISABLED_PAGES', '');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('returns no challenge and reads no content when the flag is disabled', async () => {
+    vi.stubEnv('DISABLED_PAGES', undefined);
+    const fetchChallenges = vi.fn();
+    vi.doMock('~/modules/content/api', () => ({ fetchChallenges }));
+
+    try {
+      expect(await challengesFor(FIXTURES)).toEqual([]);
+      expect(fetchChallenges).not.toHaveBeenCalled();
+    } finally {
+      vi.doUnmock('~/modules/content/api');
+    }
+  });
+
   it('lists the French challenges in order', async () => {
     const challenges = await challengesFor(FIXTURES);
 

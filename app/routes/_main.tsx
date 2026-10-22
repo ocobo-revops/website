@@ -12,14 +12,19 @@ import { LayoutMain } from '~/components/LayoutMain';
 import { createHybridLoader } from '~/modules/cache';
 import { toChallengeMenu } from '~/modules/challenge-menu';
 import { fetchChallenges } from '~/modules/content/api';
+import { isPageEnabled } from '~/modules/feature-flags';
 import { getLang } from '~/utils/lang';
 
 /**
- * Layout data shared by every page: the navbar challenge entry (#237). A
- * failed or empty fetch hides the entry and never fails the page.
+ * Layout data shared by every page: the navbar challenge entry (#237). The
+ * entry is hidden, and the page still renders, when the `challenges` page is
+ * disabled (no fetch then), when the fetch fails or when it finds nothing.
  */
 export const loader = createHybridLoader(
   async ({ params }: LoaderFunctionArgs) => {
+    if (!isPageEnabled('challenges')) {
+      return { challenges: [] };
+    }
     const [status, state, files] = await fetchChallenges(getLang(params));
     if (status === 200 && files) {
       return { challenges: toChallengeMenu(files) };

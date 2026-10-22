@@ -8,7 +8,8 @@
  *  4. Draft/closed jobs are excluded; only published ones appear.
  *  5. Loader degrades gracefully when any content fetcher fails.
  *  6. All fetchers fire in parallel (no sequential awaiting).
- *  7. Challenge routes are listed in both languages.
+ *  7. Challenge routes are listed in both languages, and none while the
+ *     `challenges` flag is disabled.
  *
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
@@ -112,10 +113,13 @@ function jobEntry(
 }
 
 beforeEach(() => {
+  // Challenges are disabled by default: enable every page.
+  vi.stubEnv('DISABLED_PAGES', '');
   fetchChallengesMock.mockResolvedValue([200, 'success', []]);
 });
 
 afterEach(() => {
+  vi.unstubAllEnvs();
   vi.clearAllMocks();
   vi.resetModules();
 });
@@ -309,6 +313,27 @@ describe('sitemap loader', () => {
       '<loc>https://www.ocobo.co/en/challenges/revenue-ai</loc>',
     );
     expect(body).not.toContain('Not_Kebab');
+  });
+
+  it('lists no challenge and skips the fetch when the flag is disabled', async () => {
+    vi.stubEnv('DISABLED_PAGES', undefined);
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    fetchChallengesMock.mockResolvedValue([
+      200,
+      'success',
+      [{ slug: 'revenue-performance' }],
+    ]);
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+
+    expect(fetchChallengesMock).not.toHaveBeenCalled();
+    expect(body).not.toContain('/challenges/');
   });
 
   it('degrades gracefully when the challenges fetcher fails', async () => {

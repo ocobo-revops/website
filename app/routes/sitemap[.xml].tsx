@@ -2,6 +2,7 @@ import type { Language } from '~/localization/resources';
 import { isChallengeSlug } from '~/modules/challenge-page';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
 import { fetchChallenges } from '~/modules/content/api';
+import { isPageEnabled } from '~/modules/feature-flags';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -106,17 +107,21 @@ export async function loader() {
   });
 
   // Challenge files carry no date: every file in the folder is published.
-  const challengesQuery = (lang: Language) =>
-    fetchChallenges(lang).then((result) => {
-      const [, state, data] = result;
-      if (state === 'success' && data) {
-        // The route answers 404 to any other slug: never list it.
-        return data
-          .filter((challenge) => isChallengeSlug(challenge.slug))
-          .map((challenge) => ({ slug: challenge.slug, lang }));
-      }
+  // With the `challenges` page disabled, list none and call no source.
+  const challengesEnabled = isPageEnabled('challenges');
+  const challengesQuery = async (lang: Language) => {
+    if (!challengesEnabled) {
       return [];
-    });
+    }
+    const [, state, data] = await fetchChallenges(lang);
+    if (state === 'success' && data) {
+      // The route answers 404 to any other slug: never list it.
+      return data
+        .filter((challenge) => isChallengeSlug(challenge.slug))
+        .map((challenge) => ({ slug: challenge.slug, lang }));
+    }
+    return [];
+  };
 
   const [stories, posts, jobs, frChallenges, enChallenges] = await Promise.all([
     storiesQuery,
