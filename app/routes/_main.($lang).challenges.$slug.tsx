@@ -14,6 +14,7 @@ import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
 import { fetchChallenge } from '~/modules/content/api';
+import { loadChallengeReferences } from '~/modules/content/challenge-references';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
@@ -40,6 +41,12 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   }
 
   const page = buildChallengePage(challenge.frontmatter);
+  // Never throws: a broken reference hides only the block that needs it.
+  const references = await loadChallengeReferences(
+    slug,
+    challenge.frontmatter,
+    lang,
+  );
   const { name, tagline } = page;
   const description = [page.hero.lead, page.hero.highlight]
     .filter(Boolean)
@@ -47,6 +54,7 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
 
   return {
     page,
+    references,
     lang,
     slug,
     title: tagline

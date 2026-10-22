@@ -22,6 +22,22 @@ vi.mock('~/modules/content/api', () => ({
   fetchChallenge: (...args: unknown[]) => fetchChallengeMock(...args),
 }));
 
+const references = {
+  clientCase: null,
+  methodTools: [],
+  partner: null,
+  experts: [],
+  otherChallenges: [],
+};
+const loadChallengeReferencesMock = vi.fn(
+  async (..._args: unknown[]) => references,
+);
+
+vi.mock('~/modules/content/challenge-references', () => ({
+  loadChallengeReferences: (...args: unknown[]) =>
+    loadChallengeReferencesMock(...args),
+}));
+
 vi.mock('~/localization/i18n.server', () => ({
   default: {
     getFixedT: async (lang: string) => (key: string) => `${lang}:${key}`,
@@ -58,6 +74,24 @@ describe('challenge loader', () => {
     expect(outcome.data.lang).toBe('fr');
     expect(outcome.data.page.key).toBe('rp');
     expect(outcome.data.title).toBe('fr:meta.title');
+  });
+
+  it('returns the resolved references of the challenge', async () => {
+    fetchChallengeMock.mockResolvedValue([200, 'success', fixture]);
+
+    const outcome = await invokeLoader(loader, {
+      url: 'http://test.local/en/challenges/revenue-performance',
+      params: { lang: 'en', slug: 'revenue-performance' },
+    });
+
+    expect(loadChallengeReferencesMock).toHaveBeenCalledWith(
+      'revenue-performance',
+      fixture.frontmatter,
+      'en',
+    );
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    expect(outcome.data.references).toBe(references);
   });
 
   it('fetches the English file for /en/challenges/<slug>', async () => {
