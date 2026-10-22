@@ -59,9 +59,10 @@ export async function invokeLoader<T>(
     request,
     params,
     context: {} as LoaderFunctionArgs['context'],
-    // RR v7 internal field; not part of public route loader contract but
-    // required by the type. Loaders that reach for it are an anti-pattern.
-    unstable_pattern: options.url ?? '/',
+    url: new URL(request.url),
+    // Matched route pattern, used by RR for logging/tracing. Loaders that
+    // reach for it are an anti-pattern.
+    pattern: options.url ?? '/',
   };
   try {
     const result = await loader(args);
