@@ -87,6 +87,8 @@ const allSections = pages.flatMap(({ sections }) => sections);
 
 const sidebar = (page: Page) =>
   page.getByRole('navigation', { name: 'Design system' });
+const sectionList = (page: Page) =>
+  sidebar(page).locator('[aria-label="On this page"]');
 
 test.describe('design system pages', () => {
   test('the index links to every page, grouped', async ({ page }) => {
@@ -125,15 +127,21 @@ test.describe('design system pages', () => {
     });
   }
 
-  for (const { path, name } of pages) {
-    test(`${name} lists every section and links to its heading`, async ({
-      page,
-    }) => {
+  for (const { path, name, sections } of pages) {
+    const title =
+      sections.length > 1
+        ? `${name} lists every section under its sidebar link`
+        : `${name} has a single section and no section list`;
+    test(title, async ({ page }) => {
       await page.goto(path);
-      // The list may be hidden on narrow screens, so read it from the DOM.
-      const hrefs = await page
-        .locator('nav[aria-label="On this page"] a')
+      // The list is hidden on narrow screens, so read it from the DOM.
+      const hrefs = await sectionList(page)
+        .locator('a')
         .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+      if (sections.length === 1) {
+        expect(hrefs).toEqual([]);
+        return;
+      }
       const headingIds = await page
         .locator('main section > h2[id]')
         .evaluateAll((headings) => headings.map((heading) => heading.id));
@@ -146,6 +154,19 @@ test.describe('design system pages', () => {
 
   test('the index has no section list', async ({ page }) => {
     await page.goto(index.path);
+    await expect(sectionList(page)).toHaveCount(0);
+  });
+
+  test('the section list sits under the current page link', async ({
+    page,
+  }) => {
+    // The list shows from `lg` only.
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/design-system/cards');
+    const item = sidebar(page)
+      .getByRole('listitem')
+      .filter({ has: page.getByRole('link', { name: 'Cards', exact: true }) });
+    await expect(item.locator('[aria-label="On this page"]')).toBeVisible();
     await expect(page.locator('nav[aria-label="On this page"]')).toHaveCount(0);
   });
 
