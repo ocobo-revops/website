@@ -8,16 +8,31 @@ let observerCallback: IntersectionObserverCallback;
 const mockObserve = vi.fn();
 const mockDisconnect = vi.fn();
 
+const motionPreference = { matches: false, listeners: new Set<() => void>() };
+
 function stubReducedMotion(matches: boolean) {
+  motionPreference.matches = matches;
+  motionPreference.listeners.clear();
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => ({
-      matches,
+      get matches() {
+        return motionPreference.matches;
+      },
       media: query,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
+      addEventListener: (_: string, listener: () => void) =>
+        motionPreference.listeners.add(listener),
+      removeEventListener: (_: string, listener: () => void) =>
+        motionPreference.listeners.delete(listener),
     })),
   );
+}
+
+function toggleReducedMotion(matches: boolean) {
+  act(() => {
+    motionPreference.matches = matches;
+    for (const listener of motionPreference.listeners) listener();
+  });
 }
 
 function stubElementTop(top: number) {
@@ -96,6 +111,33 @@ describe('useInView', () => {
     intersect(true);
     expect(screen.getByTestId('probe')).toHaveTextContent('visible');
     expect(mockDisconnect).toHaveBeenCalled();
+  });
+
+  it('keeps an element scrolled past visible', () => {
+    stubElementTop(-2000);
+    render(<Probe />);
+
+    expect(screen.getByTestId('probe')).toHaveTextContent('visible');
+  });
+
+  it('shows a hidden element when reduced motion turns on', () => {
+    stubElementTop(5000);
+    render(<Probe />);
+    expect(screen.getByTestId('probe')).toHaveTextContent('hidden');
+
+    toggleReducedMotion(true);
+    expect(screen.getByTestId('probe')).toHaveTextContent('visible');
+    expect(mockDisconnect).toHaveBeenCalled();
+  });
+
+  it('never hides an element again once revealed', () => {
+    stubElementTop(5000);
+    render(<Probe />);
+    intersect(true);
+
+    toggleReducedMotion(true);
+    toggleReducedMotion(false);
+    expect(screen.getByTestId('probe')).toHaveTextContent('visible');
   });
 
   it('stays visible without IntersectionObserver', () => {

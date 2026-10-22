@@ -27,9 +27,9 @@ type UseInViewResult<T extends Element> = {
   inView: boolean;
 };
 
-function isInViewport(element: Element): boolean {
-  const rect = element.getBoundingClientRect();
-  return rect.top < window.innerHeight && rect.bottom > 0;
+// On screen or scrolled past: either way the visitor has seen its place.
+function isAboveFold(element: Element): boolean {
+  return element.getBoundingClientRect().top < window.innerHeight;
 }
 
 /**
@@ -37,11 +37,13 @@ function isInViewport(element: Element): boolean {
  *
  * `inView` starts true, so the server render and a page without JavaScript
  * show the final state. After hydration, only an element below the fold is
- * hidden, then revealed on appearance; one already on screen never blinks.
+ * hidden, then revealed on appearance; one on screen or above it never
+ * blinks.
  * Under reduced motion, without IntersectionObserver, or once revealed,
- * `inView` stays true.
+ * `inView` stays true. The ref must stay on the same element.
  */
 export function useInView<T extends Element>({
+  // Reveal once the element is 10% of the viewport height inside it.
   rootMargin = '0px 0px -10% 0px',
   threshold = 0,
 }: UseInViewOptions = {}): UseInViewResult<T> {
@@ -58,9 +60,11 @@ export function useInView<T extends Element>({
       prefersReducedMotion ||
       matchesReducedMotion() ||
       typeof IntersectionObserver === 'undefined' ||
-      isInViewport(element)
+      isAboveFold(element)
     ) {
+      // Never hide again an element the visitor may have seen.
       setInView(true);
+      if (element) setRevealed(true);
       return;
     }
 

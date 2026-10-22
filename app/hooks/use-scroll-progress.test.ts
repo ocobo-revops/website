@@ -29,6 +29,19 @@ describe('useScrollProgress', () => {
     expect(result.current.progress.get()).toBe(1);
   });
 
+  it('accepts a target element and offsets', () => {
+    stubReducedMotion(false);
+    const target = { current: document.createElement('div') };
+    document.body.appendChild(target.current);
+    const { result } = renderHook(() =>
+      useScrollProgress({ target, offset: ['start end', 'end start'] }),
+    );
+
+    expect(result.current.enabled).toBe(true);
+    expect(result.current.progress.get()).toBe(0);
+    target.current.remove();
+  });
+
   it('tracks scroll from the top without reduced motion', () => {
     stubReducedMotion(false);
     const { result } = renderHook(() => useScrollProgress());

@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 
 import { css, cx } from '@ocobo/styled-system/css';
 
@@ -21,7 +21,7 @@ const visible = css({
   _motionReduce: { transitionDuration: 'instant' },
 });
 
-type RevealProps = ComponentProps<'div'>;
+type RevealProps = ComponentPropsWithoutRef<'div'>;
 
 /**
  * Fades and lifts its content into place when it enters the viewport.
@@ -32,10 +32,10 @@ export function Reveal({ className, children, ...props }: RevealProps) {
 
   return (
     <div
+      {...props}
       ref={ref}
       data-state={inView ? 'visible' : 'hidden'}
       className={cx(inView ? visible : hidden, className)}
-      {...props}
     >
       {children}
     </div>
