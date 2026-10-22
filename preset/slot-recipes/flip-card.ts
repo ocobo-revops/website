@@ -93,8 +93,31 @@ export const flipCard = defineSlotRecipe({
       md: { root: { h: '72' } },
       lg: { root: { h: 'lg' } },
     },
+    // `person` lays out the PersonCard faces: a centred front (photo, name,
+    // role, challenge label) and a tighter back. It keeps the `md` height.
+    variant: {
+      default: {},
+      person: {
+        front: {
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '3',
+          px: '5',
+          pt: '6',
+          pb: '5',
+          textAlign: 'center',
+        },
+        back: {
+          gap: '2',
+          p: '6',
+          bg: 'gray.50',
+          color: 'dark',
+        },
+      },
+    },
   },
   defaultVariants: {
     size: 'md',
+    variant: 'default',
   },
 });
