@@ -140,6 +140,29 @@
       "items": ["Go-to-market strategy review", "Revenue planning & board reporting", "Revenue management & leadership"]
     }
   ],
+  "scope.diagram": {
+    "loops": {
+      "acquisition": "Acquisition",
+      "expansion": "Expansion"
+    },
+    "center": {
+      "line1": "New",
+      "line2": "Customer"
+    },
+    "flow": {
+      "left": ["MQL", "SQL", "SQO"],
+      "right": ["ACTIVE", "UPSELL", "CROSS-SELL"]
+    },
+    "stages": [
+      "DEMAND",
+      "GENERATION",
+      "QUALIFICATION",
+      "NEGOTIATION",
+      "ONBOARDING",
+      "ADOPTION",
+      "IMPACT"
+    ]
+  },
   "cta.title": "Ready to stop the patchwork?",
   "cta.subtitle": "Our method is the result of 10 years of experience in top-performing scale-ups (TheFork, Spendesk, Yousign, Qonto, etc.).",
   "cta.button": "Build my architecture"

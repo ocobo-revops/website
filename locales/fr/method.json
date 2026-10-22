@@ -140,6 +140,29 @@
       "items": ["Go-to-Market Strategy Review", "Revenue Planning & Board Reporting", "Revenue Management & Leadership"]
     }
   ],
+  "scope.diagram": {
+    "loops": {
+      "acquisition": "Acquisition",
+      "expansion": "Expansion"
+    },
+    "center": {
+      "line1": "Nouveau",
+      "line2": "Client"
+    },
+    "flow": {
+      "left": ["MQL", "SQL", "SQO"],
+      "right": ["ACTIF", "UPSELL", "CROSSELL"]
+    },
+    "stages": [
+      "GÉNÉRATION",
+      "DE DEMANDE",
+      "QUALIFICATION",
+      "NÉGOCIATION",
+      "ONBOARDING",
+      "ADOPTION",
+      "IMPACT"
+    ]
+  },
   "cta.title": "Prêt à sortir du bricolage ?",
   "cta.subtitle": "Notre méthode est le fruit de 10 ans d'expérience dans les scale-ups les plus performantes (TheFork, Spendesk, Yousign, Qonto, etc.).",
   "cta.button": "Bâtir mon architecture"
