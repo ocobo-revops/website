@@ -165,6 +165,14 @@ describe('getCacheStrategyForPath', () => {
   it('/blogger → static (segment-aware match, not a blog route)', () => {
     expect(getCacheStrategyForPath('/blogger')).toBe('static');
   });
+
+  it.each([
+    '/challenges/revenue-performance',
+    '/fr/challenges/revenue-performance',
+    '/en/challenges/revenue-performance',
+  ])('%s → static (challenge page)', (path) => {
+    expect(getCacheStrategyForPath(path)).toBe('static');
+  });
 });
 
 describe('createHybridLoader', () => {

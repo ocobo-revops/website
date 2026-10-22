@@ -178,6 +178,16 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **Needs** | `Needs.tsx` | Needs assessment | Reusable |
 | **Team** | `Team.tsx` | Team presentation | Reusable |
 
+### Challenge page components (`app/components/challenges/`)
+Sections of the challenge page (`app/routes/_main.($lang).challenges.$slug.tsx`). The route builds the view model with `buildChallengePage` (`app/modules/challenge-page.ts`), which drops mockup placeholders (`[...]`) and returns `null` for a section with no content. The page root sets `colorPalette` to the challenge colour (`challenge-palette.ts`); the sections read `colorPalette` and `colorPalette.light`.
+
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **ChallengeHero** | `challenge-hero.tsx` | Colour pill, title, quote, lead, CTA to the diagnostic, bow tie with the active stages | Challenge-specific |
+| **ChallengeSymptoms** | `challenge-symptoms.tsx` | Symptom cards with coral bullets | Challenge-specific |
+| **ChallengeAudience** | `challenge-audience.tsx` | Teams, roles and benefit, on the light challenge colour | Challenge-specific |
+| **ChallengeDiagnostic** | `challenge-diagnostic.tsx` | Yellow closing block with the contact CTA (`#diagnostic`) | Challenge-specific |
+
 ### Design system showcase (`app/components/design-system/`)
 One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`), whose heading carries an anchor id derived from its title. The registry `designSystemGroups` in `subpages.ts` lists the pages in three groups (foundations, components, patterns) and each page's section titles. It feeds the sidebar (`design-system-sidebar.tsx`) and the grouped index (`design-system._index.tsx`). The sidebar lists the current page's sections under its link when the page has more than one, from `lg`. `app/routes/design-system.tsx` is the layout: one sidebar, then the page title and `Outlet`. Each page is a route `design-system.<slug>.tsx` that only composes its section modules. A new showcase section is a new module, its title in the registry and one line in its page route.
 

@@ -1,6 +1,7 @@
 import en_about from '../../locales/en/about.json';
 import en_blog from '../../locales/en/blog.json';
 import en_bowtie from '../../locales/en/bowtie.json';
+import en_challenges from '../../locales/en/challenges.json';
 import en_common from '../../locales/en/common.json';
 import en_contact from '../../locales/en/contact.json';
 import en_home from '../../locales/en/home.json';
@@ -14,6 +15,7 @@ import en_technology from '../../locales/en/technology.json';
 import fr_about from '../../locales/fr/about.json';
 import fr_blog from '../../locales/fr/blog.json';
 import fr_bowtie from '../../locales/fr/bowtie.json';
+import fr_challenges from '../../locales/fr/challenges.json';
 import fr_common from '../../locales/fr/common.json';
 import fr_contact from '../../locales/fr/contact.json';
 import fr_home from '../../locales/fr/home.json';
@@ -42,6 +44,7 @@ export const resources = {
     technology: fr_technology,
     about: fr_about,
     bowtie: fr_bowtie,
+    challenges: fr_challenges,
   },
   en: {
     common: en_common,
@@ -57,6 +60,7 @@ export const resources = {
     technology: en_technology,
     about: en_about,
     bowtie: en_bowtie,
+    challenges: en_challenges,
   },
 };
 

@@ -1,0 +1,10 @@
+{
+  "meta.title": "{{name}} : {{tagline}}",
+  "hero.breadcrumb": "Vos enjeux / Enjeu {{order}}",
+  "hero.quote": "«\u00a0{{quote}}\u00a0»",
+  "hero.bowtieLabel": "Où nous intervenons sur votre cycle",
+  "symptoms.eyebrow": "Vous vous reconnaissez",
+  "audience.title": "Pour qui",
+  "audience.intro": "Les équipes et les rôles qui vivent ce problème au quotidien, et ce que ça change pour eux.",
+  "diagnostic.cta": "Réserver un diagnostic"
+}

@@ -1,4 +1,7 @@
+import type { Language } from '~/localization/resources';
+import { isChallengeSlug } from '~/modules/challenge-page';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
+import { fetchChallenges } from '~/modules/content/api';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -13,6 +16,7 @@ function generateSiteMap(
   stories: { slug: string; date: Date }[],
   posts: { slug: string; date: Date }[],
   jobs: { slug: string; date: Date }[],
+  challenges: { slug: string; lang: Language }[],
 ) {
   return `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
@@ -50,6 +54,14 @@ function generateSiteMap(
                     `${baseUrl}/fr/jobs/${job.slug}`,
                     job.date.toISOString(),
                   )}`,
+              )
+              .join('\n')}
+            ${challenges
+              .map((challenge) =>
+                getUrlElementWithDate(
+                  `${baseUrl}/${challenge.lang}/challenges/${challenge.slug}`,
+                  new Date().toISOString(),
+                ),
               )
               .join('\n')}
             ${getUrlElementWithDate(`${baseUrl}/legal/confidentialite`, new Date().toISOString())}
@@ -93,12 +105,28 @@ export async function loader() {
     return [];
   });
 
-  const [stories, posts, jobs] = await Promise.all([
+  // Challenge files carry no date: every file in the folder is published.
+  const challengesQuery = (lang: Language) =>
+    fetchChallenges(lang).then((result) => {
+      const [, state, data] = result;
+      if (state === 'success' && data) {
+        // The route answers 404 to any other slug: never list it.
+        return data
+          .filter((challenge) => isChallengeSlug(challenge.slug))
+          .map((challenge) => ({ slug: challenge.slug, lang }));
+      }
+      return [];
+    });
+
+  const [stories, posts, jobs, frChallenges, enChallenges] = await Promise.all([
     storiesQuery,
     postsQuery,
     jobsQuery,
+    challengesQuery('fr'),
+    challengesQuery('en'),
   ]);
-  return new Response(generateSiteMap(stories, posts, jobs), {
+  const challenges = [...frChallenges, ...enChallenges];
+  return new Response(generateSiteMap(stories, posts, jobs, challenges), {
     headers: {
       'content-type': 'application/xml',
     },

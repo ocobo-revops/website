@@ -69,4 +69,23 @@ describe('LanguageSwitcher', () => {
     expect(mockNavigate).toHaveBeenCalledTimes(1);
     expect(mockNavigate).toHaveBeenCalledWith('/en/methode/discovery');
   });
+
+  it('reaches the same challenge slug in the other language', async () => {
+    const user = userEvent.setup();
+    vi.mocked(useParams).mockReturnValue({
+      lang: 'fr',
+      slug: 'revenue-performance',
+    });
+    render(<LanguageSwitcher />, {
+      initialEntries: ['/fr/challenges/revenue-performance'],
+      i18nLang: 'fr',
+    });
+
+    await user.click(screen.getByRole('combobox', { name: 'Lang' }));
+    await user.click(await screen.findByRole('option', { name: /anglais/i }));
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      '/en/challenges/revenue-performance',
+    );
+  });
 });

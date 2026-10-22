@@ -7,12 +7,13 @@
  *  3. Dynamic routes from stories, posts, and jobs are included.
  *  4. Draft/closed jobs are excluded; only published ones appear.
  *  5. Loader degrades gracefully when any content fetcher fails.
- *  6. All three fetchers fire in parallel (no sequential awaiting).
+ *  6. All fetchers fire in parallel (no sequential awaiting).
+ *  7. Challenge routes are listed in both languages.
  *
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { JobFrontmatter } from '~/modules/schemas';
 import { invokeLoader } from '~/test/loader-harness';
@@ -25,11 +26,18 @@ import type {
 const fetchStoriesMock = vi.fn();
 const fetchBlogpostsMock = vi.fn();
 const fetchJobsMock = vi.fn();
+const fetchChallengesMock = vi.fn();
 
 vi.mock('~/modules/content', () => ({
   fetchStories: () => fetchStoriesMock(),
   fetchBlogposts: () => fetchBlogpostsMock(),
   fetchJobs: () => fetchJobsMock(),
+}));
+
+// The content barrel does not export the challenge fetchers: the route
+// imports them from the API module, so both modules need a mock.
+vi.mock('~/modules/content/api', () => ({
+  fetchChallenges: (lang: string) => fetchChallengesMock(lang),
 }));
 
 function storyEntry(
@@ -102,6 +110,10 @@ function jobEntry(
     },
   };
 }
+
+beforeEach(() => {
+  fetchChallengesMock.mockResolvedValue([200, 'success', []]);
+});
 
 afterEach(() => {
   vi.clearAllMocks();
@@ -260,7 +272,62 @@ describe('sitemap loader', () => {
     expect(body).not.toContain('<loc>https://www.ocobo.co/fr/jobs/');
   });
 
-  it('fires all three fetchers in parallel', async () => {
+  it('includes challenge routes in both languages', async () => {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    fetchChallengesMock.mockImplementation(async (lang: string) => [
+      200,
+      'success',
+      lang === 'fr'
+        ? [
+            { slug: 'revenue-performance' },
+            { slug: 'revenue-ai' },
+            { slug: 'Not_Kebab' },
+          ]
+        : [{ slug: 'revenue-performance' }],
+    ]);
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+
+    expect(fetchChallengesMock).toHaveBeenCalledWith('fr');
+    expect(fetchChallengesMock).toHaveBeenCalledWith('en');
+    expect(body).toContain(
+      '<loc>https://www.ocobo.co/fr/challenges/revenue-performance</loc>',
+    );
+    expect(body).toContain(
+      '<loc>https://www.ocobo.co/fr/challenges/revenue-ai</loc>',
+    );
+    expect(body).toContain(
+      '<loc>https://www.ocobo.co/en/challenges/revenue-performance</loc>',
+    );
+    expect(body).not.toContain(
+      '<loc>https://www.ocobo.co/en/challenges/revenue-ai</loc>',
+    );
+    expect(body).not.toContain('Not_Kebab');
+  });
+
+  it('degrades gracefully when the challenges fetcher fails', async () => {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    fetchChallengesMock.mockResolvedValue([500, 'source_error', undefined]);
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+
+    expect(body).toContain('<loc>https://www.ocobo.co/fr</loc>');
+    expect(body).not.toContain('/challenges/');
+  });
+
+  it('fires all fetchers in parallel', async () => {
     let resolveStories!: (v: [number, string, unknown]) => void;
     let resolvePosts!: (v: [number, string, unknown]) => void;
     let resolveJobs!: (v: [number, string, unknown]) => void;
@@ -289,6 +356,7 @@ describe('sitemap loader', () => {
     expect(fetchStoriesMock).toHaveBeenCalledTimes(1);
     expect(fetchBlogpostsMock).toHaveBeenCalledTimes(1);
     expect(fetchJobsMock).toHaveBeenCalledTimes(1);
+    expect(fetchChallengesMock).toHaveBeenCalledTimes(2);
 
     resolveStories([200, 'success', []]);
     resolvePosts([200, 'success', []]);
