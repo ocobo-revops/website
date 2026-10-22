@@ -116,6 +116,12 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **ValuesSection** | `values-section.tsx` | Values grid | About-specific |
 | **ValueCard** | `value-card.tsx` | Values card | Reusable |
 
+### Member Components (`app/components/member/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **MemberCard** | `member-card.tsx` | Profile card: avatar, role, bio, LinkedIn (jobs, blog author) | Reusable |
+| **PersonCard** | `person-card.tsx` | Person variant of `FlipCard`: photo, role and challenge label, then contribution or bio, tools (with a limit) and previous companies | Reusable |
+
 ### Legacy Homepage Components (`app/components/homepage/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
