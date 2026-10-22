@@ -12,6 +12,7 @@ export const iconTint: Record<Color, string> = {
   sky: css({ bg: 'ocobo.sky/10', color: 'ocobo.sky' }),
   coral: css({ bg: 'ocobo.coral/10', color: 'ocobo.coral' }),
   mint: css({ bg: 'ocobo.mint/10', color: 'ocobo.mint' }),
+  gray: css({ bg: 'gray/10', color: 'gray' }),
 };
 
 /**
@@ -33,6 +34,10 @@ export const itemHoverTint: Record<Color, string> = {
   mint: css({
     _hover: { bg: 'ocobo.mint.light' },
     _focusVisible: { bg: 'ocobo.mint.light' },
+  }),
+  gray: css({
+    _hover: { bg: 'gray.light' },
+    _focusVisible: { bg: 'gray.light' },
   }),
 };
 

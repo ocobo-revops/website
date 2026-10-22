@@ -26,8 +26,8 @@ type NavbarBarProps = {
    */
   layout?: NavbarLayout;
   /**
-   * Entries rendered before the production menu. Reserved for the challenge
-   * entry (#237), wired when v2 is switched on (#242).
+   * Entries rendered before the production menu. The challenge entry (#237)
+   * already comes from `useMenuItems`: do not pass it here.
    */
   leadingItems?: NavItem[];
 };

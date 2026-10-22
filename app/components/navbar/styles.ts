@@ -11,6 +11,7 @@ export const iconStyles: Record<Color, string> = {
   sky: css({ bg: 'ocobo.sky/10', color: 'ocobo.sky' }),
   coral: css({ bg: 'ocobo.coral/10', color: 'ocobo.coral' }),
   mint: css({ bg: 'ocobo.mint/10', color: 'ocobo.mint' }),
+  gray: css({ bg: 'gray/10', color: 'gray' }),
 };
 
 /**
@@ -21,6 +22,7 @@ export const hoverStyles: Record<Color, string> = {
   sky: css({ _hover: { bg: 'ocobo.sky.light' } }),
   coral: css({ _hover: { bg: 'ocobo.coral.light' } }),
   mint: css({ _hover: { bg: 'ocobo.mint.light' } }),
+  gray: css({ _hover: { bg: 'gray.light' } }),
 };
 
 /**
@@ -31,6 +33,7 @@ export const hoverTextStyles: Record<Color, string> = {
   sky: css({ _groupHover: { color: 'ocobo.sky' } }),
   coral: css({ _groupHover: { color: 'ocobo.coral' } }),
   mint: css({ _groupHover: { color: 'ocobo.mint' } }),
+  gray: css({ _groupHover: { color: 'gray' } }),
 };
 
 /**

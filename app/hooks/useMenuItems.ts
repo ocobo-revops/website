@@ -15,6 +15,7 @@ import type { PageSlug } from '~/modules/feature-flags';
 import type { loader as rootLoader } from '~/root';
 import { url } from '~/utils/url';
 
+import { useChallengeMenuItem } from './use-challenge-menu-item';
 import { useLocalizedPathname } from './useLocalizedPathname';
 
 const menuKeyToSlug: Record<string, PageSlug> = {
@@ -30,6 +31,7 @@ export function useMenuItems(): NavItem[] {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
   const rootData = useRouteLoaderData<typeof rootLoader>('root');
+  const challengeItem = useChallengeMenuItem();
   const disabledPages = rootData?.disabledPages ?? [];
 
   const isHidden = (key: string): boolean => {
@@ -126,6 +128,7 @@ export function useMenuItems(): NavItem[] {
   ];
 
   return [
+    ...(challengeItem ? [challengeItem] : []),
     {
       key: 'offer',
       label: t('navigation.offer'),

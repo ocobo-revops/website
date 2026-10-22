@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react';
 
 // Matching prototype naming exactly
-export type Color = 'yellow' | 'sky' | 'coral' | 'mint';
+export type Color = 'yellow' | 'sky' | 'coral' | 'mint' | 'gray';
 
 export type NavbarScrollState = 'at-top' | 'scrolled';
 
