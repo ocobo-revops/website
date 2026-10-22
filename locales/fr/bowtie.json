@@ -1,4 +1,10 @@
 {
+  "title": "Le nœud papillon du revenu",
+  "loops": {
+    "acquisition": "Acquisition",
+    "expansion": "Expansion"
+  },
+  "inactive": "étape hors périmètre",
   "milestonePrefix": "Jalon",
   "stages": {
     "demand-generation": {
