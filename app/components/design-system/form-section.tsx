@@ -20,7 +20,8 @@ const fruitCollection = createListCollection({
 });
 
 const field = css({
-  width: 'md',
+  width: 'full',
+  maxW: 'md',
 });
 
 export function FormSection() {

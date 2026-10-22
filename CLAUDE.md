@@ -61,6 +61,7 @@ Read these before inferring data structures, env shape, or content pipelines. Ch
 | Concern | File |
 |---------|------|
 | Content Zod schemas (Story, Blogpost, Page, Job) | [app/modules/schemas.ts](app/modules/schemas.ts) |
+| Challenge Zod schema (mirrors the posts repo schema) | [app/modules/challenge-schema.ts](app/modules/challenge-schema.ts) |
 | Content fetching interfaces | [app/modules/content/types.ts](app/modules/content/types.ts) |
 | Content API factory (source dispatch) | [app/modules/content/factory.ts](app/modules/content/factory.ts) |
 | Content public API | [app/modules/content/api.ts](app/modules/content/api.ts) |
@@ -97,9 +98,9 @@ Full route map + tree analysis → [docs/architecture/source-tree.md](docs/archi
 - **Local**: `~/projects/ocobo-posts/` (path via `localeRepoAPIUrl`).
 - **GitHub**: `@octokit/rest`, branch via `GITHUB_BRANCH` (e.g. `offers` to preview placeholders).
 - Markdown + frontmatter → Markdoc → Zod validation → loader.
-- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, plus generic `fetchContent`/`fetchContents` for custom types.
+- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, `fetchChallenge`, `fetchChallenges`, plus generic `fetchContent`/`fetchContents` for custom types.
 - Return shape is `ContentResult<T>` = `ActionResult<ContentFetchState, T>` - a tuple destructured as `[statusCode, state, data]` where `state` is one of `'success' | 'not_found' | 'validation_error' | 'source_error' | 'ignored'`. Routes branch on `statusCode !== 200`.
-- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`) - built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts).
+- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`, `challenge`) - built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts) and [app/modules/challenge-schema.ts](app/modules/challenge-schema.ts).
 
 Deeper detail → [docs/api/contracts.md](docs/api/contracts.md), [docs/api/data-models.md](docs/api/data-models.md).
 
@@ -119,7 +120,7 @@ The preset carries the v2 values from the redesign mockup ([ADR 0002](docs/adr/0
 - **Escape hatch**: `'[value]'` (for example `top: '[50%]'`) is allowed only when no token fits. That covers geometry with no scale: percentage positions, odd illustration dimensions, ratios like `16/7`, em-relative prose spacing, dot-pattern gradients. A design value (colour, radius, shadow, font size, spacing, letter spacing, line height, duration up to 500ms, easing) snaps to the nearest token instead. Properties whose token category is empty in the preset (`borderWidth`, `opacity`, `zIndex`, `transform`, `gridTemplateColumns`) take raw CSS without brackets, until a token is added there.
 - **Legacy recipes deleted**: `icon`, `link`, `subtitle` no longer exist. Old `icon({ size })` maps to token `css({ h, w })`. The text link becomes a `button` variant (ADR 0002). Reintroducing a single-concern recipe needs a new ADR.
 
-Full mapping of old names to v2 values, and the gap decisions, are in ADR 0002 ("J1 mapping"). Known inline exceptions and deferred per-feature occurrences are in [docs/adr/0001-design-system-adoption-policy.md](docs/adr/0001-design-system-adoption-policy.md). Read them when touching a file flagged in those tables, or before proposing to bend any rule above. `/design-system` shows every v2 token.
+Full mapping of old names to v2 values, and the gap decisions, are in ADR 0002 ("J1 mapping"). Known inline exceptions and deferred per-feature occurrences are in [docs/adr/0001-design-system-adoption-policy.md](docs/adr/0001-design-system-adoption-policy.md). Read them when touching a file flagged in those tables, or before proposing to bend any rule above. The `/design-system` foundations pages (tokens, colours, typography) show every v2 token.
 
 ### Panda CSS traps (Claude-specific gotchas)
 

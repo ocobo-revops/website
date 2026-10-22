@@ -6,7 +6,7 @@ import { ShowcaseSection } from './showcase-section';
 export function BordersSection() {
   return (
     <ShowcaseSection title="Borders">
-      <ul className={grid({ columns: 4, gap: '6' })}>
+      <ul className={grid({ columns: { base: 1, md: 2, lg: 4 }, gap: '6' })}>
         <li className={css({ bleft: 'yellow' })}>
           Gagnez en performance avec des stratégies et des process de pointe
         </li>
