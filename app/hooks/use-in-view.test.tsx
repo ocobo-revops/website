@@ -64,14 +64,16 @@ beforeEach(() => {
   stubReducedMotion(false);
   vi.stubGlobal(
     'IntersectionObserver',
-    vi.fn((cb: IntersectionObserverCallback) => {
-      observerCallback = cb;
-      return {
-        observe: mockObserve,
-        disconnect: mockDisconnect,
-        unobserve: vi.fn(),
-      };
-    }),
+    vi.fn(
+      class {
+        observe = mockObserve;
+        disconnect = mockDisconnect;
+        unobserve = vi.fn();
+        constructor(cb: IntersectionObserverCallback) {
+          observerCallback = cb;
+        }
+      },
+    ),
   );
 });
 
