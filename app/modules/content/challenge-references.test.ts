@@ -23,6 +23,19 @@ import type { StoryFrontmatter } from '../schemas';
 import type { Member, MemberRegistry } from './members';
 import type { Tool, ToolRegistry } from './tools';
 
+const failures = vi.hoisted(() => ({ toolRegistry: false }));
+
+vi.mock('./tools', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./tools')>();
+  return {
+    ...actual,
+    loadToolRegistry: async () => {
+      if (failures.toolRegistry) throw new Error('registry exploded');
+      return actual.loadToolRegistry();
+    },
+  };
+});
+
 vi.mock('../env.server', () => ({
   getPrivateEnvVars: () => ({
     readContentFrom: 'locale',
@@ -126,6 +139,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  failures.toolRegistry = false;
   vi.restoreAllMocks();
 });
 
@@ -261,6 +275,19 @@ describe('partner', () => {
   });
 });
 
+describe('tool references with an empty Tool registry', () => {
+  it('hide every tool without one log per slug', () => {
+    // `loadToolRegistry` returns {} and logs once when a Tool file fails.
+    const { methodTools, partner } = resolve('sales-compensation');
+
+    expect(methodTools).toEqual([]);
+    expect(partner).toBeNull();
+    expect(errorSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('is not a Tool'),
+    );
+  });
+});
+
 describe('method tools', () => {
   it('drop only the broken Tool slug and log it', () => {
     // revenue-performance lists hubspot, salesforce, modjo, notion.
@@ -300,7 +327,8 @@ describe('other challenges', () => {
       frontmatter,
       'fr',
     );
-    // The English fixtures hold only revenue-performance.
+    // The English fixtures hold only revenue-performance, so any English
+    // challenge in the list would come from another language.
     const english = await loadChallengeReferences(
       'revenue-performance',
       frontmatter,
@@ -328,5 +356,56 @@ describe('loadChallengeReferences', () => {
     expect(references.methodTools).toEqual([]);
     expect(references.experts).toEqual([]);
     expect(references.otherChallenges).toHaveLength(5);
+  });
+
+  it('logs the client case when its Story fails to load', async () => {
+    const { frontmatter } = challengeFile('revenue-performance');
+
+    await loadChallengeReferences(
+      'revenue-performance',
+      { ...frontmatter, case: { ...frontmatter.case, story: 'missing-story' } },
+      'fr',
+    );
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-performance: case.story "missing-story" did not resolve',
+    );
+  });
+
+  it('lists no other challenge when the language folder fails', async () => {
+    const { frontmatter } = challengeFile('revenue-performance');
+
+    const { otherChallenges } = await loadChallengeReferences(
+      'revenue-performance',
+      frontmatter,
+      'de',
+    );
+
+    expect(otherChallenges).toEqual([]);
+    expect(errorSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-performance: other challenges failed to load: not_found',
+    );
+  });
+
+  it('hides every block when a source throws', async () => {
+    failures.toolRegistry = true;
+    const { frontmatter } = challengeFile('revenue-performance');
+
+    const references = await loadChallengeReferences(
+      'revenue-performance',
+      frontmatter,
+      'fr',
+    );
+
+    expect(references).toEqual({
+      clientCase: null,
+      methodTools: [],
+      partner: null,
+      experts: [],
+      otherChallenges: [],
+    });
+    expect(errorSpy).toHaveBeenCalledWith(
+      expect.stringContaining('references failed to load'),
+    );
   });
 });

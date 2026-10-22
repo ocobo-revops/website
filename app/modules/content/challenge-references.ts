@@ -10,12 +10,14 @@
  */
 
 import type { MarkdocFile } from '~/types';
+import { isChallengeSlug } from '../challenge-page';
 import type { ChallengeFrontmatter, ChallengeKey } from '../challenge-schema';
 import type { StoryFrontmatter } from '../schemas';
 import { fetchChallenges, fetchStory } from './api';
 import {
   type Member,
   type MemberRegistry,
+  getChallengeExperts,
   loadMemberRegistry,
 } from './members';
 import {
@@ -79,8 +81,28 @@ export type ChallengeReferenceSources = {
   challenges: MarkdocFile<ChallengeFrontmatter>[];
 };
 
+const emptyReferences = (): ChallengeReferences => ({
+  clientCase: null,
+  methodTools: [],
+  partner: null,
+  experts: [],
+  otherChallenges: [],
+});
+
 function logBrokenReference(slug: string, message: string): void {
   console.error(`[ChallengeReferences] ${slug}: ${message}`);
+}
+
+/**
+ * Logs a broken Tool slug. An empty registry means the Tool files failed to
+ * load (`loadToolRegistry` already logged why): every tool then drops
+ * without one log per slug, which would blame the challenge file.
+ */
+function toolReporter(slug: string, tools: ToolRegistry) {
+  const registryLoaded = Object.keys(tools).length > 0;
+  return (message: string) => {
+    if (registryLoaded) logBrokenReference(slug, message);
+  };
 }
 
 function resolveTools(
@@ -113,44 +135,29 @@ function resolveClientCase({
   return { ...rest, story: { slug: story.slug, name, title, subtitle } };
 }
 
-function resolvePartner({
-  slug,
-  challenge,
-  tools,
-}: ChallengeReferenceSources): ChallengePartner | null {
+function resolvePartner(
+  { challenge, tools }: ChallengeReferenceSources,
+  reportTool: (message: string) => void,
+): ChallengePartner | null {
   if (!challenge.partner) return null;
   const tool = resolveTool(challenge.partner.tool, tools);
   if (!tool) {
-    logBrokenReference(
-      slug,
-      `partner.tool "${challenge.partner.tool}" is not a Tool`,
-    );
+    reportTool(`partner.tool "${challenge.partner.tool}" is not a Tool`);
     return null;
   }
   return { ...challenge.partner, tool };
 }
 
-const byDisplayOrder = (a: Member, b: Member) =>
-  a.displayOrder - b.displayOrder || a.slug.localeCompare(b.slug);
-
-function resolveExperts({
-  slug,
-  challenge,
-  tools,
-  members,
-}: ChallengeReferenceSources): ChallengeExpert[] {
-  return Object.values(members)
-    .filter((member) => member.active && member.challenge === challenge.key)
-    .sort(byDisplayOrder)
-    .map((member) => ({
-      ...member,
-      tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
-        logBrokenReference(
-          slug,
-          `team/${member.slug} tools "${toolSlug}" is not a Tool`,
-        ),
-      ),
-    }));
+function resolveExperts(
+  { challenge, tools, members }: ChallengeReferenceSources,
+  reportTool: (message: string) => void,
+): ChallengeExpert[] {
+  return getChallengeExperts(members, challenge.key).map((member) => ({
+    ...member,
+    tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
+      reportTool(`team/${member.slug} tools "${toolSlug}" is not a Tool`),
+    ),
+  }));
 }
 
 function listOtherChallenges({
@@ -173,13 +180,14 @@ export function resolveChallengeReferences(
   sources: ChallengeReferenceSources,
 ): ChallengeReferences {
   const { slug, challenge, tools } = sources;
+  const reportTool = toolReporter(slug, tools);
   return {
     clientCase: resolveClientCase(sources),
     methodTools: resolveTools(challenge.method.tools, tools, (toolSlug) =>
-      logBrokenReference(slug, `method.tools "${toolSlug}" is not a Tool`),
+      reportTool(`method.tools "${toolSlug}" is not a Tool`),
     ),
-    partner: resolvePartner(sources),
-    experts: resolveExperts(sources),
+    partner: resolvePartner(sources, reportTool),
+    experts: resolveExperts(sources, reportTool),
     otherChallenges: listOtherChallenges(sources),
   };
 }
@@ -188,7 +196,8 @@ async function loadCaseStory(
   storySlug: string | undefined,
   lang: string,
 ): Promise<MarkdocFile<StoryFrontmatter> | null> {
-  if (storySlug === undefined) return null;
+  // The slug becomes a file path in the content source: kebab-case only.
+  if (storySlug === undefined || !isChallengeSlug(storySlug)) return null;
   const [status, , story] = await fetchStory(storySlug, lang);
   return status === 200 && story ? story : null;
 }
@@ -206,27 +215,35 @@ async function loadLanguageChallenges(
 }
 
 /**
- * Fetches what the references point to and resolves them. Never throws: the
- * Tool and Team member registries return `{}` when any of their files fails,
- * and every other failure resolves to a hidden block.
+ * Fetches what the references point to and resolves them. Never throws: an
+ * unexpected failure hides every block that needs a reference.
+ *
+ * The Tool and Team member registries return `{}` when any of their files
+ * fails, and a list fetch fails on its first invalid file. One invalid Tool
+ * file therefore hides every tool, one invalid Team file every expert.
  */
 export async function loadChallengeReferences(
   slug: string,
   challenge: ChallengeFrontmatter,
   lang: string,
 ): Promise<ChallengeReferences> {
-  const [story, tools, members, challenges] = await Promise.all([
-    loadCaseStory(challenge.case.story, lang),
-    loadToolRegistry(),
-    loadMemberRegistry(),
-    loadLanguageChallenges(slug, lang),
-  ]);
-  return resolveChallengeReferences({
-    slug,
-    challenge,
-    story,
-    tools,
-    members,
-    challenges,
-  });
+  try {
+    const [story, tools, members, challenges] = await Promise.all([
+      loadCaseStory(challenge.case.story, lang),
+      loadToolRegistry(),
+      loadMemberRegistry(),
+      loadLanguageChallenges(slug, lang),
+    ]);
+    return resolveChallengeReferences({
+      slug,
+      challenge,
+      story,
+      tools,
+      members,
+      challenges,
+    });
+  } catch (error) {
+    logBrokenReference(slug, `references failed to load: ${String(error)}`);
+    return emptyReferences();
+  }
 }

@@ -54,6 +54,7 @@ const frenchFixture = loadChallengeFixture('fr', 'revenue-performance');
 
 afterEach(() => {
   fetchChallengeMock.mockReset();
+  loadChallengeReferencesMock.mockClear();
 });
 
 describe('challenge loader', () => {
@@ -137,6 +138,7 @@ describe('challenge loader', () => {
       params: { lang: 'fr', slug: 'unknown' },
     });
 
+    expect(loadChallengeReferencesMock).not.toHaveBeenCalled();
     expect(outcome.type).toBe('response');
     if (outcome.type !== 'response') return;
     expect(outcome.response.status).toBe(404);
