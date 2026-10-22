@@ -23,6 +23,9 @@ import type {
   ContentValidator,
 } from '../types';
 
+const isNotFound = (error: unknown) =>
+  error instanceof Error && 'code' in error && error.code === 'ENOENT';
+
 export class FilesystemContentSource implements ContentSource {
   constructor(
     private config: NonNullable<ContentSourceConfig['filesystem']>,
@@ -71,12 +74,7 @@ export class FilesystemContentSource implements ContentSource {
 
       return [200, 'success', result.data];
     } catch (error: unknown) {
-      // Handle filesystem errors
-      if (
-        error instanceof Error &&
-        'code' in error &&
-        error.code === 'ENOENT'
-      ) {
+      if (isNotFound(error)) {
         return [404, 'not_found', undefined];
       }
 
@@ -154,6 +152,11 @@ export class FilesystemContentSource implements ContentSource {
 
       return [200, 'success', mdFiles];
     } catch (error: unknown) {
+      // A missing folder is missing content, as on GitHub.
+      if (isNotFound(error)) {
+        return [404, 'not_found', undefined];
+      }
+
       const fsError = new FileSystemError(
         `Failed to read directory: ${fullPath}`,
         'list',
@@ -190,6 +193,11 @@ export class FilesystemContentSource implements ContentSource {
 
       return [200, 'success', metadata];
     } catch (error: unknown) {
+      // A missing folder is missing content, as on GitHub.
+      if (isNotFound(error)) {
+        return [404, 'not_found', undefined];
+      }
+
       const fsError = new FileSystemError(
         `Failed to read directory metadata: ${fullPath}`,
         'list',

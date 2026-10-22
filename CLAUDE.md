@@ -61,6 +61,7 @@ Read these before inferring data structures, env shape, or content pipelines. Ch
 | Concern | File |
 |---------|------|
 | Content Zod schemas (Story, Blogpost, Page, Job) | [app/modules/schemas.ts](app/modules/schemas.ts) |
+| Challenge Zod schema (mirrors the posts repo schema) | [app/modules/challenge-schema.ts](app/modules/challenge-schema.ts) |
 | Content fetching interfaces | [app/modules/content/types.ts](app/modules/content/types.ts) |
 | Content API factory (source dispatch) | [app/modules/content/factory.ts](app/modules/content/factory.ts) |
 | Content public API | [app/modules/content/api.ts](app/modules/content/api.ts) |
@@ -97,9 +98,9 @@ Full route map + tree analysis → [docs/architecture/source-tree.md](docs/archi
 - **Local**: `~/projects/ocobo-posts/` (path via `localeRepoAPIUrl`).
 - **GitHub**: `@octokit/rest`, branch via `GITHUB_BRANCH` (e.g. `offers` to preview placeholders).
 - Markdown + frontmatter → Markdoc → Zod validation → loader.
-- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, plus generic `fetchContent`/`fetchContents` for custom types.
+- Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, `fetchChallenge`, `fetchChallenges`, plus generic `fetchContent`/`fetchContents` for custom types.
 - Return shape is `ContentResult<T>` = `ActionResult<ContentFetchState, T>` - a tuple destructured as `[statusCode, state, data]` where `state` is one of `'success' | 'not_found' | 'validation_error' | 'source_error' | 'ignored'`. Routes branch on `statusCode !== 200`.
-- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`) - built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts).
+- Validators are pre-configured in `ContentValidators` (`story`, `blogpost`, `page`, `job`, `challenge`) - built from Zod schemas in [app/modules/schemas.ts](app/modules/schemas.ts) and [app/modules/challenge-schema.ts](app/modules/challenge-schema.ts).
 
 Deeper detail → [docs/api/contracts.md](docs/api/contracts.md), [docs/api/data-models.md](docs/api/data-models.md).
 
