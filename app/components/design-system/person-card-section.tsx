@@ -30,7 +30,7 @@ export function PersonCardSection() {
         every tool. About-us: bio in place of the contribution, no previous
         companies. An absent field hides its line.
       </p>
-      <div className={grid({ columns: { base: 1, md: 2, xl: 4 }, gap: '6' })}>
+      <div className={grid({ columns: { base: 1, md: 2 }, gap: '6' })}>
         <PersonCard
           name="Clara Lecarrié"
           photo={`${photoBase}/clara-lecarrie.jpg`}
