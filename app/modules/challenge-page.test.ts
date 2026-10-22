@@ -40,7 +40,7 @@ describe('isChallengeSlug', () => {
 });
 
 describe('buildChallengePage', () => {
-  it('maps a complete challenge to its four sections', () => {
+  it('maps a complete challenge to its sections', () => {
     const page = buildChallengePage(loadFrontmatter());
 
     expect(page.key).toBe('rp');
@@ -53,6 +53,14 @@ describe('buildChallengePage', () => {
     });
     expect(page.symptoms?.items).toHaveLength(5);
     expect(page.audience).toHaveLength(4);
+    expect(page.workstreams?.items).toHaveLength(4);
+    expect(page.method?.steps).toHaveLength(3);
+    expect(page.method?.tools).toEqual([
+      'hubspot',
+      'salesforce',
+      'modjo',
+      'notion',
+    ]);
     expect(page.diagnostic?.cta).toBe('Make my forecast reliable');
   });
 
@@ -130,5 +138,157 @@ describe('buildChallengePage', () => {
 
     expect(page.hero).toMatchObject({ quote: null, cta: null, caption: null });
     expect(page.diagnostic?.cta).toBeNull();
+  });
+
+  describe('workstreams', () => {
+    it('leaves the heading to the locale when the file has none', () => {
+      const page = buildChallengePage(loadFrontmatter());
+
+      expect(page.workstreams?.title).toBeNull();
+      expect(page.workstreams?.items[0]).toMatchObject({
+        category: 'Process and tech',
+        title: 'A pipeline that means the same thing to everyone',
+        note: null,
+      });
+    });
+
+    it("keeps the file's heading and notes when present", () => {
+      const { frontmatter } = loadChallengeFixture('fr', 'revenue-ai');
+      const page = buildChallengePage(frontmatter);
+
+      expect(page.workstreams?.title).toBe(
+        "Six cas d'usage Revenue, prêts à déployer",
+      );
+      expect(page.workstreams?.items).toHaveLength(6);
+      expect(page.workstreams?.items[0].note).toBe(
+        'Prérequis : un ICP explicite et un CRM qui sert de référence.',
+      );
+    });
+
+    it('keeps the step number when the file sets one', () => {
+      const { frontmatter } = loadChallengeFixture('fr', 'sales-compensation');
+      const page = buildChallengePage(frontmatter);
+
+      expect(page.workstreams?.items.map((item) => item.step)).toEqual([
+        1, 2, 3, 4, 5,
+      ]);
+    });
+
+    it('drops a card whose title or deliverable is a placeholder', () => {
+      const frontmatter = loadFrontmatter();
+      const [first, second, ...rest] = frontmatter.workstreams.items;
+      const page = buildChallengePage({
+        ...frontmatter,
+        workstreams: {
+          ...frontmatter.workstreams,
+          items: [
+            { ...first, title: '[Title]' },
+            { ...second, deliverable: '[Deliverable]' },
+            ...rest,
+          ],
+        },
+      });
+
+      expect(page.workstreams?.items.map((item) => item.title)).toEqual(
+        rest.map((item) => item.title),
+      );
+    });
+
+    it('hides the section when every card is a placeholder', () => {
+      const frontmatter = loadFrontmatter();
+      const page = buildChallengePage({
+        ...frontmatter,
+        workstreams: {
+          ...frontmatter.workstreams,
+          items: frontmatter.workstreams.items.map((item) => ({
+            ...item,
+            deliverable: '[Deliverable]',
+          })),
+        },
+      });
+
+      expect(page.workstreams).toBeNull();
+    });
+
+    it('treats a placeholder heading override as absent', () => {
+      const frontmatter = loadFrontmatter();
+      const page = buildChallengePage({
+        ...frontmatter,
+        workstreams: { ...frontmatter.workstreams, title: '[Title]' },
+      });
+
+      expect(page.workstreams?.title).toBeNull();
+    });
+  });
+
+  describe('method', () => {
+    it('leaves the heading and step titles to the locale by default', () => {
+      const page = buildChallengePage(loadFrontmatter());
+
+      expect(page.method?.title).toBeNull();
+      expect(page.method?.steps.map((step) => step.title)).toEqual([
+        null,
+        null,
+        null,
+      ]);
+    });
+
+    it("keeps the file's heading and step titles when present", () => {
+      const { frontmatter } = loadChallengeFixture('fr', 'revenue-ai');
+      const page = buildChallengePage(frontmatter);
+
+      expect(page.method?.title).toBe('Le Revenue AI Sprint');
+      expect(page.method?.steps.map((step) => step.title)).toEqual([
+        'Vérifier les fondations',
+        'Prouver sur un cas réel',
+        'Décider la suite',
+      ]);
+    });
+
+    it('keeps every step in place when one text is a placeholder', () => {
+      const frontmatter = loadFrontmatter();
+      const [first, ...rest] = frontmatter.method.steps;
+      const page = buildChallengePage({
+        ...frontmatter,
+        method: {
+          ...frontmatter.method,
+          steps: [{ ...first, text: '[Text]' }, ...rest],
+        },
+      });
+
+      expect(page.method?.steps).toHaveLength(3);
+      expect(page.method?.steps[0].text).toBeNull();
+      expect(page.method?.steps[1].text).toBe(rest[0].text);
+    });
+
+    it('hides the section when every step text is a placeholder', () => {
+      const frontmatter = loadFrontmatter();
+      const page = buildChallengePage({
+        ...frontmatter,
+        method: {
+          ...frontmatter.method,
+          steps: frontmatter.method.steps.map((step) => ({
+            ...step,
+            text: '[Text]',
+          })),
+        },
+      });
+
+      expect(page.method).toBeNull();
+    });
+
+    it('drops placeholder tools and a placeholder note', () => {
+      const frontmatter = loadFrontmatter();
+      const page = buildChallengePage({
+        ...frontmatter,
+        method: {
+          ...frontmatter.method,
+          tools: ['[Tool]', 'hubspot'],
+          note: '[Note]',
+        },
+      });
+
+      expect(page.method).toMatchObject({ tools: ['hubspot'], note: null });
+    });
   });
 });
