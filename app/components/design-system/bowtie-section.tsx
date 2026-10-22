@@ -51,9 +51,10 @@ export function BowtieSection() {
   return (
     <ShowcaseSection title="Bow tie">
       <p className={text({ variant: 'small' })}>
-        Sept étapes du modèle, une couleur par enjeu. Les étapes inactives sont
-        estompées. Survolez, touchez ou atteignez au clavier une étape pour voir
-        son KPI et son jalon. Masqué sous 768px.
+        Sept étapes du modèle, une couleur par enjeu. Les étapes inactives
+        gardent les lignes grises. Avec un enjeu, un chip KPI s'affiche sous
+        chaque étape active. Survolez, touchez ou atteignez au clavier une étape
+        pour voir son KPI et son jalon. Masqué sous 768px.
       </p>
       <h3
         className={cx(text({ variant: 'display-md-bold' }), css({ mt: '8' }))}

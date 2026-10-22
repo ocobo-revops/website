@@ -1,9 +1,5 @@
 {
   "title": "The revenue bow tie",
-  "loops": {
-    "acquisition": "Acquisition",
-    "expansion": "Expansion"
-  },
   "inactive": "stage out of scope",
   "milestonePrefix": "Milestone",
   "stages": {

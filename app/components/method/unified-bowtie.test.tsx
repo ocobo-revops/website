@@ -56,7 +56,6 @@ describe('UnifiedBowtie', () => {
       screen.getByRole('button', { name: 'Demand generation' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Closing' })).toBeInTheDocument();
-    expect(screen.getByText('New customer')).toBeInTheDocument();
   });
 
   it('dims inactive stages and names them as such', () => {
@@ -66,13 +65,12 @@ describe('UnifiedBowtie', () => {
       </main>,
     );
 
-    expect(container.querySelector('[data-stage="discovery"]')).toHaveAttribute(
-      'opacity',
-      '1',
-    );
     expect(
-      container.querySelector('[data-stage="negotiation"]'),
-    ).toHaveAttribute('opacity', '0.3');
+      container.querySelector('[data-stage-column="discovery"]'),
+    ).toHaveAttribute('data-state', 'active');
+    expect(
+      container.querySelector('[data-stage-column="negotiation"]'),
+    ).toHaveAttribute('data-state', 'inactive');
     expect(
       screen.getByRole('button', {
         name: 'Négociation, étape hors périmètre',
@@ -90,10 +88,29 @@ describe('UnifiedBowtie', () => {
       </main>,
     );
 
-    const slices = container.querySelectorAll('[data-stage-slice]');
+    const tinted = [...container.querySelectorAll('[data-stage-tint="cx"]')];
     expect(
-      [...slices].map((slice) => slice.getAttribute('data-stage-slice')),
+      tinted.map((tint) =>
+        tint.closest('[data-stage-column]')?.getAttribute('data-stage-column'),
+      ),
     ).toEqual(['discovery', 'adoption']);
+  });
+
+  it('shows a KPI chip under each active stage of a challenge', () => {
+    const { container } = render(
+      <main>
+        <UnifiedBowtie
+          activeStages={['discovery', 'negotiation']}
+          challenge="rp"
+        />
+      </main>,
+    );
+
+    const chips = container.querySelectorAll('[data-stage-chip]');
+    expect([...chips].map((chip) => chip.textContent)).toEqual([
+      'Découverte, MQL vers SQL',
+      'Négociation, Win rate',
+    ]);
   });
 
   it('leaves the drawing neutral without a challenge', () => {
@@ -103,7 +120,12 @@ describe('UnifiedBowtie', () => {
       </main>,
     );
 
-    expect(container.querySelector('[data-stage-slice]')).toBeNull();
+    const tints = container.querySelectorAll('[data-stage-tint]');
+    expect(tints).toHaveLength(7);
+    for (const tint of tints) {
+      expect(tint).toHaveAttribute('data-stage-tint', 'neutral');
+    }
+    expect(container.querySelector('[data-stage-chip]')).toBeNull();
   });
 
   it('opens a stage tooltip with its KPI and Milestone on keyboard focus', async () => {
@@ -117,8 +139,14 @@ describe('UnifiedBowtie', () => {
     await focusWithKeyboard(trigger);
 
     const tooltip = await screen.findByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Jalon · SQL');
-    expect(tooltip).toHaveTextContent('Taux de conversion MQL vers SQL');
+    const parts = tooltip.querySelector('[data-stage-kpi="discovery"]');
+    expect(
+      [...(parts?.children ?? [])].map((part) => part.textContent),
+    ).toEqual([
+      'Jalon · SQL',
+      'Taux de conversion MQL vers SQL',
+      'La part des leads que la vente accepte et travaille réellement.',
+    ]);
   });
 
   it('opens a stage tooltip on a touch tap', async () => {
