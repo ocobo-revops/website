@@ -1,5 +1,5 @@
 /**
- * View model of a challenge page (#233): the four sections of the page,
+ * View model of a challenge page (#233, #234): the sections of the page,
  * built from a validated challenge frontmatter.
  *
  * A mockup placeholder (a value written as `[...]`) never renders. A section
@@ -57,6 +57,39 @@ export type ChallengeAudienceItem = {
   benefit: string | null;
 };
 
+export type ChallengeWorkstream = {
+  category: string | null;
+  step: number | null;
+  title: string;
+  description: string | null;
+  deliverable: string;
+  note: string | null;
+};
+
+export type ChallengeWorkstreams = {
+  /** The file's override of the locale heading, `null` for the default. */
+  title: string | null;
+  intro: string | null;
+  items: ChallengeWorkstream[];
+};
+
+export type ChallengeMethodStep = {
+  /** The file's override of the locale step title, `null` for the default. */
+  title: string | null;
+  text: string | null;
+};
+
+export type ChallengeMethod = {
+  /** The file's override of the locale heading, `null` for the default. */
+  title: string | null;
+  subtitle: string | null;
+  /** Always three: the position picks the locale step title. */
+  steps: ChallengeMethodStep[];
+  /** Tool slugs, resolved against the Tool files by the loader. */
+  tools: string[];
+  note: string | null;
+};
+
 export type ChallengeDiagnostic = {
   question: string;
   subtitle: string | null;
@@ -72,6 +105,8 @@ export type ChallengePage = {
   hero: ChallengeHero;
   symptoms: ChallengeSymptoms | null;
   audience: ChallengeAudienceItem[] | null;
+  workstreams: ChallengeWorkstreams | null;
+  method: ChallengeMethod | null;
   diagnostic: ChallengeDiagnostic | null;
 };
 
@@ -114,6 +149,52 @@ function buildAudience({
   return items.length > 0 ? items : null;
 }
 
+/** A card needs its title on the front and its deliverable on the back. */
+function buildWorkstreams({
+  workstreams,
+}: ChallengeFrontmatter): ChallengeWorkstreams | null {
+  const items = workstreams.items.flatMap((item) => {
+    const title = clean(item.title);
+    const deliverable = clean(item.deliverable);
+    if (!title || !deliverable) return [];
+    return [
+      {
+        category: clean(item.category),
+        step: item.step ?? null,
+        title,
+        description: clean(item.description),
+        deliverable,
+        note: clean(item.note),
+      },
+    ];
+  });
+  if (items.length === 0) return null;
+  return {
+    title: clean(workstreams.title),
+    intro: clean(workstreams.intro),
+    items,
+  };
+}
+
+/**
+ * The heading and step titles come from `locales/`, so the section needs at
+ * least one step text from the file to say anything about this challenge.
+ */
+function buildMethod({ method }: ChallengeFrontmatter): ChallengeMethod | null {
+  const steps = method.steps.map((step) => ({
+    title: clean(step.title),
+    text: clean(step.text),
+  }));
+  if (steps.every((step) => step.text === null)) return null;
+  return {
+    title: clean(method.title),
+    subtitle: clean(method.subtitle),
+    steps,
+    tools: cleanList(method.tools),
+    note: clean(method.note),
+  };
+}
+
 function buildDiagnostic({
   diagnostic,
   hero,
@@ -138,6 +219,8 @@ export function buildChallengePage(
     hero: buildHero(frontmatter),
     symptoms: buildSymptoms(frontmatter),
     audience: buildAudience(frontmatter),
+    workstreams: buildWorkstreams(frontmatter),
+    method: buildMethod(frontmatter),
     diagnostic: buildDiagnostic(frontmatter),
   };
 }

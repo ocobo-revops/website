@@ -11,6 +11,7 @@ import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-pag
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
 import { DIAGNOSTIC_ID } from './challenge-diagnostic';
+import { WORKSTREAMS_ID } from './challenge-workstreams';
 
 // The page root sets `colorPalette` to the challenge colour (route file).
 const pill = cx(
@@ -38,6 +39,8 @@ type ChallengeHeroProps = {
   order: number;
   /** Shows the CTA, which scrolls to the diagnostic block. */
   hasDiagnostic: boolean;
+  /** Shows the secondary CTA, which scrolls to the workstreams. */
+  hasWorkstreams: boolean;
 };
 
 export function ChallengeHero({
@@ -46,9 +49,11 @@ export function ChallengeHero({
   name,
   order,
   hasDiagnostic,
+  hasWorkstreams,
 }: ChallengeHeroProps) {
   const { t } = useTranslation('challenges');
   const titleId = useId();
+  const showCta = hero.cta !== null && hasDiagnostic;
 
   return (
     <section
@@ -117,14 +122,33 @@ export function ChallengeHero({
             </p>
           ) : null}
 
-          {hero.cta && hasDiagnostic ? (
-            <a
-              href={`#${DIAGNOSTIC_ID}`}
-              className={button({ variant: 'primary', size: 'lg' })}
+          {showCta || hasWorkstreams ? (
+            <div
+              className={css({
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '3',
+                justifyContent: 'center',
+              })}
             >
-              {hero.cta}
-              <ArrowRight size={18} aria-hidden="true" />
-            </a>
+              {showCta ? (
+                <a
+                  href={`#${DIAGNOSTIC_ID}`}
+                  className={button({ variant: 'primary', size: 'lg' })}
+                >
+                  {hero.cta}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </a>
+              ) : null}
+              {hasWorkstreams ? (
+                <a
+                  href={`#${WORKSTREAMS_ID}`}
+                  className={button({ variant: 'secondary', size: 'lg' })}
+                >
+                  {t('hero.workstreamsCta')}
+                </a>
+              ) : null}
+            </div>
           ) : null}
         </div>
 
