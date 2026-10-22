@@ -22,7 +22,11 @@ import {
 } from '../schemas';
 import { getContentSource } from './factory';
 import { createValidator } from './processor';
-import type { ContentResult, ContentValidator } from './types';
+import type {
+  ContentItemMetadata,
+  ContentResult,
+  ContentValidator,
+} from './types';
 
 /**
  * Pre-configured validators for existing content types
@@ -73,7 +77,9 @@ export class GenericContentFetcher {
   /**
    * Fetch content metadata
    */
-  async fetchMetadata(path: string) {
+  async fetchMetadata(
+    path: string,
+  ): Promise<ContentResult<ContentItemMetadata[]>> {
     return (
       this.contentSource.fetchMetadata?.(path) ?? [404, 'not_found', undefined]
     );
@@ -192,6 +198,60 @@ export async function fetchChallenges(language = 'fr') {
     ContentValidators.challenge,
     language,
   );
+}
+
+/** File states that stay the same on a retry: the file is skipped. */
+const PERMANENT_FILE_STATES = new Set<string>([
+  'validation_error',
+  'not_found',
+  'ignored',
+]);
+
+/**
+ * Every challenge of a language that loads. Unlike `fetchChallenges`, a file
+ * with invalid frontmatter is logged and skipped, so one bad file does not
+ * hide the others. A file that fails for another reason (timeout, rate
+ * limit, server error) fails the whole list: a partial list would otherwise
+ * be cached as complete.
+ *
+ * Files are fetched one by one, so the filesystem source (local dev) lists a
+ * file marked `ignore: true`; the GitHub source skips it.
+ */
+export async function fetchValidChallenges(
+  language = 'fr',
+): Promise<ContentResult<MarkdocFile<ChallengeFrontmatter>[]>> {
+  const [status, state, items] = await genericFetcher.fetchMetadata(
+    `challenges/${language}`,
+  );
+  if (status !== 200 || !items) {
+    return [status, state, undefined];
+  }
+
+  const results = await Promise.all(
+    items.map(({ slug }) => fetchChallenge(slug, language)),
+  );
+  const transient = results.find(
+    ([fileStatus, fileState]) =>
+      fileStatus !== 200 && !PERMANENT_FILE_STATES.has(fileState),
+  );
+  if (transient) {
+    return [transient[0], transient[1], undefined];
+  }
+
+  const challenges = results.flatMap(([fileStatus, fileState, file], i) => {
+    if (fileStatus === 200 && file) {
+      return [file];
+    }
+    if (fileState !== 'ignored') {
+      console.error(
+        `[challenges] skipped ${language}/${items[i].slug}:`,
+        fileStatus,
+        fileState,
+      );
+    }
+    return [];
+  });
+  return [200, 'success', challenges];
 }
 
 /**
