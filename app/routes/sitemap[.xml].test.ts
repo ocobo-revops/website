@@ -27,7 +27,7 @@ import type {
 const fetchStoriesMock = vi.fn();
 const fetchBlogpostsMock = vi.fn();
 const fetchJobsMock = vi.fn();
-const fetchChallengesMock = vi.fn();
+const loadChallengeMenuMock = vi.fn();
 
 vi.mock('~/modules/content', () => ({
   fetchStories: () => fetchStoriesMock(),
@@ -35,10 +35,11 @@ vi.mock('~/modules/content', () => ({
   fetchJobs: () => fetchJobsMock(),
 }));
 
-// The content barrel does not export the challenge fetchers: the route
-// imports them from the API module, so both modules need a mock.
-vi.mock('~/modules/content/api', () => ({
-  fetchChallenges: (lang: string) => fetchChallengesMock(lang),
+// The challenge list comes from the navbar loader module, which skips
+// invalid files and caches (tested in `challenge-menu.server.test.ts`).
+vi.mock('~/modules/challenge-menu.server', () => ({
+  loadChallengeMenu: (lang: string, options: unknown) =>
+    loadChallengeMenuMock(lang, options),
 }));
 
 function storyEntry(
@@ -115,7 +116,7 @@ function jobEntry(
 beforeEach(() => {
   // Challenges are disabled by default: enable every page.
   vi.stubEnv('DISABLED_PAGES', '');
-  fetchChallengesMock.mockResolvedValue([200, 'success', []]);
+  loadChallengeMenuMock.mockResolvedValue({ challenges: [], failed: false });
 });
 
 afterEach(() => {
@@ -280,17 +281,13 @@ describe('sitemap loader', () => {
     fetchStoriesMock.mockResolvedValue([200, 'success', []]);
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
     fetchJobsMock.mockResolvedValue([200, 'success', []]);
-    fetchChallengesMock.mockImplementation(async (lang: string) => [
-      200,
-      'success',
-      lang === 'fr'
-        ? [
-            { slug: 'revenue-performance' },
-            { slug: 'revenue-ai' },
-            { slug: 'Not_Kebab' },
-          ]
-        : [{ slug: 'revenue-performance' }],
-    ]);
+    loadChallengeMenuMock.mockImplementation(async (lang: string) => ({
+      challenges:
+        lang === 'fr'
+          ? [{ slug: 'revenue-performance' }, { slug: 'revenue-ai' }]
+          : [{ slug: 'revenue-performance' }],
+      failed: false,
+    }));
 
     const { loader } = await import('./sitemap[.xml]');
     const outcome = await invokeLoader(loader);
@@ -298,8 +295,12 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    expect(fetchChallengesMock).toHaveBeenCalledWith('fr');
-    expect(fetchChallengesMock).toHaveBeenCalledWith('en');
+    expect(loadChallengeMenuMock).toHaveBeenCalledWith('fr', {
+      refresh: false,
+    });
+    expect(loadChallengeMenuMock).toHaveBeenCalledWith('en', {
+      refresh: false,
+    });
     expect(body).toContain(
       '<loc>https://www.ocobo.co/fr/challenges/revenue-performance</loc>',
     );
@@ -312,7 +313,21 @@ describe('sitemap loader', () => {
     expect(body).not.toContain(
       '<loc>https://www.ocobo.co/en/challenges/revenue-ai</loc>',
     );
-    expect(body).not.toContain('Not_Kebab');
+  });
+
+  it('passes ?refresh=1 to the challenge list', async () => {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+
+    const { loader } = await import('./sitemap[.xml]');
+    await invokeLoader(loader, {
+      url: 'http://test.local/sitemap.xml?refresh=1',
+    });
+
+    expect(loadChallengeMenuMock).toHaveBeenCalledWith('fr', {
+      refresh: true,
+    });
   });
 
   it('lists no challenge and skips the fetch when the flag is disabled', async () => {
@@ -320,11 +335,10 @@ describe('sitemap loader', () => {
     fetchStoriesMock.mockResolvedValue([200, 'success', []]);
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
     fetchJobsMock.mockResolvedValue([200, 'success', []]);
-    fetchChallengesMock.mockResolvedValue([
-      200,
-      'success',
-      [{ slug: 'revenue-performance' }],
-    ]);
+    loadChallengeMenuMock.mockResolvedValue({
+      challenges: [{ slug: 'revenue-performance' }],
+      failed: false,
+    });
 
     const { loader } = await import('./sitemap[.xml]');
     const outcome = await invokeLoader(loader);
@@ -332,15 +346,15 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    expect(fetchChallengesMock).not.toHaveBeenCalled();
+    expect(loadChallengeMenuMock).not.toHaveBeenCalled();
     expect(body).not.toContain('/challenges/');
   });
 
-  it('degrades gracefully when the challenges fetcher fails', async () => {
+  it('degrades gracefully when the challenge list is empty', async () => {
     fetchStoriesMock.mockResolvedValue([200, 'success', []]);
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
     fetchJobsMock.mockResolvedValue([200, 'success', []]);
-    fetchChallengesMock.mockResolvedValue([500, 'source_error', undefined]);
+    loadChallengeMenuMock.mockResolvedValue({ challenges: [], failed: false });
 
     const { loader } = await import('./sitemap[.xml]');
     const outcome = await invokeLoader(loader);
@@ -381,7 +395,7 @@ describe('sitemap loader', () => {
     expect(fetchStoriesMock).toHaveBeenCalledTimes(1);
     expect(fetchBlogpostsMock).toHaveBeenCalledTimes(1);
     expect(fetchJobsMock).toHaveBeenCalledTimes(1);
-    expect(fetchChallengesMock).toHaveBeenCalledTimes(2);
+    expect(loadChallengeMenuMock).toHaveBeenCalledTimes(2);
 
     resolveStories([200, 'success', []]);
     resolvePosts([200, 'success', []]);

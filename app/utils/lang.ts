@@ -1,9 +1,15 @@
 import { Params } from 'react-router';
 
 import { type Language, languages } from '~/localization/resources';
+import { DEFAULT_LANGUAGE } from '~/modules/language';
+
+/** The `($lang)` segment, or the default language when it is absent. */
+export function getLangParam(params: Params<string>): string {
+  return params.lang ?? DEFAULT_LANGUAGE;
+}
 
 export function getLang(params: Params<string>) {
-  const lang = params.lang ?? 'fr';
+  const lang = getLangParam(params);
 
   if (!languages.includes(lang as Language)) {
     throw new Response(null, {

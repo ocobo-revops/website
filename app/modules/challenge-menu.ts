@@ -35,3 +35,22 @@ export function toChallengeMenu(
       tagline: isPlaceholder(tagline) ? null : tagline,
     }));
 }
+
+/** Route id of `app/routes/_main.tsx`, which loads the list. */
+export const MAIN_ROUTE_ID = 'routes/_main';
+
+/**
+ * Whether the `_main` layout loader reported a failed challenge load, from
+ * the loader data of a server render. Such a page must not be cached.
+ */
+export function didMainChallengeLoadFail(
+  loaderData: Record<string, unknown>,
+): boolean {
+  const main = loaderData[MAIN_ROUTE_ID];
+  return (
+    typeof main === 'object' &&
+    main !== null &&
+    'failed' in main &&
+    main.failed === true
+  );
+}

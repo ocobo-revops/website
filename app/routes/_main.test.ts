@@ -3,7 +3,7 @@
  * filesystem content source pointed at the test fixtures.
  */
 
-import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -17,6 +17,7 @@ const env = vi.hoisted(() => ({
 }));
 
 vi.mock('~/modules/env.server', () => ({
+  getContentSource: () => 'locale',
   getPrivateEnvVars: () => ({
     readContentFrom: 'locale',
     localeRepoAPIUrl: env.contentRoot,
@@ -33,7 +34,7 @@ async function loadRoute(contentRoot: string) {
 
 const FIXTURES = `${__dirname}/../test/fixtures/content`;
 
-async function challengesFor(contentRoot: string, lang?: string) {
+async function loadFor(contentRoot: string, lang?: string) {
   const { loader } = await loadRoute(contentRoot);
   const outcome = await invokeLoader(loader, {
     params: lang ? { lang } : {},
@@ -41,7 +42,11 @@ async function challengesFor(contentRoot: string, lang?: string) {
   if (outcome.type !== 'data') {
     throw new Error(`Expected data, got ${outcome.response.status}`);
   }
-  return outcome.data.challenges;
+  return outcome.data;
+}
+
+async function challengesFor(contentRoot: string, lang?: string) {
+  return (await loadFor(contentRoot, lang)).challenges;
 }
 
 describe('_main loader', () => {
@@ -56,12 +61,15 @@ describe('_main loader', () => {
 
   it('returns no challenge and reads no content when the flag is disabled', async () => {
     vi.stubEnv('DISABLED_PAGES', undefined);
-    const fetchChallenges = vi.fn();
-    vi.doMock('~/modules/content/api', () => ({ fetchChallenges }));
+    const fetchValidChallenges = vi.fn();
+    vi.doMock('~/modules/content/api', () => ({ fetchValidChallenges }));
 
     try {
-      expect(await challengesFor(FIXTURES)).toEqual([]);
-      expect(fetchChallenges).not.toHaveBeenCalled();
+      expect(await loadFor(FIXTURES)).toEqual({
+        challenges: [],
+        failed: false,
+      });
+      expect(fetchValidChallenges).not.toHaveBeenCalled();
     } finally {
       vi.doUnmock('~/modules/content/api');
     }
@@ -101,14 +109,19 @@ describe('_main loader', () => {
 
   it('returns no challenge when the source has no challenges folder', async () => {
     // The fixtures root itself holds `content/` but no `challenges/`.
-    const challenges = await challengesFor(`${FIXTURES}/..`);
-
-    expect(challenges).toEqual([]);
+    expect(await loadFor(`${FIXTURES}/..`)).toEqual({
+      challenges: [],
+      failed: false,
+    });
   });
 
-  it('hides the entry and logs when a challenge fails validation', async () => {
+  it('keeps the valid challenges and logs the one that fails validation', async () => {
     const root = await mkdtemp(join(tmpdir(), 'main-loader-'));
     await mkdir(join(root, 'challenges/fr'), { recursive: true });
+    await copyFile(
+      join(FIXTURES, 'challenges/fr/revenue-ai.md'),
+      join(root, 'challenges/fr/revenue-ai.md'),
+    );
     await writeFile(
       join(root, 'challenges/fr/broken.md'),
       '---\ntitle: Missing every other field\n---\n',
@@ -118,11 +131,15 @@ describe('_main loader', () => {
       .mockImplementation(() => undefined);
 
     try {
-      expect(await challengesFor(root)).toEqual([]);
+      const challenges = await challengesFor(root);
+
+      expect(challenges.map((challenge) => challenge.slug)).toEqual([
+        'revenue-ai',
+      ]);
       expect(error).toHaveBeenCalledWith(
-        '[_main] challenge list unavailable:',
-        500,
-        'source_error',
+        '[challenges] skipped fr/broken:',
+        expect.any(Number),
+        expect.any(String),
       );
     } finally {
       error.mockRestore();
@@ -132,10 +149,19 @@ describe('_main loader', () => {
 });
 
 describe('_main shouldRevalidate', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
   async function revalidates(
     currentParams: Record<string, string>,
     nextParams: Record<string, string>,
+    { lastLoadFailed = false } = {},
   ) {
+    const { setChallengeLoadFailed } = await import(
+      '~/modules/challenge-menu-state'
+    );
+    setChallengeLoadFailed(lastLoadFailed);
     const { shouldRevalidate } = await import('./_main');
     return shouldRevalidate({
       currentParams,
@@ -144,7 +170,8 @@ describe('_main shouldRevalidate', () => {
     } as unknown as ShouldRevalidateFunctionArgs);
   }
 
-  it('skips the reload within one language', async () => {
+  it('skips the reload within one language, empty list included', async () => {
+    // The flag-off loader and an empty folder report `failed: false`.
     expect(await revalidates({ lang: 'en' }, { lang: 'en' })).toBe(false);
     expect(await revalidates({}, { lang: 'fr' })).toBe(false);
   });
@@ -152,5 +179,14 @@ describe('_main shouldRevalidate', () => {
   it('reloads the list when the language changes', async () => {
     expect(await revalidates({ lang: 'fr' }, { lang: 'en' })).toBe(true);
     expect(await revalidates({ lang: 'en' }, {})).toBe(true);
+  });
+
+  it('retries within one language after a failed load', async () => {
+    const failed = { lastLoadFailed: true };
+
+    expect(await revalidates({ lang: 'en' }, { lang: 'en' }, failed)).toBe(
+      true,
+    );
+    expect(await revalidates({}, {}, failed)).toBe(true);
   });
 });
