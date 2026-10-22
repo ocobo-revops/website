@@ -37,6 +37,7 @@ export function FlipCard({
   front,
   back,
   size,
+  variant,
   className,
   frontClassName,
   backClassName,
@@ -48,7 +49,7 @@ export function FlipCard({
   // then shows the front; a flip from the button or a tap stays put.
   const flippedByHover = React.useRef(false);
   const backId = React.useId();
-  const styles = flipCard({ size });
+  const styles = flipCard({ size, variant });
 
   const toggle = () => {
     flippedByHover.current = false;
