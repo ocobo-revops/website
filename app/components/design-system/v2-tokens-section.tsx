@@ -4,8 +4,8 @@ import { text } from '@ocobo/styled-system/recipes';
 
 import { ShowcaseSection } from './showcase-section';
 
-// Design system v2 tokens (ADR 0002). Every class below is a static literal
-// so Panda extracts it; see CLAUDE.md §7.
+// Design system v2 tokens (ADR 0002), one export per showcase block. Every
+// class below is a static literal so Panda extracts it; see CLAUDE.md §7.
 
 const caption = css({ fontSize: 'caption', color: 'gray' });
 const swatch = css({
@@ -126,154 +126,180 @@ const surface = css({
   borderColor: 'line',
 });
 
-export function V2TokensSection() {
+export function TypeScaleSection() {
   return (
-    <>
-      <ShowcaseSection title="Type scale (v2)">
-        <ul
-          className={css({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6',
-          })}
-        >
-          {typeScale.map((item) => (
-            <li key={item.name} className={tile}>
-              <span className={caption}>
-                {item.size} · text({`{ variant: '${item.name}' }`})
-              </span>
-              <span className={item.className}>Revenue operations</span>
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
+    <ShowcaseSection title="Type scale (v2)">
+      <ul
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '6',
+        })}
+      >
+        {typeScale.map((item) => (
+          <li key={item.name} className={tile}>
+            <span className={caption}>
+              {item.size} · text({`{ variant: '${item.name}' }`})
+            </span>
+            <span className={item.className}>Revenue operations</span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
 
-      <ShowcaseSection title="Greys and line">
-        <ul className={grid({ columns: { base: 3, md: 9 }, gap: '4' })}>
-          {greys.map((item) => (
-            <li key={item.name} className={tile}>
-              <span className={cx(swatch, item.className)} />
-              <span className={caption}>{item.name}</span>
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
+export function GreysSection() {
+  return (
+    <ShowcaseSection title="Greys and line">
+      <ul className={grid({ columns: { base: 3, md: 9 }, gap: '4' })}>
+        {greys.map((item) => (
+          <li key={item.name} className={tile}>
+            <span className={cx(swatch, item.className)} />
+            <span className={caption}>{item.name}</span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
 
-      <ShowcaseSection title="Challenge colours">
-        <ul className={grid({ columns: { base: 2, md: 6 }, gap: '4' })}>
-          {challenges.map((item) => (
-            <li key={item.key} className={tile}>
-              <span className={css({ display: 'flex', gap: '2' })}>
-                <span className={cx(swatch, item.accent)} />
-                <span className={cx(swatch, item.tint)} />
-              </span>
-              <span className={caption}>
-                challenge.{item.key} · {item.label}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
+export function ChallengeColoursSection() {
+  return (
+    <ShowcaseSection title="Challenge colours">
+      <ul className={grid({ columns: { base: 2, md: 6 }, gap: '4' })}>
+        {challenges.map((item) => (
+          <li key={item.key} className={tile}>
+            <span className={css({ display: 'flex', gap: '2' })}>
+              <span className={cx(swatch, item.accent)} />
+              <span className={cx(swatch, item.tint)} />
+            </span>
+            <span className={caption}>
+              challenge.{item.key} · {item.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
 
-      <ShowcaseSection title="AI gradients">
-        <div
-          className={css({
-            h: '4',
-            rounded: 'full',
-            bgGradient: 'ai',
-            mb: '4',
-          })}
-        />
-        <p className={caption}>gradients.ai (decoration)</p>
-        <p
-          className={cx(
-            text({ variant: 'display-lg' }),
-            css({
-              textGradient: 'ai-text',
-              mt: '6',
-            }),
-          )}
-        >
-          Revenue AI
-        </p>
-        <p className={caption}>gradients.ai-text (display and H2 only)</p>
-      </ShowcaseSection>
-
-      <ShowcaseSection title="Radii">
-        <ul className={grid({ columns: { base: 2, md: 4 }, gap: '6' })}>
-          {radii.map((item) => (
-            <li key={item.name} className={tile}>
-              <span
-                className={cx(css({ h: '20', bg: 'gray.100' }), item.className)}
-              />
-              <span className={caption}>{item.name}</span>
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
-
-      <ShowcaseSection title="Shadows">
-        <ul className={grid({ columns: { base: 1, md: 3 }, gap: '8' })}>
-          {shadows.map((item) => (
-            <li key={item.name} className={tile}>
-              <span className={cx(surface, item.className)} />
-              <span className={caption}>{item.name}</span>
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
-
-      <ShowcaseSection title="Font sizes and letter spacings">
-        <ul
-          className={css({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '3',
-          })}
-        >
-          {fontSizes.map((item) => (
-            <li key={item.name} className={item.className}>
-              {item.name}
-            </li>
-          ))}
-        </ul>
-        <ul
-          className={css({
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '3',
+export function AiGradientsSection() {
+  return (
+    <ShowcaseSection title="AI gradients">
+      <div
+        className={css({
+          h: '4',
+          rounded: 'full',
+          bgGradient: 'ai',
+          mb: '4',
+        })}
+      />
+      <p className={caption}>gradients.ai (decoration)</p>
+      <p
+        className={cx(
+          text({ variant: 'display-lg' }),
+          css({
+            textGradient: 'ai-text',
             mt: '6',
-            fontSize: 'label',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-          })}
-        >
-          {letterSpacings.map((item) => (
-            <li key={item.name} className={item.className}>
-              {item.name}
-            </li>
-          ))}
-        </ul>
-      </ShowcaseSection>
+          }),
+        )}
+      >
+        Revenue AI
+      </p>
+      <p className={caption}>gradients.ai-text (display and H2 only)</p>
+    </ShowcaseSection>
+  );
+}
 
-      <ShowcaseSection title="Easing">
-        <div
-          className={cx(
-            surface,
-            css({
-              w: '40',
-              boxShadow: 'rest',
-              transition: 'common',
-              transitionDuration: 'slower',
-              transitionTimingFunction: 'smooth',
-              _hover: { transform: 'translateY(-4px)', boxShadow: 'hover' },
-            }),
-          )}
-        />
-        <p className={cx(caption, css({ mt: '3' }))}>
-          easings.smooth · cubic-bezier(.2, .8, .2, 1), hover the card
-        </p>
-      </ShowcaseSection>
-    </>
+export function RadiiSection() {
+  return (
+    <ShowcaseSection title="Radii">
+      <ul className={grid({ columns: { base: 2, md: 4 }, gap: '6' })}>
+        {radii.map((item) => (
+          <li key={item.name} className={tile}>
+            <span
+              className={cx(css({ h: '20', bg: 'gray.100' }), item.className)}
+            />
+            <span className={caption}>{item.name}</span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
+
+export function ShadowsSection() {
+  return (
+    <ShowcaseSection title="Shadows">
+      <ul className={grid({ columns: { base: 1, md: 3 }, gap: '8' })}>
+        {shadows.map((item) => (
+          <li key={item.name} className={tile}>
+            <span className={cx(surface, item.className)} />
+            <span className={caption}>{item.name}</span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
+
+export function FontSizesSection() {
+  return (
+    <ShowcaseSection title="Font sizes and letter spacings">
+      <ul
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '3',
+        })}
+      >
+        {fontSizes.map((item) => (
+          <li key={item.name} className={item.className}>
+            {item.name}
+          </li>
+        ))}
+      </ul>
+      <ul
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '3',
+          mt: '6',
+          fontSize: 'label',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+        })}
+      >
+        {letterSpacings.map((item) => (
+          <li key={item.name} className={item.className}>
+            {item.name}
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
+
+export function EasingSection() {
+  return (
+    <ShowcaseSection title="Easing">
+      <div
+        className={cx(
+          surface,
+          css({
+            w: '40',
+            boxShadow: 'rest',
+            transition: 'common',
+            transitionDuration: 'slower',
+            transitionTimingFunction: 'smooth',
+            _hover: { transform: 'translateY(-4px)', boxShadow: 'hover' },
+          }),
+        )}
+      />
+      <p className={cx(caption, css({ mt: '3' }))}>
+        easings.smooth · cubic-bezier(.2, .8, .2, 1), hover the card
+      </p>
+    </ShowcaseSection>
   );
 }
