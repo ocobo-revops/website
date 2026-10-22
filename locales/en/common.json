@@ -2,6 +2,8 @@
   "language.fr": "Français",
   "language.en": "English",
   "flipCard.flip": "Flip card: {{label}}",
+  "tabs.pause": "Pause autoplay",
+  "tabs.play": "Resume autoplay",
   "personCard.contribution": "What they bring",
   "personCard.bio": "Background",
   "personCard.tools": "Tools",

@@ -2,6 +2,8 @@
   "language.fr": "Français",
   "language.en": "Anglais",
   "flipCard.flip": "Retourner la carte : {{label}}",
+  "tabs.pause": "Mettre en pause le défilement",
+  "tabs.play": "Reprendre le défilement",
   "personCard.contribution": "Ce qu'il ou elle apporte",
   "personCard.bio": "Parcours",
   "personCard.tools": "Ses outils",
