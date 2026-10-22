@@ -17,13 +17,7 @@ importers:
       '@octokit/rest':
         specifier: ^22.0.1
         version: 22.0.1
-      '@react-router/fs-routes':
-        specifier: ^7.18.4
-        version: 7.18.4(@react-router/dev@7.18.4(@react-router/serve@7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3))(@types/node@24.19.2)(lightningcss@1.31.1)(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@5.4.21(@types/node@24.19.2)(lightningcss@1.31.1)))(typescript@5.9.3)
       '@react-router/node':
-        specifier: ^7.18.4
-        version: 7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)
-      '@react-router/serve':
         specifier: ^7.18.4
         version: 7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)
       '@vercel/analytics':
@@ -102,6 +96,12 @@ importers:
       '@react-router/dev':
         specifier: ^7.18.4
         version: 7.18.4(@react-router/serve@7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3))(@types/node@24.19.2)(lightningcss@1.31.1)(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@5.4.21(@types/node@24.19.2)(lightningcss@1.31.1))
+      '@react-router/fs-routes':
+        specifier: ^7.18.4
+        version: 7.18.4(@react-router/dev@7.18.4(@react-router/serve@7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3))(@types/node@24.19.2)(lightningcss@1.31.1)(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)(vite@5.4.21(@types/node@24.19.2)(lightningcss@1.31.1)))(typescript@5.9.3)
+      '@react-router/serve':
+        specifier: ^7.18.4
+        version: 7.18.4(react-router@7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.9.3)
       '@testing-library/jest-dom':
         specifier: ^6.9.1
         version: 6.9.1
