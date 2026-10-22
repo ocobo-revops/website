@@ -106,6 +106,10 @@ describe('challenge optional fields', () => {
   });
 
   it.each([
+    'key',
+    'order',
+    'name',
+    'tagline',
     'hero',
     'bowtie',
     'symptoms',
@@ -115,8 +119,10 @@ describe('challenge optional fields', () => {
     'method',
     'case',
     'diagnostic',
-  ])('rejects a file without %s', (section) => {
-    expect(issuesOf(without(complete, [section]))).not.toEqual([]);
+  ])('rejects a file without %s', (field) => {
+    expect(issuesOf(without(complete, [field]))).toEqual([
+      { path: [field], message: expect.any(String) },
+    ]);
   });
 });
 
@@ -179,6 +185,102 @@ describe('challenge key and caps', () => {
       { path: ['tagline'], message: 'must not be empty' },
     ]);
   });
+});
+
+// Same table as the posts repo tests: a value at the cap passes, one
+// character over fails.
+const CAPS: [Path, number][] = [
+  [['name'], 30],
+  [['tagline'], 60],
+  [['hero', 'title', 0], 34],
+  [['hero', 'title', 1], 42],
+  [['hero', 'quote'], 80],
+  [['hero', 'lead'], 240],
+  [['hero', 'highlight'], 110],
+  [['hero', 'cta'], 48],
+  [['bowtie', 'caption'], 140],
+  [['symptoms', 'title', 0], 64],
+  [['symptoms', 'title', 1], 44],
+  [['symptoms', 'items', 0], 130],
+  [['audience', 0, 'team'], 20],
+  [['audience', 0, 'roles'], 30],
+  [['audience', 0, 'benefit'], 100],
+  [['workstreams', 'title'], 50],
+  [['workstreams', 'intro'], 120],
+  [['workstreams', 'items', 0, 'category'], 26],
+  [['workstreams', 'items', 0, 'title'], 64],
+  [['workstreams', 'items', 0, 'description'], 210],
+  [['workstreams', 'items', 0, 'deliverable'], 170],
+  [['workstreams', 'items', 0, 'note'], 100],
+  [['aiBridge', 'title'], 92],
+  [['aiBridge', 'bullets', 0], 125],
+  [['method', 'title'], 30],
+  [['method', 'subtitle'], 75],
+  [['method', 'steps', 0, 'title'], 28],
+  [['method', 'steps', 0, 'text'], 150],
+  [['method', 'note'], 170],
+  [['case', 'headline'], 120],
+  [['case', 'summary'], 220],
+  [['case', 'metrics', 0, 'value'], 12],
+  [['case', 'metrics', 0, 'label'], 90],
+  [['diagnostic', 'question'], 88],
+  [['diagnostic', 'subtitle'], 125],
+];
+
+describe('challenge caps', () => {
+  it.each(CAPS)('%j accepts %i characters', (path, cap) => {
+    expect(issuesOf(withValue(complete, path, 'a'.repeat(cap)))).toEqual([]);
+  });
+
+  it.each(CAPS)('%j rejects one character over cap %i', (path, cap) => {
+    expect(issuesOf(withValue(complete, path, 'a'.repeat(cap + 1)))).toEqual([
+      { path, message: `${cap + 1} characters, cap ${cap} (1 over)` },
+    ]);
+  });
+});
+
+// Same table as the posts repo tests: [path, min, max].
+const COUNTS: [Path, number, number][] = [
+  [['hero', 'title'], 2, 2],
+  [['symptoms', 'title'], 2, 2],
+  [['symptoms', 'items'], 5, 6],
+  [['audience'], 4, 4],
+  [['workstreams', 'items'], 4, 6],
+  [['aiBridge', 'bullets'], 3, 3],
+  [['method', 'steps'], 3, 3],
+  [['method', 'tools'], 0, 9],
+  [['case', 'metrics'], 2, 2],
+];
+
+// A list of `count` items, cycling through the items of `complete`.
+const resize = (path: Path, count: number) => {
+  const items = path.reduce((node, key) => node[key], complete) as unknown[];
+  return Array.from({ length: count }, (_, index) =>
+    structuredClone(items[index % items.length]),
+  );
+};
+
+describe('challenge array counts', () => {
+  it.each(COUNTS)('%j accepts %i to %i items', (path, min, max) => {
+    expect(issuesOf(withValue(complete, path, resize(path, min)))).toEqual([]);
+    expect(issuesOf(withValue(complete, path, resize(path, max)))).toEqual([]);
+  });
+
+  it.each(COUNTS)(
+    '%j rejects fewer than %i or more than %i items',
+    (path, min, max) => {
+      // One issue at or under the path: for a tuple with an item missing, Zod
+      // 4.3 reports the missing index (`['hero', 'title', 1]`).
+      const issuePaths = (count: number) => {
+        const issues = issuesOf(withValue(complete, path, resize(path, count)));
+        return issues.map((issue) => issue.path.slice(0, path.length));
+      };
+      if (min > 0) {
+        expect(issuePaths(min - 1)).toEqual([path]);
+      }
+      expect(issuePaths(max + 1)).toEqual([path]);
+    },
+  );
 });
 
 describe('challenge unknown keys', () => {
