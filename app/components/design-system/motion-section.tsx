@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -27,6 +28,12 @@ const bar = css({
   transformOrigin: 'left',
 });
 const reducedNote = cx(text({ variant: 'small' }), css({ mb: '6' }));
+// One viewport of room, so the demos start below the fold and can cross it.
+const scrollRoom = css({ h: 'screen' });
+const scrollHint = cx(
+  text({ variant: 'label' }),
+  css({ display: 'flex', alignItems: 'center', gap: '2', color: 'gray' }),
+);
 
 const steps = [
   'Diagnostic de vos process',
@@ -69,6 +76,12 @@ export function MotionSection() {
         load stays put. The server render and reduced motion show the final
         state.
       </p>
+      <div className={scrollRoom}>
+        <p className={scrollHint}>
+          Scroll down
+          <ArrowDown aria-hidden className={css({ h: '4', w: '4' })} />
+        </p>
+      </div>
       <div
         className={cx(
           grid({ columns: { base: 1, md: 3 }, gap: '6' }),
@@ -85,6 +98,7 @@ export function MotionSection() {
         ))}
       </div>
       <ScrollProgressDemo />
+      <div aria-hidden className={scrollRoom} />
     </ShowcaseSection>
   );
 }
