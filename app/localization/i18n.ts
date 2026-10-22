@@ -13,4 +13,8 @@ export const defaultNS = 'common';
 
 export { resources };
 
+// i18next 25.10 logs a Locize notice on init; its production skip relies on
+// `process`, so it never applies in the browser
+export const showSupportNotice = false;
+
 // export const debug = process.env.NODE_ENV !== "production";
