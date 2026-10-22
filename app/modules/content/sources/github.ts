@@ -112,14 +112,11 @@ export class GitHubContentSource implements ContentSource {
         return [404, 'ignored', undefined];
       }
 
+      // The file was read: a YAML, schema or Markdoc error stays the same on
+      // a retry, so it is a content error, not a source error.
       if (!result.success) {
-        if (
-          result.error?.includes('Invalid') &&
-          result.error?.includes('frontmatter')
-        ) {
-          return [422, 'validation_error', undefined];
-        }
-        return [500, 'source_error', undefined];
+        console.error(`Failed to process ${slug}: ${result.error}`);
+        return [422, 'validation_error', undefined];
       }
 
       if (!result.data) {

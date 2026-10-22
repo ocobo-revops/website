@@ -1,7 +1,7 @@
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
-import type { Color } from '~/components/navbar/types';
+import type { Color, DropdownItemTint } from '~/components/navbar/types';
 
 /**
  * Icon box tint per colour, shared by the desktop panels and the mobile
@@ -35,6 +35,29 @@ export const itemHoverTint: Record<Color, string> = {
     _focusVisible: { bg: 'ocobo.mint.light' },
   }),
 };
+
+/**
+ * Same roles for an item that sets `colorPalette` (challenge entries).
+ */
+const paletteIconTint = css({ bg: 'colorPalette/10', color: 'colorPalette' });
+const paletteItemHoverTint = css({
+  _hover: { bg: 'colorPalette.light' },
+  _focusVisible: { bg: 'colorPalette.light' },
+});
+
+/**
+ * Icon box and hover tint of one panel item. A palette item carries its
+ * palette class on each element.
+ */
+export function panelItemTint(item: DropdownItemTint) {
+  if (item.palette !== undefined) {
+    return {
+      icon: cx(item.palette, paletteIconTint),
+      hover: cx(item.palette, paletteItemHoverTint),
+    };
+  }
+  return { icon: iconTint[item.color], hover: itemHoverTint[item.color] };
+}
 
 /**
  * Top-level desktop entry: link or disclosure button.

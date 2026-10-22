@@ -7,14 +7,21 @@ export type NavbarScrollState = 'at-top' | 'scrolled';
 
 export type ScrollDirection = 'up' | 'down';
 
-export type DropdownItem = {
+/**
+ * Item tint: a navbar colour, or a class that sets `colorPalette` (the
+ * challenge entries pass `challengePalette[key]`).
+ */
+export type DropdownItemTint =
+  | { color: Color; palette?: never }
+  | { palette: string; color?: never };
+
+export type DropdownItem = DropdownItemTint & {
   key: string;
   label: string;
   description?: string;
   path: string;
   icon?: LucideIcon;
   imageSrc?: string;
-  color: Color;
   isExternal?: boolean;
   shouldHide?: boolean;
 };

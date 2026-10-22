@@ -24,6 +24,16 @@ describe('feature-flags', () => {
       expect(getDisabledPages()).toEqual(DISABLED_PAGES_DEFAULT);
     });
 
+    it('disables challenges by default', () => {
+      delete process.env.DISABLED_PAGES;
+      expect(isPageEnabled('challenges')).toBe(false);
+    });
+
+    it('enables challenges when the env var leaves them out', () => {
+      process.env.DISABLED_PAGES = 'news,tools';
+      expect(isPageEnabled('challenges')).toBe(true);
+    });
+
     it('returns empty array when env var is empty', () => {
       process.env.DISABLED_PAGES = '';
       expect(getDisabledPages()).toEqual([]);

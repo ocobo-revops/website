@@ -1,6 +1,6 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 
-import type { Color } from './types';
+import type { Color, DropdownItemTint } from './types';
 
 /**
  * Icon background/colour styles per colour variant.
@@ -32,6 +32,35 @@ export const hoverTextStyles: Record<Color, string> = {
   coral: css({ _groupHover: { color: 'ocobo.coral' } }),
   mint: css({ _groupHover: { color: 'ocobo.mint' } }),
 };
+
+/**
+ * Same roles for an item that sets `colorPalette`. The label keeps its dark
+ * colour on hover: some challenge colours are too light for text.
+ */
+const paletteIconStyles = css({
+  bg: 'colorPalette/10',
+  color: 'colorPalette',
+});
+const paletteHoverStyles = css({ _hover: { bg: 'colorPalette.light' } });
+
+/**
+ * Tint classes of one dropdown item. A palette item carries its palette
+ * class on each element, so neither depends on the other's ancestors.
+ */
+export function dropdownItemTint(item: DropdownItemTint) {
+  if (item.palette !== undefined) {
+    return {
+      icon: cx(item.palette, paletteIconStyles),
+      hover: cx(item.palette, paletteHoverStyles),
+      label: undefined,
+    };
+  }
+  return {
+    icon: iconStyles[item.color],
+    hover: hoverStyles[item.color],
+    label: hoverTextStyles[item.color],
+  };
+}
 
 /**
  * Scroll threshold in pixels before navbar transitions to "scrolled" state.

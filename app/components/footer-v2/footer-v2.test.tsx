@@ -23,6 +23,29 @@ describe('FooterV2', () => {
     ]);
   });
 
+  it('keeps a challenge out of the link row, whatever its slug', () => {
+    // A challenge slug may equal a footer key. With the jobs page disabled,
+    // a challenge named `jobs` must not take the empty slot.
+    render(<FooterV2 />, {
+      loaderData: {
+        root: { disabledPages: ['jobs'] },
+        'routes/_main': {
+          challenges: [
+            { slug: 'jobs', key: 'rp', name: 'Jobs challenge', tagline: null },
+          ],
+        },
+      },
+    });
+    const nav = screen.getByRole('navigation', { name: 'Liens du site' });
+
+    expect(
+      within(nav).queryByRole('link', { name: 'Jobs challenge' }),
+    ).not.toBeInTheDocument();
+    expect(
+      within(nav).queryByRole('link', { name: 'Nous rejoindre' }),
+    ).not.toBeInTheDocument();
+  });
+
   it('renders the legal links and the language links', () => {
     render(<FooterV2 />, { initialEntries: ['/fr/offer'] });
 

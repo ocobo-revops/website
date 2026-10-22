@@ -17,6 +17,7 @@ import { createHybridLoader } from '~/modules/cache';
 import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
 import { fetchChallenge } from '~/modules/content/api';
 import { loadChallengeReferences } from '~/modules/content/challenge-references';
+import { throwIfDisabled } from '~/modules/feature-flags';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
@@ -24,6 +25,8 @@ import { redirectWithLocale } from '~/utils/redirections';
 const notFound = () => new Response('Not Found', { status: 404 });
 
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
+  // Before the redirect: a disabled page answers 404 on every URL.
+  throwIfDisabled('challenges');
   await redirectWithLocale(args);
   const lang = getLang(args.params);
   const { slug } = args.params;

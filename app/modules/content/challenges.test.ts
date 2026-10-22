@@ -3,10 +3,10 @@
 // it, which prevents MSW from intercepting the GitHub requests.
 
 /**
- * Challenge content API: `fetchChallenge` and `fetchChallenges` read
- * `challenges/<lang>/<slug>.md` from both content sources. The filesystem
- * source reads the website test fixtures; the GitHub source gets the same
- * files through MSW.
+ * Challenge content API: `fetchChallenge`, `fetchChallenges` and
+ * `fetchValidChallenges` read `challenges/<lang>/<slug>.md` from both content
+ * sources. The filesystem source reads the website test fixtures; the GitHub
+ * source gets the same files through MSW.
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
@@ -96,6 +96,7 @@ function githubHandlers() {
 describe.each(['locale', 'github'])('challenge content API (%s)', (source) => {
   let fetchChallenge: Api['fetchChallenge'];
   let fetchChallenges: Api['fetchChallenges'];
+  let fetchValidChallenges: Api['fetchValidChallenges'];
 
   beforeEach(async () => {
     vi.spyOn(console, 'info').mockImplementation(() => undefined);
@@ -103,7 +104,8 @@ describe.each(['locale', 'github'])('challenge content API (%s)', (source) => {
     if (source === 'github') {
       server.use(...githubHandlers());
     }
-    ({ fetchChallenge, fetchChallenges } = await loadApi(source));
+    ({ fetchChallenge, fetchChallenges, fetchValidChallenges } =
+      await loadApi(source));
   });
 
   afterEach(() => {
@@ -163,6 +165,80 @@ describe.each(['locale', 'github'])('challenge content API (%s)', (source) => {
 
     expect(status).toBe(422);
     expect(state).toBe('validation_error');
+    expect(data).toBeUndefined();
+  });
+
+  it('lists every valid challenge of a language, leniently', async () => {
+    const [status, state, data] = await fetchValidChallenges('fr');
+
+    expect(status).toBe(200);
+    expect(state).toBe('success');
+    expect(data?.map(({ slug }) => slug).sort()).toEqual(FRENCH_SLUGS);
+  });
+
+  it('skips and logs a file the schema rejects, where the strict list fails', async () => {
+    const [strictStatus] = await fetchChallenges('invalid');
+    const [status, state, data] = await fetchValidChallenges('invalid');
+
+    expect(strictStatus).not.toBe(200);
+    expect(status).toBe(200);
+    expect(state).toBe('success');
+    expect(data).toEqual([]);
+    expect(console.error).toHaveBeenCalledWith(
+      '[challenges] skipped invalid/over-cap:',
+      422,
+      'validation_error',
+    );
+  });
+
+  it('skips and logs a file whose frontmatter is not valid YAML', async () => {
+    // A parse error stays the same on a retry: skip it like a schema error,
+    // or one typo would fail the whole list.
+    const [status, state, data] = await fetchValidChallenges('invalid');
+
+    expect([status, state, data]).toEqual([200, 'success', []]);
+    expect(console.error).toHaveBeenCalledWith(
+      '[challenges] skipped invalid/bad-yaml:',
+      422,
+      'validation_error',
+    );
+  });
+
+  it('returns not_found from the lenient list for a missing folder', async () => {
+    const [status, state, data] = await fetchValidChallenges('de');
+
+    expect(status).toBe(404);
+    expect(state).toBe('not_found');
+    expect(data).toBeUndefined();
+  });
+});
+
+describe('fetchValidChallenges (github), transient file failure', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('fails the whole list when one file answers a server error', async () => {
+    // A partial list would be cached as complete: fail so the cache keeps
+    // the last full list and retries.
+    server.use(
+      http.get(
+        `${GITHUB_URL}/challenges/fr/revenue-ai.md`,
+        () => new HttpResponse(null, { status: 502 }),
+      ),
+      ...githubHandlers(),
+    );
+    const { fetchValidChallenges } = await loadApi('github');
+
+    const [status, state, data] = await fetchValidChallenges('fr');
+
+    expect(status).toBe(502);
+    expect(state).toBe('source_error');
     expect(data).toBeUndefined();
   });
 });

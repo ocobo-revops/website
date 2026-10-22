@@ -16,6 +16,7 @@ import {
   logCacheStrategy,
   shouldBypassCache,
 } from '~/modules/cache';
+import { didMainChallengeLoadFail } from '~/modules/challenge-menu';
 
 import { returnLanguageIfSupported } from './localization/resources';
 
@@ -65,7 +66,13 @@ export default async function handleRequest(
 
           // Apply framework-native cache headers at response level
           const cacheStrategy = getCacheStrategyForPath(pathname);
-          const bypassCache = shouldBypassCache(request);
+          // A page rendered while the challenge list failed to load would
+          // keep its empty or outdated navbar entry in the CDN for a day.
+          const bypassCache =
+            shouldBypassCache(request) ||
+            didMainChallengeLoadFail(
+              reactRouterContext.staticHandlerContext.loaderData,
+            );
           const cacheHeaders = getCacheHeaders(cacheStrategy, bypassCache);
 
           // Set cache headers on response (bypasses Vercel framework-level override)

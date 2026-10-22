@@ -6,7 +6,7 @@ import { NavbarBar } from './navbar-bar';
 import { useScrolled } from './use-scrolled';
 
 type NavbarV2Props = {
-  /** Challenge entry slot (#237), see `NavbarBar`. */
+  /** Extra entries before the production menu, see `NavbarBar`. */
   leadingItems?: NavItem[];
 };
 

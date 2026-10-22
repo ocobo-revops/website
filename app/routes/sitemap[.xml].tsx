@@ -1,7 +1,10 @@
+import type { LoaderFunctionArgs } from 'react-router';
+
 import type { Language } from '~/localization/resources';
-import { isChallengeSlug } from '~/modules/challenge-page';
+import { shouldBypassCache } from '~/modules/cache';
+import { loadChallengeMenu } from '~/modules/challenge-menu.server';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
-import { fetchChallenges } from '~/modules/content/api';
+import { isPageEnabled } from '~/modules/feature-flags';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -69,7 +72,7 @@ function generateSiteMap(
         </urlset>`;
 }
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
   const storiesQuery = fetchStories().then((result) => {
     const [, state, data] = result;
     if (state === 'success' && data) {
@@ -106,17 +109,18 @@ export async function loader() {
   });
 
   // Challenge files carry no date: every file in the folder is published.
-  const challengesQuery = (lang: Language) =>
-    fetchChallenges(lang).then((result) => {
-      const [, state, data] = result;
-      if (state === 'success' && data) {
-        // The route answers 404 to any other slug: never list it.
-        return data
-          .filter((challenge) => isChallengeSlug(challenge.slug))
-          .map((challenge) => ({ slug: challenge.slug, lang }));
-      }
+  // Same list as the navbar entry: it skips invalid files and slugs the
+  // route answers 404 to, and shares its in-memory cache. With the
+  // `challenges` page disabled, list none and call no source.
+  const challengesEnabled = isPageEnabled('challenges');
+  const refresh = shouldBypassCache(request);
+  const challengesQuery = async (lang: Language) => {
+    if (!challengesEnabled) {
       return [];
-    });
+    }
+    const { challenges } = await loadChallengeMenu(lang, { refresh });
+    return challenges.map(({ slug }) => ({ slug, lang }));
+  };
 
   const [stories, posts, jobs, frChallenges, enChallenges] = await Promise.all([
     storiesQuery,

@@ -6,7 +6,7 @@ import { text } from '@ocobo/styled-system/recipes';
 
 import type { DropdownItem } from '~/components/navbar/types';
 
-import { focusRing, iconTint, itemHoverTint } from './nav-styles';
+import { focusRing, panelItemTint } from './nav-styles';
 
 type NavPanelItemProps = {
   item: DropdownItem;
@@ -34,15 +34,8 @@ const itemStyles = css({
  * box, title and optional description.
  */
 export function NavPanelItem({ item, onSelect }: NavPanelItemProps) {
-  const {
-    label,
-    description,
-    path,
-    icon: Icon,
-    imageSrc,
-    color,
-    isExternal,
-  } = item;
+  const { label, description, path, icon: Icon, imageSrc, isExternal } = item;
+  const tint = panelItemTint(item);
 
   const content = (
     <>
@@ -58,7 +51,7 @@ export function NavPanelItem({ item, onSelect }: NavPanelItemProps) {
             rounded: 'xl',
             transition: 'transform',
           }),
-          iconTint[color],
+          tint.icon,
         )}
       >
         {imageSrc ? (
@@ -105,7 +98,7 @@ export function NavPanelItem({ item, onSelect }: NavPanelItemProps) {
     </>
   );
 
-  const className = cx(itemStyles, itemHoverTint[color], focusRing);
+  const className = cx(itemStyles, tint.hover, focusRing);
 
   if (isExternal) {
     return (
