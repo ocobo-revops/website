@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 
+/** Time each tab stays selected when no valid `interval` is given. */
+export const DEFAULT_INTERVAL = 6000;
+
 /** Shortest time a tab stays selected, so a bad `interval` cannot spin. */
 const MIN_INTERVAL = 1000;
 
@@ -35,7 +38,10 @@ export function useTabsAutoplay({
       () => {
         onAdvance(nextTabValue(values, value));
       },
-      Math.max(interval, MIN_INTERVAL),
+      // `Math.max` returns NaN for NaN, which setTimeout reads as 0.
+      Number.isFinite(interval)
+        ? Math.max(interval, MIN_INTERVAL)
+        : DEFAULT_INTERVAL,
     );
     return () => window.clearTimeout(timer);
   }, [values, value, playing, interval, onAdvance]);

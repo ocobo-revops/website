@@ -15,7 +15,7 @@ import { button, text } from '@ocobo/styled-system/recipes';
 
 import { usePrefersReducedMotion } from '~/hooks/use-prefers-reduced-motion';
 
-import { useTabsAutoplay } from './tabs-autoplay';
+import { DEFAULT_INTERVAL, useTabsAutoplay } from './tabs-autoplay';
 
 export type TabItem = {
   value: string;
@@ -121,7 +121,9 @@ const iconStyles = css({ w: '4', h: '4' });
  * button pauses and resumes it (WCAG 2.2.2). Choosing a tab, with a click or
  * the arrow keys, pauses it too, so the visitor keeps the tab they chose.
  * It also waits while the pointer or the keyboard focus is in the tabs or the
- * panel, outside the pause button.
+ * panel, outside the pause button. Ark gives each panel `tabIndex` 0, so a
+ * click or tap on panel text focuses the panel, and the autoplay waits until
+ * the focus leaves it.
  * There is no autoplay, and the button is hidden, when the visitor reduces
  * motion.
  */
@@ -130,7 +132,7 @@ export function Tabs({
   label,
   orientation = 'horizontal',
   autoplay = false,
-  interval = 6000,
+  interval = DEFAULT_INTERVAL,
   className,
   listClassName,
   triggerClassName,
@@ -168,15 +170,24 @@ export function Tabs({
   };
 
   // The pause button stays out of these, so it toggles the autoplay at once.
-  const onPause = (target: EventTarget) =>
+  const isInPauseButton = (target: EventTarget) =>
     target instanceof Node && pauseRef.current?.contains(target) === true;
   const enter = (event: FocusEvent<HTMLElement>) =>
-    setFocused(!onPause(event.target));
+    setFocused(!isInPauseButton(event.target));
   const leave = (event: FocusEvent<HTMLElement>) => {
+    // The window losing focus (alt-tab, the address bar) blurs with no
+    // `relatedTarget` but keeps the active element. Advancing then would hide
+    // the panel that holds it, and the focus would drop to the body.
+    if (
+      event.relatedTarget === null &&
+      event.currentTarget.contains(document.activeElement)
+    ) {
+      return;
+    }
     if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
   };
   const hover = (event: PointerEvent<HTMLElement>) =>
-    setHovered(!onPause(event.target));
+    setHovered(!isInPauseButton(event.target));
 
   if (items.length === 0) return null;
 

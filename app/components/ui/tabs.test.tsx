@@ -79,10 +79,9 @@ describe('Tabs', () => {
     expect(screen.getByRole('tabpanel')).toHaveTextContent('Les bons comptes');
   });
 
-  // Ark selects the focused tab one animation frame after the focus moves.
-  // jsdom has no requestAnimationFrame, so that frame never comes, even with
-  // fake timers, and this test checks the focus only. A browser selects the
-  // tab too, which the visitor's choice handler relies on.
+  // Arrow-key selection is not covered in jsdom: Ark moves the focus there
+  // but does not select the tab, so this test checks the focus only. A
+  // browser selects the tab too, which the visitor's choice handler relies on.
   it('moves between tabs with the arrow keys', async () => {
     const user = userEvent.setup();
     renderTabs();
@@ -118,7 +117,10 @@ describe('Tabs', () => {
     vi.useFakeTimers();
     renderTabs(true);
 
-    await act(async () => pauseButton()?.click());
+    const pause = screen.getByRole('button', {
+      name: 'Mettre en pause le défilement',
+    });
+    await act(async () => pause.click());
     await wait(INTERVAL * 3);
     expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
 
@@ -164,6 +166,51 @@ describe('Tabs', () => {
     await wait(INTERVAL * 3);
     expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
     expect(panel).toHaveFocus();
+  });
+
+  it('keeps waiting when the window loses focus', async () => {
+    vi.useFakeTimers();
+    renderTabs(true);
+    const panel = screen.getByRole('tabpanel');
+
+    await act(async () => panel.focus());
+    // A blur with no relatedTarget while the panel stays the active element,
+    // as when the visitor switches to another window.
+    fireEvent.blur(panel, { relatedTarget: null });
+    await wait(INTERVAL * 3);
+    expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
+    expect(panel).toHaveFocus();
+  });
+
+  it('resumes at once when the focus moves to the resume button', async () => {
+    vi.useFakeTimers();
+    renderTabs(true);
+
+    await act(async () => {
+      tab('Capter').focus();
+      tab('Capter').click();
+    });
+    const resume = screen.getByRole('button', {
+      name: 'Reprendre le défilement',
+    });
+    await act(async () => {
+      resume.focus();
+      resume.click();
+    });
+    await wait(INTERVAL);
+    expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('keeps playing while the pointer is over the pause button', async () => {
+    vi.useFakeTimers();
+    renderTabs(true);
+
+    fireEvent.pointerOver(screen.getByRole('tablist'));
+    fireEvent.pointerOver(
+      screen.getByRole('button', { name: 'Mettre en pause le défilement' }),
+    );
+    await wait(INTERVAL);
+    expect(tab('Préparer')).toHaveAttribute('aria-selected', 'true');
   });
 
   it('waits while the pointer is over the tabs', async () => {
