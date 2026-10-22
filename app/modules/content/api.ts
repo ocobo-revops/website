@@ -7,6 +7,10 @@
 
 import type { MarkdocFile } from '~/types';
 import {
+  type ChallengeFrontmatter,
+  ChallengeFrontmatterSchema,
+} from '../challenge-schema';
+import {
   type BlogpostFrontmatter,
   BlogpostFrontmatterSchema,
   type JobFrontmatter,
@@ -31,6 +35,10 @@ export const ContentValidators = {
   ),
   page: createValidator<PageFrontmatter>(PageFrontmatterSchema, 'Page'),
   job: createValidator<JobFrontmatter>(JobFrontmatterSchema, 'Job'),
+  challenge: createValidator<ChallengeFrontmatter>(
+    ChallengeFrontmatterSchema,
+    'Challenge',
+  ),
 } as const;
 
 /**
@@ -163,6 +171,25 @@ export async function fetchJob(slug: string, language = 'fr') {
     path,
     slug,
     ContentValidators.job,
+    language,
+  );
+}
+
+export async function fetchChallenge(slug: string, language = 'fr') {
+  const path = `challenges/${language}`;
+  return genericFetcher.fetchSingle(
+    path,
+    slug,
+    ContentValidators.challenge,
+    language,
+  );
+}
+
+export async function fetchChallenges(language = 'fr') {
+  const path = `challenges/${language}`;
+  return genericFetcher.fetchMultiple(
+    path,
+    ContentValidators.challenge,
     language,
   );
 }
