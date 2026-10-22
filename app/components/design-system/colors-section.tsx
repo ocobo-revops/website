@@ -16,7 +16,7 @@ const ColorBox = styled('div', {
 
 const list = css({
   display: 'grid',
-  gridTemplateColumns: '[repeat(8, 90px)]',
+  gridTemplateColumns: '[repeat(auto-fill, 90px)]',
   alignItems: 'start',
   justifyItems: 'center',
   gap: '4',

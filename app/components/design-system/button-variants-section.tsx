@@ -5,6 +5,7 @@ import { ShowcaseSection } from './showcase-section';
 
 const row = css({
   display: 'flex',
+  flexWrap: 'wrap',
   alignItems: 'center',
   gap: '4',
   p: '4',
