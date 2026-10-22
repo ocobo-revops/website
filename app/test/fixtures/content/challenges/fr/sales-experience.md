@@ -76,6 +76,31 @@ aiBridge:
     - "Les appels alimentent le CRM : qualification, objections, prochaines étapes."
     - Les écarts au processus remontent dans les tableaux de bord des managers.
     - Le playbook arrive dans l'outil du commercial, au moment où il en a besoin.
+  demo:
+    channel: Agent CRM · Northwind
+    agent: Agent CRM
+    time: "14:32"
+    opening:
+      kind: statement
+      text: "Appel Northwind terminé (28 min). Fiche mise à jour :"
+    elements:
+      - type: status
+        label: Besoin
+        value: Structurer 3 SDR
+        state: ok
+      - type: status
+        label: Objection
+        value: Prix vs. outil actuel
+        state: ok
+      - type: status
+        label: Prochaine étape
+        value: Démo le 12
+        state: ok
+      - type: status
+        label: Décideur
+        value: Non identifié
+        state: alert
+    footer: Écart au process signalé au manager
 method:
   subtitle: De l'analyse du funnel à une organisation qui tient sans nous.
   steps:

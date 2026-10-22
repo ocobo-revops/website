@@ -2,11 +2,10 @@
  * Challenge frontmatter schema: one file per challenge in
  * `challenges/<lang>/<slug>.md`, frontmatter only.
  *
- * Mirrors the core schema of the posts repo
- * (`scripts/schemas/challenge.schema.js`, ocobo-revops/posts#94). The website
- * must accept every file the posts repo accepts, so both schemas change in
- * the same pair of PRs. The agent window demo (`aiBridge.demo`) and the
- * partner block come in #230.
+ * Mirrors the schema of the posts repo (`scripts/schemas/challenge.schema.js`:
+ * core fields from ocobo-revops/posts#94, partner block from posts#97, agent
+ * window from posts#96). The website must accept every file the posts repo
+ * accepts, so both schemas change in the same pair of PRs.
  */
 
 import { z } from 'zod';
@@ -54,6 +53,94 @@ const workstream = z.strictObject({
   note: cappedText(100).optional(),
 });
 
+const percentage = z.number().int().min(0).max(100);
+
+/**
+ * Agent window: a frame and up to four typed body elements, rendered in
+ * order. Every mockup window has four.
+ */
+const demoElement = z.discriminatedUnion('type', [
+  z.strictObject({
+    type: z.literal('kpis'),
+    items: z
+      .array(
+        z.strictObject({
+          value: cappedText(10),
+          label: cappedText(16),
+        }),
+      )
+      .length(3),
+  }),
+  z.strictObject({
+    type: z.literal('figure'),
+    value: cappedText(12),
+    caption: cappedText(48),
+  }),
+  z.strictObject({
+    type: z.literal('progress'),
+    percent: percentage,
+    target: percentage.optional(),
+  }),
+  z.strictObject({
+    type: z.literal('status'),
+    label: cappedText(24),
+    value: cappedText(32),
+    state: z.enum(['ok', 'alert']),
+  }),
+  z.strictObject({
+    type: z.literal('buttons'),
+    labels: z.array(cappedText(20)).min(1).max(2),
+  }),
+]);
+
+const demo = z.strictObject({
+  channel: cappedText(28),
+  agent: cappedText(24),
+  /**
+   * Not trimmed: a fixed-format value, compared exactly between the French
+   * and English files. The posts repo parses YAML 1.1, which reads an
+   * unquoted 14:32 as the base 60 number 872, hence the hint.
+   */
+  time: z
+    .string({
+      error: (issue) =>
+        typeof issue.input === 'number'
+          ? 'quote the time, e.g. "14:32"'
+          : undefined,
+    })
+    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, {
+      error: 'must be a 24-hour time, HH:MM',
+    }),
+  opening: z.strictObject({
+    /** A question renders in quotes, a statement as plain agent text. */
+    kind: z.enum(['question', 'statement']),
+    text: cappedText(70),
+  }),
+  elements: z.array(demoElement).min(1).max(4),
+  footer: cappedText(60),
+  /** Shown under the window (fictional accounts). */
+  note: cappedText(90).optional(),
+});
+
+/**
+ * Open to every challenge (ADR 0002). The logo comes from the Tool file, and
+ * the figures belong to the partner, so their source is required.
+ */
+const partner = z.strictObject({
+  tool: slug,
+  sentence: cappedText(140),
+  metrics: z
+    .array(
+      z.strictObject({
+        before: cappedText(12),
+        after: cappedText(12),
+        label: cappedText(90),
+      }),
+    )
+    .length(2),
+  source: cappedText(90),
+});
+
 /**
  * Strict at every level: an unknown key (for example `extraSections`) fails
  * validation instead of being dropped.
@@ -93,9 +180,12 @@ export const ChallengeFrontmatterSchema = z.strictObject({
     intro: cappedText(120),
     items: z.array(workstream).min(4).max(6),
   }),
+  partner: partner.optional(),
   aiBridge: z.strictObject({
     title: cappedText(92),
     bullets: z.array(cappedText(125)).length(3),
+    /** Revenue AI has no agent window. */
+    demo: demo.optional(),
   }),
   method: z.strictObject({
     /** Optional override of the heading from `locales/` (#234 decides). */

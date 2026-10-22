@@ -76,6 +76,31 @@ aiBridge:
     - Les tickets, mails et appels sont lus pour détecter un risque ou une opportunité.
     - Chaque chargé de compte reçoit un résumé du compte avant son rendez-vous.
     - Les revues de compte se préparent en quelques minutes.
+  demo:
+    channel: Alerte compte · Kestrel
+    agent: Agent Customer
+    time: "09:12"
+    opening:
+      kind: statement
+      text: "Risque de départ détecté. Score de santé : 72 → 54."
+    elements:
+      - type: status
+        label: Support
+        value: 3 tickets critiques en 10 j
+        state: alert
+      - type: status
+        label: Usage
+        value: "-30 % de connexions"
+        state: alert
+      - type: status
+        label: Appel QBR
+        value: Concurrent cité 2 fois
+        state: alert
+      - type: buttons
+        labels:
+          - Ouvrir le compte
+          - Préparer le RDV
+    footer: Résumé envoyé à Julie avant son RDV de 14:00
 method:
   subtitle: De l'analyse du portefeuille à un revenu récurrent piloté.
   steps:

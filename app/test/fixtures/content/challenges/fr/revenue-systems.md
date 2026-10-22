@@ -79,6 +79,31 @@ aiBridge:
     - Les saisies se remplissent à partir des mails, des appels et des documents.
     - Vos assistants IA se connectent au CRM dans un cadre de sécurité maîtrisé.
     - Les règles de qualité de données sont surveillées en continu.
+  demo:
+    channel: Qualité de données
+    agent: Agent Data
+    time: "07:00"
+    opening:
+      kind: statement
+      text: Contrôle quotidien du CRM terminé.
+    elements:
+      - type: status
+        label: Doublons
+        value: 0,4 %
+        state: ok
+      - type: status
+        label: Champs obligatoires
+        value: 98 % remplis
+        state: ok
+      - type: status
+        label: Fiches complétées
+        value: 24 depuis les emails
+        state: ok
+      - type: status
+        label: Contacts sans compte
+        value: 12 à rattacher
+        state: alert
+    footer: Connecteur IA ↔ HubSpot · accès en lecture encadré
 method:
   subtitle: De l'audit de la stack à une équipe qui l'administre seule.
   steps:

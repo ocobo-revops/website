@@ -66,6 +66,34 @@ aiBridge:
     - Les comptes rendus d'appel mettent à jour le CRM sans saisie.
     - Les deals à risque sont signalés avant la revue de pipe.
     - Le dirigeant pose sa question en français et obtient le chiffre.
+  demo:
+    channel: "# direction"
+    agent: Agent Forecast
+    time: "08:05"
+    opening:
+      kind: question
+      text: Où en est-on du trimestre ?
+    elements:
+      - type: kpis
+        items:
+          - value: 1,24 M€
+            label: commit
+          - value: 82 %
+            label: de l'objectif
+          - value: +6 pts
+            label: vs. S-1
+      - type: progress
+        percent: 82
+        target: 100
+      - type: status
+        label: Brightlane · 180 k€
+        value: Sans activité 14 j
+        state: alert
+      - type: status
+        label: Kestrel · 95 k€
+        value: Date de signature repoussée
+        state: alert
+    footer: Calculé sur HubSpot, mis à jour ce matin
 method:
   subtitle: Du diagnostic à un chiffre que vos équipes tiennent seules.
   steps:
