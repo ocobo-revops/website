@@ -66,8 +66,8 @@ const fillColour: Record<ChallengeKey, string> = {
 const ring = css({
   display: 'flex',
   flexShrink: '0',
-  w: '28',
-  h: '28',
+  w: '24',
+  h: '24',
   p: '1',
   borderRadius: 'full',
 });
@@ -101,10 +101,7 @@ const identity = css({
   gap: '1',
 });
 const roleStyle = cx(text({ variant: 'small' }), css({ color: 'gray' }));
-const nameStyle = cx(
-  text({ variant: 'display-md-bold' }),
-  css({ fontSize: 'xl', lineHeight: 'tight' }),
-);
+const nameStyle = text({ variant: 'display-md-bold' });
 const pill = cx(
   text({ variant: 'label' }),
   css({
@@ -121,7 +118,7 @@ const inheritColour = css({ color: 'current' });
 const firstNameStyle = cx(
   text({ variant: 'display-md-bold' }),
   inheritColour,
-  css({ fontSize: 'lg', pr: '12' }),
+  css({ pr: '12' }),
 );
 const key = cx(
   text({ variant: 'label' }),
@@ -217,8 +214,8 @@ export function PersonCard({
                   src={photo}
                   // The name follows as text: the photo adds nothing to read.
                   alt=""
-                  width={112}
-                  height={112}
+                  width={96}
+                  height={96}
                   loading="lazy"
                   className={photoStyle}
                   onError={() => setPhotoFailed(true)}
