@@ -12,6 +12,7 @@ ocobo-website/
 │   │   ├── _main.($lang).*       # 🌍 Internationalized routes (FR/EN)
 │   │   ├── _main.blog.*          # 📝 Blog routes (listing + individual posts)
 │   │   ├── _main.clients.*       # 👥 Client stories routes
+│   │   ├── _main.($lang).challenges.$slug.tsx # 🎯 Challenge page (FR and EN, same slug)
 │   │   ├── robots[.txt].tsx      # 🤖 SEO: Robots.txt generator
 │   │   └── sitemap[.xml].tsx     # 🔗 SEO: Dynamic sitemap generator
 │   │
