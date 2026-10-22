@@ -44,6 +44,8 @@ export interface InvokeLoaderOptions {
   params?: Record<string, string>;
   /** Pre-built `Request`. Wins over `url`. */
   request?: Request;
+  /** Matched route pattern (e.g. `/blog/:slug`). Defaults to the request pathname. */
+  pattern?: string;
 }
 
 type AnyLoader<T> = (args: LoaderFunctionArgs) => Promise<T> | T;
@@ -55,13 +57,16 @@ export async function invokeLoader<T>(
   const request =
     options.request ?? new Request(options.url ?? 'http://test.local/');
   const params = options.params ?? {};
+  const url = new URL(request.url);
   const args: LoaderFunctionArgs = {
     request,
     params,
     context: {} as LoaderFunctionArgs['context'],
-    // RR v7 internal field; not part of public route loader contract but
-    // required by the type. Loaders that reach for it are an anti-pattern.
-    unstable_pattern: options.url ?? '/',
+    url,
+    // Un-interpolated route pattern, which RR uses for logging and tracing.
+    // The pathname is a stand-in; loaders that branch on it are an
+    // anti-pattern.
+    pattern: options.pattern ?? url.pathname,
   };
   try {
     const result = await loader(args);

@@ -18,6 +18,7 @@ import { MetaPillSection } from '~/components/design-system/meta-pill-section';
 import { MotionSection } from '~/components/design-system/motion-section';
 import { NavbarFooterSection } from '~/components/design-system/navbar-footer-section';
 import { PersonCardSection } from '~/components/design-system/person-card-section';
+import { TabsSection } from '~/components/design-system/tabs-section';
 import { TooltipSection } from '~/components/design-system/tooltip-section';
 import { TypographySection } from '~/components/design-system/typography-section';
 import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
@@ -63,6 +64,7 @@ export default function Index() {
       <PersonCardSection />
       <GridSection />
       <TooltipSection />
+      <TabsSection />
       <BowtieSection />
       <MotionSection />
     </Container>
