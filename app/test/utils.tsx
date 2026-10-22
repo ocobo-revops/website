@@ -19,6 +19,13 @@ import {
 type RenderOptions = {
   initialEntries?: string[];
   i18nLang?: (typeof supportedLngs)[number];
+  /** Route pattern of the rendered element, for example `:lang/*`. */
+  path?: string;
+  /**
+   * Loader data by route id (`root`, `routes/_main`), for components that
+   * read it with `useRouteLoaderData`. Each id becomes a parent route.
+   */
+  loaderData?: Record<string, unknown>;
 };
 
 function createTestI18n(lng: (typeof supportedLngs)[number]) {
@@ -39,17 +46,27 @@ export function render(
   ui: ReactElement,
   options: RenderOptions = {},
 ): RenderResult {
-  const { initialEntries = ['/'], i18nLang = fallbackLng } = options;
+  const {
+    initialEntries = ['/'],
+    i18nLang = fallbackLng,
+    path = '*',
+    loaderData = {},
+  } = options;
 
-  const routes: RouteObject[] = [
-    {
-      path: '*',
-      element: (
-        <I18nextProvider i18n={createTestI18n(i18nLang)}>{ui}</I18nextProvider>
-      ),
-    },
-  ];
-  const router = createMemoryRouter(routes, { initialEntries });
+  const leaf: RouteObject = {
+    path,
+    element: (
+      <I18nextProvider i18n={createTestI18n(i18nLang)}>{ui}</I18nextProvider>
+    ),
+  };
+  const routes = Object.entries(loaderData).reduceRight<RouteObject[]>(
+    (children, [id, data]) => [{ id, loader: () => data, children }],
+    [leaf],
+  );
+  const router = createMemoryRouter(routes, {
+    initialEntries,
+    hydrationData: { loaderData },
+  });
 
   return rtlRender(<RouterProvider router={router} />);
 }
