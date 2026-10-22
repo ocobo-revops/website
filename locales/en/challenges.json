@@ -1,0 +1,10 @@
+{
+  "meta.title": "{{name}}: {{tagline}}",
+  "hero.breadcrumb": "Your challenges / Challenge {{order}}",
+  "hero.quote": "“{{quote}}”",
+  "hero.bowtieLabel": "Where we work on your cycle",
+  "symptoms.eyebrow": "Sounds familiar",
+  "audience.title": "Who it is for",
+  "audience.intro": "The teams and roles who live with this problem every day, and what changes for them.",
+  "diagnostic.cta": "Book a diagnostic"
+}
