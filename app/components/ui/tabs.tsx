@@ -1,6 +1,13 @@
 import { Tabs as ArkTabs } from '@ark-ui/react/tabs';
 import { Pause, Play } from 'lucide-react';
-import { type FocusEvent, type ReactNode, useMemo, useState } from 'react';
+import {
+  type FocusEvent,
+  type PointerEvent,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -100,6 +107,10 @@ const contentStyles = css({
   },
 });
 
+// Rendered from the server on, then hidden by CSS, so a visitor who reduces
+// motion never sees it appear and vanish once the preference is known.
+const pauseStyles = css({ _motionReduce: { display: 'none' } });
+
 const iconStyles = css({ w: '4', h: '4' });
 
 /**
@@ -109,8 +120,10 @@ const iconStyles = css({ w: '4', h: '4' });
  * With `autoplay`, the next tab is selected every `interval`. A visible
  * button pauses and resumes it (WCAG 2.2.2). Choosing a tab, with a click or
  * the arrow keys, pauses it too, so the visitor keeps the tab they chose.
- * It also waits while the pointer or the keyboard focus is in the tab list.
- * There is no autoplay, and no button, when the visitor reduces motion.
+ * It also waits while the pointer or the keyboard focus is in the tabs or the
+ * panel, outside the pause button.
+ * There is no autoplay, and the button is hidden, when the visitor reduces
+ * motion.
  */
 export function Tabs({
   items,
@@ -135,8 +148,9 @@ export function Tabs({
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const canAutoplay = autoplay && !reducedMotion && values.length > 1;
-  const playing = canAutoplay && !paused && !hovered && !focused;
+  const pauseRef = useRef<HTMLButtonElement>(null);
+  const hasPause = autoplay && values.length > 1;
+  const playing = hasPause && !reducedMotion && !paused && !hovered && !focused;
 
   useTabsAutoplay({
     values,
@@ -153,9 +167,18 @@ export function Tabs({
     setValue(next);
   };
 
-  const leaveList = (event: FocusEvent<HTMLElement>) => {
+  // The pause button stays out of these, so it toggles the autoplay at once.
+  const onPause = (target: EventTarget) =>
+    target instanceof Node && pauseRef.current?.contains(target) === true;
+  const enter = (event: FocusEvent<HTMLElement>) =>
+    setFocused(!onPause(event.target));
+  const leave = (event: FocusEvent<HTMLElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
   };
+  const hover = (event: PointerEvent<HTMLElement>) =>
+    setHovered(!onPause(event.target));
+
+  if (items.length === 0) return null;
 
   return (
     <ArkTabs.Root
@@ -163,15 +186,15 @@ export function Tabs({
       onValueChange={(details) => choose(details.value)}
       orientation={orientation}
       className={cx(rootStyles[orientation], className)}
+      onPointerOver={hover}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={enter}
+      onBlur={leave}
     >
       <div className={sideStyles}>
         <ArkTabs.List
           aria-label={label}
           className={cx(listStyles[orientation], listClassName)}
-          onPointerEnter={() => setHovered(true)}
-          onPointerLeave={() => setHovered(false)}
-          onFocus={() => setFocused(true)}
-          onBlur={leaveList}
         >
           {items.map((item) => (
             <ArkTabs.Trigger
@@ -187,10 +210,14 @@ export function Tabs({
             </ArkTabs.Trigger>
           ))}
         </ArkTabs.List>
-        {canAutoplay && (
+        {hasPause && (
           <button
+            ref={pauseRef}
             type="button"
-            className={button({ variant: 'secondary', size: 'sm' })}
+            className={cx(
+              button({ variant: 'secondary', size: 'sm' }),
+              pauseStyles,
+            )}
             onClick={() => setPaused((current) => !current)}
           >
             {paused ? (
