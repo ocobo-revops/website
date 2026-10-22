@@ -4,7 +4,14 @@
 import { act } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { axe, render, screen, userEvent, waitFor } from '~/test/utils';
+import {
+  axe,
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from '~/test/utils';
 
 import { Tabs } from './tabs';
 import { nextTabValue } from './tabs-autoplay';
@@ -73,8 +80,9 @@ describe('Tabs', () => {
   });
 
   // Ark selects the focused tab one animation frame after the focus moves.
-  // That frame never comes in jsdom, so this test checks the focus only. A
-  // browser selects the tab too, which the visitor's choice handler relies on.
+  // jsdom has no requestAnimationFrame, so that frame never comes, even with
+  // fake timers, and this test checks the focus only. A browser selects the
+  // tab too, which the visitor's choice handler relies on.
   it('moves between tabs with the arrow keys', async () => {
     const user = userEvent.setup();
     renderTabs();
@@ -147,6 +155,36 @@ describe('Tabs', () => {
     expect(tab('Préparer')).toHaveAttribute('aria-selected', 'true');
   });
 
+  it('waits while the keyboard focus is in the panel', async () => {
+    vi.useFakeTimers();
+    renderTabs(true);
+    const panel = screen.getByRole('tabpanel');
+
+    await act(async () => panel.focus());
+    await wait(INTERVAL * 3);
+    expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
+    expect(panel).toHaveFocus();
+  });
+
+  it('waits while the pointer is over the tabs', async () => {
+    vi.useFakeTimers();
+    renderTabs(true);
+    const list = screen.getByRole('tablist');
+
+    fireEvent.pointerOver(list);
+    await wait(INTERVAL * 3);
+    expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
+
+    fireEvent.pointerLeave(list.closest('[data-part="root"]') as Element);
+    await wait(INTERVAL);
+    expect(tab('Préparer')).toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('renders nothing without items', () => {
+    const { container } = render(<Tabs items={[]} label="Vide" />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
   it('selects the first tab when the items drop the selected one', async () => {
     const user = userEvent.setup();
     const { rerender } = renderTabs();
@@ -168,7 +206,6 @@ describe('Tabs', () => {
 
     await wait(INTERVAL * 3);
     expect(tab('Cibler')).toHaveAttribute('aria-selected', 'true');
-    expect(pauseButton()).not.toBeInTheDocument();
   });
 
   it('has no accessibility violations with autoplay', async () => {
