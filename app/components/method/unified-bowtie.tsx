@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -63,8 +64,6 @@ const stageTrigger = css({
   position: 'absolute',
   rounded: 'lg',
   bg: 'transparent',
-  transition: 'colors',
-  _hover: { bg: 'ocobo.dark/4' },
 });
 
 const kpiContent = css({
@@ -93,6 +92,10 @@ export const UnifiedBowtie = ({
   challenge,
 }: UnifiedBowtieProps) => {
   const { t } = useTranslation(BOWTIE_NAMESPACE);
+  // Unique per instance: several bow ties can share a page.
+  const svgId = useId();
+  const gradientId = `${svgId}gradient`;
+  const arrowId = `${svgId}arrow`;
   const stages = getStageStates(activeStages);
   const label = (id: StageId) => t(getStageLabelKey(id, 'label'));
   const milestone = (id: StageId) => t(getStageLabelKey(id, 'milestone'));
@@ -151,19 +154,13 @@ export const UnifiedBowtie = ({
             fill="none"
           >
             <defs>
-              <linearGradient
-                id="blueprintGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
+              <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#212323" stopOpacity="0.01" />
                 <stop offset="50%" stopColor="#212323" stopOpacity="0.05" />
                 <stop offset="100%" stopColor="#212323" stopOpacity="0.01" />
               </linearGradient>
               <marker
-                id="arrowhead"
+                id={arrowId}
                 markerWidth="10"
                 markerHeight="7"
                 refX="0"
@@ -191,7 +188,7 @@ export const UnifiedBowtie = ({
               <path
                 d="M 100,240 C 150,300 300,300 350,240"
                 strokeDasharray="3 3"
-                markerEnd="url(#arrowhead)"
+                markerEnd={`url(#${arrowId})`}
               />
               <path
                 d="M 850,110 C 900,50 1050,50 1100,110"
@@ -200,7 +197,7 @@ export const UnifiedBowtie = ({
               <path
                 d="M 1100,240 C 1050,300 900,300 850,240"
                 strokeDasharray="3 3"
-                markerEnd="url(#arrowhead)"
+                markerEnd={`url(#${arrowId})`}
               />
             </g>
             <g
@@ -249,11 +246,11 @@ export const UnifiedBowtie = ({
 
             <path
               d="M40,60 L540,140 L540,210 L40,290 Z"
-              fill="url(#blueprintGradient)"
+              fill={`url(#${gradientId})`}
             />
             <path
               d="M1160,60 L660,140 L660,210 L1160,290 Z"
-              fill="url(#blueprintGradient)"
+              fill={`url(#${gradientId})`}
             />
 
             <g
@@ -277,7 +274,6 @@ export const UnifiedBowtie = ({
                   height={KNOT.height}
                   fill="currentColor"
                   rx="4"
-                  className={css({ shadow: 'lg' })}
                 />
                 <g
                   fill="white"
@@ -296,7 +292,7 @@ export const UnifiedBowtie = ({
                   >
                     {splitLabel(milestone('closing'), 12).map((line, i) => (
                       <tspan
-                        key={line}
+                        key={i}
                         x={STAGE_LAYOUT.closing.milestone.x}
                         dy={i === 0 ? 0 : 13}
                       >
@@ -335,11 +331,7 @@ export const UnifiedBowtie = ({
                       letterSpacing="0.05em"
                     >
                       {lines.map((line, i) => (
-                        <tspan
-                          key={line}
-                          x={layout.labelX}
-                          dy={i === 0 ? 0 : 17}
-                        >
+                        <tspan key={i} x={layout.labelX} dy={i === 0 ? 0 : 17}>
                           {line}
                         </tspan>
                       ))}
