@@ -34,57 +34,32 @@ type UnifiedBowtieProps = {
 };
 
 // One static class per challenge: Panda only ships literal values (CLAUDE.md,
-// static analysis trap). Revenue AI's token is coral, the start of its
-// gradient.
-const flowStroke: Record<BowtieChallenge, string> = {
-  rp: css({ stroke: 'challenge.rp' }),
-  se: css({ stroke: 'challenge.se' }),
-  sc: css({ stroke: 'challenge.sc' }),
-  cx: css({ stroke: 'challenge.cx' }),
-  sy: css({ stroke: 'challenge.sy' }),
-  ai: css({ stroke: 'challenge.ai' }),
+// static analysis trap). The root sets the palette, and every challenge colour
+// below reads it as `colorPalette`. Revenue AI's token is coral, the start of
+// its gradient.
+const challengePalette: Record<BowtieChallenge, string> = {
+  rp: css({ colorPalette: 'challenge.rp' }),
+  se: css({ colorPalette: 'challenge.se' }),
+  sc: css({ colorPalette: 'challenge.sc' }),
+  cx: css({ colorPalette: 'challenge.cx' }),
+  sy: css({ colorPalette: 'challenge.sy' }),
+  ai: css({ colorPalette: 'challenge.ai' }),
 };
 
-const tooltipAccent: Record<BowtieChallenge, string> = {
-  rp: css({ borderTopColor: 'challenge.rp' }),
-  se: css({ borderTopColor: 'challenge.se' }),
-  sc: css({ borderTopColor: 'challenge.sc' }),
-  cx: css({ borderTopColor: 'challenge.cx' }),
-  sy: css({ borderTopColor: 'challenge.sy' }),
-  ai: css({ borderTopColor: 'challenge.ai' }),
-};
+const flowStroke = css({ stroke: 'colorPalette' });
+const paletteBorder = css({ borderColor: 'colorPalette' });
+const paletteDot = css({ bg: 'colorPalette' });
 
-const knotRing: Record<BowtieChallenge, string> = {
-  rp: css({ borderColor: 'challenge.rp' }),
-  se: css({ borderColor: 'challenge.se' }),
-  sc: css({ borderColor: 'challenge.sc' }),
-  cx: css({ borderColor: 'challenge.cx' }),
-  sy: css({ borderColor: 'challenge.sy' }),
-  ai: css({ borderColor: 'challenge.ai' }),
-};
-
-// The chip text stays dark: the challenge shades fail contrast on white.
-const chipBorder: Record<BowtieChallenge, string> = {
-  rp: css({ borderColor: 'challenge.rp' }),
-  se: css({ borderColor: 'challenge.se' }),
-  sc: css({ borderColor: 'challenge.sc' }),
-  cx: css({ borderColor: 'challenge.cx' }),
-  sy: css({ borderColor: 'challenge.sy' }),
-  ai: css({ borderColor: 'challenge.ai' }),
-};
-
-const chipDot: Record<BowtieChallenge, string> = {
-  rp: css({ bg: 'challenge.rp' }),
-  se: css({ bg: 'challenge.se' }),
-  sc: css({ bg: 'challenge.sc' }),
-  cx: css({ bg: 'challenge.cx' }),
-  sy: css({ bg: 'challenge.sy' }),
-  ai: css({ bg: 'challenge.ai' }),
-};
-
-const tooltipAccentBorder = css({ borderTopWidth: '4px' });
-// An inactive stage keeps the muted grey, like its lines.
-const tooltipAccentInactive = css({ borderTopColor: 'gray' });
+const tooltipAccent = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'colorPalette',
+});
+// An inactive stage gets the light grey of its centre line, so that it never
+// reads as Revenue Systems' grey.
+const tooltipAccentInactive = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'gray.300',
+});
 
 const VIEWBOX = `0 0 ${BOWTIE_VIEWBOX.width} ${BOWTIE_VIEWBOX.height}`;
 
@@ -113,6 +88,7 @@ const stageTrigger = css({
   justifyContent: 'center',
   w: 'full',
   h: 'full',
+  // Clears the drawing (`h: '48'`) plus 1rem.
   pt: '52',
   pb: '1',
   px: '1',
@@ -143,6 +119,7 @@ const chip = cx(
     borderWidth: '1px',
     borderStyle: 'solid',
     rounded: 'full',
+    // Dark text: the challenge shades fail contrast on white.
     color: 'dark',
     whiteSpace: 'nowrap',
   }),
@@ -166,8 +143,7 @@ const centred = css({
   transform: 'translate(-50%, -50%)',
 });
 
-// Without a challenge every active stage is emphasised the same way, except
-// the closing knot; with one, every active stage is.
+// Active labels are dark with a challenge; without one, only closing is.
 function labelClass(stage: StageWithState, challenge?: BowtieChallenge) {
   if (stage.state === 'inactive') return labelState.inactive;
   if (challenge || stage.id === 'closing') return labelState.emphasis;
@@ -196,15 +172,18 @@ export const UnifiedBowtie = ({
     <div
       role="group"
       aria-label={t('title')}
-      className={css({
-        position: 'relative',
-        w: 'full',
-        maxW: '7xl',
-        mx: 'auto',
-        py: '12',
-        px: '4',
-        display: { base: 'none', md: 'block' },
-      })}
+      className={cx(
+        challenge && challengePalette[challenge],
+        css({
+          position: 'relative',
+          w: 'full',
+          maxW: '7xl',
+          mx: 'auto',
+          py: '12',
+          px: '4',
+          display: { base: 'none', md: 'block' },
+        }),
+      )}
     >
       <div className={css({ position: 'relative' })}>
         <div
@@ -273,7 +252,7 @@ export const UnifiedBowtie = ({
                     viewBox={VIEWBOX}
                     preserveAspectRatio="none"
                     fill="none"
-                    className={cx(flowSvg, challenge && flowStroke[challenge])}
+                    className={cx(flowSvg, challenge && flowStroke)}
                     style={columnSlice(index, stages.length)}
                     stroke={challenge ? undefined : `url(#${gradientId})`}
                   >
@@ -310,7 +289,7 @@ export const UnifiedBowtie = ({
             >
               <span
                 className={cx(
-                  knotRing[challenge],
+                  paletteBorder,
                   css({
                     position: 'absolute',
                     inset: '-1.5',
@@ -318,6 +297,9 @@ export const UnifiedBowtie = ({
                     borderWidth: '2px',
                     borderStyle: 'solid',
                     animation: 'pulse',
+                    // Stops before 5 seconds, so it needs no pause control
+                    // (WCAG 2.2.2).
+                    animationIterationCount: '3',
                     _motionReduce: { animation: '[none]' },
                   }),
                 )}
@@ -354,7 +336,8 @@ export const UnifiedBowtie = ({
             </span>
           )}
 
-          {/* The expansion loop feeds revenue back into the bow tie. */}
+          {/* The expansion loop feeds revenue back into the bow tie. It sits
+              at six sevenths, between the adoption and expansion columns. */}
           <span
             className={css({
               position: 'absolute',
@@ -384,12 +367,9 @@ export const UnifiedBowtie = ({
               <Tooltip
                 className={
                   challenge
-                    ? cx(
-                        tooltipAccentBorder,
-                        stage.state === 'active'
-                          ? tooltipAccent[challenge]
-                          : tooltipAccentInactive,
-                      )
+                    ? stage.state === 'active'
+                      ? tooltipAccent
+                      : tooltipAccentInactive
                     : undefined
                 }
                 asChild
@@ -439,12 +419,12 @@ export const UnifiedBowtie = ({
               {stage.state === 'active' && (
                 <span
                   data-stage-chip={stage.id}
-                  className={cx(chip, chipBorder[challenge])}
+                  className={cx(chip, paletteBorder)}
                 >
                   <span
                     className={cx(
                       css({ h: '1.5', w: '1.5', rounded: 'full' }),
-                      chipDot[challenge],
+                      paletteDot,
                     )}
                   />
                   <span className={css({ srOnly: true })}>

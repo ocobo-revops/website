@@ -3,6 +3,8 @@
  */
 import { describe, expect, it } from 'vitest';
 
+import { css } from '@ocobo/styled-system/css';
+
 import {
   axe,
   fireEvent,
@@ -12,7 +14,7 @@ import {
   waitFor,
 } from '~/test/utils';
 
-import { UnifiedBowtie } from './unified-bowtie';
+import { type BowtieChallenge, UnifiedBowtie } from './unified-bowtie';
 
 // Ark UI counts `element.focus()` as programmatic focus. Replay a browser Tab
 // instead, once Ark's focus tracking has started (see tooltip.test.tsx).
@@ -21,6 +23,28 @@ async function focusWithKeyboard(element: HTMLElement) {
   fireEvent.keyDown(document.body, { key: 'Tab' });
   fireEvent.focus(element);
 }
+
+async function openStageTooltip(name: string, challenge?: BowtieChallenge) {
+  const view = render(
+    <main>
+      <UnifiedBowtie activeStages={['discovery']} challenge={challenge} />
+    </main>,
+  );
+  await focusWithKeyboard(screen.getByRole('button', { name }));
+  const tooltip = await screen.findByRole('tooltip');
+  view.unmount();
+  return tooltip;
+}
+
+// The same style objects as the component, so the classes match.
+const activeBorder = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'colorPalette',
+});
+const inactiveBorder = css({
+  borderTopWidth: '4px',
+  borderTopColor: 'gray.300',
+});
 
 describe('UnifiedBowtie', () => {
   it('renders the seven stages of the model, in order', () => {
@@ -88,12 +112,35 @@ describe('UnifiedBowtie', () => {
       </main>,
     );
 
-    const tinted = [...container.querySelectorAll('[data-stage-tint="cx"]')];
+    expect(screen.getByRole('group')).toHaveClass(
+      css({ colorPalette: 'challenge.cx' }),
+    );
+    const tinted = [...container.querySelectorAll('[data-stage-tint]')];
     expect(
       tinted.map((tint) =>
         tint.closest('[data-stage-column]')?.getAttribute('data-stage-column'),
       ),
     ).toEqual(['discovery', 'adoption']);
+    for (const tint of tinted) {
+      expect(tint).toHaveClass(css({ stroke: 'colorPalette' }));
+    }
+  });
+
+  it('borders the tooltip in the challenge colour on active stages only', async () => {
+    const active = await openStageTooltip('Découverte', 'sy');
+    expect(active).toHaveClass(activeBorder);
+    expect(active).not.toHaveClass(inactiveBorder);
+
+    const inactive = await openStageTooltip(
+      'Signature, étape hors périmètre',
+      'sy',
+    );
+    expect(inactive).toHaveClass(inactiveBorder);
+    expect(inactive).not.toHaveClass(activeBorder);
+
+    const neutral = await openStageTooltip('Découverte');
+    expect(neutral).not.toHaveClass(activeBorder);
+    expect(neutral).not.toHaveClass(inactiveBorder);
   });
 
   it('shows a KPI chip under each active stage of a challenge', () => {
@@ -124,6 +171,7 @@ describe('UnifiedBowtie', () => {
     expect(tints).toHaveLength(7);
     for (const tint of tints) {
       expect(tint).toHaveAttribute('data-stage-tint', 'neutral');
+      expect(tint).not.toHaveClass(css({ stroke: 'colorPalette' }));
     }
     expect(container.querySelector('[data-stage-chip]')).toBeNull();
   });
