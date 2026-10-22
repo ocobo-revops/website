@@ -36,7 +36,7 @@ import { server } from './msw/server';
 expect.extend(toHaveNoViolations);
 
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' });
+  server.listen({ onUnhandledFrame: 'error' });
 });
 
 beforeEach(() => {
