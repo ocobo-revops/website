@@ -1,9 +1,47 @@
-import { Outlet, useNavigation } from 'react-router';
+import {
+  type LoaderFunctionArgs,
+  Outlet,
+  type ShouldRevalidateFunction,
+  useNavigation,
+} from 'react-router';
 
 import { css } from '@ocobo/styled-system/css';
 
 import { ErrorMessage } from '~/components/ErrorMessage';
 import { LayoutMain } from '~/components/LayoutMain';
+import { createHybridLoader } from '~/modules/cache';
+import { toChallengeMenu } from '~/modules/challenge-menu';
+import { fetchChallenges } from '~/modules/content/api';
+import { getLang } from '~/utils/lang';
+
+/**
+ * Layout data shared by every page: the navbar challenge entry (#237). A
+ * failed or empty fetch hides the entry and never fails the page.
+ */
+export const loader = createHybridLoader(
+  async ({ params }: LoaderFunctionArgs) => {
+    const [status, state, files] = await fetchChallenges(getLang(params));
+    if (status === 200 && files) {
+      return { challenges: toChallengeMenu(files) };
+    }
+    // A missing folder is the normal state before any challenge is published.
+    if (state !== 'not_found') {
+      console.error('[_main] challenge list unavailable:', status, state);
+    }
+    return { challenges: [] };
+  },
+);
+
+/**
+ * The list depends on the language only: skip the posts API call on client
+ * navigations within one language. `defaultShouldRevalidate` is ignored on
+ * purpose, so `revalidate()` and `?refresh=1` links on the client keep the
+ * current list; a full page load fetches it again.
+ */
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentParams,
+  nextParams,
+}) => (currentParams.lang ?? 'fr') !== (nextParams.lang ?? 'fr');
 
 export function ErrorBoundary() {
   return (
