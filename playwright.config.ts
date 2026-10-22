@@ -1,5 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
+import { DISABLED_PAGES_DEFAULT } from './app/modules/feature-flags';
+
+// Challenges are disabled by default: enable them so `e2e/challenges.spec.ts`
+// reaches the route. The disabled default is covered by the route unit tests.
+const e2eDisabledPages = DISABLED_PAGES_DEFAULT.filter(
+  (page) => page !== 'challenges',
+).join(',');
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -34,6 +42,7 @@ export default defineConfig({
       GITHUB_REPO: process.env.GITHUB_REPO ?? 'e2e-placeholder',
       GITHUB_ACCESS_TOKEN:
         process.env.GITHUB_ACCESS_TOKEN ?? 'e2e-placeholder',
+      DISABLED_PAGES: process.env.DISABLED_PAGES ?? e2eDisabledPages,
     },
   },
 });
