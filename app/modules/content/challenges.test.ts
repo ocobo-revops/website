@@ -53,10 +53,15 @@ const FRENCH_SLUGS = [
   'sales-experience',
 ];
 
-// Serves `challenges/<lang>/` from the fixtures, as the GitHub contents API
-// does: a JSON listing for the directory, the raw file for each slug.
+// `invalid/` holds a file the schema rejects. No language folder has it, so
+// the language lists stay valid.
+const FOLDERS = ['fr', 'en', 'invalid'];
+
+// Serves `challenges/<folder>/` from the fixtures, as the GitHub contents API
+// does: a JSON listing for the directory, the raw file for each slug. Any
+// other folder is a 404.
 function githubHandlers() {
-  return ['fr', 'en'].flatMap((lang) => {
+  const folders = FOLDERS.flatMap((lang) => {
     const dir = join(FIXTURES_ROOT, 'challenges', lang);
     const dirUrl = `${GITHUB_URL}/challenges/${lang}`;
     const files = readdirSync(dir);
@@ -79,6 +84,13 @@ function githubHandlers() {
       }),
     ];
   });
+  return [
+    ...folders,
+    http.get(
+      `${GITHUB_URL}/challenges/:lang`,
+      () => new HttpResponse(null, { status: 404 }),
+    ),
+  ];
 }
 
 describe.each(['locale', 'github'])('challenge content API (%s)', (source) => {
@@ -135,6 +147,22 @@ describe.each(['locale', 'github'])('challenge content API (%s)', (source) => {
 
     expect(status).toBe(404);
     expect(state).toBe('not_found');
+    expect(data).toBeUndefined();
+  });
+
+  it('returns not_found for a language without a folder', async () => {
+    const [status, state, data] = await fetchChallenges('de');
+
+    expect(status).toBe(404);
+    expect(state).toBe('not_found');
+    expect(data).toBeUndefined();
+  });
+
+  it('returns validation_error for a file the schema rejects', async () => {
+    const [status, state, data] = await fetchChallenge('over-cap', 'invalid');
+
+    expect(status).toBe(422);
+    expect(state).toBe('validation_error');
     expect(data).toBeUndefined();
   });
 });
