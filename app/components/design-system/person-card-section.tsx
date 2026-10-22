@@ -7,6 +7,10 @@ import { ShowcaseSection } from './showcase-section';
 
 const caption = css({ fontSize: 'caption', color: 'gray', mb: '6' });
 
+// Real team photos, from the member registry in the posts repository.
+const photoBase =
+  'https://ipjmp3k0z0p479cb.public.blob.vercel-storage.com/content/team';
+
 const tools = [
   'Salesforce',
   'HubSpot',
@@ -29,6 +33,7 @@ export function PersonCardSection() {
       <div className={grid({ columns: { base: 1, md: 2, xl: 4 }, gap: '6' })}>
         <PersonCard
           name="Clara Lecarrié"
+          photo={`${photoBase}/clara-lecarrie.jpg`}
           role="Manager"
           challenge="cx"
           challengeLabel="Expert Customer Experience"
@@ -39,6 +44,7 @@ export function PersonCardSection() {
         />
         <PersonCard
           name="Louis Strauss"
+          photo={`${photoBase}/louis-strauss.jpg`}
           role="RevOps Engineer"
           challenge="sy"
           challengeLabel="Expert Revenue Systems"
@@ -46,7 +52,8 @@ export function PersonCardSection() {
           tools={tools}
         />
         <PersonCard
-          name="Camille Martin"
+          name="Aude Cadiot"
+          photo={`${photoBase}/aude-cadiot.jpg`}
           role="Consultante RevOps"
           challenge="sc"
           challengeLabel="Expert Sales Compensation"
