@@ -8,12 +8,15 @@ import {
 import { ChallengeAudience } from '~/components/challenges/challenge-audience';
 import { ChallengeDiagnostic } from '~/components/challenges/challenge-diagnostic';
 import { ChallengeHero } from '~/components/challenges/challenge-hero';
+import { ChallengeMethod } from '~/components/challenges/challenge-method';
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
+import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
 import { fetchChallenge } from '~/modules/content/api';
+import { loadChallengeReferences } from '~/modules/content/challenge-references';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
 import { redirectWithLocale } from '~/utils/redirections';
@@ -40,6 +43,12 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   }
 
   const page = buildChallengePage(challenge.frontmatter);
+  // Never throws: a broken reference hides only the block that needs it.
+  const references = await loadChallengeReferences(
+    slug,
+    challenge.frontmatter,
+    lang,
+  );
   const { name, tagline } = page;
   const description = [page.hero.lead, page.hero.highlight]
     .filter(Boolean)
@@ -47,6 +56,7 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
 
   return {
     page,
+    references,
     lang,
     slug,
     title: tagline
@@ -83,6 +93,7 @@ export default function ChallengeRoute() {
         name={page.name}
         order={page.order}
         hasDiagnostic={page.diagnostic !== null}
+        hasWorkstreams={page.workstreams !== null}
       />
       {page.symptoms ? (
         <ChallengeSymptoms
@@ -95,6 +106,22 @@ export default function ChallengeRoute() {
           audience={page.audience}
           title={t('audience.title')}
           intro={t('audience.intro')}
+        />
+      ) : null}
+      {page.workstreams ? (
+        <ChallengeWorkstreams
+          workstreams={page.workstreams}
+          challenge={page.key}
+          defaultTitle={t('workstreams.title')}
+        />
+      ) : null}
+      {page.method ? (
+        <ChallengeMethod
+          method={page.method}
+          challenge={page.key}
+          // #232 resolves `method.tools` in the loader as
+          // `references.methodTools`; until then the card shows the note.
+          tools={[]}
         />
       ) : null}
       {page.diagnostic ? (

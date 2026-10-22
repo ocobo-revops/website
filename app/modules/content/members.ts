@@ -1,3 +1,4 @@
+import type { ChallengeKey } from '../challenge-schema';
 import { getPrivateEnvVars } from '../env.server';
 import {
   type MemberColor,
@@ -80,6 +81,15 @@ export function getMembersByTrack(
 ): Member[] {
   return Object.values(registry)
     .filter((m) => m.active && m.track === track)
+    .sort(byDisplayOrder);
+}
+
+export function getChallengeExperts(
+  registry: MemberRegistry,
+  challenge: ChallengeKey,
+): Member[] {
+  return Object.values(registry)
+    .filter((m) => m.active && m.challenge === challenge)
     .sort(byDisplayOrder);
 }
 
