@@ -15,6 +15,7 @@ import { IllustrationsSection } from '~/components/design-system/illustrations-s
 import { LogoSection } from '~/components/design-system/logo-section';
 import { MetaPillSection } from '~/components/design-system/meta-pill-section';
 import { NavbarFooterSection } from '~/components/design-system/navbar-footer-section';
+import { PersonCardSection } from '~/components/design-system/person-card-section';
 import { TooltipSection } from '~/components/design-system/tooltip-section';
 import { TypographySection } from '~/components/design-system/typography-section';
 import { V2TokensSection } from '~/components/design-system/v2-tokens-section';
@@ -57,6 +58,7 @@ export default function Index() {
       <IllustrationsSection />
       <CardRecipeSection />
       <FlipCardSection />
+      <PersonCardSection />
       <GridSection />
       <TooltipSection />
     </Container>
