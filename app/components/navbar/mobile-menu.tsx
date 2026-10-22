@@ -12,7 +12,7 @@ import { center, flex, hstack, vstack } from '@ocobo/styled-system/patterns';
 import { ButtonLink } from '~/components/ui/button-link';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
-import { iconStyles } from './styles';
+import { dropdownItemTint } from './styles';
 import type { DropdownItem, NavItem } from './types';
 
 type MobileMenuProps = {
@@ -27,15 +27,7 @@ function MobileDropdownItem({
   item: DropdownItem;
   onClose: () => void;
 }) {
-  const {
-    label,
-    description,
-    path,
-    icon: Icon,
-    imageSrc,
-    color,
-    isExternal,
-  } = item;
+  const { label, description, path, icon: Icon, imageSrc, isExternal } = item;
 
   const content = (
     <>
@@ -50,7 +42,7 @@ function MobileDropdownItem({
             borderWidth: '1px',
             borderColor: 'gray.50',
           }),
-          iconStyles[color],
+          dropdownItemTint(item).icon,
         )}
       >
         {imageSrc ? (

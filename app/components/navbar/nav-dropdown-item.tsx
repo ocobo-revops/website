@@ -6,7 +6,7 @@ import { NavLink } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 
-import { hoverStyles, hoverTextStyles, iconStyles } from './styles';
+import { dropdownItemTint } from './styles';
 import type { DropdownItem } from './types';
 
 type NavDropdownItemProps = React.ComponentPropsWithoutRef<'a'> & {
@@ -18,15 +18,8 @@ export const NavDropdownItem = React.forwardRef<
   HTMLAnchorElement,
   NavDropdownItemProps
 >(function NavDropdownItem({ item, onClose, ...props }, ref) {
-  const {
-    label,
-    description,
-    path,
-    icon: Icon,
-    imageSrc,
-    color,
-    isExternal,
-  } = item;
+  const { label, description, path, icon: Icon, imageSrc, isExternal } = item;
+  const tint = dropdownItemTint(item);
 
   const content = (
     <>
@@ -41,7 +34,7 @@ export const NavDropdownItem = React.forwardRef<
             transition: 'all',
             _groupHover: { transform: 'scale(1.05)' },
           }),
-          iconStyles[color],
+          tint.icon,
         )}
       >
         {imageSrc ? (
@@ -72,7 +65,7 @@ export const NavDropdownItem = React.forwardRef<
               alignItems: 'center',
               gap: '1',
             }),
-            hoverTextStyles[color],
+            tint.label,
           )}
         >
           {label}
@@ -110,7 +103,7 @@ export const NavDropdownItem = React.forwardRef<
         outlineOffset: '0.5',
       },
     }),
-    hoverStyles[color],
+    tint.hover,
   );
 
   if (isExternal) {

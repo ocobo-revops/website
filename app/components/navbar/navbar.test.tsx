@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { challengePalette } from '~/components/challenges/challenge-palette';
 import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
+import { didChallengeLoadFail } from '~/modules/challenge-menu-state';
 import { render, screen, userEvent, waitFor, within } from '~/test/utils';
 
 import { Navbar } from './navbar';
@@ -84,8 +86,8 @@ const frenchChallenges: ChallengeMenuEntry[] = [
   },
 ];
 
-const withChallenges = (challenges: ChallengeMenuEntry[]) => ({
-  loaderData: { 'routes/_main': { challenges } },
+const withChallenges = (challenges: ChallengeMenuEntry[], failed = false) => ({
+  loaderData: { 'routes/_main': { challenges, failed } },
 });
 
 describe('Navbar challenge entry', () => {
@@ -118,6 +120,30 @@ describe('Navbar challenge entry', () => {
     expect(items[0]).toHaveTextContent(
       "Une organisation commerciale qui passe à l'échelle",
     );
+  });
+
+  it('tints each item with its challenge palette', async () => {
+    const user = userEvent.setup();
+    render(<Navbar />, withChallenges(frenchChallenges));
+
+    await user.click(screen.getByRole('button', { name: /vos enjeux/i }));
+
+    const [sales, revenue] = await screen.findAllByRole('menuitem');
+    // The item carries the palette for its hover, the icon box for its tint.
+    expect(sales).toHaveClass(challengePalette.se);
+    expect(sales.getElementsByClassName(challengePalette.se)).toHaveLength(1);
+    expect(revenue).toHaveClass(challengePalette.rp);
+    expect(revenue).not.toHaveClass(challengePalette.se);
+  });
+
+  it('records whether the last load failed, for shouldRevalidate', () => {
+    const { unmount } = render(<Navbar />, withChallenges([], true));
+    expect(didChallengeLoadFail()).toBe(true);
+    unmount();
+
+    // An empty list that loaded fine (flag off, nothing published).
+    render(<Navbar />, withChallenges([]));
+    expect(didChallengeLoadFail()).toBe(false);
   });
 
   it('opens, moves and closes with the keyboard', async () => {

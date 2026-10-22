@@ -1,6 +1,6 @@
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
 
-import type { Color } from './types';
+import type { Color, DropdownItemTint } from './types';
 
 /**
  * Icon background/colour styles per colour variant.
@@ -11,7 +11,6 @@ export const iconStyles: Record<Color, string> = {
   sky: css({ bg: 'ocobo.sky/10', color: 'ocobo.sky' }),
   coral: css({ bg: 'ocobo.coral/10', color: 'ocobo.coral' }),
   mint: css({ bg: 'ocobo.mint/10', color: 'ocobo.mint' }),
-  gray: css({ bg: 'gray/10', color: 'gray' }),
 };
 
 /**
@@ -22,7 +21,6 @@ export const hoverStyles: Record<Color, string> = {
   sky: css({ _hover: { bg: 'ocobo.sky.light' } }),
   coral: css({ _hover: { bg: 'ocobo.coral.light' } }),
   mint: css({ _hover: { bg: 'ocobo.mint.light' } }),
-  gray: css({ _hover: { bg: 'gray.light' } }),
 };
 
 /**
@@ -33,8 +31,36 @@ export const hoverTextStyles: Record<Color, string> = {
   sky: css({ _groupHover: { color: 'ocobo.sky' } }),
   coral: css({ _groupHover: { color: 'ocobo.coral' } }),
   mint: css({ _groupHover: { color: 'ocobo.mint' } }),
-  gray: css({ _groupHover: { color: 'gray' } }),
 };
+
+/**
+ * Same roles for an item that sets `colorPalette`. The label keeps its dark
+ * colour on hover: some challenge colours are too light for text.
+ */
+const paletteIconStyles = css({
+  bg: 'colorPalette/10',
+  color: 'colorPalette',
+});
+const paletteHoverStyles = css({ _hover: { bg: 'colorPalette.light' } });
+
+/**
+ * Tint classes of one dropdown item. A palette item carries its palette
+ * class on each element, so neither depends on the other's ancestors.
+ */
+export function dropdownItemTint(item: DropdownItemTint) {
+  if (item.palette !== undefined) {
+    return {
+      icon: cx(item.palette, paletteIconStyles),
+      hover: cx(item.palette, paletteHoverStyles),
+      label: undefined,
+    };
+  }
+  return {
+    icon: iconStyles[item.color],
+    hover: hoverStyles[item.color],
+    label: hoverTextStyles[item.color],
+  };
+}
 
 /**
  * Scroll threshold in pixels before navbar transitions to "scrolled" state.

@@ -7,30 +7,18 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router';
 
-import type { Color, NavItem } from '~/components/navbar/types';
+import { challengePalette } from '~/components/challenges/challenge-palette';
+import type { NavItem } from '~/components/navbar/types';
+import { MAIN_ROUTE_ID } from '~/modules/challenge-menu';
+import { setChallengeLoadFailed } from '~/modules/challenge-menu-state';
 import type { ChallengeKey } from '~/modules/challenge-schema';
 import type { loader as mainLoader } from '~/routes/_main';
 
 import { useLocalizedPathname } from './useLocalizedPathname';
-
-/** Route id of `app/routes/_main.tsx`, which loads the list. */
-export const MAIN_ROUTE_ID = 'routes/_main';
-
-/**
- * Closest navbar palette colour to each challenge's `challenge.<key>` token
- * in `preset/semantic-tokens.ts`.
- */
-const challengeColor: Record<ChallengeKey, Color> = {
-  rp: 'coral',
-  se: 'mint',
-  sc: 'yellow',
-  cx: 'sky',
-  sy: 'gray',
-  ai: 'coral',
-};
 
 const challengeIcon: Record<ChallengeKey, LucideIcon> = {
   rp: TrendingUp,
@@ -48,8 +36,13 @@ const challengeIcon: Record<ChallengeKey, LucideIcon> = {
 export function useChallengeMenuItem(): NavItem | null {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
-  const challenges =
-    useRouteLoaderData<typeof mainLoader>(MAIN_ROUTE_ID)?.challenges ?? [];
+  const data = useRouteLoaderData<typeof mainLoader>(MAIN_ROUTE_ID);
+  const challenges = data?.challenges ?? [];
+  const failed = data?.failed ?? false;
+
+  useEffect(() => {
+    setChallengeLoadFailed(failed);
+  }, [failed]);
 
   if (challenges.length === 0) {
     return null;
@@ -60,12 +53,13 @@ export function useChallengeMenuItem(): NavItem | null {
     label: t('navigation.challenges.title'),
     path: null,
     dropdown: challenges.map(({ slug, key, name, tagline }) => ({
-      key: slug,
+      // Prefixed: the v2 footer picks its links by sub-item key ('blog').
+      key: `challenge-${slug}`,
       label: name,
       description: tagline ?? undefined,
       path: getLocalizedPath(`/challenges/${slug}`),
       icon: challengeIcon[key],
-      color: challengeColor[key],
+      palette: challengePalette[key],
     })),
   };
 }
