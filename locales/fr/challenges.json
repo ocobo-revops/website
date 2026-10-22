@@ -3,8 +3,17 @@
   "hero.breadcrumb": "Vos enjeux / Enjeu {{order}}",
   "hero.quote": "«\u00a0{{quote}}\u00a0»",
   "hero.bowtieLabel": "Où nous intervenons sur votre cycle",
+  "hero.workstreamsCta": "Ce que nous construisons",
   "symptoms.eyebrow": "Vous vous reconnaissez",
   "audience.title": "Pour qui",
   "audience.intro": "Les équipes et les rôles qui vivent ce problème au quotidien, et ce que ça change pour eux.",
+  "workstreams.title": "Ce que nous construisons",
+  "workstreams.step": "étape {{step}}",
+  "workstreams.delivered": "Ce qui est livré",
+  "method.title": "Comment nous travaillons",
+  "method.step1": "Diagnostic",
+  "method.step2": "Construction",
+  "method.step3": "Autonomie",
+  "method.tools": "Les outils que nous déployons le plus",
   "diagnostic.cta": "Réserver un diagnostic"
 }

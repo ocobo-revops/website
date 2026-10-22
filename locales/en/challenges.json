@@ -3,8 +3,17 @@
   "hero.breadcrumb": "Your challenges / Challenge {{order}}",
   "hero.quote": "“{{quote}}”",
   "hero.bowtieLabel": "Where we work on your cycle",
+  "hero.workstreamsCta": "What we build",
   "symptoms.eyebrow": "Sounds familiar",
   "audience.title": "Who it is for",
   "audience.intro": "The teams and roles who live with this problem every day, and what changes for them.",
+  "workstreams.title": "What we build",
+  "workstreams.step": "step {{step}}",
+  "workstreams.delivered": "What we deliver",
+  "method.title": "How we work",
+  "method.step1": "Diagnostic",
+  "method.step2": "Build",
+  "method.step3": "Autonomy",
+  "method.tools": "The tools we deploy most",
   "diagnostic.cta": "Book a diagnostic"
 }
