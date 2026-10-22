@@ -179,7 +179,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **Team** | `Team.tsx` | Team presentation | Reusable |
 
 ### Design system showcase (`app/components/design-system/`)
-One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`). The route `app/routes/design-system.tsx` only lists them in order. A new showcase section is a new module plus one line in the route.
+One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`). `app/routes/design-system.tsx` is the layout: title, subpage navigation (`subpage-nav.tsx`, list in `subpages.ts`) and an `Outlet`. Three subpage routes list the sections in order: `design-system.foundations.tsx` (tokens and visual basics), `design-system.components.tsx` (UI components and recipes) and `design-system.patterns.tsx` (page blocks and motion). A new showcase section is a new module plus one line in the subpage route it belongs to.
 
 ## Layout Components (Root Level)
 
@@ -271,7 +271,7 @@ Active Panda CSS recipes — use these before reaching for inline `css()`.
 
 ### Design system v2 tokens
 
-Defined in `preset/tokens/` and `preset/semantic-tokens.ts`, shown on `/design-system`. ADR 0002 has the full mapping from older names.
+Defined in `preset/tokens/` and `preset/semantic-tokens.ts`, shown on `/design-system/foundations`. ADR 0002 has the full mapping from older names.
 
 | Group | Tokens to use |
 |-------|---------------|

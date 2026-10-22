@@ -134,7 +134,7 @@ Keep their style; not locale-prefixed, so FR views only.
 | Markdoc prose: `medium` and `small` text styles take the body and small values | | |
 | Breadcrumb in the `small` text style | | |
 
-### Design system (`/design-system`)
+### Design system (`/design-system/foundations`, `/design-system/components`)
 
 | Change | Views checked | Status |
 |---|---|---|
