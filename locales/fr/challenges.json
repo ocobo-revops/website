@@ -15,5 +15,13 @@
   "method.step2": "Construction",
   "method.step3": "Autonomie",
   "method.tools": "Les outils que nous déployons le plus",
-  "diagnostic.cta": "Réserver un diagnostic"
+  "diagnostic.cta": "Réserver un diagnostic",
+  "clientCase.eyebrow": "Cas client",
+  "clientCase.cta": "Lire le cas client",
+  "experts.eyebrow": "Vos interlocuteurs",
+  "experts.title": "Les experts Ocobo de cet enjeu.",
+  "experts.intro": "Pas de commercial puis de junior : les personnes que vous rencontrez au premier rendez-vous sont celles qui construisent avec vous. Survolez ou touchez une carte pour les découvrir.",
+  "experts.cta": "Échanger avec l'un d'eux",
+  "experts.label": "Expert {{name}}",
+  "otherChallenges.title": "Les autres enjeux"
 }

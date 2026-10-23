@@ -15,5 +15,13 @@
   "method.step2": "Build",
   "method.step3": "Autonomy",
   "method.tools": "The tools we deploy most",
-  "diagnostic.cta": "Book a diagnostic"
+  "diagnostic.cta": "Book a diagnostic",
+  "clientCase.eyebrow": "Client case",
+  "clientCase.cta": "Read the client case",
+  "experts.eyebrow": "Your contacts",
+  "experts.title": "The Ocobo experts on this challenge.",
+  "experts.intro": "No salesperson followed by a junior: the people you meet at the first meeting are the ones who build with you. Hover over or tap a card to find out more.",
+  "experts.cta": "Talk to one of them",
+  "experts.label": "{{name}} expert",
+  "otherChallenges.title": "Other challenges"
 }
