@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  *
- * Challenge page route (#233, #234): the loader through the
+ * Challenge page route (#233, #234, #236): the loader through the
  * `invokeLoader` harness, then the page with sections left out.
  */
 
@@ -9,6 +9,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { buildChallengePage } from '~/modules/challenge-page';
 import type { ChallengeFrontmatter } from '~/modules/challenge-schema';
+import type {
+  ChallengePartner,
+  ChallengeReferences,
+} from '~/modules/content/challenge-references';
 import { loadChallengeFixture } from '~/test/challenge-fixture';
 import { invokeLoader } from '~/test/loader-harness';
 import { render, screen } from '~/test/utils';
@@ -22,7 +26,7 @@ vi.mock('~/modules/content/api', () => ({
   fetchChallenge: (...args: unknown[]) => fetchChallengeMock(...args),
 }));
 
-const references = {
+const references: ChallengeReferences = {
   clientCase: null,
   methodTools: [],
   partner: null,
@@ -98,7 +102,7 @@ describe('challenge loader', () => {
     );
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
-    expect(outcome.data.references).toBe(references);
+    expect(outcome.data.references).toEqual(references);
   });
 
   it('fetches the English file for /en/challenges/<slug>', async () => {
@@ -208,11 +212,30 @@ describe('challenge loader', () => {
   });
 });
 
+const qobra: ChallengePartner = {
+  tool: { slug: 'qobra', name: 'Qobra' },
+  sentence: 'Commissions computed on their own.',
+  metrics: [{ before: '7 days', after: '1', label: 'to close commissions' }],
+  source: 'Figures published by Qobra.',
+};
+
+const revenueAi: ChallengeReferences['otherChallenges'][number] = {
+  slug: 'revenue-ai',
+  key: 'ai',
+  order: 6,
+  name: 'Revenue AI',
+  tagline: 'AI on a system that works',
+};
+
 function renderPage(
   frontmatter: ChallengeFrontmatter,
   lang: 'fr' | 'en' = 'en',
+  pageReferences: Partial<ChallengeReferences> = {},
 ) {
-  loaderData = { page: buildChallengePage(frontmatter) };
+  loaderData = {
+    page: buildChallengePage(frontmatter),
+    references: { ...references, ...pageReferences },
+  };
   return render(<ChallengeRoute />, {
     initialEntries: [`/${lang}/challenges/revenue-performance`],
     i18nLang: lang,
@@ -233,6 +256,7 @@ describe('challenge page', () => {
       'The number lives in the heads of a few people. Nowhere else.',
       'Who it is for',
       'What we build',
+      fixture.frontmatter.aiBridge.title,
       'How we work',
       fixture.frontmatter.diagnostic.question,
     ]);
@@ -373,5 +397,116 @@ describe('challenge page', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       frontmatter.name,
     );
+  });
+
+  describe('AI bridge and partner (#236)', () => {
+    it('leaves both out when the file has neither', () => {
+      const { frontmatter } = fixture;
+      renderPage({
+        ...frontmatter,
+        aiBridge: { ...frontmatter.aiBridge, title: '[Title]' },
+      });
+
+      expect(
+        screen.queryByText('What AI changes here'),
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText('[Title]')).not.toBeInTheDocument();
+      expect(screen.queryByText('With')).not.toBeInTheDocument();
+    });
+
+    it('renders the agent window and links to the Revenue AI page', () => {
+      renderPage(frenchFixture.frontmatter, 'fr', {
+        otherChallenges: [revenueAi],
+      });
+
+      expect(screen.getByText("Ce que l'IA change ici")).toBeInTheDocument();
+      expect(
+        screen.getByRole('figure', {
+          name: 'Exemple de message\u00a0: Agent Forecast',
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: "Déployer l'IA dans vos équipes" }),
+      ).toHaveAttribute('href', '/fr/challenges/revenue-ai');
+    });
+
+    it('renders the section without a window and with no link to itself on the AI page', () => {
+      const ai = loadChallengeFixture('fr', 'revenue-ai');
+      renderPage(ai.frontmatter, 'fr', { otherChallenges: [revenueAi] });
+
+      expect(screen.getByText('Notre point de vue')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', {
+          level: 2,
+          name: ai.frontmatter.aiBridge.title,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('figure', { name: /^Exemple de message/ }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: "Déployer l'IA dans vos équipes" }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders the English labels', () => {
+      renderPage(fixture.frontmatter, 'en', { otherChallenges: [revenueAi] });
+
+      expect(screen.getByText('What AI changes here')).toBeInTheDocument();
+      // The test router has no `:lang` param, so the link is French.
+      expect(
+        screen.getByRole('link', { name: 'Deploy AI in your teams' }),
+      ).toHaveAttribute('href', '/fr/challenges/revenue-ai');
+    });
+
+    it('closes the workstreams with the partner and its source', () => {
+      renderPage(fixture.frontmatter, 'en', { partner: qobra });
+
+      const workstreams = document.getElementById('chantiers');
+      expect(workstreams).toHaveTextContent(
+        'Commissions computed on their own.',
+      );
+      expect(workstreams).toHaveTextContent('Figures published by Qobra.');
+    });
+
+    it('keeps the partner when the workstreams are absent', () => {
+      const { frontmatter } = fixture;
+      renderPage(
+        {
+          ...frontmatter,
+          workstreams: {
+            ...frontmatter.workstreams,
+            items: frontmatter.workstreams.items.map((item) => ({
+              ...item,
+              deliverable: '[Deliverable]',
+            })),
+          },
+        },
+        'en',
+        { partner: qobra },
+      );
+
+      expect(document.getElementById('chantiers')).toBeNull();
+      expect(
+        screen.getByText('Figures published by Qobra.'),
+      ).toBeInTheDocument();
+    });
+
+    it('drops a partner with a placeholder source in the loader', async () => {
+      fetchChallengeMock.mockResolvedValue([200, 'success', fixture]);
+      loadChallengeReferencesMock.mockResolvedValueOnce({
+        ...references,
+        partner: { ...qobra, source: '[Source]' },
+      });
+
+      const outcome = await invokeLoader(loader, {
+        url: 'http://test.local/en/challenges/revenue-performance',
+        params: { lang: 'en', slug: 'revenue-performance' },
+      });
+
+      expect(outcome.type).toBe('data');
+      if (outcome.type !== 'data') return;
+      expect(outcome.data.references.partner).toBeNull();
+    });
   });
 });

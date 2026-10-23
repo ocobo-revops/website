@@ -5,16 +5,25 @@ import {
   useLoaderData,
 } from 'react-router';
 
+import { ChallengeAiBridge } from '~/components/challenges/challenge-ai-bridge';
 import { ChallengeAudience } from '~/components/challenges/challenge-audience';
 import { ChallengeDiagnostic } from '~/components/challenges/challenge-diagnostic';
 import { ChallengeHero } from '~/components/challenges/challenge-hero';
 import { ChallengeMethod } from '~/components/challenges/challenge-method';
 import { challengePalette } from '~/components/challenges/challenge-palette';
+import {
+  ChallengePartner,
+  ChallengePartnerSection,
+} from '~/components/challenges/challenge-partner';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
 import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
-import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
+import {
+  buildChallengePage,
+  buildChallengePartner,
+  isChallengeSlug,
+} from '~/modules/challenge-page';
 import { fetchChallenge } from '~/modules/content/api';
 import { loadChallengeReferences } from '~/modules/content/challenge-references';
 import { throwIfDisabled } from '~/modules/feature-flags';
@@ -59,7 +68,11 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
 
   return {
     page,
-    references,
+    // Cleaned here so placeholder text never reaches the hydration data.
+    references: {
+      ...references,
+      partner: buildChallengePartner(references.partner),
+    },
     lang,
     slug,
     title: tagline
@@ -86,7 +99,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function ChallengeRoute() {
   const { t } = useTranslation('challenges');
-  const { page } = useLoaderData<typeof loader>();
+  const { page, references } = useLoaderData<typeof loader>();
+  const { partner } = references;
+  const aiChallengeSlug =
+    references.otherChallenges.find(({ key }) => key === 'ai')?.slug ?? null;
 
   return (
     <div className={challengePalette[page.key]}>
@@ -116,6 +132,16 @@ export default function ChallengeRoute() {
           workstreams={page.workstreams}
           challenge={page.key}
           defaultTitle={t('workstreams.title')}
+          footer={partner ? <ChallengePartner partner={partner} /> : null}
+        />
+      ) : partner ? (
+        <ChallengePartnerSection partner={partner} />
+      ) : null}
+      {page.aiBridge ? (
+        <ChallengeAiBridge
+          aiBridge={page.aiBridge}
+          challenge={page.key}
+          aiChallengeSlug={aiChallengeSlug}
         />
       ) : null}
       {page.method ? (
