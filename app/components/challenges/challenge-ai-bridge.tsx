@@ -124,12 +124,10 @@ export function ChallengeAiBridge({
               <AgentWindow demo={demo} />
               {demo.note ? (
                 <figcaption
-                  className={css({
-                    mt: '4',
-                    fontSize: 'caption',
-                    color: 'white/60',
-                    textAlign: 'center',
-                  })}
+                  className={cx(
+                    text({ variant: 'small' }),
+                    css({ mt: '4', color: 'white/60', textAlign: 'center' }),
+                  )}
                 >
                   {demo.note}
                 </figcaption>

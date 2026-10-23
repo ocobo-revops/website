@@ -9,51 +9,55 @@ import type {
   ChallengeDemoElement,
 } from '~/modules/challenge-page';
 
+import { figureText, unbroken, visuallyHidden } from './challenge-figure';
+
 type ElementOf<T extends ChallengeDemoElement['type']> = Extract<
   ChallengeDemoElement,
   { type: T }
 >;
 
-// Bermia figures below H2 size: the H2 variant at a smaller size.
-const figureText = text({ variant: 'display-lg' });
+const smallText = text({ variant: 'small' });
+const mutedText = text({ variant: 'small', color: 'muted' });
 
-const visuallyHidden = css({ srOnly: true });
+// Three tiles side by side only where the window is wide enough for a ten
+// character value: from `sm`, where it fills the row, and from `xl`, where it
+// sits in a half-width column. Elsewhere one row per figure.
+const kpiList = css({
+  display: 'grid',
+  gridTemplateColumns: {
+    base: '1fr',
+    sm: 'repeat(3, minmax(0, 1fr))',
+    lg: '1fr',
+    xl: 'repeat(3, minmax(0, 1fr))',
+  },
+  gap: '2.5',
+});
+
+const kpiTile = css({
+  display: 'flex',
+  flexDirection: { base: 'row', sm: 'column', lg: 'row', xl: 'column' },
+  alignItems: {
+    base: 'baseline',
+    sm: 'flex-start',
+    lg: 'baseline',
+    xl: 'flex-start',
+  },
+  columnGap: '3',
+  bg: 'gray.50',
+  rounded: 'lg',
+  // Room for a ten character value at `xl`.
+  px: '3',
+  py: '3',
+});
 
 function Kpis({ element }: { element: ElementOf<'kpis'> }) {
   return (
-    <ul
-      // `list-style: none` drops list semantics in Safari.
-      role="list"
-      className={css({
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-        gap: '2.5',
-      })}
-    >
+    // `list-style: none` drops list semantics in Safari.
+    <ul role="list" className={kpiList}>
       {element.items.map((item, index) => (
-        <li
-          key={`${index}-${item.label}`}
-          className={css({
-            bg: 'gray.50',
-            rounded: 'lg',
-            px: { base: '2.5', sm: '3.5' },
-            py: '3',
-            overflowWrap: 'anywhere',
-          })}
-        >
-          <span
-            className={cx(
-              figureText,
-              css({ display: 'block', fontSize: 'xl' }),
-            )}
-          >
-            {item.value}
-          </span>{' '}
-          <span
-            className={css({ display: 'block', fontSize: 'xs', color: 'gray' })}
-          >
-            {item.label}
-          </span>
+        <li key={`${index}-${item.label}`} className={kpiTile}>
+          <span className={cx(figureText, unbroken)}>{item.value}</span>{' '}
+          <span className={mutedText}>{item.label}</span>
         </li>
       ))}
     </ul>
@@ -74,12 +78,8 @@ function Figure({ element }: { element: ElementOf<'figure'> }) {
         py: '3.5',
       })}
     >
-      <span className={cx(figureText, css({ fontSize: '3xl' }))}>
-        {element.value}
-      </span>{' '}
-      <span className={css({ fontSize: 'caption', color: 'gray' })}>
-        {element.caption}
-      </span>
+      <span className={cx(figureText, unbroken)}>{element.value}</span>{' '}
+      <span className={mutedText}>{element.caption}</span>
     </p>
   );
 }
@@ -149,12 +149,11 @@ const statusIcon = css({
 
 const statusIconStyles = {
   ok: css({ bg: 'mint.light', color: 'mint.dark' }),
-  alert: css({
-    bg: 'coral.light',
-    color: 'coral.dark',
-    fontSize: 'micro',
-    fontWeight: 'bold',
-  }),
+  alert: cx(
+    text({ variant: 'label' }),
+    // No tracking: it would push the glyph off centre.
+    css({ bg: 'coral.light', color: 'coral.dark', letterSpacing: 'normal' }),
+  ),
 };
 
 function Status({ element }: { element: ElementOf<'status'> }) {
@@ -163,17 +162,19 @@ function Status({ element }: { element: ElementOf<'status'> }) {
 
   return (
     <p
-      className={css({
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '4',
-        py: '2.5',
-        borderTopWidth: '1px',
-        borderTopStyle: 'solid',
-        borderTopColor: 'line',
-        fontSize: 'sm',
-      })}
+      className={cx(
+        smallText,
+        css({
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '4',
+          py: '2.5',
+          borderTopWidth: '1px',
+          borderTopStyle: 'solid',
+          borderTopColor: 'line',
+        }),
+      )}
     >
       <span className={css({ color: 'gray' })}>{label}</span>{' '}
       <span
@@ -203,16 +204,17 @@ function Status({ element }: { element: ElementOf<'status'> }) {
   );
 }
 
-const demoButton = css({
-  px: '3',
-  py: '1.5',
-  rounded: 'lg',
-  fontSize: 'caption',
-  fontWeight: 'semibold',
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: 'line',
-});
+const demoButton = cx(
+  smallText,
+  css({
+    px: '3',
+    py: '1.5',
+    rounded: 'lg',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'line',
+  }),
+);
 
 function Buttons({ element }: { element: ElementOf<'buttons'> }) {
   const last = element.labels.length - 1;
@@ -311,12 +313,7 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
           <span className={cx(barDot, css({ bg: 'mint' }))} />
         </span>
         <span
-          className={css({
-            fontSize: 'xs',
-            fontWeight: 'semibold',
-            color: 'gray.700',
-            truncate: true,
-          })}
+          className={cx(smallText, css({ color: 'gray.700', truncate: true }))}
         >
           {channel}
         </span>
@@ -364,25 +361,22 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
               gap: '2',
             })}
           >
-            <span className={css({ fontSize: 'sm', fontWeight: 'semibold' })}>
-              {agent}
-            </span>{' '}
-            <time className={css({ fontSize: 'xs', color: 'gray' })}>
-              {time}
-            </time>
+            <span className={smallText}>{agent}</span>{' '}
+            <time className={mutedText}>{time}</time>
           </p>
           {opening.kind === 'question' ? (
             <p
-              className={css({
-                alignSelf: 'flex-start',
-                bg: 'gray.100',
-                px: '3.5',
-                py: '2.5',
-                rounded: '2xl',
-                borderBottomLeftRadius: 'lg',
-                fontSize: 'sm',
-                fontWeight: 'semibold',
-              })}
+              className={cx(
+                smallText,
+                css({
+                  alignSelf: 'flex-start',
+                  bg: 'gray.100',
+                  px: '3.5',
+                  py: '2.5',
+                  rounded: '2xl',
+                  borderBottomLeftRadius: 'lg',
+                }),
+              )}
             >
               {t('aiBridge.question', {
                 text: opening.text,
@@ -390,7 +384,7 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
               })}
             </p>
           ) : (
-            <p className={css({ fontSize: 'sm', color: 'gray.700' })}>
+            <p className={cx(smallText, css({ color: 'gray.700' }))}>
               {opening.text}
             </p>
           )}
@@ -398,19 +392,20 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
             <DemoElement key={elementKey(element, index)} element={element} />
           ))}
           <p
-            className={css({
-              display: 'inline-flex',
-              alignItems: 'center',
-              alignSelf: 'flex-start',
-              gap: '2',
-              mt: 'auto',
-              px: '3',
-              py: '1.5',
-              bg: 'mint.light',
-              rounded: 'full',
-              fontSize: 'xs',
-              fontWeight: 'semibold',
-            })}
+            className={cx(
+              smallText,
+              css({
+                display: 'inline-flex',
+                alignItems: 'center',
+                alignSelf: 'flex-start',
+                gap: '2',
+                mt: 'auto',
+                px: '3',
+                py: '1.5',
+                bg: 'mint.light',
+                rounded: 'full',
+              }),
+            )}
           >
             <span
               aria-hidden="true"

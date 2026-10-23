@@ -4,9 +4,11 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ChallengePartner as ChallengePartnerData } from '~/modules/content/challenge-references';
-import { axe, render, screen } from '~/test/utils';
+import { axe, fireEvent, render, screen } from '~/test/utils';
 
 import { ChallengePartner } from './challenge-partner';
+
+const source = 'Figures published by Qobra about its customers.';
 
 const partner: ChallengePartnerData = {
   tool: {
@@ -19,42 +21,48 @@ const partner: ChallengePartnerData = {
     { before: '7 days', after: '1', label: 'to close the commissions' },
     { before: '3 days', after: '½', label: 'of disputes each month' },
   ],
-  source: 'Figures published by Qobra about its customers.',
+  source,
 };
 
 describe('ChallengePartner', () => {
-  it('shows the partner, its metrics and their source', () => {
+  it('shows the source with the metrics it attributes', () => {
     render(<ChallengePartner partner={partner} />, { i18nLang: 'en' });
 
-    expect(screen.getByRole('img', { name: 'Qobra' })).toBeInTheDocument();
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getByText(source)).toBeInTheDocument();
+  });
+
+  it('drops the source when no metric is left', () => {
+    render(<ChallengePartner partner={{ ...partner, metrics: [] }} />, {
+      i18nLang: 'en',
+    });
+
+    expect(screen.queryByRole('list')).not.toBeInTheDocument();
+    expect(screen.queryByText(source)).not.toBeInTheDocument();
     expect(
       screen.getByText('Commissions computed on their own.'),
     ).toBeInTheDocument();
-    expect(screen.getAllByRole('listitem')).toHaveLength(2);
-    expect(screen.getByText('to close the commissions')).toBeInTheDocument();
-    expect(
-      screen.getByText('Figures published by Qobra about its customers.'),
-    ).toBeInTheDocument();
   });
 
-  it('keeps the source without metrics or logo', () => {
+  it('names the partner when it has no logo', () => {
     render(
       <ChallengePartner
-        partner={{
-          ...partner,
-          tool: { slug: 'qobra', name: 'Qobra' },
-          metrics: [],
-        }}
+        partner={{ ...partner, tool: { slug: 'qobra', name: 'Qobra' } }}
       />,
-      { i18nLang: 'fr' },
+      { i18nLang: 'en' },
     );
 
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
     expect(screen.getByText('Qobra')).toBeInTheDocument();
-    expect(screen.getByText('Avec')).toBeInTheDocument();
-    expect(screen.queryByRole('list')).not.toBeInTheDocument();
-    expect(
-      screen.getByText('Figures published by Qobra about its customers.'),
-    ).toBeInTheDocument();
+  });
+
+  it('names the partner when its logo fails to load', () => {
+    render(<ChallengePartner partner={partner} />, { i18nLang: 'en' });
+
+    fireEvent.error(screen.getByRole('img', { name: 'Qobra' }));
+
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    expect(screen.getByText('Qobra')).toBeInTheDocument();
   });
 
   it('has no axe violations', async () => {

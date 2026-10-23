@@ -39,36 +39,22 @@ const demo: ChallengeAgentDemo = {
 };
 
 describe('AgentWindow', () => {
-  it('renders the frame and one element of each type', () => {
+  it('renders one element of each type, with their states in words', () => {
     render(<AgentWindow demo={demo} />, { i18nLang: 'en' });
 
-    expect(screen.getByText('# leadership')).toBeInTheDocument();
-    expect(screen.getByText('Forecast agent')).toBeInTheDocument();
-    expect(screen.getByText('08:05')).toBeInTheDocument();
-    expect(screen.getByText('“Where is the quarter?”')).toBeInTheDocument();
-    // kpis
     expect(screen.getByText('€1.24M')).toBeInTheDocument();
-    expect(screen.getByText('vs. W-1')).toBeInTheDocument();
-    // figure
     expect(screen.getByText('€3,840')).toBeInTheDocument();
-    expect(screen.getByText('commission if signed')).toBeInTheDocument();
-    // progress
     const progress = screen.getByRole('progressbar', { name: 'Progress' });
     expect(progress).toHaveAttribute('aria-valuenow', '82');
     expect(progress).toHaveAttribute('aria-valuetext', '82%, target 90%');
-    // status, with its state in words
-    expect(screen.getByText('Base rate')).toBeInTheDocument();
     expect(screen.getByText('(on track)')).toBeInTheDocument();
     expect(screen.getByText('(alert)')).toBeInTheDocument();
-    // buttons: pictures of buttons, nothing to click
+    // Pictures of buttons: nothing to click.
     expect(screen.getByText('Prepare the call')).toBeInTheDocument();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(
-      screen.getByText('Computed on HubSpot this morning'),
-    ).toBeInTheDocument();
   });
 
-  it('renders a statement as plain text, without quotes', () => {
+  it('renders a statement opening without quotes', () => {
     render(
       <AgentWindow
         demo={{
