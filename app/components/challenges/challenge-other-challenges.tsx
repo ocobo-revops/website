@@ -7,7 +7,7 @@ import { card, section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
-import type { OtherChallengeLink } from '~/modules/challenge-reference-sections';
+import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
 
 import { challengePalette } from './challenge-palette';
 
@@ -43,7 +43,7 @@ const dot = css({
 const aiDot = css({ bgGradient: 'ai' });
 
 type ChallengeOtherChallengesProps = {
-  challenges: OtherChallengeLink[];
+  challenges: ChallengeMenuEntry[];
 };
 
 export function ChallengeOtherChallenges({

@@ -2,26 +2,26 @@
  * View model of a challenge page (#233, #234): the sections of the page,
  * built from a validated challenge frontmatter.
  *
- * A mockup placeholder (a value written as `[...]`) never renders. A section
- * whose required text is a placeholder, or whose items are all placeholders,
- * is `null` and the page leaves it out. The hero always renders: it holds the
+ * A mockup placeholder (any bracketed span, `content/placeholder.ts`) never
+ * renders. A section whose required text is a placeholder, or whose items are
+ * all placeholders, is `null` and the page leaves it out. The hero always renders: it holds the
  * page's `h1`, which falls back to the challenge name.
  */
 
 import type { StageId } from './bowtie-stages';
 import type { ChallengeFrontmatter, ChallengeKey } from './challenge-schema';
+import { hasPlaceholder } from './content/placeholder';
 
 /** Kebab-case, as the posts repo names challenge files. */
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-
-const PLACEHOLDER_PATTERN = /^\s*\[.*\]\s*$/s;
 
 export function isChallengeSlug(slug: string): boolean {
   return SLUG_PATTERN.test(slug);
 }
 
+/** Same rule as `hasPlaceholder`, kept for the existing call sites. */
 export function isPlaceholder(value: string): boolean {
-  return PLACEHOLDER_PATTERN.test(value);
+  return hasPlaceholder(value);
 }
 
 /** The value, or `null` when it is missing or a mockup placeholder. */

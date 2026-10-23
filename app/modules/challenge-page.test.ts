@@ -14,11 +14,17 @@ const loadFrontmatter = () =>
   loadChallengeFixture('en', 'revenue-performance').frontmatter;
 
 describe('isPlaceholder', () => {
-  it.each(['[À compléter]', '  [TBD]  ', '[]'])('flags %j', (value) => {
+  it.each([
+    '[À compléter]',
+    '  [TBD]  ',
+    '[]',
+    '[Client name]: [the change in one sentence].',
+    'And your ERPs. [Block to confirm]',
+  ])('flags %j', (value) => {
     expect(isPlaceholder(value)).toBe(true);
   });
 
-  it.each(['A number', 'See [1] here', '[a] and [b'])('keeps %j', (value) => {
+  it.each(['A number', 'a [b', 'b] a ['])('keeps %j', (value) => {
     expect(isPlaceholder(value)).toBe(false);
   });
 });

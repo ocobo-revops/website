@@ -9,15 +9,13 @@ import {
 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRouteLoaderData } from 'react-router';
 
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import type { NavItem } from '~/components/navbar/types';
-import { MAIN_ROUTE_ID } from '~/modules/challenge-menu';
 import { setChallengeLoadFailed } from '~/modules/challenge-menu-state';
 import type { ChallengeKey } from '~/modules/challenge-schema';
-import type { loader as mainLoader } from '~/routes/_main';
 
+import { useChallengeMenu } from './use-challenge-menu';
 import { useLocalizedPathname } from './useLocalizedPathname';
 
 const challengeIcon: Record<ChallengeKey, LucideIcon> = {
@@ -36,9 +34,7 @@ const challengeIcon: Record<ChallengeKey, LucideIcon> = {
 export function useChallengeMenuItem(): NavItem | null {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
-  const data = useRouteLoaderData<typeof mainLoader>(MAIN_ROUTE_ID);
-  const challenges = data?.challenges ?? [];
-  const failed = data?.failed ?? false;
+  const { challenges, failed } = useChallengeMenu();
 
   useEffect(() => {
     setChallengeLoadFailed(failed);

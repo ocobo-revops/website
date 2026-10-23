@@ -15,14 +15,11 @@ import { ChallengeOtherChallenges } from '~/components/challenges/challenge-othe
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
 import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
+import { useOtherChallenges } from '~/hooks/use-challenge-menu';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
-import {
-  buildClientCaseSection,
-  buildExpertCards,
-  buildOtherChallengeLinks,
-} from '~/modules/challenge-reference-sections';
+import { buildChallengeReferenceSections } from '~/modules/challenge-reference-sections';
 import { fetchChallenge } from '~/modules/content/api';
 import { loadChallengeReferences } from '~/modules/content/challenge-references';
 import { throwIfDisabled } from '~/modules/feature-flags';
@@ -55,9 +52,9 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
 
   const page = buildChallengePage(challenge.frontmatter);
   // Never throws: a broken reference hides only the block that needs it.
-  const references = await loadChallengeReferences(
-    slug,
-    challenge.frontmatter,
+  // Only the section view models ship to the client.
+  const references = buildChallengeReferenceSections(
+    await loadChallengeReferences(slug, challenge.frontmatter, lang),
     lang,
   );
   const { name, tagline } = page;
@@ -94,10 +91,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function ChallengeRoute() {
   const { t } = useTranslation('challenges');
-  const { page, references, lang } = useLoaderData<typeof loader>();
-  const clientCase = buildClientCaseSection(references.clientCase);
-  const experts = buildExpertCards(references.experts, lang);
-  const otherChallenges = buildOtherChallengeLinks(references.otherChallenges);
+  const { page, references, slug } = useLoaderData<typeof loader>();
+  const { clientCase, experts } = references;
+  // The `_main` layout already loads and caches the published list.
+  const otherChallenges = useOtherChallenges(slug);
 
   return (
     <div className={challengePalette[page.key]}>
