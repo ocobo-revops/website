@@ -6,7 +6,6 @@ import { loadChallengeFixture } from '~/test/challenge-fixture';
 
 import {
   buildChallengePage,
-  buildChallengePartner,
   isChallengeSlug,
   isPlaceholder,
 } from './challenge-page';
@@ -15,11 +14,17 @@ const loadFrontmatter = () =>
   loadChallengeFixture('en', 'revenue-performance').frontmatter;
 
 describe('isPlaceholder', () => {
-  it.each(['[À compléter]', '  [TBD]  ', '[]'])('flags %j', (value) => {
+  it.each([
+    '[À compléter]',
+    '  [TBD]  ',
+    '[]',
+    '[Client name]: [the change in one sentence].',
+    'And your ERPs. [Block to confirm]',
+  ])('flags %j', (value) => {
     expect(isPlaceholder(value)).toBe(true);
   });
 
-  it.each(['A number', 'See [1] here', '[a] and [b'])('keeps %j', (value) => {
+  it.each(['A number', 'a [b', 'b] a ['])('keeps %j', (value) => {
     expect(isPlaceholder(value)).toBe(false);
   });
 });
@@ -407,35 +412,4 @@ describe('buildChallengePage', () => {
       expect(page.aiBridge?.demo).toBeNull();
     });
   });
-});
-
-describe('buildChallengePartner', () => {
-  const partner = {
-    tool: { slug: 'qobra', name: 'Qobra' },
-    sentence: 'Commissions computed on their own.',
-    metrics: [
-      { before: '7 days', after: '1', label: 'to close commissions' },
-      { before: '[Avant]', after: '½', label: 'of disputes' },
-    ],
-    source: 'Figures published by Qobra.',
-  };
-
-  it('returns null without a partner', () => {
-    expect(buildChallengePartner(null)).toBeNull();
-  });
-
-  it('drops a placeholder metric and keeps the block', () => {
-    expect(buildChallengePartner(partner)?.metrics).toEqual([
-      partner.metrics[0],
-    ]);
-  });
-
-  it.each(['sentence', 'source'] as const)(
-    'hides the block when the %s is a placeholder',
-    (field) => {
-      expect(
-        buildChallengePartner({ ...partner, [field]: '[À compléter]' }),
-      ).toBeNull();
-    },
-  );
 });

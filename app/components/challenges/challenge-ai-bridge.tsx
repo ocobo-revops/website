@@ -27,7 +27,10 @@ const layouts = {
 type ChallengeAiBridgeProps = {
   aiBridge: ChallengeAiBridgeData;
   challenge: ChallengeKey;
-  /** Slug of the Revenue AI page, the target of the CTA; `null` hides it. */
+  /**
+   * Slug of the Revenue AI page, the target of the CTA. `null` hides it, as
+   * on the Revenue AI page itself.
+   */
   aiChallengeSlug: string | null;
 };
 
@@ -39,9 +42,8 @@ export function ChallengeAiBridge({
   const { t } = useTranslation('challenges');
   const getLocalizedPath = useLocalizedPathname();
   const { title, bullets, demo } = aiBridge;
-  // The Revenue AI page states its own view and links nowhere else.
+  // The Revenue AI page states its own view.
   const isAiPage = challenge === 'ai';
-  const ctaSlug = isAiPage ? null : aiChallengeSlug;
 
   return (
     <section
@@ -102,9 +104,9 @@ export function ChallengeAiBridge({
                 </li>
               ))}
             </ul>
-            {ctaSlug ? (
+            {aiChallengeSlug ? (
               <ButtonLink
-                to={getLocalizedPath(`/challenges/${ctaSlug}`)}
+                to={getLocalizedPath(`/challenges/${aiChallengeSlug}`)}
                 variant="white"
                 className={cx(aiButton, css({ mt: '10' }))}
               >

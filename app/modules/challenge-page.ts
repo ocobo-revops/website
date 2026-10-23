@@ -2,31 +2,30 @@
  * View model of a challenge page (#233, #234, #236): the sections of the page,
  * built from a validated challenge frontmatter.
  *
- * A mockup placeholder (a value written as `[...]`) never renders. A section
- * whose required text is a placeholder, or whose items are all placeholders,
- * is `null` and the page leaves it out. The hero always renders: it holds the
- * page's `h1`, which falls back to the challenge name.
+ * A mockup placeholder (any bracketed span, `content/placeholder.ts`) never
+ * renders. A section whose required text is a placeholder, or whose items are
+ * all placeholders, is `null` and the page leaves it out. The hero always
+ * renders: it holds the page's `h1`, which falls back to the challenge name.
  */
 
 import type { StageId } from './bowtie-stages';
 import type { ChallengeFrontmatter, ChallengeKey } from './challenge-schema';
-import type { ChallengePartner } from './content/challenge-references';
+import { hasPlaceholder } from './content/placeholder';
 
 /** Kebab-case, as the posts repo names challenge files. */
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-
-const PLACEHOLDER_PATTERN = /^\s*\[.*\]\s*$/s;
 
 export function isChallengeSlug(slug: string): boolean {
   return SLUG_PATTERN.test(slug);
 }
 
+/** Same rule as `hasPlaceholder`, kept for the existing call sites. */
 export function isPlaceholder(value: string): boolean {
-  return PLACEHOLDER_PATTERN.test(value);
+  return hasPlaceholder(value);
 }
 
 /** The value, or `null` when it is missing or a mockup placeholder. */
-function clean(value: string | undefined): string | null {
+export function clean(value: string | undefined): string | null {
   if (value === undefined || isPlaceholder(value)) return null;
   return value;
 }
@@ -282,22 +281,4 @@ export function buildChallengePage(
     diagnostic: buildDiagnostic(frontmatter),
     aiBridge: buildAiBridge(frontmatter),
   };
-}
-
-/**
- * The partner block, resolved by `loadChallengeReferences`. Its figures
- * belong to the partner: without a sentence and a source, the block hides.
- */
-export function buildChallengePartner(
-  partner: ChallengePartner | null,
-): ChallengePartner | null {
-  if (!partner) return null;
-  if (isPlaceholder(partner.sentence) || isPlaceholder(partner.source)) {
-    return null;
-  }
-  const metrics = partner.metrics.filter(
-    ({ before, after, label }) =>
-      !isPlaceholder(before) && !isPlaceholder(after) && !isPlaceholder(label),
-  );
-  return { ...partner, metrics };
 }

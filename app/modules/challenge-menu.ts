@@ -6,8 +6,9 @@
 
 import type { MarkdocFile } from '~/types';
 
-import { isChallengeSlug, isPlaceholder } from './challenge-page';
+import { isChallengeSlug } from './challenge-page';
 import type { ChallengeFrontmatter, ChallengeKey } from './challenge-schema';
+import { hasPlaceholder } from './content/placeholder';
 
 export type ChallengeMenuEntry = {
   slug: string;
@@ -18,7 +19,7 @@ export type ChallengeMenuEntry = {
 };
 
 /**
- * Menu entries in `order`. A file is published when it is in the content
+ * Menu entries in `order`, then by slug for a stable order. A file is published when it is in the content
  * source, so every file counts, except a slug the challenge route answers
  * 404 to.
  */
@@ -27,12 +28,16 @@ export function toChallengeMenu(
 ): ChallengeMenuEntry[] {
   return files
     .filter((file) => isChallengeSlug(file.slug))
-    .sort((a, b) => a.frontmatter.order - b.frontmatter.order)
+    .sort(
+      (a, b) =>
+        a.frontmatter.order - b.frontmatter.order ||
+        a.slug.localeCompare(b.slug),
+    )
     .map(({ slug, frontmatter: { key, name, tagline } }) => ({
       slug,
       key,
       name,
-      tagline: isPlaceholder(tagline) ? null : tagline,
+      tagline: hasPlaceholder(tagline) ? null : tagline,
     }));
 }
 
@@ -53,4 +58,15 @@ export function didMainChallengeLoadFail(
     'failed' in main &&
     main.failed === true
   );
+}
+
+/**
+ * The menu without the current challenge: the "other challenges" block of a
+ * challenge page (#235) and any link to a sibling challenge (#236).
+ */
+export function otherChallenges(
+  menu: readonly ChallengeMenuEntry[],
+  currentSlug: string,
+): ChallengeMenuEntry[] {
+  return menu.filter(({ slug }) => slug !== currentSlug);
 }

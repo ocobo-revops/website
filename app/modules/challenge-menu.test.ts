@@ -6,7 +6,11 @@ import { describe, expect, it } from 'vitest';
 
 import type { MarkdocFile } from '~/types';
 
-import { didMainChallengeLoadFail, toChallengeMenu } from './challenge-menu';
+import {
+  didMainChallengeLoadFail,
+  otherChallenges,
+  toChallengeMenu,
+} from './challenge-menu';
 import type { ChallengeFrontmatter } from './challenge-schema';
 
 function challengeFile(
@@ -39,6 +43,18 @@ describe('toChallengeMenu', () => {
       'sales-experience',
       'revenue-systems',
       'revenue-ai',
+    ]);
+  });
+
+  it('orders two entries with the same order by slug', () => {
+    const menu = toChallengeMenu([
+      challengeFile('sales-experience', { order: 1 }),
+      challengeFile('revenue-systems', { order: 1 }),
+    ]);
+
+    expect(menu.map(({ slug }) => slug)).toEqual([
+      'revenue-systems',
+      'sales-experience',
     ]);
   });
 
@@ -84,5 +100,18 @@ describe('didMainChallengeLoadFail', () => {
     // Routes outside `_main`, or a `_main` loader that threw.
     expect(didMainChallengeLoadFail({ root: {} })).toBe(false);
     expect(didMainChallengeLoadFail({ 'routes/_main': null })).toBe(false);
+  });
+});
+
+describe('otherChallenges', () => {
+  it('drops the current challenge and keeps the menu order', () => {
+    const menu = toChallengeMenu([
+      challengeFile('revenue-ai', { key: 'ai', order: 6 }),
+      challengeFile('revenue-performance', { order: 1 }),
+      challengeFile('sales-experience', { key: 'se', order: 2 }),
+    ]);
+    expect(
+      otherChallenges(menu, 'revenue-performance').map(({ slug }) => slug),
+    ).toEqual(['sales-experience', 'revenue-ai']);
   });
 });
