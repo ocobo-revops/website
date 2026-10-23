@@ -1,5 +1,5 @@
 /**
- * View model of a challenge page (#233, #234): the sections of the page,
+ * View model of a challenge page (#233, #234, #236): the sections of the page,
  * built from a validated challenge frontmatter.
  *
  * A mockup placeholder (a value written as `[...]`) never renders. A section
@@ -10,6 +10,7 @@
 
 import type { StageId } from './bowtie-stages';
 import type { ChallengeFrontmatter, ChallengeKey } from './challenge-schema';
+import type { ChallengePartner } from './content/challenge-references';
 
 /** Kebab-case, as the posts repo names challenge files. */
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -97,6 +98,21 @@ export type ChallengeDiagnostic = {
   cta: string | null;
 };
 
+type ChallengeDemo = NonNullable<ChallengeFrontmatter['aiBridge']['demo']>;
+
+export type ChallengeDemoElement = ChallengeDemo['elements'][number];
+
+/** The agent window, rendered as written: Zod already caps every text. */
+export type ChallengeAgentDemo = Omit<ChallengeDemo, 'note'> & {
+  note: string | null;
+};
+
+export type ChallengeAiBridge = {
+  title: string;
+  bullets: string[];
+  demo: ChallengeAgentDemo | null;
+};
+
 export type ChallengePage = {
   key: ChallengeKey;
   order: number;
@@ -108,6 +124,7 @@ export type ChallengePage = {
   workstreams: ChallengeWorkstreams | null;
   method: ChallengeMethod | null;
   diagnostic: ChallengeDiagnostic | null;
+  aiBridge: ChallengeAiBridge | null;
 };
 
 function buildHero({
@@ -208,6 +225,47 @@ function buildDiagnostic({
   };
 }
 
+function elementHasPlaceholder(element: ChallengeDemoElement): boolean {
+  switch (element.type) {
+    case 'kpis':
+      return element.items.some(
+        (item) => isPlaceholder(item.value) || isPlaceholder(item.label),
+      );
+    case 'figure':
+      return isPlaceholder(element.value) || isPlaceholder(element.caption);
+    case 'progress':
+      return false;
+    case 'status':
+      return isPlaceholder(element.label) || isPlaceholder(element.value);
+    case 'buttons':
+      return element.labels.some(isPlaceholder);
+  }
+}
+
+/**
+ * The window needs its frame texts and at least one element; an element
+ * with a placeholder drops out on its own.
+ */
+function buildDemo(demo: ChallengeDemo | undefined): ChallengeAgentDemo | null {
+  if (!demo) return null;
+  const frame = [demo.channel, demo.agent, demo.opening.text, demo.footer];
+  if (frame.some(isPlaceholder)) return null;
+  const elements = demo.elements.filter(
+    (element) => !elementHasPlaceholder(element),
+  );
+  if (elements.length === 0) return null;
+  return { ...demo, elements, note: clean(demo.note) };
+}
+
+function buildAiBridge({
+  aiBridge,
+}: ChallengeFrontmatter): ChallengeAiBridge | null {
+  const title = clean(aiBridge.title);
+  const bullets = cleanList(aiBridge.bullets);
+  if (!title || bullets.length === 0) return null;
+  return { title, bullets, demo: buildDemo(aiBridge.demo) };
+}
+
 export function buildChallengePage(
   frontmatter: ChallengeFrontmatter,
 ): ChallengePage {
@@ -222,5 +280,24 @@ export function buildChallengePage(
     workstreams: buildWorkstreams(frontmatter),
     method: buildMethod(frontmatter),
     diagnostic: buildDiagnostic(frontmatter),
+    aiBridge: buildAiBridge(frontmatter),
   };
+}
+
+/**
+ * The partner block, resolved by `loadChallengeReferences`. Its figures
+ * belong to the partner: without a sentence and a source, the block hides.
+ */
+export function buildChallengePartner(
+  partner: ChallengePartner | null,
+): ChallengePartner | null {
+  if (!partner) return null;
+  if (isPlaceholder(partner.sentence) || isPlaceholder(partner.source)) {
+    return null;
+  }
+  const metrics = partner.metrics.filter(
+    ({ before, after, label }) =>
+      !isPlaceholder(before) && !isPlaceholder(after) && !isPlaceholder(label),
+  );
+  return { ...partner, metrics };
 }

@@ -6,6 +6,7 @@ import { loadChallengeFixture } from '~/test/challenge-fixture';
 
 import {
   buildChallengePage,
+  buildChallengePartner,
   isChallengeSlug,
   isPlaceholder,
 } from './challenge-page';
@@ -291,4 +292,150 @@ describe('buildChallengePage', () => {
       expect(page.method).toMatchObject({ tools: ['hubspot'], note: null });
     });
   });
+
+  describe('aiBridge', () => {
+    const loadWithDemo = () =>
+      loadChallengeFixture('fr', 'revenue-performance').frontmatter;
+
+    it('keeps the title, the bullets and the agent window', () => {
+      const page = buildChallengePage(loadWithDemo());
+
+      expect(page.aiBridge?.bullets).toHaveLength(3);
+      expect(page.aiBridge?.demo).toMatchObject({
+        agent: 'Agent Forecast',
+        note: null,
+      });
+      expect(page.aiBridge?.demo?.elements).toHaveLength(4);
+    });
+
+    it('has no window when the file has no demo', () => {
+      expect(buildChallengePage(loadFrontmatter()).aiBridge).toMatchObject({
+        demo: null,
+      });
+    });
+
+    it('hides the section when its title is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: { ...frontmatter.aiBridge, title: '[Titre]' },
+      });
+
+      expect(page.aiBridge).toBeNull();
+    });
+
+    it('drops a placeholder element and keeps the window', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: {
+            ...demo,
+            elements: [
+              { type: 'figure', value: '[Valeur]', caption: 'commission' },
+              { type: 'progress', percent: 40 },
+            ],
+          },
+        },
+      });
+
+      expect(page.aiBridge?.demo?.elements).toEqual([
+        { type: 'progress', percent: 40 },
+      ]);
+    });
+
+    it('drops the window when every element is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: {
+            ...demo,
+            elements: [
+              {
+                type: 'kpis',
+                items: [
+                  { value: '1', label: 'a' },
+                  { value: '2', label: '[Libellé]' },
+                  { value: '3', label: 'c' },
+                ],
+              },
+              { type: 'status', label: 'Taux', value: '[x]', state: 'ok' },
+              { type: 'buttons', labels: ['Ouvrir', '[Bouton]'] },
+            ],
+          },
+        },
+      });
+
+      expect(page.aiBridge?.demo).toBeNull();
+    });
+
+    it('nulls a placeholder note and keeps the window', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: { ...demo, note: '[Note]' },
+        },
+      });
+
+      expect(page.aiBridge?.demo).toMatchObject({ note: null });
+    });
+
+    it('drops the window when a frame text is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: { ...demo, footer: '[Pied]' },
+        },
+      });
+
+      expect(page.aiBridge).not.toBeNull();
+      expect(page.aiBridge?.demo).toBeNull();
+    });
+  });
+});
+
+describe('buildChallengePartner', () => {
+  const partner = {
+    tool: { slug: 'qobra', name: 'Qobra' },
+    sentence: 'Commissions computed on their own.',
+    metrics: [
+      { before: '7 days', after: '1', label: 'to close commissions' },
+      { before: '[Avant]', after: '½', label: 'of disputes' },
+    ],
+    source: 'Figures published by Qobra.',
+  };
+
+  it('returns null without a partner', () => {
+    expect(buildChallengePartner(null)).toBeNull();
+  });
+
+  it('drops a placeholder metric and keeps the block', () => {
+    expect(buildChallengePartner(partner)?.metrics).toEqual([
+      partner.metrics[0],
+    ]);
+  });
+
+  it.each(['sentence', 'source'] as const)(
+    'hides the block when the %s is a placeholder',
+    (field) => {
+      expect(
+        buildChallengePartner({ ...partner, [field]: '[À compléter]' }),
+      ).toBeNull();
+    },
+  );
 });
