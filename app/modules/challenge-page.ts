@@ -25,7 +25,7 @@ export function isPlaceholder(value: string): boolean {
 }
 
 /** The value, or `null` when it is missing or a mockup placeholder. */
-function clean(value: string | undefined): string | null {
+export function clean(value: string | undefined): string | null {
   if (value === undefined || isPlaceholder(value)) return null;
   return value;
 }
