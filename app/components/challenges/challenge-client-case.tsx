@@ -13,19 +13,14 @@ import { url } from '~/utils/url';
 
 import { challengePill } from './challenge-pill';
 
-const metricCard = cx(
-  card(),
-  css({
-    gap: '2',
-    transitionProperty: 'common',
-    transitionDuration: 'normal',
-    _hover: { transform: 'translateY(-4px)', boxShadow: 'hover' },
-    _motionReduce: {
-      transitionDuration: 'instant',
-      _hover: { transform: 'none' },
-    },
-  }),
-);
+// A metric is not a link: it keeps the resting card, with no hover lift.
+const metricCard = cx(card(), css({ gap: '2' }));
+
+const layout = css({ display: 'grid', gap: '12', alignItems: 'center' });
+// The text takes the full width when the case has no metric.
+const withMetrics = css({
+  gridTemplateColumns: { base: '1fr', lg: 'repeat(2, minmax(0, 1fr))' },
+});
 
 type ChallengeClientCaseProps = {
   clientCase: ClientCaseSection;
@@ -43,15 +38,7 @@ export function ChallengeClientCase({
   return (
     <section aria-labelledby={titleId} className={section({ bg: 'white' })}>
       <Container
-        className={css({
-          display: 'grid',
-          gridTemplateColumns: {
-            base: '1fr',
-            lg: 'repeat(2, minmax(0, 1fr))',
-          },
-          gap: '12',
-          alignItems: 'center',
-        })}
+        className={cx(layout, clientCase.metrics.length > 0 && withMetrics)}
       >
         <div
           className={css({
