@@ -2,7 +2,7 @@
 
 ## Overview
 
-Ocobo's content lives in a dedicated repository (`ocobo-revops/posts`) separate from the website code (`ocobo-revops/website`). The website is a **pure read-side consumer** — it never writes content and never needs to redeploy when content changes.
+Ocobo's content lives in a dedicated repository (`ocobo-revops/posts`) separate from the website code (`ocobo-revops/website`). The website is a **pure read-side consumer** - it never writes content and never needs to redeploy when content changes.
 
 | Repo | Responsibility | Who touches it |
 |------|----------------|----------------|
@@ -25,7 +25,7 @@ graph TB
     end
 
     subgraph infra ["Infrastructure"]
-        blob[("Vercel Blob\nCDN — assets")]
+        blob[("Vercel Blob\nCDN - assets")]
     end
 
     subgraph website ["ocobo-revops/website"]
@@ -60,15 +60,24 @@ sequenceDiagram
     P-->>A: Review + merge to main
     Note over W: No redeploy required
     R->>W: HTTP request
-    W->>P: GitHub API — GET file (branch=main)
+    W->>P: GitHub API - GET file (branch=main)
     P-->>W: Raw markdown
     W->>W: Markdoc parse → Zod validate → SSR render
     W-->>R: HTML page
 ```
 
-**Local dev** (`CONTENT_SOURCE=locale`): the website reads directly from `~/projects/ocobo-posts/` on the filesystem — no GitHub API call, instant feedback.
+**Local dev** (`CONTENT_SOURCE=locale`): the website reads directly from `~/projects/ocobo-posts/` on the filesystem - no GitHub API call, instant feedback.
 
 **Production** (`CONTENT_SOURCE=github`): every request hits the GitHub API; the Vercel CDN caches the rendered page (`stale-while-revalidate`). Append `?refresh=1` to bypass cache.
+
+### Mockup placeholders
+
+Content files copied from the redesign mockup hold values that are not written yet. The rule: **any bracketed span means "not written yet"**, whatever text surrounds it. `[X]`, `[Nom du client] : [le passage en une phrase].` and `Et vos ERP. [Bloc à valider avec Qobra]` are all placeholders. A placeholder never renders.
+
+- **One helper**: `app/modules/content/placeholder.ts` (`hasPlaceholder`, `writtenOrNull`, `dropReporter`). New code that reads a content text uses it; it never defines its own pattern.
+- **Applied once, before the loader data**: the resolver of each block cleans its fields. `loadChallengeReferences` (`app/modules/content/challenge-references.ts`) cleans the client case, the partner and the experts. `buildChallengePage` (`app/modules/challenge-page.ts`, through `isPlaceholder`) cleans the page sections and the navbar tagline. Components receive written values only.
+- **Logged for the references**: each reference drop logs a warning `[scope] slug: field dropped (reason)`, so an author can find the unwritten field in the posts repo. An expert contribution is checked in both languages, so a page render warns for the other language too. The page section fields are not logged yet.
+- **Fallbacks**: a placeholder case headline or summary falls back to the linked Story title or subtitle. A block left with nothing to show is hidden.
 
 ---
 
@@ -138,7 +147,7 @@ Cross-references between content types always use **slugs** (kebab-case filename
 
 ---
 
-## Repo boundaries — which repo do I PR against?
+## Repo boundaries - which repo do I PR against?
 
 | Change | Repo |
 |--------|------|
@@ -150,7 +159,7 @@ Cross-references between content types always use **slugs** (kebab-case filename
 | Add a new page or route | `ocobo-revops/website` |
 | Update design tokens or components | `ocobo-revops/website` |
 | Add a new content type (schema) | `ocobo-revops/website` (Zod schema + route) **and** `ocobo-revops/posts` (markdown files) |
-| Change cache TTL | `ocobo-revops/website` — `app/modules/cache.ts` |
+| Change cache TTL | `ocobo-revops/website` - `app/modules/cache.ts` |
 
 ---
 
@@ -169,8 +178,8 @@ Cross-references between content types always use **slugs** (kebab-case filename
 
 ## Further reading
 
-- [`posts/CONTEXT.md`](https://github.com/ocobo-revops/posts/blob/main/CONTEXT.md) — content domain glossary
-- [`docs/architecture/overview.md`](overview.md) — website internal architecture
-- [`docs/development/cache-strategy.md`](../development/cache-strategy.md) — CDN cache TTLs and bypass
-- [`app/modules/content/api.ts`](../../app/modules/content/api.ts) — content public API
-- [`app/modules/content/factory.ts`](../../app/modules/content/factory.ts) — source dispatch (locale vs github)
+- [`posts/CONTEXT.md`](https://github.com/ocobo-revops/posts/blob/main/CONTEXT.md) - content domain glossary
+- [`docs/architecture/overview.md`](overview.md) - website internal architecture
+- [`docs/development/cache-strategy.md`](../development/cache-strategy.md) - CDN cache TTLs and bypass
+- [`app/modules/content/api.ts`](../../app/modules/content/api.ts) - content public API
+- [`app/modules/content/factory.ts`](../../app/modules/content/factory.ts) - source dispatch (locale vs github)
