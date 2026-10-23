@@ -1,11 +1,11 @@
 /**
- * View model of a challenge page (#233, #234): the sections of the page,
+ * View model of a challenge page (#233, #234, #236): the sections of the page,
  * built from a validated challenge frontmatter.
  *
  * A mockup placeholder (any bracketed span, `content/placeholder.ts`) never
  * renders. A section whose required text is a placeholder, or whose items are
- * all placeholders, is `null` and the page leaves it out. The hero always renders: it holds the
- * page's `h1`, which falls back to the challenge name.
+ * all placeholders, is `null` and the page leaves it out. The hero always
+ * renders: it holds the page's `h1`, which falls back to the challenge name.
  */
 
 import type { StageId } from './bowtie-stages';
@@ -97,6 +97,21 @@ export type ChallengeDiagnostic = {
   cta: string | null;
 };
 
+type ChallengeDemo = NonNullable<ChallengeFrontmatter['aiBridge']['demo']>;
+
+export type ChallengeDemoElement = ChallengeDemo['elements'][number];
+
+/** The agent window, rendered as written: Zod already caps every text. */
+export type ChallengeAgentDemo = Omit<ChallengeDemo, 'note'> & {
+  note: string | null;
+};
+
+export type ChallengeAiBridge = {
+  title: string;
+  bullets: string[];
+  demo: ChallengeAgentDemo | null;
+};
+
 export type ChallengePage = {
   key: ChallengeKey;
   order: number;
@@ -108,6 +123,7 @@ export type ChallengePage = {
   workstreams: ChallengeWorkstreams | null;
   method: ChallengeMethod | null;
   diagnostic: ChallengeDiagnostic | null;
+  aiBridge: ChallengeAiBridge | null;
 };
 
 function buildHero({
@@ -208,6 +224,47 @@ function buildDiagnostic({
   };
 }
 
+function elementHasPlaceholder(element: ChallengeDemoElement): boolean {
+  switch (element.type) {
+    case 'kpis':
+      return element.items.some(
+        (item) => isPlaceholder(item.value) || isPlaceholder(item.label),
+      );
+    case 'figure':
+      return isPlaceholder(element.value) || isPlaceholder(element.caption);
+    case 'progress':
+      return false;
+    case 'status':
+      return isPlaceholder(element.label) || isPlaceholder(element.value);
+    case 'buttons':
+      return element.labels.some(isPlaceholder);
+  }
+}
+
+/**
+ * The window needs its frame texts and at least one element; an element
+ * with a placeholder drops out on its own.
+ */
+function buildDemo(demo: ChallengeDemo | undefined): ChallengeAgentDemo | null {
+  if (!demo) return null;
+  const frame = [demo.channel, demo.agent, demo.opening.text, demo.footer];
+  if (frame.some(isPlaceholder)) return null;
+  const elements = demo.elements.filter(
+    (element) => !elementHasPlaceholder(element),
+  );
+  if (elements.length === 0) return null;
+  return { ...demo, elements, note: clean(demo.note) };
+}
+
+function buildAiBridge({
+  aiBridge,
+}: ChallengeFrontmatter): ChallengeAiBridge | null {
+  const title = clean(aiBridge.title);
+  const bullets = cleanList(aiBridge.bullets);
+  if (!title || bullets.length === 0) return null;
+  return { title, bullets, demo: buildDemo(aiBridge.demo) };
+}
+
 export function buildChallengePage(
   frontmatter: ChallengeFrontmatter,
 ): ChallengePage {
@@ -222,5 +279,6 @@ export function buildChallengePage(
     workstreams: buildWorkstreams(frontmatter),
     method: buildMethod(frontmatter),
     diagnostic: buildDiagnostic(frontmatter),
+    aiBridge: buildAiBridge(frontmatter),
   };
 }

@@ -297,4 +297,119 @@ describe('buildChallengePage', () => {
       expect(page.method).toMatchObject({ tools: ['hubspot'], note: null });
     });
   });
+
+  describe('aiBridge', () => {
+    const loadWithDemo = () =>
+      loadChallengeFixture('fr', 'revenue-performance').frontmatter;
+
+    it('keeps the title, the bullets and the agent window', () => {
+      const page = buildChallengePage(loadWithDemo());
+
+      expect(page.aiBridge?.bullets).toHaveLength(3);
+      expect(page.aiBridge?.demo).toMatchObject({
+        agent: 'Agent Forecast',
+        note: null,
+      });
+      expect(page.aiBridge?.demo?.elements).toHaveLength(4);
+    });
+
+    it('has no window when the file has no demo', () => {
+      expect(buildChallengePage(loadFrontmatter()).aiBridge).toMatchObject({
+        demo: null,
+      });
+    });
+
+    it('hides the section when its title is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: { ...frontmatter.aiBridge, title: '[Titre]' },
+      });
+
+      expect(page.aiBridge).toBeNull();
+    });
+
+    it('drops a placeholder element and keeps the window', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: {
+            ...demo,
+            elements: [
+              { type: 'figure', value: '[Valeur]', caption: 'commission' },
+              { type: 'progress', percent: 40 },
+            ],
+          },
+        },
+      });
+
+      expect(page.aiBridge?.demo?.elements).toEqual([
+        { type: 'progress', percent: 40 },
+      ]);
+    });
+
+    it('drops the window when every element is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: {
+            ...demo,
+            elements: [
+              {
+                type: 'kpis',
+                items: [
+                  { value: '1', label: 'a' },
+                  { value: '2', label: '[Libellé]' },
+                  { value: '3', label: 'c' },
+                ],
+              },
+              { type: 'status', label: 'Taux', value: '[x]', state: 'ok' },
+              { type: 'buttons', labels: ['Ouvrir', '[Bouton]'] },
+            ],
+          },
+        },
+      });
+
+      expect(page.aiBridge?.demo).toBeNull();
+    });
+
+    it('nulls a placeholder note and keeps the window', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: { ...demo, note: '[Note]' },
+        },
+      });
+
+      expect(page.aiBridge?.demo).toMatchObject({ note: null });
+    });
+
+    it('drops the window when a frame text is a placeholder', () => {
+      const frontmatter = loadWithDemo();
+      const demo = frontmatter.aiBridge.demo;
+      if (!demo) throw new Error('fixture has a demo');
+      const page = buildChallengePage({
+        ...frontmatter,
+        aiBridge: {
+          ...frontmatter.aiBridge,
+          demo: { ...demo, footer: '[Pied]' },
+        },
+      });
+
+      expect(page.aiBridge).not.toBeNull();
+      expect(page.aiBridge?.demo).toBeNull();
+    });
+  });
 });

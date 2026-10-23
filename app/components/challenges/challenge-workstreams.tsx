@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -41,12 +42,15 @@ type ChallengeWorkstreamsProps = {
   challenge: ChallengeKey;
   /** The locale heading, used when the file has no override. */
   defaultTitle: string;
+  /** Closes the section under the cards: the partner block (#236). */
+  footer?: ReactNode;
 };
 
 export function ChallengeWorkstreams({
   workstreams,
   challenge,
   defaultTitle,
+  footer,
 }: ChallengeWorkstreamsProps) {
   const backClassName = challenge === 'ai' ? backStyles.ai : backStyles.default;
 
@@ -90,6 +94,7 @@ export function ChallengeWorkstreams({
             </li>
           ))}
         </ul>
+        {footer ? <div className={css({ mt: '10' })}>{footer}</div> : null}
       </Container>
     </section>
   );

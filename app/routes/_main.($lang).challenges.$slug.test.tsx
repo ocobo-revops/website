@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  *
- * Challenge page route (#233, #234, #235): the loader through the
+ * Challenge page route (#233, #234, #235, #236): the loader through the
  * `invokeLoader` harness, then the page with sections left out. The
  * cross-reference blocks resolve through the real
  * `resolveChallengeReferences`, from Stories, Tools and members built here.
@@ -19,6 +19,7 @@ import { buildChallengePage } from '~/modules/challenge-page';
 import { buildChallengeReferenceSections } from '~/modules/challenge-reference-sections';
 import type { ChallengeFrontmatter } from '~/modules/challenge-schema';
 import {
+  type ChallengePartner,
   type ChallengeReferences,
   resolveChallengeReferences,
 } from '~/modules/content/challenge-references';
@@ -74,7 +75,7 @@ const frenchFixture = loadChallengeFixture('fr', 'revenue-performance');
 const revenueAiFixture = loadChallengeFixture('fr', 'revenue-ai');
 
 const tools: ToolRegistry = Object.fromEntries(
-  ['hubspot', 'salesforce', 'clari'].map((slug) => [
+  ['hubspot', 'salesforce', 'clari', 'qobra'].map((slug) => [
     slug,
     { slug, name: `${slug} tool`, iconUrl: `https://blob/${slug}.svg` },
   ]),
@@ -343,21 +344,31 @@ describe('challenge loader', () => {
   });
 });
 
+const qobra: ChallengePartner = {
+  tool: { slug: 'qobra', name: 'Qobra' },
+  sentence: 'Commissions computed on their own.',
+  metrics: [{ before: '7 days', after: '1', label: 'to close commissions' }],
+  source: 'Figures published by Qobra.',
+};
+
+const withPartner: ChallengeReferences = { ...references, partner: qobra };
+
 function renderPage(
   frontmatter: ChallengeFrontmatter,
   lang: 'fr' | 'en' = 'en',
   pageReferences: ChallengeReferences = references,
   /** `null` renders without the `_main` layout data. */
   challenges: ChallengeMenuEntry[] | null = [],
+  slug = 'revenue-performance',
 ) {
   loaderData = {
     page: buildChallengePage(frontmatter),
     references: buildChallengeReferenceSections(pageReferences, lang),
     lang,
-    slug: 'revenue-performance',
+    slug,
   };
   return render(<ChallengeRoute />, {
-    initialEntries: [`/${lang}/challenges/revenue-performance`],
+    initialEntries: [`/${lang}/challenges/${slug}`],
     i18nLang: lang,
     // The `:lang` param localises the links, as on the site.
     path: ':lang/challenges/:slug',
@@ -381,6 +392,7 @@ describe('challenge page', () => {
       'The number lives in the heads of a few people. Nowhere else.',
       'Who it is for',
       'What we build',
+      fixture.frontmatter.aiBridge.title,
       'How we work',
       fixture.frontmatter.diagnostic.question,
     ]);
@@ -521,6 +533,142 @@ describe('challenge page', () => {
       frontmatter.name,
     );
   });
+
+  describe('AI bridge and partner (#236)', () => {
+    it('leaves both out when the file has neither', () => {
+      const { frontmatter } = fixture;
+      renderPage({
+        ...frontmatter,
+        aiBridge: { ...frontmatter.aiBridge, title: '[Title]' },
+      });
+
+      expect(
+        screen.queryByText('What AI changes here'),
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText('[Title]')).not.toBeInTheDocument();
+      expect(screen.queryByText('With')).not.toBeInTheDocument();
+    });
+
+    it('renders the agent window and links to the Revenue AI page', () => {
+      renderPage(frenchFixture.frontmatter, 'fr', references, menu);
+
+      expect(screen.getByText("Ce que l'IA change ici")).toBeInTheDocument();
+      expect(
+        screen.getByRole('figure', {
+          name: 'Exemple de message\u00a0: Agent Forecast',
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: "Déployer l'IA dans vos équipes" }),
+      ).toHaveAttribute('href', '/fr/challenges/revenue-ai');
+    });
+
+    it('renders the section without a window and with no link to itself on the AI page', () => {
+      const ai = loadChallengeFixture('fr', 'revenue-ai');
+      renderPage(ai.frontmatter, 'fr', references, menu, ai.slug);
+
+      expect(screen.getByText('Notre point de vue')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', {
+          level: 2,
+          name: ai.frontmatter.aiBridge.title,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('figure', { name: /^Exemple de message/ }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: "Déployer l'IA dans vos équipes" }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('renders the English labels', () => {
+      renderPage(fixture.frontmatter, 'en', references, menu);
+
+      expect(screen.getByText('What AI changes here')).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Deploy AI in your teams' }),
+      ).toHaveAttribute('href', '/en/challenges/revenue-ai');
+    });
+
+    it('keeps the section without its CTA when the layout data is missing', () => {
+      renderPage(fixture.frontmatter, 'en', references, null);
+
+      expect(screen.getByText('What AI changes here')).toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: 'Deploy AI in your teams' }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('closes the workstreams with the partner and its source', () => {
+      renderPage(fixture.frontmatter, 'en', withPartner);
+
+      const workstreams = document.getElementById('chantiers');
+      expect(workstreams).toHaveTextContent(
+        'Commissions computed on their own.',
+      );
+      expect(workstreams).toHaveTextContent('Figures published by Qobra.');
+    });
+
+    it('keeps the partner when the workstreams are absent', () => {
+      const { frontmatter } = fixture;
+      renderPage(
+        {
+          ...frontmatter,
+          workstreams: {
+            ...frontmatter.workstreams,
+            items: frontmatter.workstreams.items.map((item) => ({
+              ...item,
+              deliverable: '[Deliverable]',
+            })),
+          },
+        },
+        'en',
+        withPartner,
+      );
+
+      expect(document.getElementById('chantiers')).toBeNull();
+      expect(
+        screen.getByText('Figures published by Qobra.'),
+      ).toBeInTheDocument();
+    });
+
+    it('keeps a partner whose source holds a placeholder out of the loader data', async () => {
+      const consoleWarn = vi
+        .spyOn(console, 'warn')
+        .mockImplementation(() => undefined);
+      const file = {
+        ...fixture,
+        frontmatter: {
+          ...fixture.frontmatter,
+          partner: {
+            tool: 'qobra',
+            sentence: qobra.sentence,
+            metrics: qobra.metrics,
+            // A written sentence around a bracketed span is still unwritten.
+            source: 'Figures published by Qobra. [To confirm with Qobra]',
+          },
+        },
+      };
+      fetchChallengeMock.mockResolvedValue([200, 'success', file]);
+      loadChallengeReferencesMock.mockResolvedValueOnce(
+        resolvedReferences({ file }),
+      );
+
+      const outcome = await invokeLoader(loader, {
+        url: 'http://test.local/en/challenges/revenue-performance',
+        params: { lang: 'en', slug: 'revenue-performance' },
+      });
+
+      expect(outcome.type).toBe('data');
+      if (outcome.type !== 'data') return;
+      expect(outcome.data.references.partner).toBeNull();
+      expect(JSON.stringify(outcome.data)).not.toContain('To confirm');
+      expect(consoleWarn).toHaveBeenCalledWith(
+        expect.stringContaining('partner.source dropped'),
+      );
+    });
+  });
 });
 
 describe('challenge page cross-references', () => {
@@ -535,6 +683,7 @@ describe('challenge page cross-references', () => {
       'The number lives in the heads of a few people. Nowhere else.',
       'Who it is for',
       'What we build',
+      fixture.frontmatter.aiBridge.title,
       'How we work',
       'Acme: a forecast within 5%.',
       'The Ocobo experts on this challenge.',
@@ -556,11 +705,12 @@ describe('challenge page cross-references', () => {
     expect(
       screen.getByRole('link', { name: 'Talk to one of them' }),
     ).toHaveAttribute('href', '#diagnostic');
-    const otherLinks = screen
-      .getAllByRole('link')
-      .filter((link) =>
-        link.getAttribute('href')?.startsWith('/en/challenges/'),
-      );
+    const otherList = screen
+      .getByRole('heading', { level: 2, name: 'Other challenges' })
+      .closest('section');
+    const otherLinks = Array.from(
+      otherList?.querySelectorAll('a[href^="/en/challenges/"]') ?? [],
+    );
     // The current challenge is not listed.
     expect(otherLinks.map((link) => link.getAttribute('href'))).toEqual([
       '/en/challenges/revenue-ai',

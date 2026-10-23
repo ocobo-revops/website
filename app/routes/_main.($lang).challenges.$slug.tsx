@@ -5,6 +5,7 @@ import {
   useLoaderData,
 } from 'react-router';
 
+import { ChallengeAiBridge } from '~/components/challenges/challenge-ai-bridge';
 import { ChallengeAudience } from '~/components/challenges/challenge-audience';
 import { ChallengeClientCase } from '~/components/challenges/challenge-client-case';
 import { ChallengeDiagnostic } from '~/components/challenges/challenge-diagnostic';
@@ -13,6 +14,10 @@ import { ChallengeHero } from '~/components/challenges/challenge-hero';
 import { ChallengeMethod } from '~/components/challenges/challenge-method';
 import { ChallengeOtherChallenges } from '~/components/challenges/challenge-other-challenges';
 import { challengePalette } from '~/components/challenges/challenge-palette';
+import {
+  ChallengePartner,
+  ChallengePartnerSection,
+} from '~/components/challenges/challenge-partner';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
 import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
 import { useOtherChallenges } from '~/hooks/use-challenge-menu';
@@ -92,9 +97,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function ChallengeRoute() {
   const { t } = useTranslation('challenges');
   const { page, references, slug } = useLoaderData<typeof loader>();
-  const { clientCase, experts } = references;
+  const { partner, clientCase, experts } = references;
   // The `_main` layout already loads and caches the published list.
   const otherChallenges = useOtherChallenges(slug);
+  // Absent on the Revenue AI page itself: the list leaves out the current one.
+  const aiChallengeSlug =
+    otherChallenges.find(({ key }) => key === 'ai')?.slug ?? null;
 
   return (
     <div className={challengePalette[page.key]}>
@@ -124,6 +132,16 @@ export default function ChallengeRoute() {
           workstreams={page.workstreams}
           challenge={page.key}
           defaultTitle={t('workstreams.title')}
+          footer={partner ? <ChallengePartner partner={partner} /> : null}
+        />
+      ) : partner ? (
+        <ChallengePartnerSection partner={partner} />
+      ) : null}
+      {page.aiBridge ? (
+        <ChallengeAiBridge
+          aiBridge={page.aiBridge}
+          challenge={page.key}
+          aiChallengeSlug={aiChallengeSlug}
         />
       ) : null}
       {page.method ? (
