@@ -1,17 +1,27 @@
 /**
  * @vitest-environment jsdom
  *
- * Challenge page route (#233, #234): the loader through the
- * `invokeLoader` harness, then the page with sections left out.
+ * Challenge page route (#233, #234, #235): the loader through the
+ * `invokeLoader` harness, then the page with sections left out. The
+ * cross-reference blocks resolve through the real
+ * `resolveChallengeReferences`, from Stories, Tools and members built here.
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { buildChallengePage } from '~/modules/challenge-page';
 import type { ChallengeFrontmatter } from '~/modules/challenge-schema';
+import {
+  type ChallengeReferences,
+  resolveChallengeReferences,
+} from '~/modules/content/challenge-references';
+import type { Member } from '~/modules/content/members';
+import type { ToolRegistry } from '~/modules/content/tools';
+import type { StoryFrontmatter } from '~/modules/schemas';
 import { loadChallengeFixture } from '~/test/challenge-fixture';
 import { invokeLoader } from '~/test/loader-harness';
 import { render, screen } from '~/test/utils';
+import type { MarkdocFile } from '~/types';
 
 import ChallengeRoute, { loader } from './_main.($lang).challenges.$slug';
 
@@ -22,7 +32,7 @@ vi.mock('~/modules/content/api', () => ({
   fetchChallenge: (...args: unknown[]) => fetchChallengeMock(...args),
 }));
 
-const references = {
+const references: ChallengeReferences = {
   clientCase: null,
   methodTools: [],
   partner: null,
@@ -30,10 +40,13 @@ const references = {
   otherChallenges: [],
 };
 const loadChallengeReferencesMock = vi.fn(
-  async (..._args: unknown[]) => references,
+  async (..._args: unknown[]): Promise<ChallengeReferences> => references,
 );
 
-vi.mock('~/modules/content/challenge-references', () => ({
+vi.mock('~/modules/content/challenge-references', async (importOriginal) => ({
+  ...(await importOriginal<
+    typeof import('~/modules/content/challenge-references')
+  >()),
   loadChallengeReferences: (...args: unknown[]) =>
     loadChallengeReferencesMock(...args),
 }));
@@ -51,6 +64,84 @@ vi.mock('react-router', async (importOriginal) => ({
 
 const fixture = loadChallengeFixture('en', 'revenue-performance');
 const frenchFixture = loadChallengeFixture('fr', 'revenue-performance');
+// The English fixtures hold revenue-performance only.
+const revenueAiFixture = loadChallengeFixture('fr', 'revenue-ai');
+
+const tools: ToolRegistry = Object.fromEntries(
+  ['hubspot', 'salesforce', 'clari'].map((slug) => [
+    slug,
+    { slug, name: `${slug} tool`, iconUrl: `https://blob/${slug}.svg` },
+  ]),
+);
+
+const expert: Member = {
+  slug: 'jane-doe',
+  name: 'Jane Doe',
+  role: { fr: 'Consultante RevOps', en: 'RevOps consultant' },
+  track: 'builder',
+  avatar: 'https://blob/jane.jpg',
+  displayOrder: 1,
+  active: true,
+  bio: { fr: 'bio', en: 'bio' },
+  featuredOnAboutUs: false,
+  challenge: 'rp',
+  contribution: {
+    fr: 'Elle remet le forecast au centre.',
+    en: 'She puts the forecast back at the centre.',
+  },
+  tools: ['hubspot', 'clari'],
+  previousCompanies: ['Salesforce'],
+};
+
+const acmeStory: MarkdocFile<StoryFrontmatter> = {
+  slug: 'acme',
+  content: null,
+  markdown: '',
+  frontmatter: {
+    name: 'Acme',
+    date: '2025-01-01',
+    title: 'Acme forecasts its quarter',
+    subtitle: 'A number you can see coming',
+    description: 'description',
+    speaker: 'Jane Doe',
+    role: 'CRO',
+    duration: '3 months',
+    scopes: [],
+    tools: [],
+    quotes: [],
+    deliverables: [],
+  },
+};
+
+const writtenCase: ChallengeFrontmatter['case'] = {
+  story: 'acme',
+  headline: 'Acme: a forecast within 5%.',
+  summary: 'Six months to rebuild the pipeline review.',
+  metrics: [
+    { value: '+32%', label: 'Win rate' },
+    { value: '5%', label: 'Forecast error' },
+  ],
+};
+
+/** The references of `file`, its case linked to the Acme Story. */
+function resolvedReferences({
+  file = fixture,
+  story = acmeStory,
+  clientCase = writtenCase,
+}: {
+  file?: MarkdocFile<ChallengeFrontmatter>;
+  story?: MarkdocFile<StoryFrontmatter> | null;
+  clientCase?: ChallengeFrontmatter['case'];
+} = {}): ChallengeReferences {
+  return resolveChallengeReferences({
+    slug: file.slug,
+    challenge: { ...file.frontmatter, case: clientCase },
+    story,
+    tools,
+    members: { [expert.slug]: expert },
+    challenges: [file, revenueAiFixture],
+  });
+}
 
 beforeEach(() => {
   // Challenges are disabled by default: enable every page.
@@ -61,6 +152,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
   fetchChallengeMock.mockReset();
   loadChallengeReferencesMock.mockClear();
+  vi.restoreAllMocks();
 });
 
 describe('challenge loader', () => {
@@ -99,6 +191,30 @@ describe('challenge loader', () => {
     expect(outcome.type).toBe('data');
     if (outcome.type !== 'data') return;
     expect(outcome.data.references).toBe(references);
+  });
+
+  it('returns the client case, experts and other challenges', async () => {
+    fetchChallengeMock.mockResolvedValue([200, 'success', fixture]);
+    loadChallengeReferencesMock.mockResolvedValueOnce(resolvedReferences());
+
+    const outcome = await invokeLoader(loader, {
+      url: 'http://test.local/en/challenges/revenue-performance',
+      params: { lang: 'en', slug: 'revenue-performance' },
+    });
+
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    const { clientCase, experts, otherChallenges, methodTools } =
+      outcome.data.references;
+    expect(clientCase?.story?.slug).toBe('acme');
+    expect(experts.map((member) => member.slug)).toEqual(['jane-doe']);
+    expect(otherChallenges.map((challenge) => challenge.slug)).toEqual([
+      'revenue-ai',
+    ]);
+    expect(methodTools.map((tool) => tool.slug)).toEqual([
+      'hubspot',
+      'salesforce',
+    ]);
   });
 
   it('fetches the English file for /en/challenges/<slug>', async () => {
@@ -211,11 +327,18 @@ describe('challenge loader', () => {
 function renderPage(
   frontmatter: ChallengeFrontmatter,
   lang: 'fr' | 'en' = 'en',
+  pageReferences: ChallengeReferences = references,
 ) {
-  loaderData = { page: buildChallengePage(frontmatter) };
+  loaderData = {
+    page: buildChallengePage(frontmatter),
+    references: pageReferences,
+    lang,
+  };
   return render(<ChallengeRoute />, {
     initialEntries: [`/${lang}/challenges/revenue-performance`],
     i18nLang: lang,
+    // The `:lang` param localises the links, as on the site.
+    path: ':lang/challenges/:slug',
   });
 }
 
@@ -239,10 +362,9 @@ describe('challenge page', () => {
     const ctas = screen.getAllByRole('link', {
       name: 'Make my forecast reliable',
     });
-    // The test router has no `:lang` param, so the contact URL is French.
     expect(ctas.map((cta) => cta.getAttribute('href'))).toEqual([
       '#diagnostic',
-      '/fr/contact',
+      '/en/contact',
     ]);
   });
 
@@ -373,5 +495,135 @@ describe('challenge page', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       frontmatter.name,
     );
+  });
+});
+
+describe('challenge page cross-references', () => {
+  it('renders the method tools, client case, experts and other challenges', () => {
+    renderPage(fixture.frontmatter, 'en', resolvedReferences());
+
+    expect(
+      screen
+        .getAllByRole('heading', { level: 2 })
+        .map((heading) => heading.textContent),
+    ).toEqual([
+      'The number lives in the heads of a few people. Nowhere else.',
+      'Who it is for',
+      'What we build',
+      'How we work',
+      'Acme: a forecast within 5%.',
+      'The Ocobo experts on this challenge.',
+      fixture.frontmatter.diagnostic.question,
+      'Other challenges',
+    ]);
+    expect(screen.getByAltText('hubspot tool')).toBeInTheDocument();
+    expect(screen.getByText('Client case')).toBeInTheDocument();
+    expect(screen.getByText('+32%')).toBeInTheDocument();
+    expect(screen.getByText('Forecast error')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Read the client case' }),
+    ).toHaveAttribute('href', '/en/clients/acme');
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Jane Doe' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('RevOps consultant')).toBeInTheDocument();
+    expect(screen.getByText('Revenue Performance expert')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Talk to one of them' }),
+    ).toHaveAttribute('href', '#diagnostic');
+    expect(
+      screen.getByRole('link', {
+        name: new RegExp(revenueAiFixture.frontmatter.name),
+      }),
+    ).toHaveAttribute('href', '/en/challenges/revenue-ai');
+  });
+
+  it('hides only the client case when its Story reference is broken', () => {
+    const consoleError = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => undefined);
+    renderPage(fixture.frontmatter, 'en', resolvedReferences({ story: null }));
+
+    expect(consoleError).toHaveBeenCalledWith(
+      expect.stringContaining('case.story "acme" did not resolve'),
+    );
+    expect(screen.queryByText('Client case')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'The Ocobo experts on this challenge.',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Other challenges' }),
+    ).toBeInTheDocument();
+  });
+
+  it('leaves out each block whose data is missing', () => {
+    renderPage(fixture.frontmatter);
+
+    expect(screen.queryByText('Client case')).not.toBeInTheDocument();
+    expect(document.getElementById('experts')).toBeNull();
+    expect(
+      screen.queryByRole('heading', { name: 'Other challenges' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('leaves out the client case while its texts are mockup templates', () => {
+    renderPage(
+      fixture.frontmatter,
+      'en',
+      resolvedReferences({
+        clientCase: { ...fixture.frontmatter.case, story: undefined },
+      }),
+    );
+
+    expect(screen.queryByText('Client case')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(fixture.frontmatter.case.headline),
+    ).not.toBeInTheDocument();
+    expect(document.getElementById('experts')).not.toBeNull();
+  });
+
+  it('drops the experts CTA when the diagnostic block is absent', () => {
+    const { frontmatter } = fixture;
+    renderPage(
+      {
+        ...frontmatter,
+        diagnostic: { ...frontmatter.diagnostic, question: '[Question]' },
+      },
+      'en',
+      resolvedReferences(),
+    );
+
+    expect(document.getElementById('experts')).not.toBeNull();
+    expect(
+      screen.queryByRole('link', { name: 'Talk to one of them' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('renders the French labels and role', () => {
+    renderPage(
+      frenchFixture.frontmatter,
+      'fr',
+      resolvedReferences({ file: frenchFixture }),
+    );
+
+    expect(screen.getByText('Cas client')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Lire le cas client' }),
+    ).toHaveAttribute('href', '/fr/clients/acme');
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Les experts Ocobo de cet enjeu.',
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Consultante RevOps')).toBeInTheDocument();
+    expect(screen.getByText('Expert Revenue Performance')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Les autres enjeux' }),
+    ).toBeInTheDocument();
   });
 });
