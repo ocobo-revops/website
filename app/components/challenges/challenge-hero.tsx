@@ -11,19 +11,8 @@ import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-pag
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
 import { DIAGNOSTIC_ID } from './challenge-diagnostic';
+import { challengePill } from './challenge-pill';
 import { WORKSTREAMS_ID } from './challenge-workstreams';
-
-// The page root sets `colorPalette` to the challenge colour (route file).
-const pill = cx(
-  text({ variant: 'label' }),
-  css({
-    bg: 'colorPalette',
-    color: 'dark',
-    px: '4',
-    py: '1.5',
-    rounded: 'full',
-  }),
-);
 
 const highlight = css({
   textDecorationLine: 'underline',
@@ -72,7 +61,7 @@ export function ChallengeHero({
               mb: '10',
             })}
           >
-            <span className={pill}>{name}</span>
+            <span className={challengePill[challenge]}>{name}</span>
             <span className={text({ variant: 'small', color: 'muted' })}>
               {t('hero.breadcrumb', { order: String(order).padStart(2, '0') })}
             </span>

@@ -1,25 +1,36 @@
 /**
- * Cross-references of a challenge page (#232): the client case Story, the
- * method tools, the partner Tool, the experts and the other challenges.
+ * Cross-references of a challenge page (#232, #235): the client case Story,
+ * the method tools, the partner Tool and the experts.
  *
  * The posts repo checks the same references when files are written
  * (ocobo-revops/posts#98). This is the second line of defence: a broken
  * reference hides only the block that depends on it and logs a validation
  * error. The page never fails. In a tool list, a broken Tool slug drops only
  * that tool.
+ *
+ * The client case, the partner and the experts come out cleaned of mockup
+ * placeholders (`placeholder.ts`), each drop logged as a warning. The other
+ * challenges are the navbar list of the `_main` layout
+ * (`challenge-menu.server.ts`).
  */
 
 import type { MarkdocFile } from '~/types';
 import { isChallengeSlug } from '../challenge-page';
-import type { ChallengeFrontmatter, ChallengeKey } from '../challenge-schema';
+import type { ChallengeFrontmatter } from '../challenge-schema';
 import type { StoryFrontmatter } from '../schemas';
-import { fetchChallenges, fetchStory } from './api';
+import { fetchStory } from './api';
 import {
   type Member,
   type MemberRegistry,
   getChallengeExperts,
   loadMemberRegistry,
 } from './members';
+import {
+  type ReportDrop,
+  dropReporter,
+  hasPlaceholder,
+  writtenOrNull,
+} from './placeholder';
 import {
   type Tool,
   type ToolRegistry,
@@ -35,30 +46,44 @@ export type CaseStory = {
   subtitle: string;
 };
 
-export type ChallengeClientCase = Omit<
-  ChallengeFrontmatter['case'],
-  'story'
-> & {
+type CaseMetric = ChallengeFrontmatter['case']['metrics'][number];
+
+/** A client case with written texts only. */
+export type ChallengeClientCase = {
+  /** The case headline, or the Story title when it is a placeholder. */
+  headline: string;
+  /** The case summary, or the Story subtitle when it is a placeholder. */
+  summary: string | null;
+  /** The metrics whose value and label are both written. */
+  metrics: CaseMetric[];
   /** `null` when the challenge names no Story. */
   story: CaseStory | null;
 };
 
-export type ChallengePartner = Omit<
-  NonNullable<ChallengeFrontmatter['partner']>,
-  'tool'
-> & {
+type PartnerMetric = NonNullable<
+  ChallengeFrontmatter['partner']
+>['metrics'][number];
+
+/** A partner block with written texts only. */
+export type ChallengePartner = {
   tool: Tool;
+  sentence: string;
+  /** The metrics whose three texts are written. */
+  metrics: PartnerMetric[];
+  source: string;
 };
 
-/** A Team member whose `challenge` matches, with resolved tools. */
-export type ChallengeExpert = Omit<Member, 'tools'> & { tools: Tool[] };
-
-export type OtherChallenge = {
-  slug: string;
-  key: ChallengeKey;
-  order: number;
-  name: string;
-  tagline: string;
+/**
+ * A Team member whose `challenge` matches, with resolved tools and without
+ * placeholder contribution or companies.
+ */
+export type ChallengeExpert = Omit<
+  Member,
+  'tools' | 'contribution' | 'previousCompanies'
+> & {
+  tools: Tool[];
+  contribution: { fr: string | null; en: string | null };
+  previousCompanies: string[];
 };
 
 /** A block is `null` when it is absent or one of its references is broken. */
@@ -67,7 +92,6 @@ export type ChallengeReferences = {
   methodTools: Tool[];
   partner: ChallengePartner | null;
   experts: ChallengeExpert[];
-  otherChallenges: OtherChallenge[];
 };
 
 export type ChallengeReferenceSources = {
@@ -77,8 +101,6 @@ export type ChallengeReferenceSources = {
   story: MarkdocFile<StoryFrontmatter> | null;
   tools: ToolRegistry;
   members: MemberRegistry;
-  /** Every challenge of the page language, the current one included. */
-  challenges: MarkdocFile<ChallengeFrontmatter>[];
 };
 
 const emptyReferences = (): ChallengeReferences => ({
@@ -86,7 +108,6 @@ const emptyReferences = (): ChallengeReferences => ({
   methodTools: [],
   partner: null,
   experts: [],
-  otherChallenges: [],
 });
 
 function logBrokenReference(slug: string, message: string): void {
@@ -120,24 +141,67 @@ function resolveTools(
   });
 }
 
-function resolveClientCase({
+function resolveCaseStory({
   slug,
   challenge,
   story,
-}: ChallengeReferenceSources): ChallengeClientCase | null {
-  const { story: storySlug, ...rest } = challenge.case;
-  if (storySlug === undefined) return { ...rest, story: null };
+}: ChallengeReferenceSources): CaseStory | null | 'broken' {
+  const storySlug = challenge.case.story;
+  if (storySlug === undefined) return null;
   if (!story) {
     logBrokenReference(slug, `case.story "${storySlug}" did not resolve`);
-    return null;
+    return 'broken';
   }
   const { name, title, subtitle } = story.frontmatter;
-  return { ...rest, story: { slug: story.slug, name, title, subtitle } };
+  return { slug: story.slug, name, title, subtitle };
 }
 
+/**
+ * `null` hides the block: the Story did not resolve, neither the case nor
+ * its Story gives a headline, or the case has neither a Story nor a written
+ * metric (a headline alone names no client).
+ */
+function resolveClientCase(
+  sources: ChallengeReferenceSources,
+  reportDrop: ReportDrop,
+): ChallengeClientCase | null {
+  const story = resolveCaseStory(sources);
+  if (story === 'broken') return null;
+  const { headline, summary, metrics } = sources.challenge.case;
+  const written = (value: string, field: string) =>
+    writtenOrNull(value, () => reportDrop(field));
+
+  const metricsWritten = metrics.filter((metric, index) => {
+    const kept = !hasPlaceholder(metric.value) && !hasPlaceholder(metric.label);
+    if (!kept) reportDrop(`case.metrics[${index}]`);
+    return kept;
+  });
+  const caseHeadline = written(headline, 'case.headline') ?? story?.title;
+  if (!caseHeadline) {
+    reportDrop('case', 'no headline');
+    return null;
+  }
+  if (!story && metricsWritten.length === 0) {
+    reportDrop('case', 'no Story and no metric');
+    return null;
+  }
+  return {
+    headline: caseHeadline,
+    summary: written(summary, 'case.summary') ?? story?.subtitle ?? null,
+    metrics: metricsWritten,
+    story,
+  };
+}
+
+/**
+ * `null` hides the block: the Tool did not resolve, or the sentence or the
+ * source is a placeholder. The figures belong to the partner, so they never
+ * show without their source.
+ */
 function resolvePartner(
   { challenge, tools }: ChallengeReferenceSources,
   reportTool: (message: string) => void,
+  reportDrop: ReportDrop,
 ): ChallengePartner | null {
   if (!challenge.partner) return null;
   const tool = resolveTool(challenge.partner.tool, tools);
@@ -145,35 +209,48 @@ function resolvePartner(
     reportTool(`partner.tool "${challenge.partner.tool}" is not a Tool`);
     return null;
   }
-  return { ...challenge.partner, tool };
+  const written = (field: 'sentence' | 'source') =>
+    writtenOrNull(challenge.partner?.[field], () =>
+      reportDrop(`partner.${field}`),
+    );
+  const sentence = written('sentence');
+  const source = written('source');
+  if (!sentence || !source) return null;
+  const metrics = challenge.partner.metrics.filter((metric, index) => {
+    const { before, after, label } = metric;
+    const kept = ![before, after, label].some(hasPlaceholder);
+    if (!kept) reportDrop(`partner.metrics[${index}]`);
+    return kept;
+  });
+  return { tool, sentence, metrics, source };
 }
 
 function resolveExperts(
   { challenge, tools, members }: ChallengeReferenceSources,
   reportTool: (message: string) => void,
+  reportDrop: ReportDrop,
 ): ChallengeExpert[] {
-  return getChallengeExperts(members, challenge.key).map((member) => ({
-    ...member,
-    tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
-      reportTool(`team/${member.slug} tools "${toolSlug}" is not a Tool`),
-    ),
-  }));
-}
-
-function listOtherChallenges({
-  slug,
-  challenges,
-}: ChallengeReferenceSources): OtherChallenge[] {
-  return challenges
-    .filter((file) => file.slug !== slug)
-    .map(({ slug: otherSlug, frontmatter }) => ({
-      slug: otherSlug,
-      key: frontmatter.key,
-      order: frontmatter.order,
-      name: frontmatter.name,
-      tagline: frontmatter.tagline,
-    }))
-    .sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
+  return getChallengeExperts(members, challenge.key).map((member) => {
+    const field = (name: string) => `team/${member.slug} ${name}`;
+    const contribution = (lang: 'fr' | 'en') =>
+      writtenOrNull(member.contribution?.[lang], () =>
+        reportDrop(field(`contribution.${lang}`)),
+      );
+    return {
+      ...member,
+      tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
+        reportTool(`team/${member.slug} tools "${toolSlug}" is not a Tool`),
+      ),
+      contribution: { fr: contribution('fr'), en: contribution('en') },
+      previousCompanies: (member.previousCompanies ?? []).filter(
+        (company, index) => {
+          if (!hasPlaceholder(company)) return true;
+          reportDrop(field(`previousCompanies[${index}]`));
+          return false;
+        },
+      ),
+    };
+  });
 }
 
 export function resolveChallengeReferences(
@@ -181,14 +258,14 @@ export function resolveChallengeReferences(
 ): ChallengeReferences {
   const { slug, challenge, tools } = sources;
   const reportTool = toolReporter(slug, tools);
+  const reportDrop = dropReporter('ChallengeReferences', slug);
   return {
-    clientCase: resolveClientCase(sources),
+    clientCase: resolveClientCase(sources, reportDrop),
     methodTools: resolveTools(challenge.method.tools, tools, (toolSlug) =>
       reportTool(`method.tools "${toolSlug}" is not a Tool`),
     ),
-    partner: resolvePartner(sources, reportTool),
-    experts: resolveExperts(sources, reportTool),
-    otherChallenges: listOtherChallenges(sources),
+    partner: resolvePartner(sources, reportTool, reportDrop),
+    experts: resolveExperts(sources, reportTool, reportDrop),
   };
 }
 
@@ -200,18 +277,6 @@ async function loadCaseStory(
   if (storySlug === undefined || !isChallengeSlug(storySlug)) return null;
   const [status, , story] = await fetchStory(storySlug, lang);
   return status === 200 && story ? story : null;
-}
-
-async function loadLanguageChallenges(
-  slug: string,
-  lang: string,
-): Promise<MarkdocFile<ChallengeFrontmatter>[]> {
-  const [status, state, challenges] = await fetchChallenges(lang);
-  if (status !== 200 || !challenges) {
-    logBrokenReference(slug, `other challenges failed to load: ${state}`);
-    return [];
-  }
-  return challenges;
 }
 
 /**
@@ -228,11 +293,10 @@ export async function loadChallengeReferences(
   lang: string,
 ): Promise<ChallengeReferences> {
   try {
-    const [story, tools, members, challenges] = await Promise.all([
+    const [story, tools, members] = await Promise.all([
       loadCaseStory(challenge.case.story, lang),
       loadToolRegistry(),
       loadMemberRegistry(),
-      loadLanguageChallenges(slug, lang),
     ]);
     return resolveChallengeReferences({
       slug,
@@ -240,7 +304,6 @@ export async function loadChallengeReferences(
       story,
       tools,
       members,
-      challenges,
     });
   } catch (error) {
     logBrokenReference(slug, `references failed to load: ${String(error)}`);

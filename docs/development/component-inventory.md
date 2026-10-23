@@ -179,14 +179,23 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **Team** | `Team.tsx` | Team presentation | Reusable |
 
 ### Challenge page components (`app/components/challenges/`)
-Sections of the challenge page (`app/routes/_main.($lang).challenges.$slug.tsx`). The route builds the view model with `buildChallengePage` (`app/modules/challenge-page.ts`), which drops mockup placeholders (`[...]`) and returns `null` for a section with no content. The page root sets `colorPalette` to the challenge colour (`challenge-palette.ts`); the sections read `colorPalette` and `colorPalette.light`.
+Sections of the challenge page (`app/routes/_main.($lang).challenges.$slug.tsx`). The route builds the view model with `buildChallengePage` (`app/modules/challenge-page.ts`), which drops mockup placeholders (`[...]`, rule in `docs/architecture/two-repo-content-pipeline.md`) and returns `null` for a section with no content. The page root sets `colorPalette` to the challenge colour (`challenge-palette.ts`); the sections read `colorPalette` and `colorPalette.light`.
+
+The sections fed by cross-references (client case, experts) get their view models from `buildChallengeReferenceSections` (`app/modules/challenge-reference-sections.ts`). The loader returns only that output, plus the resolved partner for the partner block. "Other challenges" reads the navbar list of the `_main` layout through `useOtherChallenges` (`app/hooks/use-challenge-menu.ts`), with no fetch of its own.
+
+Shared pieces:
+- `challenge-pill.ts`: the challenge pill class per key, used by the hero and the other challenges.
+- `challengeFill` in `challenge-palette.ts`: the solid fill per challenge (white text on Revenue Systems, coral for Revenue AI, as ADR 0002 sets). The pill and `PersonCard` (`app/components/member/person-card.tsx`) use it.
 
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
 | **ChallengeHero** | `challenge-hero.tsx` | Colour pill, title, quote, lead, CTA to the diagnostic, bow tie with the active stages | Challenge-specific |
 | **ChallengeSymptoms** | `challenge-symptoms.tsx` | Symptom cards with coral bullets | Challenge-specific |
 | **ChallengeAudience** | `challenge-audience.tsx` | Teams, roles and benefit, on the light challenge colour | Challenge-specific |
+| **ChallengeClientCase** | `challenge-client-case.tsx` | Case headline, summary, metric cards and the link to the Story; one column without metrics | Challenge-specific |
+| **ChallengeExperts** | `challenge-experts.tsx` | Expert cards (`PersonCard`) of the Team members on the challenge | Challenge-specific |
 | **ChallengeDiagnostic** | `challenge-diagnostic.tsx` | Yellow closing block with the contact CTA (`#diagnostic`) | Challenge-specific |
+| **ChallengeOtherChallenges** | `challenge-other-challenges.tsx` | Pills to the other challenges, from the navbar list | Challenge-specific |
 
 ### Design system showcase (`app/components/design-system/`)
 One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`), whose heading carries an anchor id derived from its title. The registry `designSystemGroups` in `subpages.ts` lists the pages in three groups (foundations, components, patterns) and each page's section titles. It feeds the sidebar (`design-system-sidebar.tsx`) and the grouped index (`design-system._index.tsx`). The sidebar lists the current page's sections under its link when the page has more than one, from `lg`. `app/routes/design-system.tsx` is the layout: one sidebar, then the page title and `Outlet`. Each page is a route `design-system.<slug>.tsx` that only composes its section modules. A new showcase section is a new module, its title in the registry and one line in its page route.
@@ -268,14 +277,14 @@ One `*-section.tsx` module per `/design-system` section, each wrapped in `Showca
 
 ## Design System Recipes
 
-Active Panda CSS recipes — use these before reaching for inline `css()`.
+Active Panda CSS recipes - use these before reaching for inline `css()`.
 
 | Recipe | File | Description |
 |--------|------|-------------|
 | `badge` | [`preset/recipes/badge.ts`](../../preset/recipes/badge.ts) | Inline pill label: colour variants (`yellow`, `mint`, `sky`, `coral`, `ai` for AI content only), sizes `xs`/`sm`/`lg` |
 | `button` | [`preset/recipes/button.ts`](../../preset/recipes/button.ts) | Button styles: variants (`primary`, `solid`, `outline`, `secondary`, `link`, `white`, `cta`, `nav`), sizes `sm`/`md`/`lg`; JSX-scanned on `ButtonLink` |
 | `card` | [`preset/recipes/card.ts`](../../preset/recipes/card.ts) | Bordered card surface (v2: `line` border, 28px padding, `rest` shadow). Tone `white`/`tinted`, padding `sm`/`md`/`lg`/`xl`, radius `md` (M 16px) / `lg` (L 24px), shadow `none`/`sm`/`card`/`elevated`, border toggle |
-| `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container — sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
+| `iconBox` | [`preset/recipes/icon-box.ts`](../../preset/recipes/icon-box.ts) | Centred icon container - sizes `sm` (2rem) / `md` (2.5rem) / `xl` (3.5rem) / `lg` (4rem), variants `solid`/`outline`/`ghost`, colour tokens |
 | `section` | [`preset/recipes/section.ts`](../../preset/recipes/section.ts) | Page section background and vertical padding: `bg` tokens, padding `sm`, `md` (v2 compact, 80px) and `lg` (v2 standard, 112px from 1024px) |
 | `text` | [`preset/recipes/text.ts`](../../preset/recipes/text.ts) | v2 type scale (ADR 0002). Use the six kept names: `display-xl` (Display), `display-lg` (H2), `display-md-bold` (H3), `body`, `small`, `label`. The other names (`display-2xl`, `display-lg-bold`, `display-section`, `display-sm`, `display-heading`, `display-md`, `display-card`, `subtitle`, `display-label`) are aliases with the same values, deleted in J6. Colour variants unchanged |
 
@@ -341,12 +350,12 @@ All bordered card surfaces use the `card()` recipe. Do not write inline `rounded
 <div className={card({ padding: 'lg', radius: 'lg' })}>...</div>
 ```
 
-### Recipes vs inline `css()` — decision rules
+### Recipes vs inline `css()` - decision rules
 
 - **Use a recipe** when the component already has a matching recipe (check the table above). Don't reinvent what the DS owns.
-- **Use `css()` for overrides only** — extra properties beyond what the recipe covers (e.g. `shadow`, `_groupHover`, `transition`).
-- **Never duplicate recipe props inline** — if `iconBox({ size: 'xl' })` already sets `w`, `h`, and `rounded`, don't repeat them in a sibling `css()` call.
-- **Static values only in `css()`** — Panda CSS extracts classes at build time; dynamic values won't generate. Pre-compute per-variant class strings with `css()` and combine at runtime with `cx()`.
+- **Use `css()` for overrides only** - extra properties beyond what the recipe covers (e.g. `shadow`, `_groupHover`, `transition`).
+- **Never duplicate recipe props inline** - if `iconBox({ size: 'xl' })` already sets `w`, `h`, and `rounded`, don't repeat them in a sibling `css()` call.
+- **Static values only in `css()`** - Panda CSS extracts classes at build time; dynamic values won't generate. Pre-compute per-variant class strings with `css()` and combine at runtime with `cx()`.
 - **Propose a recipe addition** when you see the same three-or-more `css()` properties repeated across two or more unrelated components.
 
 ## Design System Integration

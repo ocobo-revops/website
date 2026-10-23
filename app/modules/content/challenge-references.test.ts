@@ -1,7 +1,7 @@
 // @vitest-environment node
 
 /**
- * Challenge cross-references (#232). The challenge files come from the
+ * Challenge cross-references (#232, #235). The challenge files come from the
  * website test fixtures through the filesystem source. Stories, Tools and
  * expert Team members are built here: the fixtures have no `stories/` or
  * `tools/` folder, and no fixture Team member sets an expert field.
@@ -105,6 +105,15 @@ const story = (slug: string): MarkdocFile<StoryFrontmatter> => ({
   },
 });
 
+const writtenCase: ChallengeFrontmatter['case'] = {
+  headline: 'Acme: a forecast within 5%.',
+  summary: 'Six months to rebuild the pipeline review.',
+  metrics: [
+    { value: '+32%', label: 'Win rate' },
+    { value: '5%', label: 'Forecast error' },
+  ],
+};
+
 /** Resolves `slug` against every French fixture, with no Story, Tool or member. */
 function resolve(
   slug: string,
@@ -121,7 +130,6 @@ function resolve(
     story: overrides.story ?? null,
     tools: overrides.tools ?? {},
     members: overrides.members ?? {},
-    challenges: frenchChallenges,
   });
 }
 
@@ -132,9 +140,11 @@ beforeAll(async () => {
 });
 
 let errorSpy: ReturnType<typeof vi.spyOn>;
+let warnSpy: ReturnType<typeof vi.spyOn>;
 
 beforeEach(() => {
   errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+  warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
   vi.spyOn(console, 'info').mockImplementation(() => undefined);
 });
 
@@ -200,6 +210,31 @@ describe('experts', () => {
       expect.stringContaining('team/expert tools "gone"'),
     );
   });
+
+  it('drop a placeholder contribution or company and warn', () => {
+    const { experts } = resolve('revenue-performance', {
+      members: memberRegistry(
+        member({
+          slug: 'expert',
+          challenge: 'rp',
+          contribution: { fr: '[Apport]', en: 'She structures' },
+          previousCompanies: ['Salesforce', '[Company]'],
+        }),
+      ),
+    });
+
+    expect(experts[0].contribution).toEqual({
+      fr: null,
+      en: 'She structures',
+    });
+    expect(experts[0].previousCompanies).toEqual(['Salesforce']);
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-performance: team/expert contribution.fr dropped (placeholder)',
+    );
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-performance: team/expert previousCompanies[1] dropped (placeholder)',
+    );
+  });
 });
 
 describe('client case', () => {
@@ -218,14 +253,16 @@ describe('client case', () => {
   });
 
   it('links the resolved Story', () => {
-    const { case: base } = challengeFile('revenue-performance').frontmatter;
-
     const { clientCase } = resolve('revenue-performance', {
-      challenge: { case: { ...base, story: 'acme' } },
+      challenge: { case: { ...writtenCase, story: 'acme' } },
       story: story('acme'),
     });
 
-    expect(clientCase?.headline).toBe(base.headline);
+    expect(clientCase).toMatchObject({
+      headline: writtenCase.headline,
+      summary: writtenCase.summary,
+      metrics: writtenCase.metrics,
+    });
     expect(clientCase?.story).toEqual({
       slug: 'acme',
       name: 'Acme',
@@ -235,11 +272,73 @@ describe('client case', () => {
   });
 
   it('shows without a Story when the challenge names none', () => {
-    const { clientCase } = resolve('revenue-performance');
+    const { clientCase } = resolve('revenue-performance', {
+      challenge: { case: writtenCase },
+    });
 
     expect(clientCase?.story).toBeNull();
+    expect(clientCase?.headline).toBe(writtenCase.headline);
     expect(errorSpy).not.toHaveBeenCalledWith(
       expect.stringContaining('case.story'),
+    );
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('replaces mockup texts with the Story title and subtitle, and warns', () => {
+    // The fixture case is the mockup template: brackets mixed with words.
+    const { case: base } = challengeFile('revenue-performance').frontmatter;
+
+    const { clientCase } = resolve('revenue-performance', {
+      challenge: { case: { ...base, story: 'acme' } },
+      story: story('acme'),
+    });
+
+    expect(clientCase).toMatchObject({
+      headline: 'Acme forecasts its quarter',
+      summary: 'A number you can see coming',
+      metrics: [],
+    });
+    for (const field of ['case.headline', 'case.summary', 'case.metrics[0]']) {
+      expect(warnSpy).toHaveBeenCalledWith(
+        `[ChallengeReferences] revenue-performance: ${field} dropped (placeholder)`,
+      );
+    }
+  });
+
+  it('drops only the metric that holds a placeholder', () => {
+    const { clientCase } = resolve('revenue-performance', {
+      challenge: {
+        case: {
+          ...writtenCase,
+          metrics: [
+            { value: '[X]', label: 'Win rate' },
+            writtenCase.metrics[1],
+          ],
+        },
+      },
+    });
+
+    expect(clientCase?.metrics).toEqual([writtenCase.metrics[1]]);
+  });
+
+  it('is hidden and warns when no headline is written and no Story is named', () => {
+    const { clientCase } = resolve('revenue-performance', {
+      challenge: { case: { ...writtenCase, headline: '[Headline]' } },
+    });
+
+    expect(clientCase).toBeNull();
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-performance: case dropped (no headline)',
+    );
+  });
+
+  it('is hidden and warns with neither a Story nor a written metric', () => {
+    // revenue-ai: a written headline over placeholder metrics, no Story.
+    const { clientCase } = resolve('revenue-ai');
+
+    expect(clientCase).toBeNull();
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] revenue-ai: case dropped (no Story and no metric)',
     );
   });
 });
@@ -263,6 +362,43 @@ describe('partner', () => {
 
     expect(partner?.tool).toEqual(tool('qobra'));
     expect(partner?.metrics).toHaveLength(2);
+  });
+
+  const partnerWith = (
+    overrides: Partial<NonNullable<ChallengeFrontmatter['partner']>>,
+  ) => {
+    const { partner } = challengeFile('sales-compensation').frontmatter;
+    if (!partner) throw new Error('sales-compensation has a partner');
+    return resolve('sales-compensation', {
+      challenge: { partner: { ...partner, ...overrides } },
+      tools: toolRegistry('qobra'),
+    }).partner;
+  };
+
+  it.each(['sentence', 'source'] as const)(
+    'is hidden and warns when its %s is a placeholder',
+    (field) => {
+      expect(partnerWith({ [field]: '[À écrire]' })).toBeNull();
+      expect(warnSpy).toHaveBeenCalledWith(
+        `[ChallengeReferences] sales-compensation: partner.${field} dropped (placeholder)`,
+      );
+    },
+  );
+
+  it('drops a placeholder metric and warns', () => {
+    const partner = partnerWith({
+      metrics: [
+        { before: '[X] jours', after: '1', label: 'Clôture' },
+        { before: '3 jours', after: '½', label: 'Clôture' },
+      ],
+    });
+
+    expect(partner?.metrics).toEqual([
+      { before: '3 jours', after: '½', label: 'Clôture' },
+    ]);
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[ChallengeReferences] sales-compensation: partner.metrics[0] dropped (placeholder)',
+    );
   });
 
   it('is absent without logging when the challenge has none', () => {
@@ -306,40 +442,6 @@ describe('method tools', () => {
   });
 });
 
-describe('other challenges', () => {
-  it('exclude the current challenge, in display order', () => {
-    const { otherChallenges } = resolve('revenue-performance');
-
-    expect(otherChallenges.map(({ slug }) => slug)).toEqual([
-      'sales-experience',
-      'customer-experience',
-      'sales-compensation',
-      'revenue-systems',
-      'revenue-ai',
-    ]);
-  });
-
-  it('exclude the challenges of other languages', async () => {
-    const { frontmatter } = challengeFile('revenue-performance');
-
-    const french = await loadChallengeReferences(
-      'revenue-performance',
-      frontmatter,
-      'fr',
-    );
-    // The English fixtures hold only revenue-performance, so any English
-    // challenge in the list would come from another language.
-    const english = await loadChallengeReferences(
-      'revenue-performance',
-      frontmatter,
-      'en',
-    );
-
-    expect(french.otherChallenges).toHaveLength(5);
-    expect(english.otherChallenges).toEqual([]);
-  });
-});
-
 describe('loadChallengeReferences', () => {
   it('never fails when the referenced folders are missing', async () => {
     // The fixtures have no `tools/` or `stories/` folder.
@@ -355,7 +457,6 @@ describe('loadChallengeReferences', () => {
     expect(references.partner).toBeNull();
     expect(references.methodTools).toEqual([]);
     expect(references.experts).toEqual([]);
-    expect(references.otherChallenges).toHaveLength(5);
   });
 
   it('logs the client case when its Story fails to load', async () => {
@@ -369,21 +470,6 @@ describe('loadChallengeReferences', () => {
 
     expect(errorSpy).toHaveBeenCalledWith(
       '[ChallengeReferences] revenue-performance: case.story "missing-story" did not resolve',
-    );
-  });
-
-  it('lists no other challenge when the language folder fails', async () => {
-    const { frontmatter } = challengeFile('revenue-performance');
-
-    const { otherChallenges } = await loadChallengeReferences(
-      'revenue-performance',
-      frontmatter,
-      'de',
-    );
-
-    expect(otherChallenges).toEqual([]);
-    expect(errorSpy).toHaveBeenCalledWith(
-      '[ChallengeReferences] revenue-performance: other challenges failed to load: not_found',
     );
   });
 
@@ -402,7 +488,6 @@ describe('loadChallengeReferences', () => {
       methodTools: [],
       partner: null,
       experts: [],
-      otherChallenges: [],
     });
     expect(errorSpy).toHaveBeenCalledWith(
       expect.stringContaining('references failed to load'),

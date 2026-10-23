@@ -6,15 +6,20 @@ import {
 } from 'react-router';
 
 import { ChallengeAudience } from '~/components/challenges/challenge-audience';
+import { ChallengeClientCase } from '~/components/challenges/challenge-client-case';
 import { ChallengeDiagnostic } from '~/components/challenges/challenge-diagnostic';
+import { ChallengeExperts } from '~/components/challenges/challenge-experts';
 import { ChallengeHero } from '~/components/challenges/challenge-hero';
 import { ChallengeMethod } from '~/components/challenges/challenge-method';
+import { ChallengeOtherChallenges } from '~/components/challenges/challenge-other-challenges';
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
 import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
+import { useOtherChallenges } from '~/hooks/use-challenge-menu';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import { buildChallengePage, isChallengeSlug } from '~/modules/challenge-page';
+import { buildChallengeReferenceSections } from '~/modules/challenge-reference-sections';
 import { fetchChallenge } from '~/modules/content/api';
 import { loadChallengeReferences } from '~/modules/content/challenge-references';
 import { throwIfDisabled } from '~/modules/feature-flags';
@@ -47,9 +52,9 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
 
   const page = buildChallengePage(challenge.frontmatter);
   // Never throws: a broken reference hides only the block that needs it.
-  const references = await loadChallengeReferences(
-    slug,
-    challenge.frontmatter,
+  // Only the section view models ship to the client.
+  const references = buildChallengeReferenceSections(
+    await loadChallengeReferences(slug, challenge.frontmatter, lang),
     lang,
   );
   const { name, tagline } = page;
@@ -86,7 +91,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function ChallengeRoute() {
   const { t } = useTranslation('challenges');
-  const { page } = useLoaderData<typeof loader>();
+  const { page, references, slug } = useLoaderData<typeof loader>();
+  const { clientCase, experts } = references;
+  // The `_main` layout already loads and caches the published list.
+  const otherChallenges = useOtherChallenges(slug);
 
   return (
     <div className={challengePalette[page.key]}>
@@ -122,9 +130,19 @@ export default function ChallengeRoute() {
         <ChallengeMethod
           method={page.method}
           challenge={page.key}
-          // #232 resolves `method.tools` in the loader as
-          // `references.methodTools`; until then the card shows the note.
-          tools={[]}
+          tools={references.methodTools}
+        />
+      ) : null}
+      {clientCase ? (
+        <ChallengeClientCase clientCase={clientCase} challenge={page.key} />
+      ) : null}
+      {experts.length > 0 ? (
+        <ChallengeExperts
+          experts={experts}
+          challenge={page.key}
+          challengeName={page.name}
+          hasDiagnostic={page.diagnostic !== null}
+          afterClientCase={clientCase !== null}
         />
       ) : null}
       {page.diagnostic ? (
@@ -132,6 +150,9 @@ export default function ChallengeRoute() {
           diagnostic={page.diagnostic}
           fallbackCta={t('diagnostic.cta')}
         />
+      ) : null}
+      {otherChallenges.length > 0 ? (
+        <ChallengeOtherChallenges challenges={otherChallenges} />
       ) : null}
     </div>
   );
