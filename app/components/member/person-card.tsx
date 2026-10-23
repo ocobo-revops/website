@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
+import { challengeFill } from '~/components/challenges/challenge-palette';
 import { FlipCard } from '~/components/ui/flip-card';
 
 /** Challenge keys, as in the posts frontmatter and the `challenge` tokens. */
@@ -51,16 +52,6 @@ const avatarColour: Record<ChallengeKey, string> = {
   cx: css({ bg: 'challenge.cx.light' }),
   sy: css({ bg: 'challenge.sy.light' }),
   ai: css({ bg: 'challenge.ai.light' }),
-};
-
-// The Revenue Systems grey needs white text to reach 4.5:1.
-const fillColour: Record<ChallengeKey, string> = {
-  rp: css({ bg: 'challenge.rp', color: 'dark' }),
-  se: css({ bg: 'challenge.se', color: 'dark' }),
-  sc: css({ bg: 'challenge.sc', color: 'dark' }),
-  cx: css({ bg: 'challenge.cx', color: 'dark' }),
-  sy: css({ bg: 'challenge.sy', color: 'white' }),
-  ai: css({ bg: 'challenge.ai', color: 'dark' }),
 };
 
 const ring = css({
@@ -195,7 +186,7 @@ export function PersonCard({
       variant="person"
       label={name}
       className={className}
-      backClassName={challenge ? fillColour[challenge] : undefined}
+      backClassName={challenge ? challengeFill[challenge] : undefined}
       front={
         <>
           <span
@@ -229,7 +220,10 @@ export function PersonCard({
           </div>
           {challengeLabel && (
             <span
-              className={cx(pill, challenge ? fillColour[challenge] : pillGrey)}
+              className={cx(
+                pill,
+                challenge ? challengeFill[challenge] : pillGrey,
+              )}
             >
               {challengeLabel}
             </span>

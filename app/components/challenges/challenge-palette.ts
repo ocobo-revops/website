@@ -15,3 +15,17 @@ export const challengePalette: Record<ChallengeKey, string> = {
   sy: css({ colorPalette: 'challenge.sy' }),
   ai: css({ colorPalette: 'challenge.ai' }),
 };
+
+/**
+ * Solid challenge fill with readable text: pills, expert labels, person card
+ * backs. The Revenue Systems grey needs white text to reach 4.5:1. Revenue
+ * AI fills with coral, the start of its gradient (ADR 0002).
+ */
+export const challengeFill: Record<ChallengeKey, string> = {
+  rp: css({ bg: 'challenge.rp', color: 'dark' }),
+  se: css({ bg: 'challenge.se', color: 'dark' }),
+  sc: css({ bg: 'challenge.sc', color: 'dark' }),
+  cx: css({ bg: 'challenge.cx', color: 'dark' }),
+  sy: css({ bg: 'challenge.sy', color: 'white' }),
+  ai: css({ bg: 'challenge.ai', color: 'dark' }),
+};
