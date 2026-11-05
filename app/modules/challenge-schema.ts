@@ -176,7 +176,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
     .length(4),
   workstreams: z.strictObject({
     /** Optional override of the heading from `locales/` (#234 decides). */
-    title: cappedText(50).optional(),
+    title: cappedText(71).optional(),
     intro: cappedText(120),
     items: z.array(workstream).min(4).max(6),
   }),
@@ -190,7 +190,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   method: z.strictObject({
     /** Optional override of the heading from `locales/` (#234 decides). */
     title: cappedText(30).optional(),
-    subtitle: cappedText(75),
+    subtitle: cappedText(91),
     steps: z
       .array(
         z.strictObject({
@@ -228,7 +228,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   }),
   diagnostic: z.strictObject({
     question: cappedText(88),
-    subtitle: cappedText(125),
+    subtitle: cappedText(155),
   }),
 });
 
