@@ -29,7 +29,7 @@ graph TB
     end
 
     subgraph website ["ocobo-revops/website"]
-        app["SSR React Router app\nVercel Edge"]
+        app["SSR React Router app\nVercel Node.js functions"]
     end
 
     author -->|"edit markdown + PR → merge"| md

@@ -36,7 +36,7 @@ pnpm dev
 - **React i18next** - French/English internationalization
 - **TypeScript** - Type-safe development with automatic type generation
 - **Biome** - Code formatting and linting
-- **Vercel** - Edge deployment with intelligent caching
+- **Vercel** - Node.js serverless deployment with intelligent CDN caching
 
 ## Development Commands
 
@@ -200,7 +200,7 @@ This application follows a **component-based layered architecture** with:
 - **Server-first** state management via URL and React Router loaders
 - **Content-as-data** approach with Markdown and GitHub integration
 - **Type-safe** styling with Panda CSS and design tokens
-- **Edge-optimized** deployment with intelligent caching
+- **CDN-cached** deployment with intelligent caching
 
 For detailed architectural information, see [docs/architecture/overview.md](docs/architecture/overview.md).
 

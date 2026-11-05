@@ -6,9 +6,9 @@ Project guide for Claude Code and any other coding agent working on the Ocobo we
 
 ## 1. What this is
 
-Ocobo is a RevOps consulting platform. The website is a React Router v7 (formerly Remix) full-stack app, server-rendered on Vercel Edge.
+Ocobo is a RevOps consulting platform. The website is a React Router v7 (formerly Remix) full-stack app, server-rendered on Vercel Node.js serverless functions (Node 24).
 
-- **Framework**: React Router v7, file-based routing via `@react-router/fs-routes`, SSR on Vercel Edge with stale-while-revalidate.
+- **Framework**: React Router v7, file-based routing via `@react-router/fs-routes`, SSR on Vercel Node.js serverless functions (Node 24), with CDN stale-while-revalidate caching on the Vercel edge network.
 - **Styling**: Panda CSS - atomic, zero-runtime, type-safe. UI primitives from Ark UI.
 - **Content**: Markdoc + Zod, sourced from a sibling GitHub repo (or local filesystem in dev).
 - **i18n**: `react-i18next` / `remix-i18next`. FR default, EN at `/en/*`.

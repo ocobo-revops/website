@@ -8,7 +8,7 @@
 
 ## 1. Problème
 
-Architecture SSR + Vercel Edge correctement posée (streaming via `renderToPipeableStream`, Panda CSS zero-runtime, cache custom avec SWR), mais **trois axes lourds** dégradent les Core Web Vitals : data fetching (N+1, batches sous-dimensionnés), images (pas de LCP priority, dimensions manquantes), bundling (CSS non splittée par route).
+Architecture SSR + Vercel Node.js (serverless) correctement posée (streaming via `renderToPipeableStream`, Panda CSS zero-runtime, cache custom avec SWR), mais **trois axes lourds** dégradent les Core Web Vitals : data fetching (N+1, batches sous-dimensionnés), images (pas de LCP priority, dimensions manquantes), bundling (CSS non splittée par route).
 
 ### Constats CWV estimés (à vérifier sur prod)
 
