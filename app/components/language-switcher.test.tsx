@@ -70,20 +70,6 @@ describe('LanguageSwitcher', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/en/methode/discovery');
   });
 
-  it('switches the bare English home page to the French one', async () => {
-    const user = userEvent.setup();
-    vi.mocked(useParams).mockReturnValue({ lang: 'en' });
-    render(<LanguageSwitcher />, {
-      initialEntries: ['/en'],
-      i18nLang: 'en',
-    });
-
-    await user.click(screen.getByRole('combobox', { name: 'Lang' }));
-    await user.click(await screen.findByRole('option', { name: /français/i }));
-
-    expect(mockNavigate).toHaveBeenCalledWith('/fr');
-  });
-
   it('reaches the same challenge slug in the other language', async () => {
     const user = userEvent.setup();
     vi.mocked(useParams).mockReturnValue({

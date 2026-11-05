@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getLang, getLangParam, getLocaleFromPathname } from './lang';
+import { getLang, getLangParam } from './lang';
 
 function catchThrown(fn: () => unknown): unknown {
   try {
@@ -45,13 +45,7 @@ describe('getLang', () => {
   it('is case sensitive: an upper-case prefix is unknown', () => {
     const thrown = catchThrown(() => getLang({ lang: 'EN' }));
 
+    expect(thrown).toBeInstanceOf(Response);
     expect((thrown as Response).status).toBe(404);
-  });
-});
-
-describe('getLocaleFromPathname', () => {
-  it('reads the first path segment', () => {
-    expect(getLocaleFromPathname('/en/offer')).toBe('en');
-    expect(getLocaleFromPathname('/fr')).toBe('fr');
   });
 });

@@ -53,9 +53,21 @@ describe('redirectWithLocale', () => {
     ).resolves.toBeUndefined();
   });
 
+  it('redirects a path with a query string (today without the query)', async () => {
+    const response = await thrownResponse(
+      redirectWithLocale(
+        loaderArgs('http://test.local/offer?utm_source=linkedin'),
+      ),
+    );
+
+    expect(response.status).toBe(301);
+    expect(response.headers.get('Location')).toBe('/fr/offer');
+  });
+
   // Bug: the redirect is built from `pathname` alone, so the query string is
   // dropped. A campaign link such as `/offer?utm_source=linkedin` lands on
-  // `/fr/offer` without its UTM parameters. Remove `.fails` once fixed.
+  // `/fr/offer` without its UTM parameters. Fixing it means appending
+  // `search`; then remove `.fails` here and update the case above.
   it.fails('keeps the query string when it adds the prefix', async () => {
     const response = await thrownResponse(
       redirectWithLocale(

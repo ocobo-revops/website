@@ -33,4 +33,19 @@ describe('useLocalizedPathname', () => {
 
     expect(result.current('/contact')).toBe('/fr/contact');
   });
+
+  it('throws the 404 Response when building a link under an unknown prefix', () => {
+    vi.mocked(useParams).mockReturnValue({ lang: 'de' });
+    const { result } = renderHook(() => useLocalizedPathname());
+
+    let thrown: unknown;
+    try {
+      result.current('/offer');
+    } catch (error) {
+      thrown = error;
+    }
+
+    expect(thrown).toBeInstanceOf(Response);
+    expect((thrown as Response).status).toBe(404);
+  });
 });

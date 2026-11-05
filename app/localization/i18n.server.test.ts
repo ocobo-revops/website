@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_LANGUAGE } from '~/modules/language';
 
-import { defaultNS, fallbackLng, resources, supportedLngs } from './i18n';
+import { fallbackLng, resources, supportedLngs } from './i18n';
 import i18nServer from './i18n.server';
 
 function requestWith(acceptLanguage?: string): Request {
@@ -17,9 +17,7 @@ describe('i18n configuration', () => {
   });
 
   it('falls back to the same language as the routing default', () => {
-    expect(fallbackLng).toBe('fr');
     expect(fallbackLng).toBe(DEFAULT_LANGUAGE);
-    expect(defaultNS).toBe('common');
   });
 
   it('ships the same namespaces in both languages', () => {

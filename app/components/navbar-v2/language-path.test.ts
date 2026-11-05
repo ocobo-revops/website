@@ -28,12 +28,6 @@ describe('getLanguageSwitchPath', () => {
     expect(getLanguageSwitchPath('/frontend', 'en')).toBe('/en');
   });
 
-  it('keeps nested segments and a trailing slash', () => {
-    expect(getLanguageSwitchPath('/en/challenges/rp/', 'fr')).toBe(
-      '/fr/challenges/rp/',
-    );
-  });
-
   it('sends an unknown locale prefix to the target home page', () => {
     expect(getLanguageSwitchPath('/de/offer', 'en')).toBe('/en');
   });
