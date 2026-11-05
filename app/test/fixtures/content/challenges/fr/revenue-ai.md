@@ -2,15 +2,15 @@
 key: ai
 order: 6
 name: Revenue AI
-tagline: Une IA qui travaille pour vos équipes Revenue
+tagline: Une IA qui travaille pour vos équipes
 hero:
   title:
-    - Vos équipes testent l'IA.
-    - Nous la faisons passer à l'échelle.
+    - Vos équipes et vos agents IA,
+    - enfin dans le même système.
   quote: Tout le monde utilise ChatGPT, personne ne vend mieux.
-  lead: "Un agent IA ne sait pas ce qu'est une opportunité qualifiée. Quelqu'un doit le lui avoir appris. Nous choisissons les usages qui comptent pour vos ventes, nous remettons d'aplomb"
+  lead: "Un agent IA ne sait pas ce qu'est une opportunité qualifiée. Quelqu'un doit le lui apprendre. Nous choisissons les usages qui comptent pour vos ventes, nous fiabilisons"
   highlight: les données et les processus sur lesquels ils tournent, et nous mesurons ce qu'ils rapportent.
-  cta: Lancer un Revenue AI Sprint
+  cta: Évaluer ma maturité IA
 bowtie:
   activeStages:
     - demand-generation
@@ -40,13 +40,13 @@ audience:
     benefit: Des équipes qui préparent, relancent et vendent plus vite.
   - team: Ops
     roles: RevOps, Ops
-    benefit: Des agents branchés sur une donnée fiable, gouvernés et maintenus.
+    benefit: Des usages IA branchés sur une donnée fiable, gouvernée et maintenue.
   - team: Terrain
     roles: Commerciaux et CSM
     benefit: Moins de tâches administratives, plus de temps avec les clients.
 workstreams:
-  title: Six cas d'usage Revenue, prêts à déployer
-  intro: Chacun se livre en un Revenue AI Sprint, avec ses prérequis RevOps vérifiés d'abord.
+  title: Six cas d'usage, mis en place sur des fondations vérifiées.
+  intro: Chacun se livre en un Revenue AI Sprint.
   items:
     - category: Cibler
       title: Les bons comptes, enrichis et priorisés
@@ -58,7 +58,7 @@ workstreams:
       description: Qualification, objections et prochaines étapes rattachées au bon deal, sans saisie.
       deliverable: "Un agent post-appel connecté à votre téléphonie : résumé, champs de qualification et prochaine étape écrits dans le deal, à valider en un clic."
       note: "Prérequis : des étapes de vente et des champs de qualification définis."
-    - category: Restituer
+    - category: Préparer
       title: La préparation de rendez-vous en une minute
       description: Historique du compte, derniers échanges, enjeux probables, questions à poser.
       deliverable: "Un brief automatique envoyé avant chaque rendez-vous dans Slack ou par mail : contexte du compte, interlocuteurs, enjeux et questions à poser."
@@ -68,12 +68,12 @@ workstreams:
       description: Les deals à risque signalés avant la réunion, avec la raison du risque.
       deliverable: "Une alerte hebdomadaire dans le canal de l'équipe : les deals à risque, la raison du risque et une relance préparée pour chacun."
       note: "Prérequis : des critères de sortie d'étape et des dates de closing tenues."
-    - category: Piloter
+    - category: Prévoir
       title: Le prévisionnel en langage naturel
       description: Le dirigeant pose sa question en français et obtient le chiffre, avec son détail.
       deliverable: "Un assistant de prévision interrogeable en français, relié au CRM : le chiffre, son détail par deal et l'écart avec la semaine précédente."
       note: "Prérequis : une méthode de prévision et des catégories partagées."
-    - category: Faire progresser
+    - category: Guider
       title: Le playbook dans l'outil du commercial
       description: La bonne ressource au bon moment du cycle, sans chercher dans un drive.
       deliverable: "Un assistant de vente branché sur votre playbook : la bonne ressource, l'objection type ou le script poussés au commercial selon l'étape du deal."
@@ -83,7 +83,7 @@ aiBridge:
   bullets:
     - Un assistant branché sur un CRM mal rempli produit des réponses fausses avec assurance.
     - "C'est pourquoi chaque sprint commence par vérifier les fondations : données, processus de vente, outils."
-    - Quand elles tiennent, on déploie. Quand elles manquent, on vous le dit, et on commence par là.
+    - Quand elles tiennent, nous déployons. Quand elles manquent, nous vous le disons, et nous commençons par là.
 method:
   title: Le Revenue AI Sprint
   subtitle: Trois semaines pour passer du test à la décision.
@@ -93,7 +93,7 @@ method:
     - title: Prouver sur un cas réel
       text: Un premier usage branché sur vos outils, utilisé par une vraie équipe, mesuré.
     - title: Décider la suite
-      text: Une feuille de route chiffrée en impact. Si les fondations manquent, on commence par elles.
+      text: Une feuille de route chiffrée en impact. Si les fondations ne sont pas prêtes, nous commençons par là.
   tools:
     - hubspot
     - salesforce
@@ -112,5 +112,5 @@ case:
       label: "[Effet mesuré sur le pipe]"
 diagnostic:
   question: Votre organisation Revenue est-elle prête pour l'IA ?
-  subtitle: Trente minutes avec un architecte du revenu pour le savoir, et choisir le premier usage à déployer.
+  subtitle: En 30 minutes, un architecte du revenu évalue avec vous la maturité IA de vos équipes. Vous repartez en sachant par où commencer.
 ---

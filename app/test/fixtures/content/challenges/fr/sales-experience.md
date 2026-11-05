@@ -2,15 +2,15 @@
 key: se
 order: 1
 name: Sales Experience
-tagline: Une organisation commerciale qui passe à l'échelle
+tagline: Une organisation commerciale qui grandit avec vous
 hero:
   title:
     - Une organisation commerciale
-    - qui passe à l'échelle.
+    - qui grandit avec vous.
   quote: Deux commerciaux font l'essentiel du chiffre.
   lead: "Quand la performance tient à quelques talents, ajouter des commerciaux ne suffit pas. Nous construisons l'organisation, les processus, les outils et les indicateurs qui font tourner"
   highlight: tout le cycle, du premier lead à l'argent encaissé.
-  cta: Structurer mon organisation commerciale
+  cta: Échanger avec un architecte
 bowtie:
   activeStages:
     - demand-generation
@@ -26,7 +26,7 @@ symptoms:
   items:
     - Vos commerciaux trouvent que les leads marketing ne valent pas la peine d'être rappelés.
     - Les leads arrivent sans règle claire sur qui les traite, ni en combien de temps.
-    - Vos commerciaux prospectent, closent et gèrent leurs comptes à la fois.
+    - Vos commerciaux prospectent, signent et gèrent leurs comptes à la fois.
     - Vous ne savez pas à quelle étape du cycle vous perdez vos deals.
     - Les devis se font à la main, et la facturation ressaisit tout ce que la vente a signé.
     - Un nouveau commercial met des mois à produire, parce que rien n'est outillé pour lui.
@@ -54,7 +54,7 @@ workstreams:
       title: Les bons rôles, au bon moment du cycle
       description: Segmentation des comptes, spécialisation prospection, vente et gestion de comptes, passations entre rôles, dimensionnement des équipes.
       deliverable: Modèle d'organisation commerciale et plan de capacité.
-    - category: Processus et techno
+    - category: Processus et outils
       title: Un cycle de vente outillé de bout en bout
       description: Étapes et critères de sortie, séquences, tâches et automatisations dans le CRM.
       deliverable: Processus de vente paramétré dans vos outils.
@@ -102,7 +102,7 @@ aiBridge:
         state: alert
     footer: Écart au process signalé au manager
 method:
-  subtitle: De l'analyse du funnel à une organisation qui tient sans nous.
+  subtitle: De l'analyse de votre cycle de vente à une organisation qui tient sans nous.
   steps:
     - text: Le Design Sprint analyse votre funnel de bout en bout, votre organisation et vos outils, et identifie où la performance se perd.
     - text: La squad construit l'organisation, les processus et les indicateurs dans vos outils, avec votre direction commerciale.
@@ -120,7 +120,7 @@ method:
   note: "Du ciblage à l'encaissement. Et ceux que vous avez déjà : nous partons de votre stack."
 case:
   headline: "[Nom du client] : [le passage en une phrase]."
-  summary: "[Contexte en deux lignes. Ce qu'on a construit. Ce qui a changé pour la direction commerciale.]"
+  summary: "[Contexte en deux lignes. Ce que nous avons construit. Ce qui a changé pour la direction commerciale.]"
   metrics:
     - value: "[X]"
       label: "[Conversion lead vers opportunité, avant et après]"
@@ -128,5 +128,5 @@ case:
       label: "[Délai entre signature et facturation]"
 diagnostic:
   question: À quelle étape de votre cycle perdez-vous vos deals ?
-  subtitle: Trente minutes avec un architecte du revenu pour le mesurer, et savoir par où commencer.
+  subtitle: En 30 minutes, un architecte du revenu le mesure avec vous. Vous repartez en sachant par où commencer.
 ---
