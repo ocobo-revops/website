@@ -134,8 +134,8 @@ export const semanticTokens = defineSemanticTokens({
     // Second line of page headlines, read by app/components/ui/headline-accent.ts.
     // Mockup colours for now: all but gray fail WCAG 3:1 on white, a gap
     // accepted on #212. To comply, point each one at its `.dark` variant here
-    // (yellow needs a darker shade still), and the AI gradient below at
-    // `gradients.ai-text`.
+    // (yellow needs a darker shade still). The AI gradient below already uses
+    // `gradients.ai-text`, as ADR 0002 requires for gradient text.
     headlineAccent: {
       coral: { value: '{colors.coral}' },
       mint: { value: '{colors.mint}' },
@@ -146,7 +146,7 @@ export const semanticTokens = defineSemanticTokens({
   },
   gradients: {
     headlineAccent: {
-      ai: { value: '{gradients.ai}' },
+      ai: { value: '{gradients.ai-text}' },
     },
   },
   borders: {
