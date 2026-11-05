@@ -824,3 +824,70 @@ describe('challenge page cross-references', () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('Revenue Systems stack section (#238)', () => {
+  const revenueSystems = loadChallengeFixture('fr', 'revenue-systems');
+
+  it('sits after the workstreams and before the AI bridge on the sy page', () => {
+    renderPage(
+      revenueSystems.frontmatter,
+      'fr',
+      references,
+      [],
+      'revenue-systems',
+    );
+
+    const headings = screen
+      .getAllByRole('heading', { level: 2 })
+      .map((heading) => heading.textContent);
+    const stackIndex = headings.indexOf('À quoi ressemble une stack utile');
+    const workstreamsTitle = revenueSystems.frontmatter.workstreams?.title;
+    const aiBridgeTitle = revenueSystems.frontmatter.aiBridge?.title;
+    expect(workstreamsTitle).toBeDefined();
+    expect(aiBridgeTitle).toBeDefined();
+    const workstreamsIndex = headings.indexOf(workstreamsTitle as string);
+    const aiBridgeIndex = headings.indexOf(aiBridgeTitle as string);
+    // All three must be on the page, or the order check proves nothing.
+    expect(workstreamsIndex).toBeGreaterThanOrEqual(0);
+    expect(aiBridgeIndex).toBeGreaterThanOrEqual(0);
+    expect(stackIndex).toBeGreaterThan(workstreamsIndex);
+    expect(stackIndex).toBeLessThan(aiBridgeIndex);
+    expect(
+      screen.getByRole('link', { name: 'Voir notre approche technologique' }),
+    ).toHaveAttribute('href', '/fr/technology');
+    expect(
+      screen.getByRole('figure', { name: /La stack Revenue Systems/ }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the English labels', () => {
+    renderPage(
+      revenueSystems.frontmatter,
+      'en',
+      references,
+      [],
+      'revenue-systems',
+    );
+
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'What a useful stack looks like',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'See our approach to technology' }),
+    ).toHaveAttribute('href', '/en/technology');
+  });
+
+  it('is absent from the other challenges', () => {
+    renderPage(fixture.frontmatter);
+
+    expect(
+      screen.queryByRole('heading', { name: 'What a useful stack looks like' }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('figure', { name: /Revenue Systems stack/ }),
+    ).not.toBeInTheDocument();
+  });
+});
