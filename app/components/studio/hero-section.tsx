@@ -9,6 +9,7 @@ import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
+import { headlineAccent } from '~/components/ui/headline-accent';
 import { Container } from '../ui/Container';
 import { TeamPhotoIllustration } from './team-photo-illustration';
 
@@ -38,7 +39,7 @@ export const HeroSection = () => {
           >
             {t('hero.title.line1')}
             <br />
-            <span className={css({ color: 'ocobo.mint', fontStyle: 'italic' })}>
+            <span className={headlineAccent.mint}>
               {t('hero.title.highlight')}
             </span>
           </h1>

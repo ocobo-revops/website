@@ -9,6 +9,7 @@ import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
+import { headlineAccent } from '~/components/ui/headline-accent';
 import {
   DEFAULT_STACK_ITEMS,
   ModularStackGrid,
@@ -48,7 +49,7 @@ export const HeroSection = () => {
             {t('hero.title.line1')}
             <br />
             {t('hero.title.line2')}{' '}
-            <span className={css({ color: 'ocobo.sky', fontStyle: 'italic' })}>
+            <span className={headlineAccent.sky}>
               {t('hero.title.highlight')}
             </span>
           </h1>

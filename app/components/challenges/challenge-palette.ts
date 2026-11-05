@@ -1,5 +1,6 @@
 import { css } from '@ocobo/styled-system/css';
 
+import { headlineAccent } from '~/components/ui/headline-accent';
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
 /**
@@ -28,4 +29,14 @@ export const challengeFill: Record<ChallengeKey, string> = {
   cx: css({ bg: 'challenge.cx', color: 'dark' }),
   sy: css({ bg: 'challenge.sy', color: 'white' }),
   ai: css({ bg: 'challenge.ai', color: 'dark' }),
+};
+
+/** Second line of the challenge H1, in the challenge accent (prototype #28). */
+export const challengeHeadlineAccent: Record<ChallengeKey, string> = {
+  rp: headlineAccent.coral,
+  se: headlineAccent.mint,
+  sc: headlineAccent.yellow,
+  cx: headlineAccent.sky,
+  sy: headlineAccent.gray,
+  ai: headlineAccent.ai,
 };

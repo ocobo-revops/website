@@ -4,6 +4,7 @@ import { designSystemDescription } from '~/components/design-system/subpages';
 import { TypographySection } from '~/components/design-system/typography-section';
 import {
   FontSizesSection,
+  HeadlineAccentSection,
   TypeScaleSection,
 } from '~/components/design-system/v2-tokens-section';
 import { getMetaTags } from '~/utils/metatags';
@@ -20,6 +21,7 @@ export default function DesignSystemTypography() {
   return (
     <>
       <TypeScaleSection />
+      <HeadlineAccentSection />
       <FontSizesSection />
       <TypographySection />
     </>

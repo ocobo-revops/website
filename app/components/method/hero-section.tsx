@@ -9,6 +9,7 @@ import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
+import { headlineAccent } from '~/components/ui/headline-accent';
 import { Container } from '../ui/Container';
 import { AttioPillarsIllustration } from './attio-pillars-illustration';
 
@@ -54,9 +55,7 @@ export const HeroSection = () => {
             {t('hero.title.line1')}
             <br />
             {t('hero.title.line2')}{' '}
-            <span
-              className={css({ color: 'ocobo.yellow', fontStyle: 'italic' })}
-            >
+            <span className={headlineAccent.yellow}>
               {t('hero.title.highlight')}
             </span>
           </h1>
