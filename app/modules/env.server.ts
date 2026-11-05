@@ -1,4 +1,5 @@
-import untildify from 'untildify';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 
 import { ConfigurationError } from './errors';
 import type { PrivateEnvVars, PublicEnvVars } from './types';
@@ -92,7 +93,7 @@ export function getPrivateEnvVars(): PrivateEnvVars {
     }
 
     const githubRepoAPIUrl = `https://api.github.com/repos/${githubAccount}/${githubRepo}/contents`;
-    const localeRepoAPIUrl = untildify(`~/projects/ocobo/${githubRepo}`);
+    const localeRepoAPIUrl = join(homedir(), 'projects', 'ocobo', githubRepo);
 
     const readContentFrom: 'locale' | 'github' =
       process.env.NODE_ENV === 'production'
