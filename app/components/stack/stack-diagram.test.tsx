@@ -5,7 +5,11 @@ import { createInstance } from 'i18next';
 import { describe, expect, it } from 'vitest';
 
 import { languages, resources } from '~/localization/resources';
-import { STACK_LAYER_IDS, revenueStack } from '~/modules/revenue-stack';
+import {
+  STACK_LAYER_IDS,
+  layerNumber,
+  revenueStack,
+} from '~/modules/revenue-stack';
 import { axe, render, screen, within } from '~/test/utils';
 
 import { StackDiagram } from './stack-diagram';
@@ -30,18 +34,8 @@ describe('StackDiagram', () => {
     expect(screen.getByText('CRM')).toBeInTheDocument();
   });
 
-  it('numbers the layers in the order of their ids', () => {
-    expect(
-      STACK_LAYER_IDS.map((id) => {
-        const layer = revenueStack.layers[id];
-        return [layer.id, layer.number];
-      }),
-    ).toEqual(
-      STACK_LAYER_IDS.map((id, index) => [
-        id,
-        String(index + 1).padStart(2, '0'),
-      ]),
-    );
+  it('numbers the layers from their place in STACK_LAYER_IDS', () => {
+    expect(STACK_LAYER_IDS.map(layerNumber)).toEqual(['01', '02', '03', '04']);
   });
 
   it('renders the English copy', () => {

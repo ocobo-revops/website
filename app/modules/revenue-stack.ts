@@ -18,6 +18,11 @@ export const STACK_LAYER_IDS = [
 
 export type StackLayerId = (typeof STACK_LAYER_IDS)[number];
 
+/** The layer's number, from its place in `STACK_LAYER_IDS`: "01" to "04". */
+export function layerNumber(id: StackLayerId): string {
+  return String(STACK_LAYER_IDS.indexOf(id) + 1).padStart(2, '0');
+}
+
 export type StackTool = {
   name: string;
   /** Path under `public/`. Without one, the chip shows the first letter. */
@@ -42,8 +47,6 @@ export type StackAccent = 'mint' | 'sky' | 'ai' | 'coral';
 export type StackLayer = {
   id: StackLayerId;
   accent: StackAccent;
-  /** Shown before the layer name, as in "01 · Signaux". */
-  number: string;
   tools: readonly StackTool[];
 };
 
@@ -62,7 +65,6 @@ export const revenueStack: RevenueStack = {
     signals: {
       id: 'signals',
       accent: 'mint',
-      number: '01',
       tools: [
         { name: 'Modjo', logo: '/logos/modjo.jpg', role: 'conversations' },
         { name: 'Aircall', logo: '/logos/aircall.png', role: 'calls' },
@@ -78,7 +80,6 @@ export const revenueStack: RevenueStack = {
     context: {
       id: 'context',
       accent: 'sky',
-      number: '02',
       tools: [
         { name: 'Notion', logo: '/logos/notion.png' },
         { name: 'Modjo', logo: '/logos/modjo.jpg' },
@@ -90,7 +91,6 @@ export const revenueStack: RevenueStack = {
     interface: {
       id: 'interface',
       accent: 'ai',
-      number: '03',
       tools: [
         { name: 'Dust', logo: '/logos/dust.png', role: 'agents' },
         { name: 'Claude', role: 'assistant' },
@@ -100,7 +100,6 @@ export const revenueStack: RevenueStack = {
     execution: {
       id: 'execution',
       accent: 'coral',
-      number: '04',
       tools: [
         { name: 'Planhat', logo: '/logos/planhat.png' },
         { name: 'Qobra', logo: '/logos/qobra.png' },

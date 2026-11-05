@@ -11,7 +11,7 @@ import { url } from '~/utils/url';
 
 // After another white section, the two join: no top padding, a hairline
 // above the heading instead, as in the mockup.
-const joinedStyles = {
+export const joinedStyles = {
   section: css({ pt: '0' }),
   header: css({
     pt: '14',

@@ -18,6 +18,7 @@ import {
   layerText,
   layerTitle,
   useLayerCopy,
+  useLayerText,
 } from './stack-parts';
 
 /*
@@ -141,7 +142,8 @@ const lineVisible = css({
 const lineOrigins: Record<Direction, string> = {
   right: css({ '@/5xl': { transformOrigin: 'left' } }),
   left: css({ '@/5xl': { transformOrigin: 'right' } }),
-  up: css({ transformOrigin: 'bottom' }),
+  // In one column the CRM sits above this connector, from `@/5xl` below it.
+  up: css({ transformOrigin: { base: 'top', '@/5xl': 'bottom' } }),
   down: css({ transformOrigin: 'top' }),
 };
 
@@ -180,7 +182,12 @@ const dotOffset = {
   vertical: css({ ml: '[-3.5px]' }),
 };
 
-const paused = css({ animationPlayState: 'paused' });
+// The loops start once the figure enters the viewport, so the first dot run
+// is seen. `useInView` reveals once: they never pause again after that.
+// The play state sits in the same condition as the `animation` shorthand,
+// which would otherwise reset it to running.
+const trackPaused = css({ '@/5xl': { animationPlayState: 'paused' } });
+const pingPaused = css({ animationPlayState: 'paused' });
 
 type ConnectorProps = {
   area: string;
@@ -223,7 +230,7 @@ function Connector({ area, direction, colour, inView }: ConnectorProps) {
           }),
           trackStyles[axis],
           trackMotion[direction],
-          inView ? undefined : paused,
+          inView ? undefined : trackPaused,
         )}
       >
         <span
@@ -270,7 +277,7 @@ function LayerHeading({ layer }: { layer: StackLayer }) {
 
 /** Signals and interface: title, text, then the tools with their role. */
 function ListCard({ layer }: { layer: StackLayer }) {
-  const { text: body } = useLayerCopy(layer);
+  const body = useLayerText(layer);
   return (
     <>
       <LayerHeading layer={layer} />
@@ -282,7 +289,7 @@ function ListCard({ layer }: { layer: StackLayer }) {
 
 /** Context: title and text beside the tool chips, from `@/5xl`. */
 function ChipsCard({ layer }: { layer: StackLayer }) {
-  const { text: body } = useLayerCopy(layer);
+  const body = useLayerText(layer);
   return (
     <div
       className={css({
@@ -334,8 +341,24 @@ function RowCard({ layer }: { layer: StackLayer }) {
   );
 }
 
-// Interface is AI content: a 1px AI gradient frame around a white card.
-const aiFrame = css({ p: '[1px]', borderRadius: '2xl', bgGradient: 'ai' });
+// Interface is AI content: a 1px AI gradient frame around a white card. The
+// gradient sits on a layer of its own, at 70% as in the prototype, so the
+// card stays opaque.
+const aiFrame = css({
+  position: 'relative',
+  isolation: 'isolate',
+  p: '[1px]',
+  borderRadius: '2xl',
+  _before: {
+    content: '""',
+    position: 'absolute',
+    inset: '0',
+    zIndex: '-1',
+    borderRadius: '2xl',
+    bgGradient: 'ai',
+    opacity: '[0.7]',
+  },
+});
 
 // --- CRM ------------------------------------------------------------------
 
@@ -389,7 +412,7 @@ function CrmCore({ crm, inView }: CrmCoreProps) {
               animation: 'stack-ping',
               _motionReduce: { animation: '[none]' },
             }),
-            inView ? undefined : paused,
+            inView ? undefined : pingPaused,
           )}
         />
       </svg>
@@ -451,32 +474,26 @@ function CrmCore({ crm, inView }: CrmCoreProps) {
 
 // --- Diagram --------------------------------------------------------------
 
-type StackDiagramProps = {
-  /** Defaults to Ocobo's stack (`app/modules/revenue-stack.ts`). */
-  stack?: RevenueStack;
-  className?: string;
-};
-
-export function StackDiagram({
-  stack = revenueStack,
-  className,
-}: StackDiagramProps) {
+/** Ocobo's stack diagram, drawn from `revenueStack` (`app/modules/revenue-stack.ts`). */
+export function StackDiagram() {
   const { t } = useTranslation('stack');
   const { ref, inView } = useInView<HTMLElement>();
-  const { signals, context, interface: aiLayer, execution } = stack.layers;
+  const {
+    signals,
+    context,
+    interface: aiLayer,
+    execution,
+  } = revenueStack.layers;
 
   return (
     <figure
       ref={ref}
       aria-label={t('figureLabel')}
-      className={cx(
-        css({
-          position: 'relative',
-          isolation: 'isolate',
-          containerType: 'inline-size',
-        }),
-        className,
-      )}
+      className={css({
+        position: 'relative',
+        isolation: 'isolate',
+        containerType: 'inline-size',
+      })}
     >
       <div
         aria-hidden="true"
@@ -508,7 +525,7 @@ export function StackDiagram({
           inView={inView}
         />
         <Node area={areas.core} delay="core" inView={inView}>
-          <CrmCore crm={stack.crm} inView={inView} />
+          <CrmCore crm={revenueStack.crm} inView={inView} />
         </Node>
         <Connector
           area={areas.up}

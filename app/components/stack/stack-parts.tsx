@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
-import type {
-  StackAccent,
-  StackLayer,
-  StackTool,
+import {
+  type StackAccent,
+  type StackLayer,
+  type StackTool,
+  layerNumber,
 } from '~/modules/revenue-stack';
 
 // One static class per accent: Panda only ships literal values (CLAUDE.md §7).
-export const accentDots: Record<StackAccent | 'yellow', string> = {
+const accentDots: Record<StackAccent | 'yellow', string> = {
   mint: css({ bg: 'mint' }),
   sky: css({ bg: 'sky' }),
   ai: css({ bgGradient: 'ai' }),
@@ -204,20 +205,22 @@ export function ToolList({ tools }: { tools: readonly StackTool[] }) {
   );
 }
 
-/**
- * A layer's copy: "01 · Signaux", its title and its text. Execution has no
- * text key, and `RowCard` reads none.
- */
+/** A layer's heading, as "01 · Signaux", and its title. */
 export function useLayerCopy(layer: StackLayer) {
   const { t } = useTranslation('stack');
   return {
     heading: t('layerHeading', {
-      number: layer.number,
+      number: layerNumber(layer.id),
       label: t(`layers.${layer.id}.label`),
     }),
     title: t(`layers.${layer.id}.title`),
-    text: t(`layers.${layer.id}.text`),
   };
+}
+
+/** A layer's text. Execution has none: `RowCard` does not call this. */
+export function useLayerText(layer: StackLayer) {
+  const { t } = useTranslation('stack');
+  return t(`layers.${layer.id}.text`);
 }
 
 // The prototype's 19px Bermia title. ADR 0002 keeps Bermia for H2 and
