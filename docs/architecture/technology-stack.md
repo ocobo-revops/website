@@ -49,7 +49,7 @@
 
 | Category | Technology | Version | Justification |
 |----------|------------|---------|---------------|
-| **Deployment** | Vercel | - | Edge deployment platform with automatic caching |
+| **Deployment** | Vercel | - | Node.js serverless deployment platform with automatic CDN caching |
 | **Analytics** | @vercel/analytics | ^1.5.0 | Web analytics and performance monitoring |
 | **Performance** | @vercel/speed-insights | ^1.2.0 | Real user monitoring and Core Web Vitals |
 | **Storage** | @vercel/blob | ^1.1.1 | File storage for content and assets |
@@ -68,7 +68,7 @@
 - **Presentation Layer**: React components with Panda CSS styling
 - **Data Layer**: React Router loaders with caching strategy  
 - **Content Layer**: Markdoc processing with GitHub/filesystem sources
-- **Infrastructure Layer**: Vercel edge deployment with global caching
+- **Infrastructure Layer**: Vercel Node.js serverless deployment with global CDN caching
 
 ## Key Architectural Decisions
 

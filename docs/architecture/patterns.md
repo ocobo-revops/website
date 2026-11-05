@@ -6,7 +6,7 @@
 
 ## Executive Summary
 
-OCOBO website is a React Router v7 (formerly Remix) application with internationalization support, implementing a modern full-stack React architecture with server-side rendering and edge deployment capabilities.
+OCOBO website is a React Router v7 (formerly Remix) application with internationalization support, implementing a modern full-stack React architecture with server-side rendering and serverless deployment on Vercel.
 
 ## Technology Stack
 
@@ -22,7 +22,7 @@ OCOBO website is a React Router v7 (formerly Remix) application with internation
 | **Internationalization** | React i18next | ^15.6.1 | French/English support with SSR compatibility |
 | **Testing** | Vitest | ^3.2.4 | Fast unit testing with coverage reporting |
 | **Code Quality** | Biome | 1.9.4 | Fast linting and formatting |
-| **Deployment** | Vercel | N/A | Edge deployment with global CDN |
+| **Deployment** | Vercel | N/A | Node.js serverless deployment with global CDN |
 
 ## Architecture Pattern
 
@@ -68,8 +68,8 @@ The application follows React Router v7's file-based routing with a layered comp
    - Markdoc processing pipeline
    - Dual source support (local/remote)
 
-4. **Edge-First Design**
-   - Vercel Edge Runtime compatibility
+4. **CDN-Backed Design**
+   - Vercel Node.js serverless runtime (Node 24)
    - Global content caching
    - Optimal performance worldwide
 
@@ -224,10 +224,11 @@ export const loader = createHybridLoader(
 
 ## Deployment Architecture
 
-### Vercel Edge Deployment
+### Vercel Deployment
 
 **Infrastructure:**
-- Global edge network
+- Node.js serverless functions (Node 24)
+- Global edge network (CDN caching)
 - Automatic scaling
 - Zero-config deployment
 

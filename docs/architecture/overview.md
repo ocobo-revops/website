@@ -49,7 +49,7 @@ Content (markdown, assets) lives in a separate repository (`ocobo-revops/posts`)
 │      (GitHub API / Filesystem)          │
 ├─────────────────────────────────────────┤
 │           Infrastructure                │
-│       (Vercel Edge + CDN Cache)         │
+│       (Vercel Functions + CDN Cache)    │
 └─────────────────────────────────────────┘
 ```
 
@@ -139,7 +139,7 @@ Design Tokens → Panda Compilation → CSS Generation → Component Application
 
 ### Horizontal
 
-- **Vercel Edge** automatic global distribution
+- **Vercel edge network** automatic global distribution of cached responses
 - **CDN Caching** zero configuration
 - **Stateless Architecture** for automatic scaling
 

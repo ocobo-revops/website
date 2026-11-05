@@ -7,7 +7,7 @@ Official documentation for the OCOBO project - React Router v7 application with 
 - **Type:** React Router v7 Monolith
 - **Technologies:** TypeScript, Panda CSS, Vercel, GitHub API
 - **Architecture:** Component-based Layered Architecture with SSR
-- **Deployment:** Vercel Edge with intelligent caching
+- **Deployment:** Vercel (Node.js serverless functions) with intelligent CDN caching
 
 ## Documentation Structure
 

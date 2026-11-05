@@ -29,13 +29,13 @@ The OCOBO website is built with React Router v7 (evolved from Remix), implementi
 | **Internationalization** | React i18next | Multi-language support |
 | **Testing** | Vitest | Unit testing with coverage |
 | **Code Quality** | Biome | Linting and formatting |
-| **Deployment** | Vercel | Edge deployment and global CDN |
+| **Deployment** | Vercel | Node.js serverless deployment and global CDN |
 
 ## Architecture Classification
 
 **Type**: Monolith Web Application
 **Pattern**: Layered Component Architecture with SSR
-**Deployment**: Edge-first with global CDN
+**Deployment**: Node.js serverless functions with global CDN
 **Content**: GitHub-based headless CMS
 
 ## Repository Structure
