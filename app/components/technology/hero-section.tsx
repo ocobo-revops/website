@@ -6,10 +6,10 @@ import { flex } from '@ocobo/styled-system/patterns';
 import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
+import { headlineAccent } from '~/components/ui/headline-accent';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
-import { headlineAccent } from '~/components/ui/headline-accent';
 import {
   DEFAULT_STACK_ITEMS,
   ModularStackGrid,

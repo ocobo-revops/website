@@ -157,7 +157,7 @@ export function TypeScaleSection() {
 const headlineAccents: { tone: HeadlineAccentTone; usedBy: string }[] = [
   { tone: 'coral', usedBy: 'Revenue Performance' },
   { tone: 'mint', usedBy: 'Sales Experience, studio' },
-  { tone: 'yellow', usedBy: 'Sales Compensation, method' },
+  { tone: 'yellow', usedBy: 'Sales Compensation, method, clients (J5)' },
   { tone: 'sky', usedBy: 'Customer Experience, technology' },
   { tone: 'gray', usedBy: 'Revenue Systems' },
   { tone: 'ai', usedBy: 'Revenue AI (gradient)' },
