@@ -27,6 +27,10 @@ describe('getLanguageSwitchPath', () => {
   it('does not treat a segment that only starts with a locale as one', () => {
     expect(getLanguageSwitchPath('/frontend', 'en')).toBe('/en');
   });
+
+  it('sends an unknown locale prefix to the target home page', () => {
+    expect(getLanguageSwitchPath('/de/offer', 'en')).toBe('/en');
+  });
 });
 
 describe('getPathLanguage', () => {
@@ -38,5 +42,9 @@ describe('getPathLanguage', () => {
   it('falls back without a locale prefix', () => {
     expect(getPathLanguage('/blog/post', 'en')).toBe('en');
     expect(getPathLanguage('/english', 'fr')).toBe('fr');
+  });
+
+  it('falls back on an unknown locale prefix', () => {
+    expect(getPathLanguage('/de/offer', 'fr')).toBe('fr');
   });
 });
