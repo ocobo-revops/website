@@ -5,10 +5,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getPrivateEnvVars, getPublicEnvVars } from './env.server';
 import { ConfigurationError } from './errors';
 
-// Mock untildify
-vi.mock('untildify', () => ({
-  default: (path: string) => path.replace('~', '/home/user'),
-}));
+// Pin the home directory so the local content path is deterministic.
+// Named imports of Node built-ins resolve through `default`, so override both.
+vi.mock('node:os', async (importOriginal) => {
+  const os = await importOriginal<typeof import('node:os')>();
+  const homedir = () => '/home/user';
+  return { ...os, default: { ...os, homedir }, homedir };
+});
 
 describe('Environment Configuration', () => {
   const originalEnv = process.env;
