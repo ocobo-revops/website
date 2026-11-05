@@ -110,6 +110,12 @@ export const designSystemGroups = [
         sections: ['Bow tie'],
       },
       {
+        slug: 'stack',
+        title: 'Stack diagram',
+        description: 'The Revenue Systems stack around the CRM.',
+        sections: ['Stack diagram'],
+      },
+      {
         slug: 'motion',
         title: 'Motion',
         description: 'Reveal on scroll and scroll progress.',

@@ -70,6 +70,7 @@ const groups = [
     title: 'Patterns',
     pages: [
       { slug: 'bow-tie', name: 'Bow tie', sections: ['Bow tie'] },
+      { slug: 'stack', name: 'Stack diagram', sections: ['Stack diagram'] },
       { slug: 'motion', name: 'Motion', sections: ['Motion'] },
     ],
   },
