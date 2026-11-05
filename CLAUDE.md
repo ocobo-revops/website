@@ -96,7 +96,7 @@ Full route map + tree analysis → [docs/architecture/source-tree.md](docs/archi
 
 - Two sources, one API. Switch via `CONTENT_SOURCE` (`locale` or `github`).
 - **Local**: `~/projects/ocobo-posts/` (path via `localeRepoAPIUrl`).
-- **GitHub**: `@octokit/rest`, branch via `GITHUB_BRANCH` (e.g. `offers` to preview placeholders).
+- **GitHub**: native `fetch` against the GitHub REST contents API (raw media type, PAT auth, `ref` set to `GITHUB_BRANCH`, e.g. `offers` to preview placeholders). No SDK.
 - Markdown + frontmatter → Markdoc → Zod validation → loader.
 - Public API: import from [app/modules/content/api.ts](app/modules/content/api.ts) - never reach into `sources/` directly. Use the convenience functions: `fetchStory`, `fetchStories`, `fetchBlogpost`, `fetchBlogposts`, `fetchPage`, `fetchPages`, `fetchJob`, `fetchJobs`, `fetchChallenge`, `fetchChallenges`, plus generic `fetchContent`/`fetchContents` for custom types.
 - Return shape is `ContentResult<T>` = `ActionResult<ContentFetchState, T>` - a tuple destructured as `[statusCode, state, data]` where `state` is one of `'success' | 'not_found' | 'validation_error' | 'source_error' | 'ignored'`. Routes branch on `statusCode !== 200`.

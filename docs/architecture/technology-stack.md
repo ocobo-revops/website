@@ -32,7 +32,7 @@
 | Category | Technology | Version | Justification |
 |----------|------------|---------|---------------|
 | **Markdown Processing** | Markdoc | ^0.5.4 | Structured markdown parser with component rendering |
-| **GitHub Integration** | @octokit/rest | ^22.0.0 | GitHub API client for fetching content from repositories |
+| **GitHub Integration** | Native `fetch` | Node 24 built-in | Calls the GitHub REST contents API directly to fetch content from the posts repository, no SDK |
 | **YAML Processing** | js-yaml | ^4.1.0 | YAML parsing for frontmatter and configuration |
 | **Schema Validation** | Zod | ^4.0.17 | TypeScript-first schema validation |
 
