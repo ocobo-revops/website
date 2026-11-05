@@ -201,9 +201,8 @@ export const ChallengeFrontmatterSchema = z.strictObject({
       )
       .length(3),
     /**
-     * Tool slugs. Spec #91 says 0 to 6, but two mockups exceed it, logos
-     * included (Sales Experience 9, Revenue Systems 7), so the cap is the
-     * largest mockup count. Keep it in step with the posts repo.
+     * Tool slugs. The cap is the largest mockup count, logos included
+     * (Sales Experience). Keep it in step with the posts repo.
      */
     tools: z.array(slug).max(9),
     note: cappedText(170),
@@ -211,10 +210,6 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   case: z.strictObject({
     /** Story slug, optional until the Revenue AI client case has a Story. */
     story: slug.optional(),
-    /**
-     * Spec #91 says 90. The Revenue AI headline is 98 characters, so the cap
-     * follows the spec's own rule: longest mockup value plus about 20%.
-     */
     headline: cappedText(120),
     summary: cappedText(220),
     metrics: z
