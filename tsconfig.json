@@ -22,9 +22,10 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "@ocobo/styled-system/*": ["./@ocobo/styled-system/*"],
+      "preset": ["./preset"]
     },
 
     // Vite takes care of building everything, not tsc.
