@@ -11,8 +11,43 @@ import type {
 
 import { figureText, unbroken, visuallyHidden } from './challenge-figure';
 
-type ElementOf<T extends ChallengeDemoElement['type']> = Extract<
-  ChallengeDemoElement,
+/**
+ * Ranked accounts, each with a score bar. Local to the website: the Revenue
+ * AI day scenes use it, the posts schema does not.
+ */
+type AccountsElement = {
+  type: 'accounts';
+  items: readonly { name: string; signal: string; score: number }[];
+};
+
+/** Labelled bullet points, as in a meeting brief. Local to the website. */
+type BulletsElement = {
+  type: 'bullets';
+  items: readonly { label: string; text: string }[];
+};
+
+export type AgentWindowElement =
+  | ChallengeDemoElement
+  | AccountsElement
+  | BulletsElement;
+
+/**
+ * What the window draws. A challenge demo from the posts schema fits as is;
+ * the website adds a bold lead to the opening, two element types and a clock
+ * in the title bar.
+ */
+export type AgentWindowDemo = Pick<
+  ChallengeAgentDemo,
+  'channel' | 'agent' | 'time' | 'footer'
+> & {
+  opening: ChallengeAgentDemo['opening'] & { lead?: string };
+  elements: readonly AgentWindowElement[];
+  /** Time shown at the right of the title bar. */
+  clock?: string;
+};
+
+type ElementOf<T extends AgentWindowElement['type']> = Extract<
+  AgentWindowElement,
   { type: T }
 >;
 
@@ -239,7 +274,95 @@ function Buttons({ element }: { element: ElementOf<'buttons'> }) {
   );
 }
 
-function DemoElement({ element }: { element: ChallengeDemoElement }) {
+const scoreTrack = css({
+  flexShrink: 0,
+  h: '1.5',
+  w: { base: '12', sm: '20' },
+  bg: 'gray.100',
+  rounded: 'full',
+  overflow: 'hidden',
+});
+
+function Accounts({ element }: { element: ElementOf<'accounts'> }) {
+  const { t } = useTranslation('challenges');
+
+  return (
+    // The order is the priority: an ordered list says so.
+    <ol
+      role="list"
+      className={css({ display: 'flex', flexDirection: 'column', gap: '2' })}
+    >
+      {element.items.map((item, index) => (
+        <li
+          key={`${index}-${item.name}`}
+          className={cx(
+            smallText,
+            css({
+              display: 'flex',
+              alignItems: 'center',
+              gap: '3',
+              px: '3',
+              py: '2.5',
+              bg: 'gray.50',
+              rounded: 'lg',
+            }),
+          )}
+        >
+          <span className={css({ flex: '1', minW: '0' })}>
+            <span className={css({ fontWeight: 'semibold' })}>{item.name}</span>{' '}
+            <span className={css({ color: 'gray' })}>{item.signal}</span>
+          </span>
+          <span className={visuallyHidden}>
+            {t('aiDay.score', { score: item.score })}
+          </span>
+          <span aria-hidden="true" className={scoreTrack}>
+            <span
+              className={css({
+                display: 'block',
+                h: 'full',
+                bgGradient: 'ai',
+                rounded: 'full',
+              })}
+              // A data value: Panda cannot generate a class per percentage.
+              style={{ width: `${item.score}%` }}
+            />
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function Bullets({ element }: { element: ElementOf<'bullets'> }) {
+  return (
+    <ul
+      role="list"
+      className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2',
+        px: '3.5',
+        py: '3',
+        bg: 'gray.50',
+        rounded: 'lg',
+      })}
+    >
+      {element.items.map((item, index) => (
+        <li
+          key={`${index}-${item.label}`}
+          className={cx(smallText, css({ color: 'gray.700' }))}
+        >
+          <span className={css({ fontWeight: 'semibold', color: 'dark' })}>
+            {item.label}
+          </span>{' '}
+          {item.text}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function DemoElement({ element }: { element: AgentWindowElement }) {
   switch (element.type) {
     case 'kpis':
       return <Kpis element={element} />;
@@ -251,16 +374,20 @@ function DemoElement({ element }: { element: ChallengeDemoElement }) {
       return <Status element={element} />;
     case 'buttons':
       return <Buttons element={element} />;
+    case 'accounts':
+      return <Accounts element={element} />;
+    case 'bullets':
+      return <Bullets element={element} />;
   }
 }
 
-const elementKey = (element: ChallengeDemoElement, index: number) =>
+const elementKey = (element: AgentWindowElement, index: number) =>
   `${element.type}-${index}`;
 
 const barDot = css({ h: '2', w: '2', rounded: 'full' });
 
 type AgentWindowProps = {
-  demo: ChallengeAgentDemo;
+  demo: AgentWindowDemo;
   className?: string;
 };
 
@@ -272,7 +399,7 @@ type AgentWindowProps = {
  */
 export function AgentWindow({ demo, className }: AgentWindowProps) {
   const { t } = useTranslation('challenges');
-  const { channel, agent, time, opening, elements, footer } = demo;
+  const { channel, agent, time, opening, elements, footer, clock } = demo;
 
   return (
     <div
@@ -317,6 +444,20 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
         >
           {channel}
         </span>
+        {clock ? (
+          <time
+            className={cx(
+              mutedText,
+              css({
+                ml: 'auto',
+                flexShrink: 0,
+                fontVariantNumeric: 'tabular-nums',
+              }),
+            )}
+          >
+            {clock}
+          </time>
+        ) : null}
       </div>
 
       <div
@@ -385,6 +526,13 @@ export function AgentWindow({ demo, className }: AgentWindowProps) {
             </p>
           ) : (
             <p className={cx(smallText, css({ color: 'gray.700' }))}>
+              {opening.lead ? (
+                <>
+                  <strong className={css({ color: 'dark' })}>
+                    {opening.lead}
+                  </strong>{' '}
+                </>
+              ) : null}
               {opening.text}
             </p>
           )}

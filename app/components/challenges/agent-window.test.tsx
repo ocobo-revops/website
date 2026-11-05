@@ -68,6 +68,40 @@ describe('AgentWindow', () => {
     expect(screen.getByText('Daily CRM check done.')).toBeInTheDocument();
   });
 
+  it('renders the website-only elements, the lead and the clock', () => {
+    render(
+      <AgentWindow
+        demo={{
+          ...demo,
+          clock: '09:45',
+          opening: {
+            kind: 'statement',
+            lead: 'Brightlane, meeting at 10:00.',
+            text: 'Brief ready:',
+          },
+          elements: [
+            {
+              type: 'accounts',
+              items: [{ name: 'Northwind', signal: 'Raised funds', score: 94 }],
+            },
+            {
+              type: 'bullets',
+              items: [{ label: 'History:', text: 'a demo in June.' }],
+            },
+          ],
+        }}
+      />,
+      { i18nLang: 'en' },
+    );
+
+    expect(screen.getByText('Brightlane, meeting at 10:00.').tagName).toBe(
+      'STRONG',
+    );
+    expect(screen.getByText('09:45')).toBeInTheDocument();
+    expect(screen.getByText('Score: 94 out of 100')).toBeInTheDocument();
+    expect(screen.getByText('History:')).toBeInTheDocument();
+  });
+
   it('has no axe violations', async () => {
     const { container } = render(<AgentWindow demo={demo} />, {
       i18nLang: 'en',

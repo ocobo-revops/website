@@ -27,11 +27,15 @@ export type TabItem = {
 
 type TabsOrientation = 'horizontal' | 'vertical';
 
+/** `dark` draws the tabs on a dark section, such as `section({ bg: 'dark' })`. */
+type TabsTone = 'light' | 'dark';
+
 type TabsProps = {
   items: readonly TabItem[];
   /** Accessible name of the tab list. */
   label: string;
   orientation?: TabsOrientation;
+  tone?: TabsTone;
   /** Selects the next tab on its own, unless the visitor reduces motion. */
   autoplay?: boolean;
   /** Time each tab stays selected during autoplay, in milliseconds. */
@@ -74,7 +78,6 @@ const triggerStyles = css({
   px: '4',
   py: '3',
   rounded: 'lg',
-  color: 'gray',
   textAlign: 'left',
   cursor: 'pointer',
   transition: 'colors',
@@ -82,30 +85,52 @@ const triggerStyles = css({
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: 'transparent',
-  _hover: { bg: 'gray.light', color: 'foreground' },
-  // The border marks the selected tab apart from hover, beyond colour alone.
-  _selected: {
-    bg: 'gray.light',
-    color: 'foreground',
-    borderColor: 'foreground',
-  },
   _focusVisible: {
     outlineWidth: '2px',
     outlineStyle: 'solid',
-    outlineColor: 'foreground',
     outlineOffset: '0.5',
   },
   _motionReduce: { transitionDuration: 'instant' },
 });
 
+// One static class per tone: a colour passed through `triggerClassName`
+// would compete with these atomic classes in no set order.
+const triggerToneStyles = {
+  light: css({
+    color: 'gray',
+    _hover: { bg: 'gray.light', color: 'foreground' },
+    // The border marks the selected tab apart from hover, beyond colour alone.
+    _selected: {
+      bg: 'gray.light',
+      color: 'foreground',
+      borderColor: 'foreground',
+    },
+    _focusVisible: { outlineColor: 'foreground' },
+  }),
+  dark: css({
+    color: 'white/70',
+    _hover: { bg: 'white/5', color: 'white' },
+    _selected: {
+      bg: 'white/10',
+      color: 'white',
+      borderColor: 'white/40',
+    },
+    _focusVisible: { outlineColor: 'white' },
+  }),
+};
+
 const contentStyles = css({
   _focusVisible: {
     outlineWidth: '2px',
     outlineStyle: 'solid',
-    outlineColor: 'foreground',
     outlineOffset: '1',
   },
 });
+
+const contentToneStyles = {
+  light: css({ _focusVisible: { outlineColor: 'foreground' } }),
+  dark: css({ _focusVisible: { outlineColor: 'white' } }),
+};
 
 // Rendered from the server on, then hidden by CSS, so a visitor who reduces
 // motion never sees it appear and vanish once the preference is known.
@@ -131,6 +156,7 @@ export function Tabs({
   items,
   label,
   orientation = 'horizontal',
+  tone = 'light',
   autoplay = false,
   interval = DEFAULT_INTERVAL,
   className,
@@ -214,6 +240,7 @@ export function Tabs({
               className={cx(
                 text({ variant: 'small' }),
                 triggerStyles,
+                triggerToneStyles[tone],
                 triggerClassName,
               )}
             >
@@ -244,7 +271,11 @@ export function Tabs({
         <ArkTabs.Content
           key={item.value}
           value={item.value}
-          className={cx(contentStyles, contentClassName)}
+          className={cx(
+            contentStyles,
+            contentToneStyles[tone],
+            contentClassName,
+          )}
         >
           {item.content}
         </ArkTabs.Content>

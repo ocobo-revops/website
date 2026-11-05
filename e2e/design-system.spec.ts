@@ -71,6 +71,11 @@ const groups = [
     pages: [
       { slug: 'bow-tie', name: 'Bow tie', sections: ['Bow tie'] },
       { slug: 'motion', name: 'Motion', sections: ['Motion'] },
+      {
+        slug: 'challenge-sections',
+        name: 'Challenge sections',
+        sections: ['AI thesis', 'Une journée de commercial'],
+      },
     ],
   },
 ];

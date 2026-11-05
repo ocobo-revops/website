@@ -28,7 +28,7 @@ import type { ToolRegistry } from '~/modules/content/tools';
 import type { StoryFrontmatter } from '~/modules/schemas';
 import { loadChallengeFixture } from '~/test/challenge-fixture';
 import { invokeLoader } from '~/test/loader-harness';
-import { render, screen } from '~/test/utils';
+import { render, screen, within } from '~/test/utils';
 import type { MarkdocFile } from '~/types';
 
 import ChallengeRoute, { loader } from './_main.($lang).challenges.$slug';
@@ -568,14 +568,15 @@ describe('challenge page', () => {
       renderPage(ai.frontmatter, 'fr', references, menu, ai.slug);
 
       expect(screen.getByText('Notre point de vue')).toBeInTheDocument();
-      expect(
-        screen.getByRole('heading', {
+      const bridge = screen
+        .getByRole('heading', {
           level: 2,
           name: ai.frontmatter.aiBridge.title,
-        }),
-      ).toBeInTheDocument();
+        })
+        .closest('section') as HTMLElement;
+      // The day section further down has its own agent windows.
       expect(
-        screen.queryByRole('figure', { name: /^Exemple de message/ }),
+        within(bridge).queryByRole('figure', { name: /^Exemple de message/ }),
       ).not.toBeInTheDocument();
       expect(
         screen.queryByRole('link', { name: "Déployer l'IA dans vos équipes" }),
@@ -822,5 +823,68 @@ describe('challenge page cross-references', () => {
     expect(
       screen.getByRole('heading', { level: 2, name: 'Les autres enjeux' }),
     ).toBeInTheDocument();
+  });
+});
+
+describe('Revenue AI thesis and day (#239)', () => {
+  const thesisTitle =
+    "Vos agents IA ne seront jamais meilleurs que les données et les processus qu'on leur donne.";
+
+  it('renders both sections after the audience on the Revenue AI page', () => {
+    renderPage(
+      revenueAiFixture.frontmatter,
+      'fr',
+      references,
+      menu,
+      revenueAiFixture.slug,
+    );
+
+    const headings = screen
+      .getAllByRole('heading', { level: 2 })
+      .map((heading) => heading.textContent);
+    const audience = headings.indexOf('Pour qui');
+    expect(headings.slice(audience + 1, audience + 3)).toEqual([
+      thesisTitle,
+      'Une journée de commercial, avec ses agents.',
+    ]);
+    expect(document.getElementById('contexte')).not.toBeNull();
+    expect(
+      screen.getByRole('img', { name: /^Animation : des outils/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('tablist', { name: 'Une journée type' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the English copy', () => {
+    renderPage(
+      revenueAiFixture.frontmatter,
+      'en',
+      references,
+      menu,
+      revenueAiFixture.slug,
+    );
+
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Your AI agents will never be better than the data and processes you give them.',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('tablist', { name: 'A typical day' }),
+    ).toBeInTheDocument();
+  });
+
+  it('leaves both out of the other challenge pages', () => {
+    renderPage(frenchFixture.frontmatter, 'fr', references, menu);
+
+    expect(document.getElementById('contexte')).toBeNull();
+    expect(
+      screen.queryByRole('heading', { level: 2, name: thesisTitle }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('tablist', { name: 'Une journée type' }),
+    ).not.toBeInTheDocument();
   });
 });
