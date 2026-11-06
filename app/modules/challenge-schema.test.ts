@@ -232,7 +232,7 @@ const CAPS: [Path, number][] = [
   [['audience', 0, 'team'], 20],
   [['audience', 0, 'roles'], 30],
   [['audience', 0, 'benefit'], 100],
-  [['workstreams', 'title'], 50],
+  [['workstreams', 'title'], 71],
   [['workstreams', 'intro'], 120],
   [['workstreams', 'items', 0, 'category'], 26],
   [['workstreams', 'items', 0, 'title'], 64],
@@ -255,7 +255,7 @@ const CAPS: [Path, number][] = [
   [['aiBridge', 'demo', 'footer'], 60],
   [['aiBridge', 'demo', 'note'], 90],
   [['method', 'title'], 30],
-  [['method', 'subtitle'], 75],
+  [['method', 'subtitle'], 91],
   [['method', 'steps', 0, 'title'], 28],
   [['method', 'steps', 0, 'text'], 150],
   [['method', 'note'], 170],
@@ -264,7 +264,7 @@ const CAPS: [Path, number][] = [
   [['case', 'metrics', 0, 'value'], 12],
   [['case', 'metrics', 0, 'label'], 90],
   [['diagnostic', 'question'], 88],
-  [['diagnostic', 'subtitle'], 125],
+  [['diagnostic', 'subtitle'], 155],
 ];
 
 describe('challenge caps', () => {

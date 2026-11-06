@@ -10,7 +10,7 @@ hero:
   quote: On paie un CRM que personne ne remplit.
   lead: "Votre stack s'est empilée au fil des besoins, et personne n'en a la vue d'ensemble. Nous dessinons l'architecture d'abord, puis nous implémentons, connectons et faisons adopter"
   highlight: des outils au service de votre organisation Revenue.
-  cta: Remettre ma stack au service de la vente
+  cta: Échanger avec un architecte
 bowtie:
   activeStages:
     - demand-generation
@@ -121,7 +121,7 @@ method:
   note: "Et vos ERP, outils de facturation et de marketing. [Badges partenaires officiels à intégrer : HubSpot, Notion]"
 case:
   headline: "[Nom du client] : [le passage en une phrase]."
-  summary: "[Contexte en deux lignes. Ce qu'on a construit. Ce qui a changé pour les équipes.]"
+  summary: "[Contexte en deux lignes. Ce que nous avons construit. Ce qui a changé pour les équipes.]"
   metrics:
     - value: "[X]"
       label: "[Taux d'adoption du CRM, avant et après]"
@@ -129,5 +129,5 @@ case:
       label: "[Outils supprimés ou temps de saisie économisé]"
 diagnostic:
   question: Combien payez-vous pour des outils que vos équipes n'utilisent pas ?
-  subtitle: Trente minutes avec un architecte du revenu pour le savoir, et décider quoi garder, connecter ou arrêter.
+  subtitle: En 30 minutes, un architecte du revenu fait le point avec vous sur votre stack. Vous repartez en sachant par où commencer.
 ---
