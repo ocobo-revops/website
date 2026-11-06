@@ -91,22 +91,29 @@ const withChallenges = (challenges: ChallengeMenuEntry[], failed = false) => ({
 });
 
 describe('Navbar challenge entry', () => {
-  it('is hidden when no challenge is published', () => {
+  it('is hidden when no challenge is published, and the offer stays', () => {
     render(<Navbar />, withChallenges([]));
 
     expect(
       screen.queryByRole('button', { name: /vos enjeux/i }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Notre Offre' }),
+    ).toBeInTheDocument();
   });
 
-  it('comes first and lists the challenges in the order given', async () => {
+  it('replaces the offer entry and lists the challenges in order', async () => {
     const user = userEvent.setup();
     render(<Navbar />, withChallenges(frenchChallenges));
 
     const trigger = screen.getByRole('button', { name: /vos enjeux/i });
-    const offer = screen.getByRole('link', { name: 'Notre Offre' });
     expect(
-      trigger.compareDocumentPosition(offer) & Node.DOCUMENT_POSITION_FOLLOWING,
+      screen.queryByRole('link', { name: 'Notre Offre' }),
+    ).not.toBeInTheDocument();
+    const stories = screen.getByRole('link', { name: 'Success Stories' });
+    expect(
+      trigger.compareDocumentPosition(stories) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
 
     await user.click(trigger);
