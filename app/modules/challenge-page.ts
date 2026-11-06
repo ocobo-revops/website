@@ -36,7 +36,8 @@ function cleanList(values: readonly string[]): string[] {
 
 export type ChallengeHero = {
   title: string;
-  titleMuted: string | null;
+  /** Second line of the H1, italic in the challenge accent. */
+  titleAccent: string | null;
   quote: string | null;
   lead: string | null;
   highlight: string | null;
@@ -135,7 +136,7 @@ function buildHero({
   return {
     title: title ?? name,
     // The second line completes the first: it goes with a missing title.
-    titleMuted: title ? clean(hero.title[1]) : null,
+    titleAccent: title ? clean(hero.title[1]) : null,
     quote: clean(hero.quote),
     lead: clean(hero.lead),
     highlight: clean(hero.highlight),

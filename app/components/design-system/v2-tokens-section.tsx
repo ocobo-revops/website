@@ -2,6 +2,11 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { grid } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
+import {
+  type HeadlineAccentTone,
+  headlineAccent,
+} from '~/components/ui/headline-accent';
+
 import { ShowcaseSection } from './showcase-section';
 
 // Design system v2 tokens (ADR 0002), one export per showcase block. Every
@@ -142,6 +147,42 @@ export function TypeScaleSection() {
               {item.size} · text({`{ variant: '${item.name}' }`})
             </span>
             <span className={item.className}>Revenue operations</span>
+          </li>
+        ))}
+      </ul>
+    </ShowcaseSection>
+  );
+}
+
+const headlineAccents: { tone: HeadlineAccentTone; usedBy: string }[] = [
+  { tone: 'coral', usedBy: 'Revenue Performance' },
+  { tone: 'mint', usedBy: 'Sales Experience, studio' },
+  { tone: 'yellow', usedBy: 'Sales Compensation, method, clients (J5)' },
+  { tone: 'sky', usedBy: 'Customer Experience, technology' },
+  { tone: 'gray', usedBy: 'Revenue Systems' },
+  { tone: 'ai', usedBy: 'Revenue AI (gradient)' },
+];
+
+export function HeadlineAccentSection() {
+  return (
+    <ShowcaseSection title="Headline accent">
+      <ul
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8',
+        })}
+      >
+        {headlineAccents.map((item) => (
+          <li key={item.tone} className={tile}>
+            <span className={caption}>
+              headlineAccent.{item.tone} · {item.usedBy}
+            </span>
+            <span className={text({ variant: 'display-xl' })}>
+              Revenue operations
+              <br />
+              <span className={headlineAccent[item.tone]}>qui tiennent</span>
+            </span>
           </li>
         ))}
       </ul>

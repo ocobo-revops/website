@@ -11,6 +11,7 @@ import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-pag
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
 import { DIAGNOSTIC_ID } from './challenge-diagnostic';
+import { challengeHeadlineAccent } from './challenge-palette';
 import { challengePill } from './challenge-pill';
 import { WORKSTREAMS_ID } from './challenge-workstreams';
 
@@ -72,11 +73,11 @@ export function ChallengeHero({
             className={cx(text({ variant: 'display-xl' }), css({ mb: '8' }))}
           >
             {hero.title}
-            {hero.titleMuted ? (
+            {hero.titleAccent ? (
               <>
                 <br />
-                <span className={css({ color: 'gray' })}>
-                  {hero.titleMuted}
+                <span className={challengeHeadlineAccent[challenge]}>
+                  {hero.titleAccent}
                 </span>
               </>
             ) : null}

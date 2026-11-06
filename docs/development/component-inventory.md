@@ -47,6 +47,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | **Avatar** | `Avatar.tsx` | User profile images | Image handling |
 | **Tag** | `Tag.tsx` | Content tags and labels (blog chip, keeps its own style) | Panda styling |
 | **Eyebrow** | `eyebrow.tsx` | `label` text variant, optional 7px coloured dot (`dotColor`) | `text` recipe |
+| **headlineAccent** | `headline-accent.ts` | Class per tone for the italic second line of page headlines, colours from the `headlineAccent` semantic tokens; `ai` is gradient text | `css()` map, no recipe |
 | **Illustration** | `Illustration.tsx` | SVG illustrations | Custom wrapper |
 | **Logocobo** | `Logocobo.tsx` | Company logo component | SVG assets |
 
@@ -186,6 +187,7 @@ The sections fed by cross-references (client case, experts) get their view model
 Shared pieces:
 - `challenge-pill.ts`: the challenge pill class per key, used by the hero and the other challenges.
 - `challengeFill` in `challenge-palette.ts`: the solid fill per challenge (white text on Revenue Systems, coral for Revenue AI, as ADR 0002 sets). The pill and `PersonCard` (`app/components/member/person-card.tsx`) use it.
+- `challengeHeadlineAccent` in `challenge-palette.ts`: the `headlineAccent` class per challenge (gradient for Revenue AI). The hero uses it on the second line of the title.
 
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|

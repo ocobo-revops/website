@@ -6,6 +6,7 @@ import { center, flex } from '@ocobo/styled-system/patterns';
 import { badge, text } from '@ocobo/styled-system/recipes';
 
 import { ButtonLink } from '~/components/ui/button-link';
+import { headlineAccent } from '~/components/ui/headline-accent';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
@@ -38,7 +39,7 @@ export const HeroSection = () => {
           >
             {t('hero.title.line1')}
             <br />
-            <span className={css({ color: 'ocobo.mint', fontStyle: 'italic' })}>
+            <span className={headlineAccent.mint}>
               {t('hero.title.highlight')}
             </span>
           </h1>

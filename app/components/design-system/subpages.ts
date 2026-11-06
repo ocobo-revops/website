@@ -48,8 +48,14 @@ export const designSystemGroups = [
       {
         slug: 'typography',
         title: 'Typography',
-        description: 'The v2 type scale, font sizes and the v1 text styles.',
-        sections: ['Type scale (v2)', 'Font sizes and letter spacings', 'css'],
+        description:
+          'The v2 type scale, the headline accent, font sizes and the v1 text styles.',
+        sections: [
+          'Type scale (v2)',
+          'Headline accent',
+          'Font sizes and letter spacings',
+          'css',
+        ],
       },
       {
         slug: 'brand',

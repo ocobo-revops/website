@@ -53,7 +53,7 @@ describe('buildChallengePage', () => {
     expect(page.order).toBe(3);
     expect(page.hero).toMatchObject({
       title: 'A number',
-      titleMuted: 'you can see coming.',
+      titleAccent: 'you can see coming.',
       cta: 'Make my forecast reliable',
       activeStages: ['discovery', 'negotiation', 'closing', 'expansion'],
     });
@@ -130,7 +130,7 @@ describe('buildChallengePage', () => {
 
     expect(page.hero).toMatchObject({
       title: frontmatter.name,
-      titleMuted: null,
+      titleAccent: null,
     });
   });
 
