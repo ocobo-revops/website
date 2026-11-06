@@ -6,6 +6,8 @@ import {
 } from 'react-router';
 
 import { ChallengeAiBridge } from '~/components/challenges/challenge-ai-bridge';
+import { ChallengeAiDay } from '~/components/challenges/challenge-ai-day';
+import { ChallengeAiThesis } from '~/components/challenges/challenge-ai-thesis';
 import { ChallengeAudience } from '~/components/challenges/challenge-audience';
 import { ChallengeClientCase } from '~/components/challenges/challenge-client-case';
 import { ChallengeDiagnostic } from '~/components/challenges/challenge-diagnostic';
@@ -127,6 +129,13 @@ export default function ChallengeRoute() {
           title={t('audience.title')}
           intro={t('audience.intro')}
         />
+      ) : null}
+      {/* The Revenue AI page only: its copy lives in the locales (#239). */}
+      {page.key === 'ai' ? (
+        <>
+          <ChallengeAiThesis />
+          <ChallengeAiDay />
+        </>
       ) : null}
       {page.workstreams ? (
         <ChallengeWorkstreams

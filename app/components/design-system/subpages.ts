@@ -121,6 +121,12 @@ export const designSystemGroups = [
         description: 'Reveal on scroll and scroll progress.',
         sections: ['Motion'],
       },
+      {
+        slug: 'challenge-sections',
+        title: 'Challenge sections',
+        description: 'Sections specific to one challenge page.',
+        sections: ['AI thesis', 'Une journée de commercial'],
+      },
     ],
   },
 ] as const satisfies readonly DesignSystemGroup[];
