@@ -16,6 +16,7 @@ export const url = {
   blog: '/blog',
   contact: '/contact',
   tools: '/tools',
+  roi: '/roi',
   privacy: '/privacy',
   notFound: '/404',
   podcasts: 'https://podcast.ausha.co/revenue-echoes',

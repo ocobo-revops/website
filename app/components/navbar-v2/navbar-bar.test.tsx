@@ -21,7 +21,7 @@ describe('NavbarBar', () => {
       within(nav).getByRole('link', { name: 'Notre Offre' }),
     ).toBeInTheDocument();
     expect(
-      within(nav).getByRole('link', { name: 'Success Stories' }),
+      within(nav).getByRole('link', { name: 'Clients' }),
     ).toBeInTheDocument();
     for (const name of ['Méthode', 'À propos', 'Ressources']) {
       expect(within(nav).getByRole('button', { name })).toHaveAttribute(
@@ -29,7 +29,9 @@ describe('NavbarBar', () => {
         'false',
       );
     }
-    expect(screen.getByTestId('nav-cta')).toHaveTextContent('Prendre RDV');
+    expect(screen.getByTestId('nav-cta')).toHaveTextContent(
+      'Échanger avec un architecte',
+    );
     expect(
       within(nav).getByRole('link', { name: 'Ocobo, accueil' }),
     ).toHaveAttribute('href', '/fr');
@@ -51,7 +53,7 @@ describe('NavbarBar', () => {
     expect(panel).toBeVisible();
     expect(
       within(panel as HTMLElement).getByRole('link', {
-        name: /The Revenue Experience System/,
+        name: /Méthodologie/,
       }),
     ).toHaveAttribute('href', '/fr/method');
 
