@@ -39,6 +39,9 @@ export function placeChallengeItem(
   if (challengeItem === null) {
     return items;
   }
+  if (!items.some((item) => item.key === 'offer')) {
+    return [challengeItem, ...items];
+  }
   return items.map((item) => (item.key === 'offer' ? challengeItem : item));
 }
 

@@ -44,6 +44,16 @@ describe('placeChallengeItem', () => {
     expect(placeChallengeItem(items, null)).toEqual([offer, stories, contact]);
   });
 
+  it('keeps the challenge entry, first, when there is no offer entry', () => {
+    const items = placeChallengeItem([stories, contact], challenges);
+
+    expect(items.map((item) => item.key)).toEqual([
+      'challenges',
+      'stories',
+      'contact',
+    ]);
+  });
+
   it('does not mutate the given list', () => {
     const items = [offer, stories];
 

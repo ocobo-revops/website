@@ -72,8 +72,7 @@ export function Navbar() {
         className={css({
           position: 'relative',
           w: 'full',
-          // 6xl, not 5xl: the scrolled bar must hold every item on one line
-          // with the challenges entry shown.
+          // 6xl holds every item on one line once the challenges entry shows.
           maxW: scrolled ? '6xl' : '7xl',
           transition: 'all',
           transitionDuration: '[700ms]',
@@ -142,7 +141,6 @@ export function Navbar() {
               hstack({ gap: { base: '2', lg: '1', xl: '2' } }),
               css({
                 display: { base: 'none', lg: 'flex' },
-                flexWrap: 'nowrap',
                 px: '2',
               }),
             )}
