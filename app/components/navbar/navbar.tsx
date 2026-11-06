@@ -19,7 +19,8 @@ const getLinkStyles = (isDropdownActive: boolean, isCurrent: boolean) =>
   cx(
     flex({ gap: '1', align: 'center' }),
     css({
-      px: '4',
+      // Tighter between 1024px and 1280px, so the bar stays on one line.
+      px: { base: '4', lg: '3', xl: '4' },
       py: '2',
       rounded: 'full',
       fontSize: 'sm',
@@ -71,7 +72,8 @@ export function Navbar() {
         className={css({
           position: 'relative',
           w: 'full',
-          maxW: scrolled ? '5xl' : '7xl',
+          // 6xl holds every item on one line once the challenges entry shows.
+          maxW: scrolled ? '6xl' : '7xl',
           transition: 'all',
           transitionDuration: '[700ms]',
           transitionTimingFunction: 'smooth',
@@ -136,7 +138,7 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div
             className={cx(
-              hstack({ gap: '2' }),
+              hstack({ gap: { base: '2', lg: '1', xl: '2' } }),
               css({
                 display: { base: 'none', lg: 'flex' },
                 px: '2',

@@ -90,7 +90,7 @@ describe('_main loader', () => {
       slug: 'sales-experience',
       key: 'se',
       name: 'Sales Experience',
-      tagline: "Une organisation commerciale qui passe à l'échelle",
+      tagline: 'Une organisation commerciale qui grandit avec vous',
     });
   });
 

@@ -10,7 +10,7 @@ hero:
   quote: On signe, puis on perd le fil.
   lead: "Une grande part de votre chiffre de demain est déjà chez vos clients d'aujourd'hui. Nous construisons l'organisation, les processus, les outils et les indicateurs qui la sécurisent,"
   highlight: de la signature au renouvellement.
-  cta: Sécuriser mon revenu récurrent
+  cta: Échanger avec un architecte
 bowtie:
   activeStages:
     - onboarding
@@ -19,8 +19,8 @@ bowtie:
   caption: "Après la signature : démarrage, valeur délivrée, renouvellement et expansion."
 symptoms:
   title:
-    - Vous découvrez vos départs de clients
-    - quand ils sont déjà partis.
+    - Vos clients partent
+    - sans que personne ne l'ait vu venir.
   items:
     - La passation entre la vente et la production se fait par mail, et chacun repose les mêmes questions au client.
     - Les renouvellements se découvrent quelques semaines avant l'échéance.
@@ -33,10 +33,10 @@ audience:
     benefit: Une vision claire de la santé du parc et des renouvellements à venir.
   - team: Customer Success
     roles: CSM, Account Managers
-    benefit: Moins de pompiers, plus de rendez-vous qui préparent l'expansion.
+    benefit: Moins d'urgences à gérer, plus de rendez-vous qui préparent l'expansion.
   - team: Direction
     roles: CEO, DG
-    benefit: Un NRR qui progresse et une croissance qui ne repose plus que sur l'acquisition.
+    benefit: Un NRR qui progresse et une croissance qui ne repose plus seulement sur l'acquisition.
   - team: Ventes
     roles: Équipes commerciales
     benefit: Une passation nette après la signature, sans perte d'information.
@@ -62,7 +62,7 @@ workstreams:
       title: Des renouvellements anticipés, un développement piloté
       description: Échéances visibles des mois à l'avance, pipe de renouvellement et d'expansion, plans de compte pour les clients clés.
       deliverable: Un pipe de renouvellement et d'expansion dans votre CRM.
-    - category: Processus et techno
+    - category: Processus et outils
       title: Une seule vue du client, partagée
       description: "CRM, support et facturation reliés : chaque équipe voit l'historique, les tickets, les contrats et les opportunités."
       deliverable: Une fiche client unifiée et ses automatisations.
@@ -116,13 +116,13 @@ method:
   note: "Et ceux que vous avez déjà : nous partons de votre stack."
 case:
   headline: "[Nom du client] : [le passage en une phrase]."
-  summary: "[Contexte en deux lignes. Ce qu'on a construit. Ce qui a changé pour la direction.]"
+  summary: "[Contexte en deux lignes. Ce que nous avons construit. Ce qui a changé pour la direction.]"
   metrics:
     - value: "[X]"
       label: "[Taux de renouvellement, avant et après]"
     - value: "[X]"
       label: "[Part du chiffre issue du développement des clients existants]"
 diagnostic:
-  question: Quelle part de votre chiffre de l'an prochain est déjà chez vos clients ?
-  subtitle: Trente minutes avec un architecte du revenu pour le mesurer, et savoir par où commencer.
+  question: Et si votre prochaine croissance était déjà chez vos clients ?
+  subtitle: En 30 minutes, un architecte du revenu fait le point avec vous sur votre base clients. Vous repartez en sachant par où commencer.
 ---

@@ -112,6 +112,20 @@ export const tokens = defineTokens({
     'box-pop': {
       value: 'box-pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
     },
+    // Stack diagram (#238). The delays stagger the four connectors.
+    'stack-flow-right': {
+      value: 'stack-flow-right 2.4s ease-in-out 1.6s infinite',
+    },
+    'stack-flow-left': {
+      value: 'stack-flow-left 2.4s ease-in-out 2.4s infinite',
+    },
+    'stack-flow-up': { value: 'stack-flow-up 2.4s ease-in-out 2s infinite' },
+    'stack-flow-down': {
+      value: 'stack-flow-down 2.4s ease-in-out 2.8s infinite',
+    },
+    'stack-ping': {
+      value: 'stack-ping 3.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite',
+    },
   },
   spacing,
   sizes,

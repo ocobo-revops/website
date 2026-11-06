@@ -10,7 +10,7 @@ hero:
   quote: Mes commerciaux optimisent leur commission, pas mon chiffre.
   lead: "Votre plan de commissionnement est le document que vos commerciaux lisent le plus attentivement. S'il contredit votre stratégie, c'est lui qui l'emporte. Nous concevons, modélisons, outillons et pilotons"
   highlight: une rémunération variable alignée sur ce que vous voulez vraiment vendre.
-  cta: Revoir mon plan de rémunération variable
+  cta: Échanger avec un architecte
 bowtie:
   activeStages:
     - negotiation
@@ -53,7 +53,7 @@ workstreams:
       title: Un coût modélisé avant d'être payé
       description: Simulation du plan sur votre historique de ventes, scénarios de dépassement, coût de vente rapporté au chiffre.
       deliverable: Un modèle financier du plan, partagé avec votre direction financière.
-    - category: Processus et techno
+    - category: Processus et outils
       step: 3
       title: Des commissions calculées automatiquement
       description: Données de vente prises dans le CRM, règles paramétrées dans un outil de commissionnement, export vers la paie.
@@ -122,7 +122,7 @@ method:
   note: Et votre outil de paie. Nous partons de votre stack.
 case:
   headline: "[Nom du client] : [le passage en une phrase]."
-  summary: "[Contexte en deux lignes. Ce qu'on a construit. Ce qui a changé pour la direction et les équipes.]"
+  summary: "[Contexte en deux lignes. Ce que nous avons construit. Ce qui a changé pour la direction et les équipes.]"
   metrics:
     - value: "[X]"
       label: "[Temps de calcul mensuel des commissions, avant et après]"
@@ -130,5 +130,5 @@ case:
       label: "[Évolution du comportement visé : marge, récurrence ou nouveaux clients]"
 diagnostic:
   question: Votre plan récompense-t-il ce que vous voulez vraiment vendre ?
-  subtitle: Trente minutes avec un architecte du revenu pour le vérifier, et savoir par où commencer.
+  subtitle: En 30 minutes, un architecte du revenu le vérifie avec vous. Vous repartez en sachant par où commencer.
 ---

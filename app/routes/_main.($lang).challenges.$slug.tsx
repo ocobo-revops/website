@@ -20,6 +20,7 @@ import {
   ChallengePartner,
   ChallengePartnerSection,
 } from '~/components/challenges/challenge-partner';
+import { ChallengeStack } from '~/components/challenges/challenge-stack';
 import { ChallengeSymptoms } from '~/components/challenges/challenge-symptoms';
 import { ChallengeWorkstreams } from '~/components/challenges/challenge-workstreams';
 import { useOtherChallenges } from '~/hooks/use-challenge-menu';
@@ -145,6 +146,12 @@ export default function ChallengeRoute() {
         />
       ) : partner ? (
         <ChallengePartnerSection partner={partner} />
+      ) : null}
+      {/* Ocobo's stack belongs to Revenue Systems: no file field for it. */}
+      {page.key === 'sy' ? (
+        <ChallengeStack
+          joined={page.workstreams !== null || partner !== null}
+        />
       ) : null}
       {page.aiBridge ? (
         <ChallengeAiBridge

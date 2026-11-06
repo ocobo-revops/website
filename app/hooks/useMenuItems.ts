@@ -27,6 +27,24 @@ const menuKeyToSlug: Record<string, PageSlug> = {
   tools: 'tools',
 };
 
+/**
+ * Puts the challenge entry in the place of the offer entry: "Vos enjeux"
+ * replaces "Notre offre" once a challenge is published in the page language.
+ * Without one, the offer entry stays. The `/offer` route itself stays live.
+ */
+export function placeChallengeItem(
+  items: NavItem[],
+  challengeItem: NavItem | null,
+): NavItem[] {
+  if (challengeItem === null) {
+    return items;
+  }
+  if (!items.some((item) => item.key === 'offer')) {
+    return [challengeItem, ...items];
+  }
+  return items.map((item) => (item.key === 'offer' ? challengeItem : item));
+}
+
 export function useMenuItems(): NavItem[] {
   const { t } = useTranslation('common');
   const getLocalizedPath = useLocalizedPathname();
@@ -127,8 +145,7 @@ export function useMenuItems(): NavItem[] {
     },
   ];
 
-  return [
-    ...(challengeItem ? [challengeItem] : []),
+  const items: NavItem[] = [
     {
       key: 'offer',
       label: t('navigation.offer'),
@@ -164,4 +181,6 @@ export function useMenuItems(): NavItem[] {
       isButton: true,
     },
   ];
+
+  return placeChallengeItem(items, challengeItem);
 }

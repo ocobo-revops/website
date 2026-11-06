@@ -31,7 +31,8 @@ export function NavItemWithDropdown({
   const triggerStyles = cx(
     flex({ gap: '1', align: 'center' }),
     css({
-      px: '4',
+      // Same spacing as the plain links in `navbar.tsx`.
+      px: { base: '4', lg: '3', xl: '4' },
       py: '2',
       rounded: 'full',
       fontSize: 'sm',
@@ -41,6 +42,7 @@ export function NavItemWithDropdown({
       transitionDuration: 'slow',
       color: isOpen || isCurrentPath ? 'ocobo.dark' : 'gray.500',
       _hover: { color: 'ocobo.dark' },
+      whiteSpace: 'nowrap',
     }),
   );
 

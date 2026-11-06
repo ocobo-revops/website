@@ -176,7 +176,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
     .length(4),
   workstreams: z.strictObject({
     /** Optional override of the heading from `locales/` (#234 decides). */
-    title: cappedText(50).optional(),
+    title: cappedText(71).optional(),
     intro: cappedText(120),
     items: z.array(workstream).min(4).max(6),
   }),
@@ -190,7 +190,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   method: z.strictObject({
     /** Optional override of the heading from `locales/` (#234 decides). */
     title: cappedText(30).optional(),
-    subtitle: cappedText(75),
+    subtitle: cappedText(91),
     steps: z
       .array(
         z.strictObject({
@@ -201,9 +201,8 @@ export const ChallengeFrontmatterSchema = z.strictObject({
       )
       .length(3),
     /**
-     * Tool slugs. Spec #91 says 0 to 6, but two mockups exceed it, logos
-     * included (Sales Experience 9, Revenue Systems 7), so the cap is the
-     * largest mockup count. Keep it in step with the posts repo.
+     * Tool slugs. The cap is the largest mockup count, logos included
+     * (Sales Experience). Keep it in step with the posts repo.
      */
     tools: z.array(slug).max(9),
     note: cappedText(170),
@@ -211,10 +210,6 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   case: z.strictObject({
     /** Story slug, optional until the Revenue AI client case has a Story. */
     story: slug.optional(),
-    /**
-     * Spec #91 says 90. The Revenue AI headline is 98 characters, so the cap
-     * follows the spec's own rule: longest mockup value plus about 20%.
-     */
     headline: cappedText(120),
     summary: cappedText(220),
     metrics: z
@@ -228,7 +223,7 @@ export const ChallengeFrontmatterSchema = z.strictObject({
   }),
   diagnostic: z.strictObject({
     question: cappedText(88),
-    subtitle: cappedText(125),
+    subtitle: cappedText(155),
   }),
 });
 

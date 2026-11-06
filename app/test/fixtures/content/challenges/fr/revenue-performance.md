@@ -10,7 +10,7 @@ hero:
   quote: Je découvre mon trimestre à la fin du trimestre.
   lead: "Votre board, votre fonds ou votre banque vous demandent un prévisionnel. Vos équipes vous donnent une intuition. Nous construisons le système qui transforme"
   highlight: votre pipe en chiffre fiable, mois après mois.
-  cta: Fiabiliser mon prévisionnel
+  cta: Échanger avec un architecte
 bowtie:
   activeStages:
     - discovery
@@ -44,7 +44,7 @@ audience:
 workstreams:
   intro: Quatre chantiers, priorisés selon votre point de départ.
   items:
-    - category: Processus et techno
+    - category: Processus et outils
       title: Un pipe qui veut dire la même chose pour tous
       description: Étapes de vente définies par des critères de sortie, qualification commune, règles de probabilité.
       deliverable: Processus de vente documenté et paramétré dans votre CRM.
@@ -108,7 +108,7 @@ method:
   note: "Et ceux que vous avez déjà : nous partons de votre stack."
 case:
   headline: "[Nom du client] : [le passage en une phrase]."
-  summary: "[Contexte en deux lignes. Ce qu'on a construit. Ce qui a changé pour le dirigeant.]"
+  summary: "[Contexte en deux lignes. Ce que nous avons construit. Ce qui a changé pour le dirigeant.]"
   metrics:
     - value: "[X]"
       label: "[Écart prévu contre réalisé, avant et après]"
@@ -116,5 +116,5 @@ case:
       label: "[Temps gagné sur le reporting]"
 diagnostic:
   question: Quel est l'écart entre votre prévisionnel et votre réalisé ?
-  subtitle: Trente minutes avec un architecte du revenu pour le mesurer, et savoir par où commencer.
+  subtitle: En 30 minutes, un architecte du revenu le mesure avec vous. Vous repartez en sachant par où commencer.
 ---

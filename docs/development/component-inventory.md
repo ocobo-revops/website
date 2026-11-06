@@ -194,8 +194,17 @@ Shared pieces:
 | **ChallengeAudience** | `challenge-audience.tsx` | Teams, roles and benefit, on the light challenge colour | Challenge-specific |
 | **ChallengeClientCase** | `challenge-client-case.tsx` | Case headline, summary, metric cards and the link to the Story; one column without metrics | Challenge-specific |
 | **ChallengeExperts** | `challenge-experts.tsx` | Expert cards (`PersonCard`) of the Team members on the challenge | Challenge-specific |
+| **ChallengeStack** | `challenge-stack.tsx` | Revenue Systems only (key `sy`): heading, CTA to the technology page and `StackDiagram`; copy in the `challenges` namespace | Challenge-specific |
 | **ChallengeDiagnostic** | `challenge-diagnostic.tsx` | Yellow closing block with the contact CTA (`#diagnostic`) | Challenge-specific |
 | **ChallengeOtherChallenges** | `challenge-other-challenges.tsx` | Pills to the other challenges, from the navbar list | Challenge-specific |
+
+### Stack diagram (`app/components/stack/`)
+Ocobo's Revenue Systems stack: the CRM at the centre, four numbered layers around it (01 signals, 02 context, 03 interface, 04 execution). The data has one source, `revenueStack` in `app/modules/revenue-stack.ts`. The copy lives in the `stack` locale namespace. The figure is a size container: from 1024px of its own width (`@/5xl`) it takes the 5-column layout, below that one column in number order.
+
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **StackDiagram** | `stack-diagram.tsx` | The whole figure: layer cards, CRM core, animated connectors; entrance on scroll, animations off under reduced motion | Reusable (challenge page, technology page, home) |
+| **StackLabel**, **ToolChips**, **ToolList**, **ToolIcon** | `stack-parts.tsx` | Layer label with its dot, tool chips, tool rows with their role, logo or monogram | Stack-specific |
 
 ### Design system showcase (`app/components/design-system/`)
 One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`), whose heading carries an anchor id derived from its title. The registry `designSystemGroups` in `subpages.ts` lists the pages in three groups (foundations, components, patterns) and each page's section titles. It feeds the sidebar (`design-system-sidebar.tsx`) and the grouped index (`design-system._index.tsx`). The sidebar lists the current page's sections under its link when the page has more than one, from `lg`. `app/routes/design-system.tsx` is the layout: one sidebar, then the page title and `Outlet`. Each page is a route `design-system.<slug>.tsx` that only composes its section modules. A new showcase section is a new module, its title in the registry and one line in its page route.

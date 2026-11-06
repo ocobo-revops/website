@@ -163,7 +163,7 @@ describe('buildChallengePage', () => {
       const page = buildChallengePage(frontmatter);
 
       expect(page.workstreams?.title).toBe(
-        "Six cas d'usage Revenue, prêts à déployer",
+        "Six cas d'usage, mis en place sur des fondations vérifiées.",
       );
       expect(page.workstreams?.items).toHaveLength(6);
       expect(page.workstreams?.items[0].note).toBe(
