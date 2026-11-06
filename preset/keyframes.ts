@@ -104,4 +104,32 @@ export const keyframes = defineKeyframes({
     '0%': { opacity: '0', transform: 'translateY(20px) scale(0.9)' },
     '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
   },
+  // Stack diagram (#238): a dot travels along each connector, then a ping
+  // pulses from the CRM. The flows move the dot's track, as long as the
+  // connector, so the percentages refer to the connector; `--sizes-dot` is
+  // the dot.
+  'stack-flow-right': {
+    '0%': { transform: 'translateX(0)', opacity: '0' },
+    '15%, 85%': { opacity: '1' },
+    '100%': { transform: 'translateX(calc(100% - var(--sizes-dot)))', opacity: '0' },
+  },
+  'stack-flow-left': {
+    '0%': { transform: 'translateX(calc(100% - var(--sizes-dot)))', opacity: '0' },
+    '15%, 85%': { opacity: '1' },
+    '100%': { transform: 'translateX(0)', opacity: '0' },
+  },
+  'stack-flow-up': {
+    '0%': { transform: 'translateY(calc(100% - var(--sizes-dot)))', opacity: '0' },
+    '15%, 85%': { opacity: '1' },
+    '100%': { transform: 'translateY(0)', opacity: '0' },
+  },
+  'stack-flow-down': {
+    '0%': { transform: 'translateY(0)', opacity: '0' },
+    '15%, 85%': { opacity: '1' },
+    '100%': { transform: 'translateY(calc(100% - var(--sizes-dot)))', opacity: '0' },
+  },
+  'stack-ping': {
+    '0%': { transform: 'scale(1)', opacity: '0.8' },
+    '100%': { transform: 'scale(2.5)', opacity: '0' },
+  },
 });
