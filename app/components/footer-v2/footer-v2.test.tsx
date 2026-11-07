@@ -17,7 +17,7 @@ describe('FooterV2', () => {
       'Podcast Revenue Echoes',
       'Modern Revenue Club',
       'Qui sommes-nous',
-      'Success Stories',
+      'Clients',
       'Librairie RevOps',
       'Nous rejoindre',
     ]);

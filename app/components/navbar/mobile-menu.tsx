@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Dialog } from '@ark-ui/react/dialog';
 import { Portal } from '@ark-ui/react/portal';
 import { Menu as MenuIcon, X } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigation } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -118,7 +117,6 @@ function MobileNavItem({
   item: NavItem;
   onClose: () => void;
 }) {
-  const { t } = useTranslation('common');
   const { label, path, dropdown, isButton } = item;
   const visibleItems = dropdown?.filter((sub) => !sub.shouldHide) ?? [];
 
@@ -135,7 +133,7 @@ function MobileNavItem({
     return (
       <div className={css({ w: 'full', mt: '10' })}>
         <ButtonLink to={path} onClick={onClose} variant="solid" size="lg">
-          {t('contact.cta.mobile')}
+          {label}
         </ButtonLink>
       </div>
     );

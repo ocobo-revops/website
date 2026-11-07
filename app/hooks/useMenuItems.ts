@@ -1,6 +1,7 @@
 import {
   BookOpen,
   Briefcase,
+  Calculator,
   Cpu,
   Layers,
   Mic,
@@ -15,6 +16,7 @@ import type { PageSlug } from '~/modules/feature-flags';
 import type { loader as rootLoader } from '~/root';
 import { url } from '~/utils/url';
 
+import { useChallengeMenu } from './use-challenge-menu';
 import { useChallengeMenuItem } from './use-challenge-menu-item';
 import { useLocalizedPathname } from './useLocalizedPathname';
 
@@ -25,6 +27,7 @@ const menuKeyToSlug: Record<string, PageSlug> = {
   podcasts: 'podcasts',
   news: 'news',
   tools: 'tools',
+  roi: 'roi',
 };
 
 /**
@@ -50,6 +53,8 @@ export function useMenuItems(): NavItem[] {
   const getLocalizedPath = useLocalizedPathname();
   const rootData = useRouteLoaderData<typeof rootLoader>('root');
   const challengeItem = useChallengeMenuItem();
+  const { challenges } = useChallengeMenu();
+  const revenueAi = challenges.find((challenge) => challenge.key === 'ai');
   const disabledPages = rootData?.disabledPages ?? [];
 
   const isHidden = (key: string): boolean => {
@@ -135,6 +140,15 @@ export function useMenuItems(): NavItem[] {
       color: 'sky',
     },
     {
+      key: 'roi',
+      label: t('navigation.resources.roi'),
+      description: t('navigation.resources.roi.description'),
+      path: getLocalizedPath(url.roi),
+      icon: Calculator,
+      color: 'mint',
+      shouldHide: isHidden('roi'),
+    },
+    {
       key: 'club',
       label: t('navigation.resources.club'),
       description: t('navigation.resources.club.description'),
@@ -168,6 +182,16 @@ export function useMenuItems(): NavItem[] {
       path: null,
       dropdown: companyDropdown,
     },
+    // The Revenue AI challenge page, when it is published in this language.
+    ...(revenueAi
+      ? [
+          {
+            key: 'ai',
+            label: t('navigation.ai'),
+            path: getLocalizedPath(`/challenges/${revenueAi.slug}`),
+          },
+        ]
+      : []),
     {
       key: 'resources',
       label: t('navigation.resources.title'),
@@ -176,7 +200,7 @@ export function useMenuItems(): NavItem[] {
     },
     {
       key: 'contact',
-      label: t('contact.cta'),
+      label: t('navigation.cta'),
       path: getLocalizedPath(url.contact),
       isButton: true,
     },

@@ -12,7 +12,8 @@ export type PageSlug =
   | 'podcasts'
   | 'news'
   | 'tools'
-  | 'challenges';
+  | 'challenges'
+  | 'roi';
 
 const VALID_SLUGS: Set<string> = new Set<PageSlug>([
   'technology',
@@ -22,25 +23,39 @@ const VALID_SLUGS: Set<string> = new Set<PageSlug>([
   'news',
   'tools',
   'challenges',
+  'roi',
 ]);
 
 /**
  * P2+ pages disabled by default until launched. `challenges` waits for a
  * website go-live decision: publishing a file on posts must not put the
- * pages and the navbar menu live on its own.
+ * pages and the navbar menu live on its own. `roi` waits for the ROI page
+ * (#248) and Ocobo's sign-off on its assumptions copy.
  */
 export const DISABLED_PAGES_DEFAULT: PageSlug[] = [
   'news',
   'tools',
   'challenges',
+  'roi',
 ];
 
 /**
+ * Pages not built yet: disabled whatever DISABLED_PAGES says, since that env
+ * var replaces the default list. #248 removes `roi` from here when it ships
+ * the ROI calculator page.
+ */
+const UNBUILT_PAGES: PageSlug[] = ['roi'];
+
+/**
  * Returns the list of currently disabled page slugs.
- * Reads from DISABLED_PAGES env var, falls back to DISABLED_PAGES_DEFAULT.
- * Server-only — reads process.env.
+ * Reads from DISABLED_PAGES env var, falls back to DISABLED_PAGES_DEFAULT,
+ * then adds UNBUILT_PAGES. Server-only, reads process.env.
  */
 export function getDisabledPages(): PageSlug[] {
+  return [...new Set([...readDisabledPages(), ...UNBUILT_PAGES])];
+}
+
+function readDisabledPages(): PageSlug[] {
   const raw = process.env.DISABLED_PAGES;
   if (raw === undefined) {
     return DISABLED_PAGES_DEFAULT;

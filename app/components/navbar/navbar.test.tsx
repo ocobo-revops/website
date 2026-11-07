@@ -15,9 +15,7 @@ describe('Navbar', () => {
     expect(
       screen.getByRole('link', { name: 'Notre Offre' }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: 'Success Stories' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Clients' })).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /méthode/i }),
     ).toBeInTheDocument();
@@ -65,9 +63,9 @@ describe('Navbar', () => {
       'aria-current',
       'page',
     );
-    expect(
-      screen.getByRole('link', { name: 'Success Stories' }),
-    ).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', { name: 'Clients' })).not.toHaveAttribute(
+      'aria-current',
+    );
   });
 });
 
@@ -110,7 +108,7 @@ describe('Navbar challenge entry', () => {
     expect(
       screen.queryByRole('link', { name: 'Notre Offre' }),
     ).not.toBeInTheDocument();
-    const stories = screen.getByRole('link', { name: 'Success Stories' });
+    const stories = screen.getByRole('link', { name: 'Clients' });
     expect(
       trigger.compareDocumentPosition(stories) &
         Node.DOCUMENT_POSITION_FOLLOWING,

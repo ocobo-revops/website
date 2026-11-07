@@ -317,7 +317,7 @@ export function MobileMenu({
                   variant="solid"
                   size="sm"
                 >
-                  {t('contact.cta.mobile')}
+                  {cta.label}
                 </ButtonLink>
               )}
             </div>
