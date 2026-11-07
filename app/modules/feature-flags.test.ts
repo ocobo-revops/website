@@ -34,14 +34,21 @@ describe('feature-flags', () => {
       expect(isPageEnabled('challenges')).toBe(true);
     });
 
-    it('returns empty array when env var is empty', () => {
+    it('keeps only the unbuilt pages when env var is empty', () => {
       process.env.DISABLED_PAGES = '';
-      expect(getDisabledPages()).toEqual([]);
+      expect(getDisabledPages()).toEqual(['roi']);
     });
 
     it('parses comma-separated slugs', () => {
       process.env.DISABLED_PAGES = 'news, tools';
-      expect(getDisabledPages()).toEqual(['news', 'tools']);
+      expect(getDisabledPages()).toEqual(['news', 'tools', 'roi']);
+    });
+
+    it('keeps roi disabled whatever the env var says, until #248', () => {
+      process.env.DISABLED_PAGES = 'news,tools';
+      expect(isPageEnabled('roi')).toBe(false);
+      process.env.DISABLED_PAGES = '';
+      expect(isPageEnabled('roi')).toBe(false);
     });
   });
 
@@ -78,7 +85,7 @@ describe('feature-flags', () => {
 
     it('ignores invalid slugs in env var', () => {
       process.env.DISABLED_PAGES = 'news,bogus,tools';
-      expect(getDisabledPages()).toEqual(['news', 'tools']);
+      expect(getDisabledPages()).toEqual(['news', 'tools', 'roi']);
     });
 
     it('does not throw when page is enabled', () => {

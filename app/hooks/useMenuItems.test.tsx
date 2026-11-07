@@ -1,11 +1,11 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import type { NavItem } from '~/components/navbar/types';
 import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
-import type { PageSlug } from '~/modules/feature-flags';
+import { type PageSlug, getDisabledPages } from '~/modules/feature-flags';
 import { render, screen } from '~/test/utils';
 
 import { placeChallengeItem, useMenuItems } from './useMenuItems';
@@ -195,6 +195,30 @@ describe('useMenuItems', () => {
     expect(
       resources?.dropdown?.find((item) => item.key === 'roi')?.shouldHide,
     ).toBe(true);
+  });
+
+  describe('with the production DISABLED_PAGES value', () => {
+    const originalEnv = process.env.DISABLED_PAGES;
+
+    afterEach(() => {
+      if (originalEnv === undefined) {
+        delete process.env.DISABLED_PAGES;
+      } else {
+        process.env.DISABLED_PAGES = originalEnv;
+      }
+    });
+
+    it('hides the ROI calculator until its page exists (#248)', () => {
+      process.env.DISABLED_PAGES = 'news,tools';
+      const resources = find(
+        renderMenu({ disabledPages: getDisabledPages() }),
+        'resources',
+      );
+
+      expect(
+        resources?.dropdown?.find((item) => item.key === 'roi')?.shouldHide,
+      ).toBe(true);
+    });
   });
 
   it('carries the prototype labels in French', () => {
