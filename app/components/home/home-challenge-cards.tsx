@@ -38,16 +38,16 @@ const watermark = cx(
     fontSize: '9xl',
     lineHeight: 'none',
     letterSpacing: 'tighter',
-    color: 'colorPalette',
     opacity: '0.22',
     pointerEvents: 'none',
   }),
 );
-const aiWatermark = css({
-  bgGradient: 'ai-text',
-  bgClip: 'text',
-  color: 'transparent',
-});
+// One class per colour property: `cx()` only joins names, so two classes
+// setting `color` would resolve by stylesheet order, not by call order.
+const watermarkColor = {
+  palette: css({ color: 'colorPalette' }),
+  ai: css({ bgGradient: 'ai-text', bgClip: 'text', color: 'transparent' }),
+};
 const above = css({ position: 'relative' });
 // Keeps the first line of a face clear of the flip button in the corner.
 const clearOfButton = css({ pr: '12' });
@@ -79,9 +79,11 @@ const band = css({
   left: '0',
   right: '0',
   h: '1',
-  bg: 'colorPalette',
 });
-const aiBand = css({ bgGradient: 'ai' });
+const bandColor = {
+  palette: css({ bg: 'colorPalette' }),
+  ai: css({ bgGradient: 'ai' }),
+};
 const backLabel = cx(text({ variant: 'label' }), css({ color: 'gray.300' }));
 const intro = cx(
   text({ variant: 'small' }),
@@ -107,12 +109,19 @@ const step = cx(
     lineHeight: 'snug',
   }),
 );
-const stepNumber = cx(
-  text({ variant: 'display-lg' }),
-  css({ fontSize: 'sm', lineHeight: 'snug', color: 'colorPalette' }),
-);
-// Sky reads at about 3.5:1 on the dark back: the systems number is lighter.
-const syStepNumber = css({ color: 'gray.300' });
+// Display face at body-copy size: no `text()` variant has it (ADR 0001,
+// deferred occurrences).
+const stepNumber = css({
+  fontFamily: 'display',
+  fontWeight: 'black',
+  fontSize: 'sm',
+  lineHeight: 'snug',
+});
+const stepNumberColor = {
+  palette: css({ color: 'colorPalette' }),
+  // Sky reads at about 3.5:1 on the dark back: the systems number is lighter.
+  light: css({ color: 'gray.300' }),
+};
 const backLink = cx(
   text({ variant: 'small', color: 'white' }),
   css({
@@ -168,7 +177,7 @@ function ChallengeFlipCard({ challenge }: { challenge: HomeChallengeCard }) {
   const getLocalizedPath = useLocalizedPathname();
   const number = challengeNumber(challenge.order);
   const title = challenge.tagline ?? challenge.name;
-  const isAi = challenge.key === 'ai';
+  const tone = challenge.key === 'ai' ? 'ai' : 'palette';
 
   return (
     <FlipCard
@@ -180,7 +189,7 @@ function ChallengeFlipCard({ challenge }: { challenge: HomeChallengeCard }) {
         <>
           <span
             aria-hidden="true"
-            className={cx(watermark, isAi && aiWatermark)}
+            className={cx(watermark, watermarkColor[tone])}
           >
             {number}
           </span>
@@ -215,26 +224,32 @@ function ChallengeFlipCard({ challenge }: { challenge: HomeChallengeCard }) {
       }
       back={
         <>
-          <span aria-hidden="true" className={cx(band, isAi && aiBand)} />
+          <span aria-hidden="true" className={cx(band, bandColor[tone])} />
           <span className={cx(backLabel, clearOfButton)}>
             {t('challengeCards.backLabel', { number })}
           </span>
           {challenge.intro ? <p className={intro}>{challenge.intro}</p> : null}
-          <ol className={steps}>
-            {challenge.workstreams.map((workstream, index) => (
-              <li key={`${index}-${workstream}`} className={step}>
-                <span
-                  className={cx(
-                    stepNumber,
-                    challenge.key === 'sy' && syStepNumber,
-                  )}
-                >
-                  {challengeNumber(index + 1)}
-                </span>
-                <span>{workstream}</span>
-              </li>
-            ))}
-          </ol>
+          {challenge.workstreams.length > 0 ? (
+            <ol className={steps}>
+              {challenge.workstreams.map((workstream, index) => (
+                <li key={`${index}-${workstream}`} className={step}>
+                  <span
+                    className={cx(
+                      stepNumber,
+                      stepNumberColor[
+                        challenge.key === 'sy' ? 'light' : 'palette'
+                      ],
+                    )}
+                  >
+                    {challengeNumber(index + 1)}
+                  </span>
+                  <span>{workstream}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <span className={css({ flex: '1' })} />
+          )}
           <Link
             to={getLocalizedPath(`/challenges/${challenge.slug}`)}
             className={backLink}

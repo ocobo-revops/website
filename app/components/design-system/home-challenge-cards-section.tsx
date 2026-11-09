@@ -8,8 +8,9 @@ import { ShowcaseSection } from './showcase-section';
 const caption = css({ fontSize: 'caption', color: 'gray', mb: '6' });
 
 /**
- * Sample cards, in the shape the home loader returns. The text is copied
- * from three challenge files of the posts repo.
+ * Sample cards, in the shape the home loader returns. The text is a frozen
+ * copy of three challenge files of the posts repo: it does not follow later
+ * edits there.
  */
 const samples: HomeChallengeCard[] = [
   {

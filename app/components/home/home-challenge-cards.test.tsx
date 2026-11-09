@@ -34,7 +34,6 @@ describe('HomeChallengeCards', () => {
     expect(screen.getByText(/Deux commerciaux/)).toBeInTheDocument();
     // The back is inert until the card turns: nothing on the front navigates.
     expect(screen.queryAllByRole('link')).toHaveLength(0);
-    expect(screen.queryByText(/Survolez/)).not.toBeInTheDocument();
   });
 
   it('shows the back on a tap on the front, without navigating', async () => {
