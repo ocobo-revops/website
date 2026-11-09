@@ -4,6 +4,9 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
+import { ButtonLink } from '~/components/ui/button-link';
+import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
+import { url } from '~/utils/url';
 
 import { DashboardIllustration } from './dashboard-illustration';
 
@@ -53,6 +56,7 @@ const body = css({
  */
 export function MissionSection() {
   const { t } = useTranslation('home');
+  const getLocalizedPath = useLocalizedPathname();
   const paragraphs = t('mission.body', { returnObjects: true }) as string[];
 
   return (
@@ -89,6 +93,21 @@ export function MissionSection() {
           >
             {t('mission.conclusion')}
           </p>
+        </div>
+        <div
+          className={css({
+            display: 'flex',
+            justifyContent: 'center',
+            mt: '10',
+          })}
+        >
+          <ButtonLink
+            to={`${getLocalizedPath(url.aboutUs)}#manifeste`}
+            variant="outline"
+            size="md"
+          >
+            {t('mission.cta')}
+          </ButtonLink>
         </div>
       </Container>
     </section>

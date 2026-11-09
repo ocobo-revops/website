@@ -58,6 +58,7 @@ export const ManifestoSection = () => {
 
   return (
     <section
+      id="manifeste"
       className={css({
         py: '32',
         bg: 'ocobo.dark',
