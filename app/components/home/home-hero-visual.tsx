@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { memo, useId, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -145,29 +145,322 @@ function asList(value: unknown): string[] {
   return Array.isArray(value) ? value : [];
 }
 
+type SceneIds = Record<
+  | 'axis'
+  | 'fill'
+  | 'vignette'
+  | 'mask'
+  | 'pattern'
+  | 'shadow'
+  | 'blur'
+  | 'halo'
+  | 'clip',
+  string
+>;
+
+type SceneCopy = {
+  teams: string[];
+  gains: string[];
+  axis: string;
+  withoutSystem: string;
+};
+
+type SceneProps = { frame: HeroFrame; ids: SceneIds; copy: SceneCopy };
+
+/**
+ * Skips a still layer when only the moving parts changed: past the settle
+ * time `heroFrame` keeps every other field's reference.
+ */
+function sameScene(before: SceneProps, after: SceneProps) {
+  if (before.ids !== after.ids || before.copy !== after.copy) return false;
+  return (Object.keys(after.frame) as (keyof HeroFrame)[]).every(
+    (key) =>
+      key === 'dots' ||
+      key === 'halo' ||
+      before.frame[key] === after.frame[key],
+  );
+}
+
+/** Background, axis and labels: under the moving dots. */
+const BackLayer = memo(function BackLayer({ frame, ids, copy }: SceneProps) {
+  return (
+    <>
+      <defs>
+        <linearGradient
+          id={ids.axis}
+          gradientUnits="userSpaceOnUse"
+          x1={TEAM_X[0]}
+          y1="0"
+          x2="1000"
+          y2="0"
+        >
+          <stop offset="0" stopColor="var(--colors-yellow)" />
+          <stop offset=".35" stopColor="var(--colors-mint)" />
+          <stop offset=".68" stopColor="var(--colors-sky)" />
+          <stop offset="1" stopColor="var(--colors-coral)" />
+        </linearGradient>
+        <linearGradient id={ids.fill} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="var(--colors-dark)" stopOpacity=".035" />
+          <stop offset="1" stopColor="var(--colors-dark)" stopOpacity="0" />
+        </linearGradient>
+        <radialGradient id={ids.vignette} cx="50%" cy="50%" r="55%">
+          <stop offset="0" stopColor="white" />
+          <stop offset=".7" stopColor="white" stopOpacity=".5" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
+        </radialGradient>
+        <mask id={ids.mask}>
+          <rect
+            width={VIEWBOX.width}
+            height={VIEWBOX.height}
+            fill={`url(#${ids.vignette})`}
+          />
+        </mask>
+        <pattern
+          id={ids.pattern}
+          width="22"
+          height="22"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="1" cy="1" r="1" fill="var(--colors-gray-200)" />
+        </pattern>
+        <filter id={ids.shadow} x="-20%" y="-40%" width="140%" height="200%">
+          <feDropShadow
+            dx="0"
+            dy="4"
+            stdDeviation="6"
+            floodColor="var(--colors-dark)"
+            floodOpacity=".07"
+          />
+        </filter>
+        <filter id={ids.blur} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" />
+        </filter>
+        <linearGradient id={ids.halo} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="var(--colors-coral)" />
+          <stop offset="1" stopColor="var(--colors-yellow)" />
+        </linearGradient>
+        <clipPath id={ids.clip}>
+          <rect
+            x={AXIS_START}
+            y="0"
+            width={frame.clipWidth}
+            height={VIEWBOX.height}
+          />
+        </clipPath>
+      </defs>
+
+      <rect
+        width={VIEWBOX.width}
+        height={VIEWBOX.height}
+        fill={`url(#${ids.pattern})`}
+        mask={`url(#${ids.mask})`}
+      />
+      <g opacity={frame.gridOpacity}>
+        {GRID_Y.map((y) => (
+          <line
+            key={y}
+            className={gridLine}
+            x1={AXIS_START}
+            y1={y}
+            x2={AXIS_END}
+            y2={y}
+          />
+        ))}
+      </g>
+      <path
+        d={AREA_PATH}
+        clipPath={`url(#${ids.clip})`}
+        fill={`url(#${ids.fill})`}
+      />
+      <line
+        className={baseLine}
+        x1={AXIS_START}
+        y1={AXIS_Y}
+        x2={AXIS_END}
+        y2={AXIS_Y}
+        opacity={frame.baseOpacity}
+      />
+      <line
+        x1={AXIS_START}
+        y1={AXIS_Y}
+        x2={frame.axis.x2}
+        y2={AXIS_Y}
+        stroke={`url(#${ids.axis})`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity={frame.axis.opacity}
+      />
+      <path
+        className={ghostLine}
+        d={`M${AXIS_START},${AXIS_Y} C300,247 600,238 ${AXIS_END},222`}
+        opacity={frame.ghostOpacity}
+      />
+      <text
+        className={axisLabel}
+        x={AXIS_END}
+        y="212"
+        textAnchor="end"
+        opacity={frame.ghostOpacity}
+      >
+        {copy.withoutSystem}
+      </text>
+      <text
+        className={axisLabel}
+        x={AXIS_END}
+        y="280"
+        textAnchor="end"
+        opacity={frame.axisLabelOpacity}
+      >
+        {copy.axis}
+      </text>
+    </>
+  );
+}, sameScene);
+
+/** Guides, curve, teams and nodes: over the dots, under the halo. */
+const MiddleLayer = memo(function MiddleLayer({
+  frame,
+  ids,
+  copy,
+}: SceneProps) {
+  return (
+    <>
+      {TEAM_X.map((x, i) => (
+        <line
+          key={x}
+          className={guideLine}
+          x1={x}
+          y1={AXIS_Y - 8}
+          x2={x}
+          y2={frame.guides[i]?.y2}
+          opacity={frame.guides[i]?.opacity}
+        />
+      ))}
+
+      <path
+        d={CURVE_PATH}
+        clipPath={`url(#${ids.clip})`}
+        stroke={`url(#${ids.axis})`}
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeOpacity=".22"
+        filter={`url(#${ids.blur})`}
+      />
+      <path
+        d={CURVE_PATH}
+        pathLength={1}
+        strokeDasharray="1"
+        strokeDashoffset={frame.curveOffset}
+        stroke={`url(#${ids.axis})`}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+
+      {TEAM_X.map((x, i) => (
+        <g
+          key={x}
+          transform={`translate(${x},${frame.teams[i]?.y ?? AXIS_Y})`}
+          opacity={frame.teams[i]?.opacity}
+        >
+          <circle r="9" className={cx(teamDot, teamFill[i])} />
+          <text y="30" textAnchor="middle" className={teamLabel}>
+            {copy.teams[i]}
+          </text>
+        </g>
+      ))}
+
+      {TEAM_X.map((x, i) => (
+        <circle
+          key={x}
+          className={node}
+          cx={x}
+          cy={frame.nodes[i]?.cy}
+          r="4"
+          opacity={frame.nodes[i]?.opacity}
+        />
+      ))}
+    </>
+  );
+}, sameScene);
+
+/** The Ocobo mark and the gains: on top of everything. */
+const FrontLayer = memo(function FrontLayer({ frame, ids, copy }: SceneProps) {
+  return (
+    <>
+      <g
+        className={scalesFromCentre}
+        opacity={frame.end.opacity}
+        style={{ transform: `scale(${frame.end.scale})` }}
+      >
+        <circle
+          cx={CURVE_END.x}
+          cy={CURVE_END.y}
+          r={MARK_RADIUS}
+          fill="white"
+          filter={`url(#${ids.shadow})`}
+        />
+        <g
+          transform={`translate(${CURVE_END.x - 14},${CURVE_END.y - 14}) scale(0.04667)`}
+        >
+          <circle cx="300" cy="300" r="298" fill="var(--colors-dark)" />
+          <path d={OCOBO_O_LEFT} fill="white" />
+          <path d={OCOBO_O_RIGHT} fill="white" />
+        </g>
+      </g>
+
+      {GAIN_ANCHORS.map(({ x, y }, i) => (
+        <g
+          key={x}
+          className={gainGroup}
+          transform={`translate(${x},${y + (frame.gains[i]?.dy ?? 0)})`}
+          opacity={frame.gains[i]?.opacity}
+        >
+          <text className={gainNumber} x="-6" y="-26" textAnchor="end">
+            {String(i + 1).padStart(2, '0')}
+          </text>
+          <text className={gainLabel} x="-6" y="-10" textAnchor="end">
+            {copy.gains[i]}
+          </text>
+        </g>
+      ))}
+    </>
+  );
+}, sameScene);
+
 type HomeHeroVisualProps = { frame: HeroFrame };
 
 /**
  * The drawing of the home hero, for one frame of its timeline. The SVG is
  * hidden from assistive technologies: a visually hidden sentence describes
- * it, gains included.
+ * it, gains included. Once settled, only the dots and the halo render on
+ * each frame; the still layers are memoised.
  */
 export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
   const { t } = useTranslation('home');
-  const teams = asList(t('heroV2.teams', { returnObjects: true }));
-  const gains = asList(t('heroV2.gains', { returnObjects: true }));
   const id = useId();
-  const ids = {
-    axis: `${id}-axis`,
-    fill: `${id}-fill`,
-    vignette: `${id}-vignette`,
-    mask: `${id}-mask`,
-    pattern: `${id}-pattern`,
-    shadow: `${id}-shadow`,
-    blur: `${id}-blur`,
-    halo: `${id}-halo`,
-    clip: `${id}-clip`,
-  };
+  const ids = useMemo<SceneIds>(
+    () => ({
+      axis: `${id}-axis`,
+      fill: `${id}-fill`,
+      vignette: `${id}-vignette`,
+      mask: `${id}-mask`,
+      pattern: `${id}-pattern`,
+      shadow: `${id}-shadow`,
+      blur: `${id}-blur`,
+      halo: `${id}-halo`,
+      clip: `${id}-clip`,
+    }),
+    [id],
+  );
+  const copy = useMemo<SceneCopy>(
+    () => ({
+      teams: asList(t('heroV2.teams', { returnObjects: true })),
+      gains: asList(t('heroV2.gains', { returnObjects: true })),
+      axis: t('heroV2.axis'),
+      withoutSystem: t('heroV2.withoutSystem'),
+    }),
+    [t],
+  );
 
   return (
     <div>
@@ -178,139 +471,7 @@ export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
         fill="none"
         className={svgStyles}
       >
-        <defs>
-          <linearGradient
-            id={ids.axis}
-            gradientUnits="userSpaceOnUse"
-            x1={TEAM_X[0]}
-            y1="0"
-            x2="1000"
-            y2="0"
-          >
-            <stop offset="0" stopColor="var(--colors-yellow)" />
-            <stop offset=".35" stopColor="var(--colors-mint)" />
-            <stop offset=".68" stopColor="var(--colors-sky)" />
-            <stop offset="1" stopColor="var(--colors-coral)" />
-          </linearGradient>
-          <linearGradient id={ids.fill} x1="0" y1="0" x2="0" y2="1">
-            <stop
-              offset="0"
-              stopColor="var(--colors-dark)"
-              stopOpacity=".035"
-            />
-            <stop offset="1" stopColor="var(--colors-dark)" stopOpacity="0" />
-          </linearGradient>
-          <radialGradient id={ids.vignette} cx="50%" cy="50%" r="55%">
-            <stop offset="0" stopColor="white" />
-            <stop offset=".7" stopColor="white" stopOpacity=".5" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id={ids.mask}>
-            <rect
-              width={VIEWBOX.width}
-              height={VIEWBOX.height}
-              fill={`url(#${ids.vignette})`}
-            />
-          </mask>
-          <pattern
-            id={ids.pattern}
-            width="22"
-            height="22"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="1" cy="1" r="1" fill="var(--colors-gray-200)" />
-          </pattern>
-          <filter id={ids.shadow} x="-20%" y="-40%" width="140%" height="200%">
-            <feDropShadow
-              dx="0"
-              dy="4"
-              stdDeviation="6"
-              floodColor="var(--colors-dark)"
-              floodOpacity=".07"
-            />
-          </filter>
-          <filter id={ids.blur} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="5" />
-          </filter>
-          <linearGradient id={ids.halo} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="var(--colors-coral)" />
-            <stop offset="1" stopColor="var(--colors-yellow)" />
-          </linearGradient>
-          <clipPath id={ids.clip}>
-            <rect
-              x={AXIS_START}
-              y="0"
-              width={frame.clipWidth}
-              height={VIEWBOX.height}
-            />
-          </clipPath>
-        </defs>
-
-        <rect
-          width={VIEWBOX.width}
-          height={VIEWBOX.height}
-          fill={`url(#${ids.pattern})`}
-          mask={`url(#${ids.mask})`}
-        />
-        <g opacity={frame.gridOpacity}>
-          {GRID_Y.map((y) => (
-            <line
-              key={y}
-              className={gridLine}
-              x1={AXIS_START}
-              y1={y}
-              x2={AXIS_END}
-              y2={y}
-            />
-          ))}
-        </g>
-        <path
-          d={AREA_PATH}
-          clipPath={`url(#${ids.clip})`}
-          fill={`url(#${ids.fill})`}
-        />
-        <line
-          className={baseLine}
-          x1={AXIS_START}
-          y1={AXIS_Y}
-          x2={AXIS_END}
-          y2={AXIS_Y}
-          opacity={frame.baseOpacity}
-        />
-        <line
-          x1={AXIS_START}
-          y1={AXIS_Y}
-          x2={frame.axis.x2}
-          y2={AXIS_Y}
-          stroke={`url(#${ids.axis})`}
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity={frame.axis.opacity}
-        />
-        <path
-          className={ghostLine}
-          d={`M${AXIS_START},${AXIS_Y} C300,247 600,238 ${AXIS_END},222`}
-          opacity={frame.ghostOpacity}
-        />
-        <text
-          className={axisLabel}
-          x={AXIS_END}
-          y="212"
-          textAnchor="end"
-          opacity={frame.ghostOpacity}
-        >
-          {t('heroV2.withoutSystem')}
-        </text>
-        <text
-          className={axisLabel}
-          x={AXIS_END}
-          y="280"
-          textAnchor="end"
-          opacity={frame.axisLabelOpacity}
-        >
-          {t('heroV2.axis')}
-        </text>
-
+        <BackLayer frame={frame} ids={ids} copy={copy} />
         <g>
           {frame.dots.map((dot, i) => (
             <circle
@@ -324,62 +485,7 @@ export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
             />
           ))}
         </g>
-
-        {TEAM_X.map((x, i) => (
-          <line
-            key={x}
-            className={guideLine}
-            x1={x}
-            y1={AXIS_Y - 8}
-            x2={x}
-            y2={frame.guides[i]?.y2}
-            opacity={frame.guides[i]?.opacity}
-          />
-        ))}
-
-        <path
-          d={CURVE_PATH}
-          clipPath={`url(#${ids.clip})`}
-          stroke={`url(#${ids.axis})`}
-          strokeWidth="10"
-          strokeLinecap="round"
-          strokeOpacity=".22"
-          filter={`url(#${ids.blur})`}
-        />
-        <path
-          d={CURVE_PATH}
-          pathLength={1}
-          strokeDasharray="1"
-          strokeDashoffset={frame.curveOffset}
-          stroke={`url(#${ids.axis})`}
-          strokeWidth="2.4"
-          strokeLinecap="round"
-        />
-
-        {TEAM_X.map((x, i) => (
-          <g
-            key={x}
-            transform={`translate(${x},${frame.teams[i]?.y ?? AXIS_Y})`}
-            opacity={frame.teams[i]?.opacity}
-          >
-            <circle r="9" className={cx(teamDot, teamFill[i])} />
-            <text y="30" textAnchor="middle" className={teamLabel}>
-              {teams[i]}
-            </text>
-          </g>
-        ))}
-
-        {TEAM_X.map((x, i) => (
-          <circle
-            key={x}
-            className={node}
-            cx={x}
-            cy={frame.nodes[i]?.cy}
-            r="4"
-            opacity={frame.nodes[i]?.opacity}
-          />
-        ))}
-
+        <MiddleLayer frame={frame} ids={ids} copy={copy} />
         <circle
           className={scalesFromCentre}
           cx={CURVE_END.x}
@@ -390,49 +496,14 @@ export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
           opacity={frame.halo.opacity}
           style={{ transform: `scale(${frame.halo.scale})` }}
         />
-        <g
-          className={scalesFromCentre}
-          opacity={frame.end.opacity}
-          style={{ transform: `scale(${frame.end.scale})` }}
-        >
-          <circle
-            cx={CURVE_END.x}
-            cy={CURVE_END.y}
-            r={MARK_RADIUS}
-            fill="white"
-            filter={`url(#${ids.shadow})`}
-          />
-          <g
-            transform={`translate(${CURVE_END.x - 14},${CURVE_END.y - 14}) scale(0.04667)`}
-          >
-            <circle cx="300" cy="300" r="298" fill="var(--colors-dark)" />
-            <path d={OCOBO_O_LEFT} fill="white" />
-            <path d={OCOBO_O_RIGHT} fill="white" />
-          </g>
-        </g>
-
-        {GAIN_ANCHORS.map(({ x, y }, i) => (
-          <g
-            key={x}
-            className={gainGroup}
-            transform={`translate(${x},${y + (frame.gains[i]?.dy ?? 0)})`}
-            opacity={frame.gains[i]?.opacity}
-          >
-            <text className={gainNumber} x="-6" y="-26" textAnchor="end">
-              {String(i + 1).padStart(2, '0')}
-            </text>
-            <text className={gainLabel} x="-6" y="-10" textAnchor="end">
-              {gains[i]}
-            </text>
-          </g>
-        ))}
+        <FrontLayer frame={frame} ids={ids} copy={copy} />
       </svg>
       {/* The hidden sentence above already reads these gains. */}
       <ul
         aria-hidden="true"
         className={cx(text({ variant: 'small' }), mobileGains)}
       >
-        {gains.map((gain) => (
+        {copy.gains.map((gain) => (
           <li key={gain}>{gain}</li>
         ))}
       </ul>

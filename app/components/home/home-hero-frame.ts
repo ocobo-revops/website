@@ -186,12 +186,7 @@ function hiddenDot(tone: HeroDot['tone']): HeroDot {
   return { x: -50, y: -50, r: 3, opacity: 0, tone };
 }
 
-/**
- * Every animated value at time `t`. Before `SETTLE_TIME` the teams arrive
- * and converge, then the curve draws; after it, only the dots keep flowing
- * along the axis.
- */
-export function heroFrame(t: number): HeroFrame {
+function computeFrame(t: number): HeroFrame {
   const axisEnd = AXIS_START + AXIS_SPAN * easeInOut(segment(t, 2.3, 3.5));
   // Progress of the second act: guides, nodes, gains, curve, mark.
   const growth = segment(t, 3.6, SETTLE_TIME);
@@ -262,11 +257,25 @@ export function heroFrame(t: number): HeroFrame {
   };
 }
 
+const SETTLED_BASE = computeFrame(SETTLE_TIME);
+
+/**
+ * Every animated value at time `t`. Before `SETTLE_TIME` the teams arrive
+ * and converge, then the curve draws; after it, only the dots and the halo
+ * move. Past that time every other field keeps the same reference, so the
+ * still parts of the drawing can skip rendering.
+ */
+export function heroFrame(t: number): HeroFrame {
+  if (t < SETTLE_TIME) return computeFrame(t);
+  const { dots, halo } = computeFrame(t);
+  return { ...SETTLED_BASE, dots, halo };
+}
+
 /**
  * The finished picture: every part in place, no dot moving. The server
  * render, a page without JavaScript and reduced motion all show it.
  */
 export const SETTLED_FRAME: HeroFrame = {
-  ...heroFrame(SETTLE_TIME),
+  ...SETTLED_BASE,
   dots: Array.from({ length: DOT_COUNT }, () => hiddenDot('axis')),
 };

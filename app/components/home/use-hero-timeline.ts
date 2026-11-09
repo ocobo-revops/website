@@ -16,6 +16,9 @@ import {
 const useIsomorphicLayoutEffect =
   typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
+/** Longest step of the clock, in milliseconds. */
+const MAX_STEP = 100;
+
 type HeroTimeline = {
   ref: RefObject<HTMLElement>;
   /** Seconds since the animation started, or null for the settled picture. */
@@ -61,8 +64,9 @@ export function useHeroTimeline(): HeroTimeline {
   useEffect(() => {
     const element = ref.current;
     if (!element || typeof IntersectionObserver === 'undefined') return;
-    const observer = new IntersectionObserver(([entry]) =>
-      setOnScreen(entry?.isIntersecting ?? false),
+    // The last entry is the most recent state of the hero.
+    const observer = new IntersectionObserver((entries) =>
+      setOnScreen(entries[entries.length - 1]?.isIntersecting ?? false),
     );
     observer.observe(element);
     return () => observer.disconnect();
@@ -75,8 +79,10 @@ export function useHeroTimeline(): HeroTimeline {
     let last: number | null = null;
     let frame = 0;
     const tick = (now: number) => {
-      // The first tick only sets the origin, so a resume does not jump.
-      if (last !== null) elapsed.current += (now - last) / 1000;
+      // The first tick only sets the origin, so a resume does not jump. A
+      // long gap (a background tab) counts as one step, so the intro waits.
+      if (last !== null)
+        elapsed.current += Math.min(now - last, MAX_STEP) / 1000;
       last = now;
       setTime(elapsed.current);
       frame = requestAnimationFrame(tick);

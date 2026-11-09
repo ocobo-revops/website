@@ -7,17 +7,37 @@ import { useHeroTimeline } from './use-hero-timeline';
 let observerCallbacks: IntersectionObserverCallback[] = [];
 let frames = new Map<number, FrameRequestCallback>();
 let nextFrame = 1;
+let reducedMotion = false;
+let motionListeners: (() => void)[] = [];
 
 function stubReducedMotion(matches: boolean) {
+  reducedMotion = matches;
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => ({
-      matches,
+      get matches() {
+        return reducedMotion;
+      },
       media: query,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
+      addEventListener: (_: string, listener: () => void) =>
+        motionListeners.push(listener),
+      removeEventListener: (_: string, listener: () => void) => {
+        motionListeners = motionListeners.filter((l) => l !== listener);
+      },
     })),
   );
+}
+
+/** Tells every IntersectionObserver whether the hero is on screen. */
+function intersect(isIntersecting: boolean) {
+  act(() => {
+    for (const callback of observerCallbacks) {
+      callback(
+        [{ isIntersecting } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    }
+  });
 }
 
 /** Runs the pending animation frames at `now` milliseconds. */
@@ -27,6 +47,11 @@ function tick(now: number) {
     frames = new Map();
     for (const callback of pending) callback(now);
   });
+}
+
+/** Runs frames every 50 ms from `from` to `to`, both included. */
+function play(from: number, to: number) {
+  for (let now = from; now <= to; now += 50) tick(now);
 }
 
 function Probe() {
@@ -47,6 +72,7 @@ beforeEach(() => {
   observerCallbacks = [];
   frames = new Map();
   nextFrame = 1;
+  motionListeners = [];
   stubReducedMotion(false);
   vi.stubGlobal(
     'IntersectionObserver',
@@ -69,6 +95,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe('useHeroTimeline', () => {
@@ -91,37 +118,63 @@ describe('useHeroTimeline', () => {
     render(<Probe />);
     expect(clock()).toBe('0.00');
 
-    tick(1000);
-    tick(2500);
+    play(1000, 2500);
     expect(clock()).toBe('1.50');
   });
 
   it('stops while paused and resumes without a jump', () => {
     render(<Probe />);
-    tick(0);
-    tick(1000);
+    play(0, 1000);
 
     fireEvent.click(screen.getByRole('button', { name: 'pause' }));
     expect(frames.size).toBe(0);
 
     fireEvent.click(screen.getByRole('button', { name: 'play' }));
-    tick(9000);
-    tick(9500);
+    play(9000, 9500);
     expect(clock()).toBe('1.50');
   });
 
-  it('stops while the hero is off screen', () => {
+  it('stops off screen and resumes without a jump', () => {
+    render(<Probe />);
+    play(0, 1000);
+
+    intersect(false);
+    expect(frames.size).toBe(0);
+
+    intersect(true);
+    play(30000, 30500);
+    expect(clock()).toBe('1.50');
+  });
+
+  it('counts a long gap as one short step', () => {
     render(<Probe />);
     tick(0);
+    tick(60000);
+
+    expect(clock()).toBe('0.10');
+  });
+
+  it('waits for the reveal when the hero is below the fold', () => {
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+      top: window.innerHeight + 100,
+    } as DOMRect);
+    render(<Probe />);
+    expect(frames.size).toBe(0);
+
+    intersect(true);
+    expect(frames.size).toBe(1);
+  });
+
+  it('goes back to the settled picture when reduced motion turns on', () => {
+    render(<Probe />);
+    tick(0);
+    tick(500);
 
     act(() => {
-      for (const callback of observerCallbacks) {
-        callback(
-          [{ isIntersecting: false } as IntersectionObserverEntry],
-          {} as IntersectionObserver,
-        );
-      }
+      reducedMotion = true;
+      for (const listener of motionListeners) listener();
     });
+    expect(clock()).toBe('settled');
     expect(frames.size).toBe(0);
   });
 });

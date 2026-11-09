@@ -94,4 +94,13 @@ describe('SETTLED_FRAME', () => {
     expect(dots).toHaveLength(DOT_COUNT);
     for (const dot of dots) expect(dot.opacity).toBe(0);
   });
+
+  it('keeps the still parts by reference once settled', () => {
+    const before = heroFrame(SETTLE_TIME + 1);
+    const after = heroFrame(SETTLE_TIME + 2);
+
+    expect(after.teams).toBe(before.teams);
+    expect(after.accents).toBe(before.accents);
+    expect(after.dots).not.toBe(before.dots);
+  });
 });
