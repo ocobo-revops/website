@@ -135,20 +135,12 @@ describe('NavbarBar', () => {
     ).toHaveAttribute('href', '/fr/enjeux/rp');
   });
 
-  it('links to the same page in the other language', () => {
+  it('leaves the language switch to the footer', () => {
     render(<NavbarBar scrolled={false} />, { initialEntries: ['/fr/offer'] });
-    const switcher = screen.getAllByRole('navigation', {
-      name: 'Choisir la langue',
-    })[0];
 
-    expect(within(switcher).getByRole('link', { name: 'EN' })).toHaveAttribute(
-      'href',
-      '/en/offer',
-    );
-    expect(within(switcher).getByRole('link', { name: 'FR' })).toHaveAttribute(
-      'aria-current',
-      'true',
-    );
+    expect(
+      screen.queryByRole('navigation', { name: 'Choisir la langue' }),
+    ).toBeNull();
   });
 
   it('marks the current page', () => {

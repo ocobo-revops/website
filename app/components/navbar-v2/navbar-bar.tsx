@@ -11,7 +11,6 @@ import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
 import { AiLink } from './ai-link';
-import { LanguageLinks } from './language-links';
 import { MobileMenu } from './mobile-menu';
 import { NavDisclosure } from './nav-disclosure';
 import {
@@ -258,7 +257,6 @@ export function NavbarBar({
             flexShrink: 0,
           })}
         >
-          <LanguageLinks className={desktopOnly[layout]} />
           {cta?.path && (
             <ButtonLink
               to={cta.path}
