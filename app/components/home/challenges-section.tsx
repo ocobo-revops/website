@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { section, text } from '@ocobo/styled-system/recipes';
+import { button, card, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
@@ -9,12 +9,29 @@ import type { HomeChallengeCard } from '~/modules/home-challenges';
 
 import { HomeChallengeCards } from './home-challenge-cards';
 
+/** Target of the final call to action, which the start panel links to. */
+export const DIAGNOSTIC_ID = 'diagnostic';
+
 /** Target of the hero's "challenges" call to action. */
 export const CHALLENGES_ID = 'enjeux';
 
 const subtitle = cx(
   text({ variant: 'body' }),
   css({ maxW: '2xl', mx: 'auto', color: 'gray', textAlign: 'center' }),
+);
+
+const startPanel = cx(
+  card({ shadow: 'none', padding: 'xl', border: false }),
+  // The mockup panel sits on the section grey, darker than `tone: 'tinted'`.
+  css({
+    mt: '10',
+    bg: 'gray.light',
+    flexDirection: { base: 'column', md: 'row' },
+    flexWrap: 'wrap',
+    gap: '6',
+    alignItems: { base: 'flex-start', md: 'center' },
+    justifyContent: 'space-between',
+  }),
 );
 
 type ChallengesSectionProps = {
@@ -32,7 +49,7 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
     <section
       id={CHALLENGES_ID}
       className={cx(
-        section({ bg: 'gray', padding: 'lg' }),
+        section({ bg: 'white', padding: 'lg' }),
         css({ scrollMarginTop: '24' }),
       )}
     >
@@ -50,6 +67,27 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
           <UnifiedBowtie />
         </div>
         <HomeChallengeCards challenges={challenges} />
+        <div className={startPanel}>
+          <div className={css({ flex: '1', maxW: 'xl' })}>
+            <h3
+              className={cx(
+                text({ variant: 'display-md-bold' }),
+                css({ mb: '2' }),
+              )}
+            >
+              {t('challenges.start.title')}
+            </h3>
+            <p className={text({ variant: 'body', color: 'muted' })}>
+              {t('challenges.start.text')}
+            </p>
+          </div>
+          <a
+            href={`#${DIAGNOSTIC_ID}`}
+            className={button({ variant: 'primary', size: 'md' })}
+          >
+            {t('challenges.start.cta')}
+          </a>
+        </div>
       </Container>
     </section>
   );

@@ -51,7 +51,13 @@ export const InterventionsSection = () => {
   }) as Intervention[];
 
   return (
-    <section className={section({ bg: 'white', padding: 'lg' })}>
+    <section
+      id="methode"
+      className={cx(
+        section({ bg: 'gray', padding: 'lg' }),
+        css({ scrollMarginTop: '24' }),
+      )}
+    >
       <Container>
         <h2
           className={cx(
@@ -176,7 +182,7 @@ export const InterventionsSection = () => {
 
         <div className={`${flex({ justify: 'center' })} ${css({ mt: '20' })}`}>
           <ButtonLink
-            to={getLocalizedPath(url.offer)}
+            to={getLocalizedPath(url.method)}
             variant="outline"
             size="lg"
           >

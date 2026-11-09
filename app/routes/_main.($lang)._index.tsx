@@ -2,7 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { type LoaderFunctionArgs, type MetaFunction } from 'react-router';
 import { useLoaderData } from 'react-router';
 
-import { ChallengesSection } from '~/components/home/challenges-section';
+import { AiSection } from '~/components/home/ai-section';
+import {
+  ChallengesSection,
+  DIAGNOSTIC_ID,
+} from '~/components/home/challenges-section';
 import { ComparatifSection } from '~/components/home/comparatif-section';
 import { CtaSection } from '~/components/home/cta-section';
 import { HomeHero } from '~/components/home/home-hero';
@@ -112,20 +116,23 @@ export default function Index() {
     useLoaderData<typeof loader>();
   const { t } = useTranslation('home');
   const hasChallenges = challenges.length > 0;
+  const aiChallengeSlug =
+    challenges.find((challenge) => challenge.key === 'ai')?.slug ?? null;
 
-  // The mockup order (`accueil.html`): hero, clients, mission, method,
-  // challenges, why Ocobo, stack, diagnostic.
+  // The mockup order (`accueil.html`): hero, clients, mission, AI,
+  // challenges, method, why Ocobo, stack, diagnostic.
   return (
     <div>
       <HomeHero hasChallenges={hasChallenges} />
       <SocialProofSection testimonials={testimonials} />
       <MissionSection />
-      <InterventionsSection />
+      <AiSection aiChallengeSlug={aiChallengeSlug} />
       {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
+      <InterventionsSection />
       <ComparatifSection showStudio={showStudio} />
       <StackSection showTechnology={showTechnology} />
       <CtaSection
-        id="diagnostic"
+        id={DIAGNOSTIC_ID}
         variant="yellow"
         title={t('cta.title')}
         subtitle={t('cta.subtitle')}
