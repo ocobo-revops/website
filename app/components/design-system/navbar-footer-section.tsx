@@ -75,6 +75,22 @@ const sampleAiItem: NavItem = {
 };
 
 /**
+ * The DS frame is narrower than the page, so each preview keeps only the
+ * entries it demonstrates. The others are hidden, not removed, so the ROI
+ * card can still read the resources menu.
+ */
+function keepOnly(items: NavItem[], keys: string[]): NavItem[] {
+  return items.map((item) =>
+    item.isButton || keys.includes(item.key)
+      ? item
+      : { ...item, shouldHide: true },
+  );
+}
+
+const desktopKeys = ['offer', 'method', 'company'];
+const sampleKeys = ['challenges', 'method', 'ai'];
+
+/**
  * Production menu with the sample challenges and the IA link. `withRoi`
  * forces the ROI calculator on or off, so each preview shows its method
  * panel whatever the page flag says.
@@ -93,7 +109,7 @@ function useSampleMenu(withRoi: boolean): NavItem[] {
       : item;
     return item.key === 'resources' ? [sampleAiItem, shown] : [shown];
   });
-  return placeChallengeItem(items, sampleChallenges);
+  return keepOnly(placeChallengeItem(items, sampleChallenges), sampleKeys);
 }
 
 /**
@@ -103,6 +119,7 @@ function useSampleMenu(withRoi: boolean): NavItem[] {
 export function NavbarFooterSection() {
   const sampleMenu = useSampleMenu(false);
   const sampleMenuWithRoi = useSampleMenu(true);
+  const desktopMenu = keepOnly(useMenuItems(), desktopKeys);
 
   return (
     <ShowcaseSection title="Navbar and footer (v2)">
@@ -110,10 +127,10 @@ export function NavbarFooterSection() {
         className={css({ display: 'flex', flexDirection: 'column', gap: '8' })}
       >
         <Preview label="Navbar, desktop, top of page">
-          <NavbarBar scrolled={false} />
+          <NavbarBar scrolled={false} items={desktopMenu} />
         </Preview>
         <Preview label="Navbar, desktop, scrolled">
-          <NavbarBar scrolled />
+          <NavbarBar scrolled items={desktopMenu} />
         </Preview>
         <Preview label="Navbar, mobile (open the menu with the burger)" mobile>
           <NavbarBar scrolled={false} layout="mobile" />
