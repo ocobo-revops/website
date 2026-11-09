@@ -2,6 +2,7 @@ import type { MetaFunction } from 'react-router';
 
 import { CardRecipeSection } from '~/components/design-system/card-recipe-section';
 import { FlipCardSection } from '~/components/design-system/flip-card-section';
+import { HomeChallengeCardsSection } from '~/components/design-system/home-challenge-cards-section';
 import { PersonCardSection } from '~/components/design-system/person-card-section';
 import { designSystemDescription } from '~/components/design-system/subpages';
 import { getMetaTags } from '~/utils/metatags';
@@ -20,6 +21,7 @@ export default function DesignSystemCards() {
       <CardRecipeSection />
       <FlipCardSection />
       <PersonCardSection />
+      <HomeChallengeCardsSection />
     </>
   );
 }
