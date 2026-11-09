@@ -15,11 +15,11 @@ const face = {
   WebkitBackfaceVisibility: 'hidden',
   // WebKit paints the turned-away face through `backfaceVisibility`
   // (mirrored back over the front at rest), so the turned-away face is also
-  // hidden. The swap waits until the turn passes 90deg, about 64ms into
-  // the `smooth` easing.
+  // hidden. The swap waits until the turn passes 90deg (`flip-swap`), so
+  // neither face is blank mid-turn.
   transitionProperty: 'visibility',
   transitionDuration: 'instant',
-  transitionDelay: 'faster',
+  transitionDelay: 'flip-swap',
   _motionReduce: { transitionDelay: 'instant' },
 } as const;
 
