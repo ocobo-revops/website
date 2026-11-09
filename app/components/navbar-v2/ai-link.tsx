@@ -63,7 +63,7 @@ const linkStyles = css({
  */
 export function AiLink({ label, path }: AiLinkProps) {
   return (
-    <NavLink to={path} className={cx(topLinkStyles, linkStyles)}>
+    <NavLink to={path} end className={cx(topLinkStyles, linkStyles)}>
       <span aria-hidden="true" className={cx('ai-ring', ringStyles)}>
         <span
           className={css({

@@ -240,6 +240,57 @@ describe('NavbarBar panels (#315)', () => {
 
       expect(button).toHaveAttribute('aria-expanded', 'false');
     });
+
+    it('keeps a hovered panel open while focus is inside it', async () => {
+      const user = userEvent.setup();
+      render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+      const { button, panel } = openPanel('Vos enjeux');
+
+      await user.hover(button);
+      within(panel()).getAllByRole('link')[0].focus();
+      await user.unhover(button);
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('pins a hovered panel on click, so leaving keeps it open', async () => {
+      const user = userEvent.setup();
+      render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+      const { button } = openPanel('Vos enjeux');
+
+      await user.click(button);
+      // Clicks do not focus buttons in every browser (Safari).
+      button.blur();
+      await user.unhover(button);
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('closes a hovered panel on Enter', async () => {
+      const user = userEvent.setup();
+      render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+      const { button } = openPanel('Vos enjeux');
+
+      await user.hover(button);
+      button.focus();
+      await user.keyboard('{Enter}');
+
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+    });
+  });
+
+  it('toggles a panel on tap', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+    const { button } = openPanel('Vos enjeux');
+
+    await user.pointer({ keys: '[TouchA]', target: button });
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    await user.pointer({ keys: '[TouchA]', target: button });
+    expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('shows the numbered challenges, the scope card and the contact footer', async () => {
@@ -285,9 +336,8 @@ describe('NavbarBar panels (#315)', () => {
     ]);
   });
 
-  it('hides the ROI card while the ROI page is off', async () => {
-    const user = userEvent.setup();
-    const items: NavItem[] = [
+  function methodItems(roiHidden: boolean): NavItem[] {
+    return [
       {
         key: 'method',
         label: 'Méthode',
@@ -311,12 +361,16 @@ describe('NavbarBar panels (#315)', () => {
             label: 'Calculateur ROI',
             path: '/fr/roi',
             color: 'mint',
-            shouldHide: true,
+            shouldHide: roiHidden,
           },
         ],
       },
     ];
-    render(<NavbarBar scrolled={false} items={items} />);
+  }
+
+  it('hides the ROI card while the ROI page is off', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} items={methodItems(true)} />);
     const { button, panel } = openPanel('Méthode');
 
     await user.click(button);
@@ -327,6 +381,19 @@ describe('NavbarBar panels (#315)', () => {
     expect(
       within(panel()).getByRole('link', { name: /Méthodologie/ }),
     ).toBeInTheDocument();
+  });
+
+  it('shows the ROI card once the ROI page is on', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} items={methodItems(false)} />);
+    const { button, panel } = openPanel('Méthode');
+
+    await user.click(button);
+
+    expect(within(panel()).getByRole('link', { name: /ROI/ })).toHaveAttribute(
+      'href',
+      '/fr/roi',
+    );
   });
 
   it('uses English labels and paths on English pages', async () => {

@@ -23,6 +23,7 @@ type NavDisclosureProps = {
 };
 
 // Time to cross the gap between the button and the panel with the mouse.
+// The panel also carries an invisible bridge over its top margin.
 const HOVER_CLOSE_DELAY = 250;
 
 const rootLayout = {
@@ -60,9 +61,10 @@ export function NavDisclosure({
   const onOpenChangeRef = React.useRef(onOpenChange);
   onOpenChangeRef.current = onOpenChange;
   const closeTimer = React.useRef<ReturnType<typeof setTimeout>>();
-  // A click right after a hover opening keeps the panel open instead of
-  // closing it under the pointer.
-  const openedByHover = React.useRef(false);
+  // A panel opened or confirmed by a click or a key press stays open when
+  // the pointer leaves; one opened by hover alone closes. A ref, so it
+  // does not depend on the browser focusing buttons on click (Safari).
+  const pinned = React.useRef(false);
 
   const cancelClose = () => {
     clearTimeout(closeTimer.current);
@@ -72,7 +74,7 @@ export function NavDisclosure({
 
   React.useEffect(() => {
     if (!isOpen) {
-      openedByHover.current = false;
+      pinned.current = false;
       // A close timer left by a pointer leave must not fire later, once
       // another panel or a click has changed the state.
       clearTimeout(closeTimer.current);
@@ -121,7 +123,6 @@ export function NavDisclosure({
     }
     cancelClose();
     if (!isOpen) {
-      openedByHover.current = true;
       onOpenChange(true);
     }
   };
@@ -132,21 +133,24 @@ export function NavDisclosure({
     }
     cancelClose();
     closeTimer.current = setTimeout(() => {
-      // A panel opened by click or keyboard stays open while focus is in
-      // it, so the pointer leaving does not drop focus to the page.
+      // Closing with focus inside would drop focus to the page, so the
+      // panel stays open while focus is in it, however it was opened.
       const hasFocus = rootRef.current?.contains(document.activeElement);
-      if (!openedByHover.current && hasFocus) {
+      if (pinned.current || hasFocus) {
         return;
       }
       onOpenChangeRef.current(false);
     }, HOVER_CLOSE_DELAY);
   };
 
-  const handleClick = () => {
-    if (isOpen && openedByHover.current) {
-      openedByHover.current = false;
+  const handleClick = (event: React.MouseEvent) => {
+    // A mouse click on a panel just opened by hover pins it instead of
+    // closing it under the pointer. A key press (`detail` 0) toggles.
+    if (isOpen && !pinned.current && event.detail > 0) {
+      pinned.current = true;
       return;
     }
+    pinned.current = !isOpen;
     onOpenChange(!isOpen);
   };
 
@@ -202,6 +206,16 @@ export function NavDisclosure({
             shadow: 'window',
             zIndex: 10,
             '&[hidden]': { display: 'none' },
+            // Invisible bridge over the top margin, so the pointer stays
+            // inside the group on its way from the button to the panel.
+            _before: {
+              content: '""',
+              position: 'absolute',
+              left: '0',
+              right: '0',
+              bottom: '[100%]',
+              h: '7',
+            },
           }),
           panelWidth[width],
         )}
