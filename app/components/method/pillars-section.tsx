@@ -37,7 +37,9 @@ export const PillarsSection = () => {
 
   return (
     <section
+      id="piliers"
       className={`${section({ bg: 'gray', padding: 'lg' })} ${css({
+        scrollMarginTop: '24',
         borderTopWidth: '1px',
         borderBottomWidth: '1px',
         borderColor: 'gray.100',

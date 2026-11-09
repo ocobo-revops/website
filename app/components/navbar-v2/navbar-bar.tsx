@@ -10,9 +10,15 @@ import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
+import { AiLink } from './ai-link';
 import { LanguageLinks } from './language-links';
 import { MobileMenu } from './mobile-menu';
 import { NavDisclosure } from './nav-disclosure';
+import {
+  NavPanelContent,
+  findRoiItem,
+  panelWidthFor,
+} from './nav-panel-content';
 import { focusRing, topLinkStyles } from './nav-styles';
 
 export type NavbarLayout = 'auto' | 'mobile';
@@ -30,6 +36,11 @@ type NavbarBarProps = {
    * already comes from `useMenuItems`: do not pass it here.
    */
   leadingItems?: NavItem[];
+  /**
+   * Replaces the production menu. The design-system page passes sample
+   * challenges, since its routes have no challenge loader.
+   */
+  items?: NavItem[];
 };
 
 const barStyles = {
@@ -88,6 +99,7 @@ export function NavbarBar({
   scrolled,
   layout = 'auto',
   leadingItems = [],
+  items: itemsOverride,
 }: NavbarBarProps) {
   const { t } = useTranslation('common');
   const { pathname } = useLocation();
@@ -102,9 +114,9 @@ export function NavbarBar({
     setMobileOpen(false);
   }, [pathname]);
 
-  const items = [...leadingItems, ...menuItems].filter(
-    (item) => !item.shouldHide,
-  );
+  const allItems = [...leadingItems, ...(itemsOverride ?? menuItems)];
+  const items = allItems.filter((item) => !item.shouldHide);
+  const roiItem = findRoiItem(allItems);
   const entries = items.filter((item) => !item.isButton);
   const cta = items.find((item) => item.isButton && item.path);
   const state = scrolled ? 'scrolled' : 'top';
@@ -113,9 +125,14 @@ export function NavbarBar({
   return (
     <nav
       aria-label={t('navigation.label')}
+      data-panel-open={openKey !== null || undefined}
       className={cx(
         css({
           position: 'relative',
+          // The scrolled bar's backdrop filter makes it a stacking context,
+          // so the panel's own z-index stays inside it. Lift the whole bar
+          // while a panel is open, above the content that follows it.
+          '&[data-panel-open]': { zIndex: 10 },
           w: 'full',
           mx: 'auto',
           borderWidth: '1px',
@@ -177,18 +194,37 @@ export function NavbarBar({
                   <NavDisclosure
                     id={`${idPrefix}-${item.key}`}
                     label={item.label}
-                    items={visible}
+                    width={panelWidthFor(item.key)}
                     isOpen={openKey === item.key}
                     isCurrent={visible.some((sub) =>
                       isWithin(pathname, sub.path),
                     )}
-                    onOpenChange={(open) => setOpenKey(open ? item.key : null)}
-                  />
+                    onOpenChange={(open) =>
+                      setOpenKey((current) =>
+                        open ? item.key : current === item.key ? null : current,
+                      )
+                    }
+                  >
+                    <NavPanelContent
+                      item={item}
+                      visible={visible}
+                      roiItem={roiItem}
+                      compact={false}
+                      onSelect={() => setOpenKey(null)}
+                    />
+                  </NavDisclosure>
                 </li>
               );
             }
             if (!item.path) {
               return null;
+            }
+            if (item.key === 'ai') {
+              return (
+                <li key={item.key}>
+                  <AiLink label={item.label} path={item.path} />
+                </li>
+              );
             }
             if (item.isExternal) {
               return (
@@ -236,6 +272,7 @@ export function NavbarBar({
           )}
           <MobileMenu
             items={items}
+            roiItem={roiItem}
             open={mobileOpen}
             onOpenChange={setMobileOpen}
             closeOnDesktop={layout === 'auto'}

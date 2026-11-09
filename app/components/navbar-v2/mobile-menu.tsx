@@ -15,11 +15,12 @@ import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
 import { LanguageLinks } from './language-links';
-import { NavPanelItem } from './nav-panel-item';
+import { NavPanelContent } from './nav-panel-content';
 import { focusRing } from './nav-styles';
 
 type MobileMenuProps = {
   items: NavItem[];
+  roiItem?: DropdownItem;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Close when the viewport grows to the desktop breakpoint. */
@@ -67,12 +68,14 @@ const iconButtonStyles = cx(
 function MobileGroup({
   item,
   visible,
+  roiItem,
   isOpen,
   onToggle,
   onSelect,
 }: {
   item: NavItem;
   visible: DropdownItem[];
+  roiItem?: DropdownItem;
   isOpen: boolean;
   onToggle: () => void;
   onSelect: () => void;
@@ -95,13 +98,15 @@ function MobileGroup({
           className={cx('nav-chevron', css({ transition: 'transform' }))}
         />
       </button>
-      <ul id={panelId} hidden={!isOpen} className={css({ pb: '2' })}>
-        {visible.map((sub) => (
-          <li key={sub.key}>
-            <NavPanelItem item={sub} onSelect={onSelect} />
-          </li>
-        ))}
-      </ul>
+      <div id={panelId} hidden={!isOpen} className={css({ pb: '2' })}>
+        <NavPanelContent
+          item={item}
+          visible={visible}
+          roiItem={roiItem}
+          compact
+          onSelect={onSelect}
+        />
+      </div>
     </li>
   );
 }
@@ -113,6 +118,7 @@ function MobileGroup({
  */
 export function MobileMenu({
   items,
+  roiItem,
   open,
   onOpenChange,
   closeOnDesktop,
@@ -253,6 +259,7 @@ export function MobileMenu({
                         key={item.key}
                         item={item}
                         visible={visible}
+                        roiItem={roiItem}
                         isOpen={openGroup === item.key}
                         onToggle={() =>
                           setOpenGroup((current) =>

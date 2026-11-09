@@ -61,7 +61,10 @@ export const EcosystemSection = () => {
   const filtered = filterPartners(partners, filter);
 
   return (
-    <section className={css({ py: '24', bg: 'white' })}>
+    <section
+      id="badges"
+      className={css({ py: '24', bg: 'white', scrollMarginTop: '24' })}
+    >
       <Container>
         <div
           className={`${flex({

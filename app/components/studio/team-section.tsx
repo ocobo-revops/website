@@ -49,7 +49,10 @@ export const TeamSection = ({ members, lang }: TeamSectionProps) => {
     filter === 'all' ? members : members.filter((m) => m.track === filter);
 
   return (
-    <section className={css({ py: '24', bg: 'white' })}>
+    <section
+      id="expertises"
+      className={css({ py: '24', bg: 'white', scrollMarginTop: '24' })}
+    >
       <Container>
         <div
           className={`${flex({

@@ -46,7 +46,8 @@ export const ScopeSection = () => {
 
   return (
     <section
-      className={`${section({ bg: 'white', padding: 'lg' })} ${css({ overflow: 'hidden' })}`}
+      id="perimetre"
+      className={`${section({ bg: 'white', padding: 'lg' })} ${css({ overflow: 'hidden', scrollMarginTop: '24' })}`}
     >
       <Container className={css({ textAlign: 'center' })}>
         <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '6' }))}>
