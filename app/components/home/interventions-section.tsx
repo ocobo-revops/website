@@ -32,6 +32,7 @@ const cardStyle = cx(
     transitionProperty: 'common',
     transitionDuration: 'slow',
     _hover: { boxShadow: 'hover', transform: 'translateY(-4px)' },
+    _motionReduce: { _hover: { transform: 'none' } },
   }),
 );
 
@@ -151,6 +152,7 @@ export const InterventionsSection = () => {
                       transitionProperty: 'common',
                       transitionDuration: 'slow',
                       _groupHover: { transform: 'translateX(4px)' },
+                      _motionReduce: { _groupHover: { transform: 'none' } },
                     })}
                   />
                 </span>

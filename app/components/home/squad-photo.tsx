@@ -2,6 +2,7 @@ import { Sparkles, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 const bracket = css({
   position: 'absolute',
@@ -80,6 +81,7 @@ export function SquadPhoto() {
           transitionProperty: 'common',
           transitionDuration: 'slower',
           _groupHover: { transform: 'scale(1.01)' },
+          _motionReduce: { _groupHover: { transform: 'none' } },
         })}
       >
         <img
@@ -102,29 +104,28 @@ export function SquadPhoto() {
           })}
         />
         <p
-          className={css({
-            position: 'absolute',
-            bottom: { base: '5', md: '8' },
-            left: { base: '5', md: '8' },
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2.5',
-            px: '5',
-            py: '3',
-            bg: 'white/92',
-            rounded: '2xl',
-            boxShadow: 'hover',
-            fontSize: 'xs',
-            fontWeight: 'black',
-            letterSpacing: 'label',
-            textTransform: 'uppercase',
-            // Shown on hover from tablet up; always shown on touch screens.
-            opacity: { base: '1', md: '0' },
-            transform: { base: 'none', md: 'translateY(16px)' },
-            transitionProperty: 'common',
-            transitionDuration: 'slow',
-            _groupHover: { opacity: '1', transform: 'none' },
-          })}
+          className={cx(
+            text({ variant: 'label' }),
+            css({
+              position: 'absolute',
+              bottom: { base: '5', md: '8' },
+              left: { base: '5', md: '8' },
+              display: 'flex',
+              alignItems: 'center',
+              gap: '2.5',
+              px: '5',
+              py: '3',
+              bg: 'white/92',
+              rounded: '2xl',
+              boxShadow: 'hover',
+              // Shown on hover from tablet up; always shown on touch screens.
+              opacity: { base: '1', md: '0' },
+              transform: { base: 'none', md: 'translateY(16px)' },
+              transitionProperty: 'common',
+              transitionDuration: 'slow',
+              _groupHover: { opacity: '1', transform: 'none' },
+            }),
+          )}
         >
           <span
             aria-hidden="true"

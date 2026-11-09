@@ -50,6 +50,7 @@ const windowFrame = css({
   transitionProperty: 'common',
   transitionDuration: 'slow',
   _groupHover: { transform: 'translateY(-4px)' },
+  _motionReduce: { _groupHover: { transform: 'none' } },
 });
 
 const titleBar = css({
@@ -175,14 +176,13 @@ function AgentWindow({
       >
         <p
           className={cx(
+            text({ variant: 'label' }),
             css({
               display: 'inline-flex',
               alignItems: 'center',
               gap: '2',
-              fontSize: 'label',
-              fontWeight: 'bold',
+              mt: '0',
               letterSpacing: 'tag',
-              textTransform: 'uppercase',
             }),
             STEP_LABELS[agent],
           )}
