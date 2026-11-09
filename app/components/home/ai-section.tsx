@@ -1,11 +1,10 @@
-import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
+import { ButtonLink } from '~/components/ui/button-link';
 import { Reveal } from '~/components/ui/reveal';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
@@ -162,24 +161,6 @@ const toolLogo = css({
   bg: 'white',
   objectFit: 'contain',
 });
-
-const ctaLink = cx(
-  text({ variant: 'small' }),
-  css({
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '2',
-    px: '8',
-    py: '4',
-    rounded: 'full',
-    bgGradient: 'ai',
-    color: 'dark',
-    fontWeight: 'bold',
-    transitionProperty: 'common',
-    transitionDuration: 'normal',
-    _hover: { boxShadow: 'hover', transform: 'translateY(-2px)' },
-  }),
-);
 
 type AiSectionProps = {
   /** Slug of the Revenue AI challenge page; hides the CTA when missing. */
@@ -346,13 +327,17 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
               display: 'flex',
               flexWrap: 'wrap',
               justifyContent: 'space-between',
-              alignItems: 'flex-end',
+              alignItems: 'baseline',
               gap: '4',
               mb: '8',
             })}
           >
+            {/* Bermia at 28px in the mockup: the display face, nearest size. */}
             <h3
-              className={text({ variant: 'display-md-bold', color: 'white' })}
+              className={cx(
+                text({ variant: 'display-lg', color: 'white' }),
+                css({ fontSize: '3xl' }),
+              )}
             >
               {t('ai.agents.title')}
             </h3>
@@ -370,13 +355,13 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
 
         {aiChallengeSlug ? (
           <div className={css({ textAlign: 'center', mt: '16' })}>
-            <NavLink
+            <ButtonLink
               to={getLocalizedPath(`/challenges/${aiChallengeSlug}`)}
-              className={ctaLink}
+              variant="ai"
+              size="lg"
             >
               {t('ai.cta')}
-              <ArrowRight size={16} aria-hidden="true" />
-            </NavLink>
+            </ButtonLink>
           </div>
         ) : null}
       </Container>
