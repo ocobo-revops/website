@@ -15,12 +15,15 @@
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { ChallengeFrontmatter } from '~/modules/challenge-schema';
 import { invokeLoader } from '~/test/loader-harness';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 
 const fetchStoriesMock = vi.fn();
+const fetchValidChallengesMock = vi.fn();
+const isPageEnabledMock = vi.fn((_slug: string) => true);
 const getFixedTMock = vi.fn(
   async (lang: string, _ns?: string) => (key: string) => `${lang}:${key}`,
 );
@@ -31,6 +34,12 @@ vi.mock('~/modules/content', () => ({
   fetchStories: (...args: unknown[]) => fetchStoriesMock(...args),
 }));
 
+// The home challenge cards (#241) read the challenge files.
+vi.mock('~/modules/content/api', () => ({
+  fetchValidChallenges: (...args: unknown[]) =>
+    fetchValidChallengesMock(...args),
+}));
+
 vi.mock('~/localization/i18n.server', () => ({
   default: {
     getFixedT: (lang: string, ns: string) => getFixedTMock(lang, ns),
@@ -38,7 +47,7 @@ vi.mock('~/localization/i18n.server', () => ({
 }));
 
 vi.mock('~/modules/feature-flags', () => ({
-  isPageEnabled: () => true,
+  isPageEnabled: (slug: string) => isPageEnabledMock(slug),
 }));
 
 function storyEntry(
@@ -67,8 +76,39 @@ function storyEntry(
   };
 }
 
+function challengeFile(
+  slug: string,
+  frontmatter: Partial<ChallengeFrontmatter> = {},
+): MarkdocFile<ChallengeFrontmatter> {
+  return {
+    slug,
+    content: null,
+    markdown: '',
+    frontmatter: {
+      key: 'se',
+      order: 1,
+      name: `Name of ${slug}`,
+      tagline: `Tagline of ${slug}`,
+      hero: { quote: `Quote of ${slug}` },
+      workstreams: {
+        intro: `Intro of ${slug}`,
+        items: [{ title: `First of ${slug}` }, { title: `Second of ${slug}` }],
+      },
+      ...frontmatter,
+    } as ChallengeFrontmatter,
+  } as MarkdocFile<ChallengeFrontmatter>;
+}
+
+beforeEach(() => {
+  // No challenge folder yet: the state before any challenge is published.
+  fetchValidChallengesMock.mockResolvedValue([404, 'not_found', undefined]);
+});
+
 afterEach(() => {
   fetchStoriesMock.mockReset();
+  fetchValidChallengesMock.mockReset();
+  isPageEnabledMock.mockReset();
+  isPageEnabledMock.mockImplementation(() => true);
   getFixedTMock.mockClear();
 });
 
@@ -226,5 +266,101 @@ describe('homepage loader', () => {
 
     resolveT((key: string) => `fr:${key}`);
     await loaderPromise;
+  });
+});
+
+describe('homepage loader: challenge cards (#241)', () => {
+  async function loadHome(lang: 'fr' | 'en' = 'fr') {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    const { loader } = await import('./_main.($lang)._index');
+    const outcome = await invokeLoader(loader, {
+      url: `http://test.local/${lang}`,
+      params: { lang },
+    });
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') throw new Error('expected data');
+    return outcome.data;
+  }
+
+  it('returns every published challenge of the language, in order', async () => {
+    fetchValidChallengesMock.mockResolvedValueOnce([
+      200,
+      'success',
+      [
+        challengeFile('revenue-ai', { key: 'ai', order: 6 }),
+        challengeFile('sales-experience', { key: 'se', order: 1 }),
+        challengeFile('customer-experience', { key: 'cx', order: 2 }),
+      ],
+    ]);
+
+    const data = await loadHome('en');
+
+    expect(fetchValidChallengesMock).toHaveBeenCalledExactlyOnceWith('en');
+    expect(data.challenges.map(({ slug }) => slug)).toEqual([
+      'sales-experience',
+      'customer-experience',
+      'revenue-ai',
+    ]);
+  });
+
+  it('gives each card the quote, workstream intro and workstream titles of its file', async () => {
+    fetchValidChallengesMock.mockResolvedValueOnce([
+      200,
+      'success',
+      [challengeFile('sales-experience', { key: 'se', order: 1 })],
+    ]);
+
+    const data = await loadHome();
+
+    expect(data.challenges).toEqual([
+      {
+        slug: 'sales-experience',
+        key: 'se',
+        order: 1,
+        name: 'Name of sales-experience',
+        tagline: 'Tagline of sales-experience',
+        quote: 'Quote of sales-experience',
+        intro: 'Intro of sales-experience',
+        workstreams: [
+          'First of sales-experience',
+          'Second of sales-experience',
+        ],
+      },
+    ]);
+  });
+
+  it('returns only published challenges: a slug the challenge route rejects is left out', async () => {
+    fetchValidChallengesMock.mockResolvedValueOnce([
+      200,
+      'success',
+      [challengeFile('sales-experience'), challengeFile('Draft_Copy')],
+    ]);
+
+    const data = await loadHome();
+
+    expect(data.challenges.map(({ slug }) => slug)).toEqual([
+      'sales-experience',
+    ]);
+  });
+
+  it('returns no challenge, and fetches none, while the challenge pages are disabled', async () => {
+    isPageEnabledMock.mockImplementation((slug) => slug !== 'challenges');
+
+    const data = await loadHome();
+
+    expect(fetchValidChallengesMock).not.toHaveBeenCalled();
+    expect(data.challenges).toEqual([]);
+  });
+
+  it('still renders the home, with no challenge, when the list fails', async () => {
+    fetchValidChallengesMock.mockResolvedValueOnce([
+      500,
+      'source_error',
+      undefined,
+    ]);
+
+    const data = await loadHome();
+
+    expect(data.challenges).toEqual([]);
   });
 });
