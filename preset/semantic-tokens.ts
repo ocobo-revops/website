@@ -141,7 +141,7 @@ export const semanticTokens = defineSemanticTokens({
       mint: { value: '{colors.mint}' },
       yellow: { value: '{colors.yellow}' },
       sky: { value: '{colors.sky}' },
-      gray: { value: '{colors.challenge.sy}' },
+      gray: { value: '{colors.gray.400}' },
     },
   },
   gradients: {
