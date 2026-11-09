@@ -15,6 +15,7 @@ import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
 import { fetchStories } from '~/modules/content';
 import { isPageEnabled } from '~/modules/feature-flags';
+import { loadHomeChallenges } from '~/modules/home-challenges.server';
 import type { MarkdocFile, StoryFrontmatter } from '~/types';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
@@ -43,13 +44,15 @@ function shuffleArray<T>(array: readonly T[]): T[] {
 export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
   await redirectWithLocale(args);
   const lang = getLang(args.params);
-  // All three are independent — i18n + both story fetches start in parallel.
-  const [t, [primary, fallback]] = await Promise.all([
+  // All independent: i18n, both story fetches and the challenge cards (#241)
+  // start in parallel.
+  const [t, [primary, fallback], challenges] = await Promise.all([
     i18nServer.getFixedT(lang, 'home'),
     Promise.all([
       fetchStories(lang),
       lang === 'fr' ? Promise.resolve(null) : fetchStories('fr'),
     ]),
+    loadHomeChallenges(lang),
   ]);
 
   let [status, _state, storiesData] = primary;
@@ -88,6 +91,8 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     showStudio: isPageEnabled('studio'),
     showTechnology: isPageEnabled('technology'),
     testimonials,
+    // Rendered on the home by #242; shown on `/design-system` until then.
+    challenges,
   };
 }, 'story');
 

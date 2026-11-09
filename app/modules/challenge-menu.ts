@@ -19,26 +19,34 @@ export type ChallengeMenuEntry = {
 };
 
 /**
- * Menu entries in `order`, then by slug for a stable order. A file is published when it is in the content
- * source, so every file counts, except a slug the challenge route answers
- * 404 to.
+ * Published challenge files in `order`, then by slug for a stable order. A
+ * file is published when it is in the content source, so every file counts,
+ * except a slug the challenge route answers 404 to.
  */
-export function toChallengeMenu(
+export function publishedChallengesInOrder(
   files: readonly MarkdocFile<ChallengeFrontmatter>[],
-): ChallengeMenuEntry[] {
+): MarkdocFile<ChallengeFrontmatter>[] {
   return files
     .filter((file) => isChallengeSlug(file.slug))
     .sort(
       (a, b) =>
         a.frontmatter.order - b.frontmatter.order ||
         a.slug.localeCompare(b.slug),
-    )
-    .map(({ slug, frontmatter: { key, name, tagline } }) => ({
+    );
+}
+
+/** Menu entries of the published challenges, in order. */
+export function toChallengeMenu(
+  files: readonly MarkdocFile<ChallengeFrontmatter>[],
+): ChallengeMenuEntry[] {
+  return publishedChallengesInOrder(files).map(
+    ({ slug, frontmatter: { key, name, tagline } }) => ({
       slug,
       key,
       name,
       tagline: hasPlaceholder(tagline) ? null : tagline,
-    }));
+    }),
+  );
 }
 
 /** Route id of `app/routes/_main.tsx`, which loads the list. */

@@ -71,6 +71,9 @@ export const tokens = defineTokens({
   // `instant` turns a transition off under reduced motion without a raw value.
   durations: {
     instant: { value: '0ms' },
+    // When a `slowest` turn with the `smooth` easing passes 90deg: the flip
+    // card swaps its faces then (`preset/slot-recipes/flip-card.ts`).
+    'flip-swap': { value: '65ms' },
   },
   easings: {
     smooth: { value: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },

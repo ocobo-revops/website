@@ -90,7 +90,12 @@ export const designSystemGroups = [
         slug: 'cards',
         title: 'Cards',
         description: 'The card recipe, flip card and person card.',
-        sections: ['Card recipe', 'Flip card', 'Person card'],
+        sections: [
+          'Card recipe',
+          'Flip card',
+          'Person card',
+          'Home challenge cards',
+        ],
       },
       {
         slug: 'tooltip-and-tabs',
