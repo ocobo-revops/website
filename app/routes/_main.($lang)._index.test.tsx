@@ -363,4 +363,12 @@ describe('homepage loader: challenge cards (#241)', () => {
 
     expect(data.challenges).toEqual([]);
   });
+
+  it('still renders the home, with no challenge, when the list throws', async () => {
+    fetchValidChallengesMock.mockRejectedValueOnce(new Error('network'));
+
+    const data = await loadHome();
+
+    expect(data.challenges).toEqual([]);
+  });
 });
