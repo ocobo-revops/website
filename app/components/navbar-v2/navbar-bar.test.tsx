@@ -170,6 +170,207 @@ describe('NavbarBar', () => {
   });
 });
 
+describe('NavbarBar panels (#315)', () => {
+  const challenges: NavItem = {
+    key: 'challenges',
+    label: 'Vos enjeux',
+    path: null,
+    dropdown: [
+      {
+        key: 'challenge-rp',
+        label: 'Revenue Process',
+        description: 'Structurer un process qui convertit',
+        path: '/fr/challenges/rp',
+        color: 'yellow',
+      },
+    ],
+  };
+
+  function openPanel(name: string) {
+    const button = screen.getByRole('button', { name });
+    return {
+      button,
+      panel: () =>
+        document.getElementById(
+          button.getAttribute('aria-controls') ?? '',
+        ) as HTMLElement,
+    };
+  }
+
+  it('names each challenge row with the challenge and its tagline', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+    const { button, panel } = openPanel('Vos enjeux');
+
+    await user.click(button);
+
+    expect(
+      within(panel()).getByRole('link', {
+        name: 'Revenue Process: Structurer un process qui convertit',
+      }),
+    ).toBeInTheDocument();
+  });
+
+  describe('hover', () => {
+    it('keeps the next panel open when the pointer moves across', async () => {
+      const user = userEvent.setup();
+      render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+      const first = openPanel('Vos enjeux');
+      const second = openPanel('Méthode');
+
+      await user.hover(first.button);
+      expect(first.button).toHaveAttribute('aria-expanded', 'true');
+      await user.unhover(first.button);
+      await user.hover(second.button);
+      // Past the 250ms close delay of the panel the pointer left.
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      expect(second.button).toHaveAttribute('aria-expanded', 'true');
+      expect(first.button).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('closes a panel opened by hover on Escape', async () => {
+      const user = userEvent.setup();
+      render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+      const { button } = openPanel('Vos enjeux');
+
+      await user.hover(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      await user.keyboard('{Escape}');
+
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+    });
+  });
+
+  it('shows the numbered challenges, the scope card and the contact footer', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} leadingItems={[challenges]} />);
+    const { button, panel } = openPanel('Vos enjeux');
+
+    await user.click(button);
+    const content = within(panel());
+
+    const row = content.getByRole('link', { name: /Structurer un process/ });
+    expect(row).toHaveAttribute('href', '/fr/challenges/rp');
+    expect(row).toHaveTextContent(/^01/);
+    expect(
+      content.getByRole('link', { name: /Notre périmètre/ }),
+    ).toHaveAttribute('href', '/fr/method#perimetre');
+    expect(
+      content.getByRole('link', { name: 'Échanger avec un architecte' }),
+    ).toHaveAttribute('href', '/fr/contact');
+  });
+
+  it('links the method chips to anchors of their page', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} />);
+    const { button, panel } = openPanel('Méthode');
+
+    await user.click(button);
+    const chips = within(panel()).getAllByRole('list', {
+      name: /^Sections de la page/,
+    });
+    const hrefs = chips.flatMap((list) =>
+      within(list)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('href')),
+    );
+
+    expect(hrefs).toEqual([
+      '/fr/method#piliers',
+      '/fr/method#perimetre',
+      '/fr/technology#badges',
+      '/fr/studio#squad',
+      '/fr/studio#expertises',
+    ]);
+  });
+
+  it('hides the ROI card while the ROI page is off', async () => {
+    const user = userEvent.setup();
+    const items: NavItem[] = [
+      {
+        key: 'method',
+        label: 'Méthode',
+        path: null,
+        dropdown: [
+          {
+            key: 'framework',
+            label: 'Méthodologie',
+            path: '/fr/method',
+            color: 'yellow',
+          },
+        ],
+      },
+      {
+        key: 'resources',
+        label: 'Ressources',
+        path: null,
+        dropdown: [
+          {
+            key: 'roi',
+            label: 'Calculateur ROI',
+            path: '/fr/roi',
+            color: 'mint',
+            shouldHide: true,
+          },
+        ],
+      },
+    ];
+    render(<NavbarBar scrolled={false} items={items} />);
+    const { button, panel } = openPanel('Méthode');
+
+    await user.click(button);
+
+    expect(
+      within(panel()).queryByRole('link', { name: /ROI/ }),
+    ).not.toBeInTheDocument();
+    expect(
+      within(panel()).getByRole('link', { name: /Méthodologie/ }),
+    ).toBeInTheDocument();
+  });
+
+  it('uses English labels and paths on English pages', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} leadingItems={[challenges]} />, {
+      initialEntries: ['/en'],
+      path: '/:lang',
+      i18nLang: 'en',
+    });
+    const { button, panel } = openPanel('Vos enjeux');
+
+    await user.click(button);
+
+    expect(
+      within(panel()).getByRole('link', { name: /Our scope/ }),
+    ).toHaveAttribute('href', '/en/method#perimetre');
+    expect(
+      within(panel()).getByText('Not sure where to start?'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the IA entry as a plain link', () => {
+    const items: NavItem[] = [
+      { key: 'ai', label: 'IA', path: '/fr/challenges/ai' },
+    ];
+    render(<NavbarBar scrolled={false} items={items} />);
+
+    expect(within(mainNav()).getByRole('link', { name: 'IA' })).toHaveAttribute(
+      'href',
+      '/fr/challenges/ai',
+    );
+  });
+
+  it('has no axe violations with the challenge panel open', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <NavbarBar scrolled leadingItems={[challenges]} />,
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Vos enjeux' }));
+    expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
 describe('NavbarBar mobile menu', () => {
   it('opens from the burger and closes with Escape', async () => {
     const user = userEvent.setup();
