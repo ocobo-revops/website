@@ -92,7 +92,6 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     title: t('meta.title'),
     description: t('meta.description'),
     ogImageSrc: getImageOgFullPath('homepage', args.request.url),
-    showStudio: isPageEnabled('studio'),
     showTechnology: isPageEnabled('technology'),
     testimonials,
     challenges,
@@ -112,7 +111,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { showStudio, showTechnology, testimonials, challenges } =
+  const { showTechnology, testimonials, challenges } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation('home');
   const hasChallenges = challenges.length > 0;
@@ -129,7 +128,7 @@ export default function Index() {
       <AiSection aiChallengeSlug={aiChallengeSlug} />
       {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
       <InterventionsSection />
-      <ComparatifSection showStudio={showStudio} />
+      <ComparatifSection />
       <StackSection showTechnology={showTechnology} />
       <CtaSection
         id={DIAGNOSTIC_ID}
