@@ -12,6 +12,7 @@ import {
   CURVE_END,
   CURVE_PATH,
   GAIN_ANCHORS,
+  GAIN_X,
   type HeroDot,
   type HeroFrame,
   TEAM_X,
@@ -102,7 +103,100 @@ const gainLabel = css({
   fill: 'dark',
 });
 
-const node = css({ fill: 'white', stroke: 'dark', strokeWidth: '1.6' });
+const aiLabel = cx(teamLabel, css({ fontWeight: 'bold' }));
+
+const aiRing = css({
+  strokeWidth: '1.6',
+  strokeDasharray: '3 3',
+  transformBox: 'fill-box',
+  transformOrigin: 'center',
+});
+
+const node = css({
+  fill: 'white',
+  stroke: 'dark',
+  strokeWidth: '1.6',
+  transformBox: 'fill-box',
+  transformOrigin: 'center',
+  transitionProperty: 'common',
+  transitionDuration: 'fast',
+  _motionReduce: { transitionDuration: 'instant' },
+});
+
+// Hovering a gain shows its tooltip, grows its node and dims the other
+// gains, as in the mockup. Static selectors per gain: Panda extracts
+// literals only (CLAUDE.md §7).
+const GAIN_CLASS = [
+  'hero-gain-1',
+  'hero-gain-2',
+  'hero-gain-3',
+  'hero-gain-4',
+  'hero-gain-5',
+] as const;
+const NODE_CLASS = [
+  'hero-node-1',
+  'hero-node-2',
+  'hero-node-3',
+  'hero-node-4',
+  'hero-node-5',
+] as const;
+const TIP_CLASS = [
+  'hero-tip-1',
+  'hero-tip-2',
+  'hero-tip-3',
+  'hero-tip-4',
+  'hero-tip-5',
+] as const;
+const grownNode = { transform: 'scale(1.6)', fill: 'dark' } as const;
+const shownTip = { opacity: '1' } as const;
+
+const visualFrame = css({
+  position: 'relative',
+  '&:has(.hero-gain-1:hover) .hero-node-1': grownNode,
+  '&:has(.hero-gain-2:hover) .hero-node-2': grownNode,
+  '&:has(.hero-gain-3:hover) .hero-node-3': grownNode,
+  '&:has(.hero-gain-4:hover) .hero-node-4': grownNode,
+  '&:has(.hero-gain-5:hover) .hero-node-5': grownNode,
+  '&:has(.hero-gain-1:hover) .hero-tip-1': shownTip,
+  '&:has(.hero-gain-2:hover) .hero-tip-2': shownTip,
+  '&:has(.hero-gain-3:hover) .hero-tip-3': shownTip,
+  '&:has(.hero-gain-4:hover) .hero-tip-4': shownTip,
+  '&:has(.hero-gain-5:hover) .hero-tip-5': shownTip,
+  '&:has(.hero-hit:hover) .hero-gain:not(:hover) text': {
+    fillOpacity: '0.3',
+  },
+});
+
+const gainHit = css({ fill: 'transparent' });
+
+// Hover only, hidden on a phone as in the mockup. Screen readers get the
+// same texts from the hidden list next to the visual.
+const tip = cx(
+  text({ variant: 'small', color: 'white' }),
+  css({
+    display: { base: 'none', md: 'block' },
+    position: 'absolute',
+    zIndex: '6',
+    pointerEvents: 'none',
+    w: '60',
+    bg: 'dark',
+    px: '3',
+    py: '2.5',
+    rounded: 'lg',
+    shadow: 'hover',
+    opacity: '0',
+    transitionProperty: 'common',
+    transitionDuration: 'normal',
+    _motionReduce: { transitionDuration: 'instant' },
+  }),
+);
+// The last two open to the left, to stay inside the frame.
+const tipToRight = css({ transform: 'translate(14px, 14px)' });
+const tipToLeft = css({ transform: 'translate(calc(-100% - 14px), 14px)' });
+const tipLabel = cx(
+  text({ variant: 'label' }),
+  css({ display: 'block', mb: '1', color: 'coral' }),
+);
 
 const scalesFromCentre = css({
   transformBox: 'fill-box',
@@ -160,6 +254,7 @@ type SceneIds = Record<
 
 type SceneCopy = {
   teams: string[];
+  agents: string;
   gains: string[];
   axis: string;
   withoutSystem: string;
@@ -325,7 +420,7 @@ const MiddleLayer = memo(function MiddleLayer({
 }: SceneProps) {
   return (
     <>
-      {TEAM_X.map((x, i) => (
+      {GAIN_X.map((x, i) => (
         <line
           key={x}
           className={guideLine}
@@ -369,10 +464,27 @@ const MiddleLayer = memo(function MiddleLayer({
         </g>
       ))}
 
-      {TEAM_X.map((x, i) => (
+      <g
+        transform={`translate(${frame.ai.x},${frame.ai.y})`}
+        opacity={frame.ai.opacity}
+      >
+        <circle
+          className={aiRing}
+          r="17"
+          stroke={`url(#${ids.halo})`}
+          opacity={frame.ai.ringOpacity}
+          style={{ transform: `rotate(${frame.ai.ringRotation}deg)` }}
+        />
+        <circle r="9" className={teamDot} fill={`url(#${ids.halo})`} />
+        <text y="30" textAnchor="middle" className={aiLabel}>
+          {copy.agents}
+        </text>
+      </g>
+
+      {GAIN_X.map((x, i) => (
         <circle
           key={x}
-          className={node}
+          className={cx(node, NODE_CLASS[i])}
           cx={x}
           cy={frame.nodes[i]?.cy}
           r="4"
@@ -411,10 +523,23 @@ const FrontLayer = memo(function FrontLayer({ frame, ids, copy }: SceneProps) {
       {GAIN_ANCHORS.map(({ x, y }, i) => (
         <g
           key={x}
-          className={gainGroup}
+          className={cx(gainGroup, 'hero-gain', GAIN_CLASS[i])}
           transform={`translate(${x},${y + (frame.gains[i]?.dy ?? 0)})`}
           opacity={frame.gains[i]?.opacity}
         >
+          <rect
+            className={cx(gainHit, 'hero-hit')}
+            // Above the curve only, so a node never opens its neighbour.
+            x="-215"
+            y="-46"
+            width="221"
+            height="46"
+            // No hover before the gain has appeared.
+            style={{
+              pointerEvents:
+                (frame.gains[i]?.opacity ?? 0) > 0.5 ? 'all' : 'none',
+            }}
+          />
           <text className={gainNumber} x="-6" y="-26" textAnchor="end">
             {String(i + 1).padStart(2, '0')}
           </text>
@@ -455,6 +580,7 @@ export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
   const copy = useMemo<SceneCopy>(
     () => ({
       teams: asList(t('heroV2.teams', { returnObjects: true })),
+      agents: t('heroV2.agents'),
       gains: asList(t('heroV2.gains', { returnObjects: true })),
       axis: t('heroV2.axis'),
       withoutSystem: t('heroV2.withoutSystem'),
@@ -462,42 +588,72 @@ export function HomeHeroVisual({ frame }: HomeHeroVisualProps) {
     [t],
   );
 
+  const tips = useMemo(
+    () => asList(t('heroV2.tips', { returnObjects: true })),
+    [t],
+  );
+
   return (
     <div>
       <p className={css({ srOnly: true })}>{t('heroV2.visualLabel')}</p>
-      <svg
-        aria-hidden="true"
-        viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
-        fill="none"
-        className={svgStyles}
-      >
-        <BackLayer frame={frame} ids={ids} copy={copy} />
-        <g>
-          {frame.dots.map((dot, i) => (
-            <circle
-              // The dots are a fixed pool, recycled from frame to frame.
-              key={i}
-              className={dotFill[dot.tone]}
-              cx={dot.x}
-              cy={dot.y}
-              r={dot.r}
-              opacity={dot.opacity}
-            />
-          ))}
-        </g>
-        <MiddleLayer frame={frame} ids={ids} copy={copy} />
-        <circle
-          className={scalesFromCentre}
-          cx={CURVE_END.x}
-          cy={CURVE_END.y}
-          r={MARK_RADIUS}
-          stroke={`url(#${ids.halo})`}
-          strokeWidth="1.8"
-          opacity={frame.halo.opacity}
-          style={{ transform: `scale(${frame.halo.scale})` }}
-        />
-        <FrontLayer frame={frame} ids={ids} copy={copy} />
-      </svg>
+      <ul className={css({ srOnly: true })}>
+        {tips.map((tipText, i) => (
+          <li key={tipText}>
+            {copy.gains[i]}. {tipText}
+          </li>
+        ))}
+      </ul>
+      <div className={visualFrame}>
+        <svg
+          aria-hidden="true"
+          viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
+          fill="none"
+          className={svgStyles}
+        >
+          <BackLayer frame={frame} ids={ids} copy={copy} />
+          <g>
+            {frame.dots.map((dot, i) => (
+              <circle
+                // The dots are a fixed pool, recycled from frame to frame.
+                key={i}
+                className={dotFill[dot.tone]}
+                cx={dot.x}
+                cy={dot.y}
+                r={dot.r}
+                opacity={dot.opacity}
+              />
+            ))}
+          </g>
+          <MiddleLayer frame={frame} ids={ids} copy={copy} />
+          <circle
+            className={scalesFromCentre}
+            cx={CURVE_END.x}
+            cy={CURVE_END.y}
+            r={MARK_RADIUS}
+            stroke={`url(#${ids.halo})`}
+            strokeWidth="1.8"
+            opacity={frame.halo.opacity}
+            style={{ transform: `scale(${frame.halo.scale})` }}
+          />
+          <FrontLayer frame={frame} ids={ids} copy={copy} />
+        </svg>
+        {GAIN_ANCHORS.map(({ x, y }, i) =>
+          tips[i] ? (
+            <span
+              key={x}
+              aria-hidden="true"
+              className={cx(tip, i < 3 ? tipToRight : tipToLeft, TIP_CLASS[i])}
+              style={{
+                left: `${(x / VIEWBOX.width) * 100}%`,
+                top: `${(y / VIEWBOX.height) * 100}%`,
+              }}
+            >
+              <b className={tipLabel}>{t('heroV2.tipLabel')}</b>
+              {tips[i]}
+            </span>
+          ) : null,
+        )}
+      </div>
       {/* The hidden sentence above already reads these gains. */}
       <ul
         aria-hidden="true"
