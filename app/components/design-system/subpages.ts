@@ -138,6 +138,12 @@ export const designSystemGroups = [
         description: 'Sections specific to one challenge page.',
         sections: ['AI thesis', 'Une journée de commercial'],
       },
+      {
+        slug: 'home-hero',
+        title: 'Home hero',
+        description: 'The animated hero of the home page.',
+        sections: ['Home hero'],
+      },
     ],
   },
 ] as const satisfies readonly DesignSystemGroup[];
