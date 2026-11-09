@@ -18,16 +18,7 @@ const sideCard = cx(
   }),
 );
 
-// Bermia at 26px in the mockup: the display face, at the nearest size.
-const sideTitle = cx(
-  text({ variant: 'display-lg' }),
-  css({
-    fontSize: 'h3',
-    lineHeight: 'tight',
-    letterSpacing: 'normal',
-    mb: '2.5',
-  }),
-);
+const sideTitle = cx(text({ variant: 'display-md-black' }), css({ mb: '2.5' }));
 
 const sideText = cx(
   text({ variant: 'small', color: 'muted' }),

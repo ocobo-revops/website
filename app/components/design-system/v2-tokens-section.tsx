@@ -35,6 +35,11 @@ const typeScale = [
     className: text({ variant: 'display-lg' }),
   },
   {
+    name: 'display-md-black',
+    size: 'H3 (Bermia)',
+    className: text({ variant: 'display-md-black' }),
+  },
+  {
     name: 'display-md-bold',
     size: 'H3',
     className: text({ variant: 'display-md-bold' }),

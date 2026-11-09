@@ -332,12 +332,8 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
               mb: '8',
             })}
           >
-            {/* Bermia at 28px in the mockup: the display face, nearest size. */}
             <h3
-              className={cx(
-                text({ variant: 'display-lg', color: 'white' }),
-                css({ fontSize: '3xl' }),
-              )}
+              className={text({ variant: 'display-md-black', color: 'white' })}
             >
               {t('ai.agents.title')}
             </h3>

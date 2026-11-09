@@ -112,14 +112,8 @@ export const InterventionsSection = () => {
                 </div>
                 <h3
                   className={cx(
-                    text({ variant: 'display-lg' }),
-                    css({
-                      fontSize: 'h3',
-                      lineHeight: 'tight',
-                      letterSpacing: 'normal',
-                      mt: '5',
-                      mb: '4',
-                    }),
+                    text({ variant: 'display-md-black' }),
+                    css({ mt: '5', mb: '4' }),
                   )}
                 >
                   {item.title}
