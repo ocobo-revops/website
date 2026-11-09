@@ -126,17 +126,28 @@ describe('UnifiedBowtie', () => {
     }
   });
 
-  it('draws the Revenue Systems flow in dark, not its grey', () => {
+  it('draws the Revenue Systems flow and chips in the colour of each phase', () => {
     const { container } = render(
       <main>
-        <UnifiedBowtie activeStages={['discovery']} challenge="sy" />
+        <UnifiedBowtie
+          activeStages={['discovery', 'closing', 'adoption']}
+          challenge="sy"
+        />
       </main>,
     );
 
-    const tint = container.querySelector('[data-stage-tint]');
-    expect(tint).toHaveClass(css({ stroke: 'dark' }));
-    expect(tint).not.toHaveClass(css({ stroke: 'colorPalette' }));
-    expect(tint).not.toHaveAttribute('stroke');
+    const strokes = [...container.querySelectorAll('[data-stage-tint]')];
+    expect(strokes[0]).toHaveClass(css({ stroke: 'mint' }));
+    expect(strokes[1]).toHaveClass(css({ stroke: 'yellow' }));
+    expect(strokes[2]).toHaveClass(css({ stroke: 'sky' }));
+    for (const stroke of strokes) {
+      expect(stroke).not.toHaveClass(css({ stroke: 'colorPalette' }));
+      expect(stroke).not.toHaveAttribute('stroke');
+    }
+    const chips = [...container.querySelectorAll('[data-stage-chip]')];
+    expect(chips[0]).toHaveClass(css({ borderColor: 'mint' }));
+    expect(chips[1]).toHaveClass(css({ borderColor: 'yellow' }));
+    expect(chips[2]).toHaveClass(css({ borderColor: 'sky' }));
   });
 
   it('draws the Revenue AI flow with the AI gradient', () => {
@@ -159,13 +170,13 @@ describe('UnifiedBowtie', () => {
   });
 
   it('borders the tooltip in the challenge colour on active stages only', async () => {
-    const active = await openStageTooltip('Découverte', 'sy');
+    const active = await openStageTooltip('Découverte', 'cx');
     expect(active).toHaveClass(activeBorder);
     expect(active).not.toHaveClass(inactiveBorder);
 
     const inactive = await openStageTooltip(
       'Signature, étape hors périmètre',
-      'sy',
+      'cx',
     );
     expect(inactive).toHaveClass(inactiveBorder);
     expect(inactive).not.toHaveClass(activeBorder);

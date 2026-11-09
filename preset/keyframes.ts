@@ -88,6 +88,16 @@ export const keyframes = defineKeyframes({
     '0%, 100%': { opacity: '1' },
     '50%': { opacity: '0.5' },
   },
+  // Bow tie (#242): each active column uncovers its flow lines from the left,
+  // and the knot ring expands and fades, as in the prototype challenge pages.
+  'bowtie-draw': {
+    from: { clipPath: 'inset(0 100% 0 0)' },
+    to: { clipPath: 'inset(0 0 0 0)' },
+  },
+  'bowtie-ring': {
+    '0%': { transform: 'scale(0.92)', opacity: '1' },
+    '100%': { transform: 'scale(1.7)', opacity: '0' },
+  },
   'radar-sweep': {
     from: { transform: 'rotate(0deg)' },
     to: { transform: 'rotate(360deg)' },
