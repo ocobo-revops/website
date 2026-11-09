@@ -168,7 +168,7 @@ describe('loadChallengeMenu', () => {
       loadChallengeMenu('fr'),
     ]);
 
-    expect(first).toBe(second);
+    expect(first).toEqual(second);
     expect(fetchValidChallenges).toHaveBeenCalledTimes(1);
   });
 

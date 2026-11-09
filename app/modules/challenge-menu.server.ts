@@ -1,6 +1,6 @@
 /**
- * Challenge list behind the navbar entry and the sitemap (#237), kept in
- * memory per language. Every page render needs it, and the GitHub source
+ * Challenge list behind the navbar entry, the sitemap (#237) and the home
+ * cards (#241), kept in memory per language as validated files. Every page render needs it, and the GitHub source
  * costs one listing plus one call per file: the HTTP layer does not cache
  * those calls on Node.
  *
@@ -10,7 +10,10 @@
 
 import type { Language } from '~/localization/resources';
 
+import type { MarkdocFile } from '~/types';
+
 import { type ChallengeMenuEntry, toChallengeMenu } from './challenge-menu';
+import type { ChallengeFrontmatter } from './challenge-schema';
 import { fetchValidChallenges } from './content/api';
 import { getContentSource } from './env.server';
 
@@ -26,35 +29,50 @@ export type ChallengeMenuLoad = {
   failed: boolean;
 };
 
-type CachedList = ChallengeMenuLoad & { expiresAt: number };
+export type ChallengeFilesLoad = {
+  files: readonly MarkdocFile<ChallengeFrontmatter>[];
+  /** True when the list could not be fetched: `files` may be outdated. */
+  failed: boolean;
+};
+
+type CachedList = ChallengeFilesLoad & { expiresAt: number };
 
 const cache = new Map<Language, CachedList>();
-const inflight = new Map<Language, Promise<ChallengeMenuLoad>>();
+const inflight = new Map<Language, Promise<ChallengeFilesLoad>>();
 
 type LoadOptions = {
   /** Fetch even when the cached list is fresh (`?refresh=1`). */
   refresh?: boolean;
 };
 
+/** Menu entries of one language, in `order`, from `loadChallengeFiles`. */
+export async function loadChallengeMenu(
+  lang: Language,
+  options: LoadOptions = {},
+): Promise<ChallengeMenuLoad> {
+  const { files, failed } = await loadChallengeFiles(lang, options);
+  return { challenges: toChallengeMenu(files), failed };
+}
+
 /**
- * Published challenges of one language, in `order`. Never throws: a failed
- * fetch serves the last list fetched, or `[]` before any, and waits
+ * Validated challenge files of one language. Never throws: a failed fetch
+ * serves the last list fetched, or `[]` before any, and waits
  * `CHALLENGE_MENU_RETRY_MS` before the next try. Concurrent renders share
  * one fetch. The local filesystem source is read on every call, so edits
  * show at once.
  */
-export async function loadChallengeMenu(
+export async function loadChallengeFiles(
   lang: Language,
   { refresh = false }: LoadOptions = {},
-): Promise<ChallengeMenuLoad> {
+): Promise<ChallengeFilesLoad> {
   const cacheable = getContentSource() === 'github';
   if (!cacheable) {
-    return fetchChallengeMenu(lang);
+    return fetchChallengeFiles(lang);
   }
 
   const cached = cache.get(lang);
   if (cached && !refresh && cached.expiresAt > Date.now()) {
-    return { challenges: cached.challenges, failed: cached.failed };
+    return { files: cached.files, failed: cached.failed };
   }
 
   const pending = inflight.get(lang);
@@ -62,11 +80,11 @@ export async function loadChallengeMenu(
     return pending;
   }
 
-  const load: Promise<ChallengeMenuLoad> = fetchChallengeMenu(lang).then(
+  const load: Promise<ChallengeFilesLoad> = fetchChallengeFiles(lang).then(
     (result) => {
       // Read the previous list now, not when the fetch started.
       const served = result.failed
-        ? { challenges: cache.get(lang)?.challenges ?? [], failed: true }
+        ? { files: cache.get(lang)?.files ?? [], failed: true }
         : result;
       // A refresh started after this fetch owns the cache: keep its list.
       if (inflight.get(lang) === load) {
@@ -90,7 +108,9 @@ export async function loadChallengeMenu(
   }
 }
 
-async function fetchChallengeMenu(lang: Language): Promise<ChallengeMenuLoad> {
+async function fetchChallengeFiles(
+  lang: Language,
+): Promise<ChallengeFilesLoad> {
   const [status, state, files] = await fetchValidChallenges(lang).catch(
     (error: unknown) => {
       console.error('[challenge-menu] challenge list threw:', error);
@@ -99,12 +119,9 @@ async function fetchChallengeMenu(lang: Language): Promise<ChallengeMenuLoad> {
   );
   // A missing folder is the normal state before any challenge is published.
   if ((status === 200 && files) || state === 'not_found') {
-    return {
-      challenges: files ? toChallengeMenu(files) : [],
-      failed: false,
-    };
+    return { files: files ?? [], failed: false };
   }
 
   console.error('[challenge-menu] challenge list unavailable:', status, state);
-  return { challenges: [], failed: true };
+  return { files: [], failed: true };
 }
