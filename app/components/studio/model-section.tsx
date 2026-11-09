@@ -27,7 +27,9 @@ export const ModelSection = () => {
 
   return (
     <section
+      id="squad"
       className={css({
+        scrollMarginTop: '24',
         bg: 'ocobo.dark',
         py: '32',
         color: 'white',
