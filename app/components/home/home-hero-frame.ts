@@ -56,7 +56,7 @@ export type HeroFrame = {
   /** The ring that pulses around the mark once it has landed. */
   halo: { scale: number; opacity: number };
   /** Progress of the headline accents, from 0 to 1. */
-  accents: { strike: number; tag: number; highlight: number };
+  accents: { tag: number; highlight: number };
   dots: readonly HeroDot[];
 };
 
@@ -249,7 +249,6 @@ function computeFrame(t: number): HeroFrame {
     endReached: end > 0.98,
     halo: haloAt(t),
     accents: {
-      strike: easeInOut(segment(t, 0.7, 1.25)),
       tag: easeOut(segment(t, 1.15, 1.7)),
       highlight: easeInOut(segment(t, 1.3, 2.1)),
     },

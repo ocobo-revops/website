@@ -34,7 +34,7 @@ describe('heroFrame', () => {
     expect(frame.curveOffset).toBe(1);
     expect(frame.end.opacity).toBe(0);
     expect(frame.endReached).toBe(false);
-    expect(frame.accents).toEqual({ strike: 0, tag: 0, highlight: 0 });
+    expect(frame.accents).toEqual({ tag: 0, highlight: 0 });
   });
 
   it('pulses the halo only after the mark has landed', () => {
@@ -61,7 +61,7 @@ describe('heroFrame', () => {
     expect(frame.end).toEqual({ opacity: 1, scale: 1 });
     expect(frame.endReached).toBe(true);
     for (const gain of frame.gains) expect(gain).toEqual({ dy: 0, opacity: 1 });
-    expect(frame.accents).toEqual({ strike: 1, tag: 1, highlight: 1 });
+    expect(frame.accents).toEqual({ tag: 1, highlight: 1 });
   });
 
   it('keeps the dots flowing along the axis after it settles', () => {

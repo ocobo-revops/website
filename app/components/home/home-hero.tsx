@@ -1,6 +1,6 @@
 import { ArrowRight, Pause, Play } from 'lucide-react';
 import { memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { button, section, text } from '@ocobo/styled-system/recipes';
@@ -21,34 +21,13 @@ const glow = css({
 
 const title = cx(
   text({ variant: 'display-xl' }),
-  css({ maxW: '[18em]', mx: 'auto', mb: '6', textWrap: 'balance' }),
+  css({ maxW: '6xl', mx: 'auto', mb: '6' }),
 );
 
 const subtitle = cx(
   text({ variant: 'body' }),
   css({ maxW: '2xl', mx: 'auto', mb: '8', color: 'gray' }),
 );
-
-const struck = css({
-  position: 'relative',
-  textDecoration: 'none',
-  color: 'gray',
-  whiteSpace: 'nowrap',
-  // Forced colours drop the coral bar: fall back to the native strike.
-  _highContrast: { textDecoration: 'line-through' },
-});
-
-const strikeLine = css({
-  position: 'absolute',
-  left: '[-2%]',
-  right: '[-2%]',
-  top: '[44%]',
-  h: '[0.085em]',
-  rounded: 'full',
-  bg: 'coral',
-  transformOrigin: 'left center',
-  _highContrast: { display: 'none' },
-});
 
 const tag = css({
   display: 'inline-block',
@@ -59,6 +38,7 @@ const tag = css({
   rounded: 'lg',
   bg: 'mint',
   color: 'dark',
+  whiteSpace: 'nowrap',
 });
 
 const highlight = css({
@@ -100,7 +80,6 @@ const iconSize = css({ w: '4', h: '4' });
 
 type HeroCopyProps = {
   titleAs: 'h1' | 'h2';
-  strike: number;
   tag: number;
   highlight: number;
 };
@@ -111,55 +90,39 @@ type HeroCopyProps = {
  */
 const HeroCopy = memo(function HeroCopy({
   titleAs: Title,
-  strike,
   tag: tagIn,
   highlight: highlightIn,
 }: HeroCopyProps) {
   const { t } = useTranslation('home');
-  // Keep the punctuation that follows the tag on its line.
-  const after = t('heroV2.title.after');
-  const glue = after.match(/^\S*/)?.[0] ?? '';
 
   return (
     <>
       <Title className={title}>
         {t('heroV2.title.before')}{' '}
-        <del className={struck}>
-          {t('heroV2.title.struck')}
-          {/* Screen readers rarely announce a deletion: say it. */}
-          <span className={css({ srOnly: true })}>
-            {' '}
-            {t('heroV2.title.struckSr')}
-          </span>
-          <span
-            aria-hidden="true"
-            className={strikeLine}
-            style={{ transform: `scaleX(${strike})` }}
-          />
-        </del>{' '}
-        <span className={css({ whiteSpace: 'nowrap' })}>
-          <span
-            className={tag}
-            style={{
-              opacity: tagIn,
-              transform: `rotate(${-12 + 9.5 * tagIn}deg) scale(${0.6 + 0.4 * tagIn})`,
-            }}
-          >
-            {t('heroV2.title.accent')}
-          </span>
-          {glue}
+        <span
+          className={tag}
+          style={{
+            opacity: tagIn,
+            transform: `rotate(${-12 + 9.5 * tagIn}deg) scale(${0.6 + 0.4 * tagIn})`,
+          }}
+        >
+          {t('heroV2.title.accent')}
         </span>
-        {after.slice(glue.length)}
+        <br />
+        {t('heroV2.title.after')}
       </Title>
       <p className={subtitle}>
-        {t('heroV2.subtitle.before')}{' '}
-        <strong
-          className={highlight}
-          style={{ backgroundSize: `${highlightIn * 100}% 0.32em` }}
-        >
-          {t('heroV2.subtitle.highlight')}
-        </strong>
-        {t('heroV2.subtitle.after')}
+        <Trans
+          i18nKey="heroV2.subtitle"
+          t={t}
+          components={[
+            <strong
+              key="highlight"
+              className={highlight}
+              style={{ backgroundSize: `${highlightIn * 100}% 0.32em` }}
+            />,
+          ]}
+        />
       </p>
     </>
   );

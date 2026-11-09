@@ -48,11 +48,13 @@ describe('HomeHero', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /fluid across your teams/,
+        name: /Growth is a system\. ?We build it\./,
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/single RevOps axis/, { selector: 'p' }),
+      screen.getByText('former revenue operations leaders', {
+        selector: 'strong',
+      }),
     ).toBeInTheDocument();
   });
 
@@ -63,11 +65,15 @@ describe('HomeHero', () => {
     expect(screen.queryByRole('heading', { level: 1 })).toBeNull();
   });
 
-  it('keeps the punctuation after the tag on its line', () => {
+  it('keeps the French elision against the highlight', () => {
     render(<HomeHero />, { i18nLang: 'fr' });
 
-    const tag = screen.getByText('simple');
-    expect(tag.parentElement?.textContent).toBe('simple,');
+    const highlight = screen.getByText(
+      'anciens responsables des opérations commerciales',
+    );
+    expect(highlight.parentElement?.textContent).toContain(
+      "Avec d'anciens responsables",
+    );
   });
 
   it('switches the pause button label', async () => {
@@ -85,7 +91,7 @@ describe('HomeHero', () => {
     render(<HomeHero />, { i18nLang: 'en' });
 
     expect(screen.queryByRole('button', { name: /pause/i })).toBeNull();
-    expect(screen.getByText('simple')).toHaveStyle({ opacity: '1' });
+    expect(screen.getByText('a system.')).toHaveStyle({ opacity: '1' });
   });
 
   it('has no axe violations', async () => {
