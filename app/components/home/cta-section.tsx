@@ -17,6 +17,8 @@ interface CtaSectionProps {
   subtitle?: string;
   ctaText: string;
   ctaLink: string;
+  /** Anchor target, for example the hero's `#diagnostic` link. */
+  id?: string;
 }
 
 const variantToSectionBg: Record<CtaVariant, 'yellow' | 'sky' | 'dark'> = {
@@ -43,16 +45,17 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
   subtitle,
   ctaText,
   ctaLink,
+  id,
 }) => {
   const getLocalizedPath = useLocalizedPathname();
 
   return (
     <section
-      className={`${section({ bg: variantToSectionBg[variant], padding: 'lg' })} ${css(
-        {
-          py: '32',
-        },
-      )}`}
+      id={id}
+      className={cx(
+        section({ bg: variantToSectionBg[variant], padding: 'lg' }),
+        css({ py: '32', scrollMarginTop: '24' }),
+      )}
     >
       <Container className={css({ textAlign: 'center' })}>
         <h2
@@ -85,6 +88,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({
             to={getLocalizedPath(ctaLink)}
             variant={buttonVariants[variant]}
             size="lg"
+            data-testid={id ? `${id}-cta` : undefined}
           >
             {ctaText}
           </ButtonLink>

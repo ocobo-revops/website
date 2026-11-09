@@ -1,16 +1,6 @@
 {
   "meta.title": "Ocobo · RevOps & Revenue Experience",
   "meta.description": "Ocobo conçoit l'architecture RevOps qui rend la croissance simple, fluide et pilotable.",
-  "hero.title.lines": [
-    "L'architecture",
-    "qui fait tenir",
-    "votre croissance."
-  ],
-  "hero.subtitle.before": "Voici comment nous transformons la croissance en",
-  "hero.subtitle.highlight": "expérience simple, fluide et pilotable.",
-  "hero.callout.before": "Le RevOps n'est pas un outil : c'est",
-  "hero.callout.emphasis": "la science qui organise votre revenu.",
-  "hero.cta": "Rencontrer un architecte",
   "heroV2.title.before": "La croissance est",
   "heroV2.title.accent": "un système.",
   "heroV2.title.after": "Nous le construisons.",
@@ -27,81 +17,9 @@
   "socialProof.label": "Ils nous font confiance",
   "socialProof.title": "La preuve par l'expérience",
   "socialProof.ctaText": "Découvrir nos stories",
-  "painPoint.title.line1": "Le RevOps est partout.",
-  "painPoint.title.line2": "Mais personne ne comprend vraiment ce dont il s'agit.",
-  "painPoint.description": "Le marché a transformé un métier essentiel en une discipline fourre-tout : CRM, intégration, automatisation, data, growth… Résultat : une cacophonie, des stacks qui débordent et des organisations qui avancent à tâtons.",
-  "painPoint.badge": "Nous refusons ce flou",
-  "painPoint.cards": [
-    {
-      "title": "Aligner",
-      "description": "les équipes",
-      "label": "Organiser =",
-      "colour": "coral"
-    },
-    {
-      "title": "Simplifier",
-      "description": "les process",
-      "label": "Organiser =",
-      "colour": "yellow"
-    },
-    {
-      "title": "Fiabiliser",
-      "description": "la donnée",
-      "label": "Organiser =",
-      "colour": "sky"
-    },
-    {
-      "title": "Piloter",
-      "description": "la croissance",
-      "label": "Organiser =",
-      "colour": "mint"
-    }
-  ],
-  "painPoint.mission.label": "Notre Mission",
-  "painPoint.mission.title": "Démocratiser la science du revenu.",
-  "painPoint.mission.description": "Pour que chaque organisation puisse faire l'expérience d'une croissance saine et maîtrisée.",
-  "transformation.title": "On ne scale pas avec des outils. On scale avec un système.",
-  "transformation.description": "La plupart des organisations grandissent en empilant les outils. Nous préférons construire des fondations solides et un système qui tient la charge.",
-  "transformation.items": [
-    {
-      "title": "Clarté radicale",
-      "description": "Une vérité partagée entre équipes. Des décisions éclairées. La fin du pilotage à l'intuition."
-    },
-    {
-      "title": "Simplicité opérationnelle",
-      "description": "Moins de friction, moins de complexité, moins d'outils. Des équipes concentrées sur le closing."
-    },
-    {
-      "title": "Performance mesurable",
-      "description": "Des conversions qui augmentent. Des cycles qui raccourcissent. Un revenu enfin prévisible."
-    }
-  ],
-  "transformation.method.title.line1": "Ce n'est pas un hasard.",
-  "transformation.method.title.line2": "C'est une méthode.",
-  "transformation.method.items": [
-    {
-      "title": "Alignment",
-      "description": "Aligner les équipes qui font le revenu.",
-      "colour": "yellow"
-    },
-    {
-      "title": "Technology",
-      "description": "Une stack claire, connectée, utile.",
-      "colour": "sky"
-    },
-    {
-      "title": "Performance",
-      "description": "Indicateurs fiables, pilotage, cockpit.",
-      "colour": "mint"
-    },
-    {
-      "title": "Enablement",
-      "description": "Équipes formées et autonomes.",
-      "colour": "coral"
-    }
-  ],
-  "transformation.method.label": "The Revenue Experience System™",
-  "transformation.method.cta": "Découvrir notre méthode",
+  "mission.label": "Notre Mission",
+  "mission.title": "Démocratiser la science du revenu.",
+  "mission.description": "Pour que chaque organisation puisse faire l'expérience d'une croissance saine et maîtrisée.",
   "interventions.title": "Nos interventions",
   "interventions.subtitle": "Nous vous aidons à construire les fondations RevOps dont dépend votre croissance.",
   "interventions.items": [
@@ -133,6 +51,8 @@
   "challengeCards.backLabel": "Enjeu {{number}} · Ce que nous déployons",
   "challengeCards.link": "Voir les chantiers",
   "challengeCards.linkLabel": "Voir les chantiers : {{name}}",
+  "challenges.title": "Six problèmes que nous réglons",
+  "challenges.subtitle": "Du premier lead au renouvellement. Chacun se règle avec la même méthode, dans vos outils.",
   "challengeCards.quote": "«\u00a0{{quote}}\u00a0»",
   "comparatif.title.line1": "Pourquoi Ocobo est plus qu'un intégrateur.",
   "comparatif.title.line2": "Plus qu'un cabinet. Plus qu'un freelance CRM.",

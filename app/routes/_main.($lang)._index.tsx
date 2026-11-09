@@ -2,14 +2,14 @@ import { useTranslation } from 'react-i18next';
 import { type LoaderFunctionArgs, type MetaFunction } from 'react-router';
 import { useLoaderData } from 'react-router';
 
+import { ChallengesSection } from '~/components/home/challenges-section';
 import { ComparatifSection } from '~/components/home/comparatif-section';
 import { CtaSection } from '~/components/home/cta-section';
-import { HeroSection } from '~/components/home/hero-section';
+import { HomeHero } from '~/components/home/home-hero';
 import { InterventionsSection } from '~/components/home/interventions-section';
-import { PainPointSection } from '~/components/home/pain-point-section';
+import { MissionSection } from '~/components/home/mission-section';
 import { SocialProofSection } from '~/components/home/social-proof-section';
 import { StackSection } from '~/components/home/stack-section';
-import { TransformationSection } from '~/components/home/transformation-section';
 import { ASSETS_BASE_URL } from '~/config/assets';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
@@ -91,7 +91,6 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     showStudio: isPageEnabled('studio'),
     showTechnology: isPageEnabled('technology'),
     testimonials,
-    // Rendered on the home by #242; shown on `/design-system` until then.
     challenges,
   };
 }, 'story');
@@ -109,20 +108,24 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { showStudio, showTechnology, testimonials } =
+  const { showStudio, showTechnology, testimonials, challenges } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation('home');
+  const hasChallenges = challenges.length > 0;
 
+  // The mockup order (`accueil.html`): hero, clients, mission, method,
+  // challenges, why Ocobo, stack, diagnostic.
   return (
     <div>
-      <HeroSection />
+      <HomeHero hasChallenges={hasChallenges} />
       <SocialProofSection testimonials={testimonials} />
-      <PainPointSection />
-      <TransformationSection />
+      <MissionSection />
       <InterventionsSection />
+      {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
       <ComparatifSection showStudio={showStudio} />
       <StackSection showTechnology={showTechnology} />
       <CtaSection
+        id="diagnostic"
         variant="yellow"
         title={t('cta.title')}
         subtitle={t('cta.subtitle')}
