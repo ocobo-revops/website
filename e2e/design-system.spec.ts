@@ -77,6 +77,7 @@ const groups = [
         name: 'Challenge sections',
         sections: ['AI thesis', 'Une journée de commercial'],
       },
+      { slug: 'home-hero', name: 'Home hero', sections: ['Home hero'] },
     ],
   },
 ];
