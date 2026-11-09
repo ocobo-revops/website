@@ -125,9 +125,14 @@ export function NavbarBar({
   return (
     <nav
       aria-label={t('navigation.label')}
+      data-panel-open={openKey !== null || undefined}
       className={cx(
         css({
           position: 'relative',
+          // The scrolled bar's backdrop filter makes it a stacking context,
+          // so the panel's own z-index stays inside it. Lift the whole bar
+          // while a panel is open, above the content that follows it.
+          '&[data-panel-open]': { zIndex: 10 },
           w: 'full',
           mx: 'auto',
           borderWidth: '1px',
