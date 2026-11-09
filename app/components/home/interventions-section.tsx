@@ -5,13 +5,13 @@ import { NavLink } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex, grid } from '@ocobo/styled-system/patterns';
 import { badge, card, section, text } from '@ocobo/styled-system/recipes';
-import type { ColorToken } from '@ocobo/styled-system/tokens';
 
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
 import { Container } from '../ui/Container';
+import { SquadPhoto } from './squad-photo';
 
 type Intervention = {
   badge: string;
@@ -21,25 +21,17 @@ type Intervention = {
   description: string;
 };
 
-const COLOR_MAP: Record<Intervention['badgeColor'], ColorToken> = {
-  yellow: 'ocobo.yellow',
-  sky: 'ocobo.sky',
-  mint: 'ocobo.mint',
-} as const;
-
 const cardStyle = cx(
-  card({ padding: 'md', radius: 'md', tone: 'white', border: true }),
+  'group',
+  card({ padding: 'lg' }),
   css({
-    p: '10',
+    flexDirection: 'column',
     h: 'full',
-    position: 'relative',
-    overflow: 'hidden',
-    transition: 'all',
+    color: 'dark',
+    textDecoration: 'none',
+    transitionProperty: 'common',
     transitionDuration: 'slow',
-    _hover: {
-      shadow: '2xl',
-      translateY: '-1',
-    },
+    _hover: { boxShadow: 'hover', transform: 'translateY(-4px)' },
   }),
 );
 
@@ -61,126 +53,113 @@ export const InterventionsSection = () => {
       <Container>
         <h2
           className={cx(
-            text({ variant: 'display-lg', color: 'dark' }),
-            css({
-              fontSize: '4xl',
-              mb: '4',
-              textAlign: 'center',
-            }),
+            text({ variant: 'display-lg' }),
+            css({ mb: '4', textAlign: 'center' }),
           )}
         >
           {t('interventions.title')}
         </h2>
         <p
-          className={css({
-            textAlign: 'center',
-            color: 'gray.600',
-            maxW: '2xl',
-            mx: 'auto',
-            mb: '20',
-          })}
+          className={cx(
+            text({ variant: 'body', color: 'muted' }),
+            css({ textAlign: 'center', maxW: '2xl', mx: 'auto', mb: '20' }),
+          )}
         >
           {t('interventions.subtitle')}
         </p>
 
+        <SquadPhoto />
+
         <div
           className={grid({
             columns: { base: 1, md: 3 },
-            gap: { base: '8', md: '10' },
+            gap: '8',
           })}
         >
-          {items.map((item) => {
-            const color = COLOR_MAP[item.badgeColor];
+          {items.map((item, index) => {
             const anchor = item.badge.toLowerCase();
             return (
               <NavLink
                 key={item.badge}
                 to={getLocalizedPath(`${url.offer}#${anchor}`)}
-                className={`group ${cardStyle} ${css({ textDecoration: 'none', color: 'current' })}`}
+                className={cardStyle}
               >
-                <div className={css({ mb: '8' })}>
-                  <span
-                    className={badge({
-                      variant: item.badgeColor,
-                    })}
-                  >
-                    {item.badge}
-                  </span>
-                  <p
-                    className={css({
-                      fontSize: 'sm',
-                      fontWeight: 'black',
-                      textTransform: 'uppercase',
-                      letterSpacing: 'widest',
-                      mt: '3',
-                      ml: '1',
-                      opacity: '0.7',
-                      color,
-                    })}
-                  >
+                <div
+                  className={css({
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '4',
+                  })}
+                >
+                  <span className={badge({ variant: item.badgeColor })}>
                     {item.subtitle}
-                  </p>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={cx(
+                      text({ variant: 'display-lg' }),
+                      css({
+                        fontSize: '4xl',
+                        lineHeight: 'none',
+                        color: 'gray.light',
+                      }),
+                    )}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                 </div>
                 <h3
                   className={cx(
-                    text({ variant: 'display-lg', color: 'dark' }),
+                    text({ variant: 'display-lg' }),
                     css({
-                      fontSize: '3xl',
-                      mb: '6',
+                      fontSize: 'h3',
                       lineHeight: 'tight',
-                      transition: 'colors',
-                      _groupHover: { color: 'black' },
+                      letterSpacing: 'normal',
+                      mt: '5',
+                      mb: '4',
                     }),
                   )}
                 >
                   {item.title}
                 </h3>
                 <p
-                  className={css({
-                    color: 'gray.600',
-                    fontSize: 'base',
-                    lineHeight: 'relaxed',
-                    flex: '1',
-                    fontWeight: 'medium',
-                  })}
+                  className={cx(
+                    text({ variant: 'body', color: 'muted' }),
+                    css({ flex: '1' }),
+                  )}
                 >
                   {item.description}
                 </p>
-
-                <div
+                <span
                   className={css({
-                    mt: '10',
-                    pt: '6',
-                    borderTopWidth: '1px',
-                    borderTopColor: 'gray.50',
-                    display: 'flex',
+                    display: 'inline-flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    color,
-                    opacity: '0',
-                    transition: 'opacity',
-                    transitionDuration: 'slow',
-                    _groupHover: { opacity: '1' },
+                    gap: '2',
+                    mt: '7',
+                    pt: '5',
+                    borderTopWidth: '1px',
+                    borderColor: 'gray.50',
+                    fontWeight: 'semibold',
                   })}
                 >
-                  <span
+                  {t('interventions.more')}
+                  <ArrowRight
+                    size={16}
+                    aria-hidden="true"
                     className={css({
-                      fontSize: '2xs',
-                      fontWeight: 'bold',
-                      textTransform: 'uppercase',
-                      letterSpacing: 'widest',
+                      transitionProperty: 'common',
+                      transitionDuration: 'slow',
+                      _groupHover: { transform: 'translateX(4px)' },
                     })}
-                  >
-                    {t('interventions.more')}
-                  </span>
-                  <ArrowRight size={16} />
-                </div>
+                  />
+                </span>
               </NavLink>
             );
           })}
         </div>
 
-        <div className={`${flex({ justify: 'center' })} ${css({ mt: '20' })}`}>
+        <div className={`${flex({ justify: 'center' })} ${css({ mt: '14' })}`}>
           <ButtonLink
             to={getLocalizedPath(url.method)}
             variant="outline"

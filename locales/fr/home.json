@@ -103,6 +103,8 @@
     }
   ],
   "interventions.more": "Voir le détail",
+  "interventions.squad.alt": "L'équipe Ocobo",
+  "interventions.squad.label": "La Squad Ocobo",
   "interventions.cta": "Découvrir notre méthode",
   "challengeCards.number": "Enjeu {{number}}",
   "challengeCards.backLabel": "Enjeu {{number}} · Ce que nous déployons",
