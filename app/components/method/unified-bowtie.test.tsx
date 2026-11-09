@@ -126,6 +126,38 @@ describe('UnifiedBowtie', () => {
     }
   });
 
+  it('draws the Revenue Systems flow in dark, not its grey', () => {
+    const { container } = render(
+      <main>
+        <UnifiedBowtie activeStages={['discovery']} challenge="sy" />
+      </main>,
+    );
+
+    const tint = container.querySelector('[data-stage-tint]');
+    expect(tint).toHaveClass(css({ stroke: 'dark' }));
+    expect(tint).not.toHaveClass(css({ stroke: 'colorPalette' }));
+    expect(tint).not.toHaveAttribute('stroke');
+  });
+
+  it('draws the Revenue AI flow with the AI gradient', () => {
+    const { container } = render(
+      <main>
+        <UnifiedBowtie activeStages={['discovery']} challenge="ai" />
+      </main>,
+    );
+
+    const tint = container.querySelector('[data-stage-tint]');
+    expect(tint).not.toHaveClass(css({ stroke: 'colorPalette' }));
+    const gradientId = tint?.getAttribute('stroke')?.match(/^url\(#(.+)\)$/);
+    const gradient = gradientId && document.getElementById(gradientId[1]);
+    expect(gradient).not.toBeNull();
+    expect(
+      [...(gradient as Element).querySelectorAll('stop')].map((stop) =>
+        stop.getAttribute('stop-color'),
+      ),
+    ).toEqual(['var(--colors-coral)', 'var(--colors-yellow)']);
+  });
+
   it('borders the tooltip in the challenge colour on active stages only', async () => {
     const active = await openStageTooltip('Découverte', 'sy');
     expect(active).toHaveClass(activeBorder);

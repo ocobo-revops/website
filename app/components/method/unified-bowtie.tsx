@@ -47,6 +47,27 @@ const challengePalette: Record<BowtieChallenge, string> = {
 };
 
 const flowStroke = css({ stroke: 'colorPalette' });
+
+// Revenue Systems' grey reads as the neutral drawing on thin lines, so its
+// flow is dark. Revenue AI's flow takes the `gradients.ai` stops instead (an
+// SVG stroke cannot use a CSS gradient), set as an attribute below.
+const flowStrokeClass: Record<BowtieChallenge, string | undefined> = {
+  rp: flowStroke,
+  se: flowStroke,
+  sc: flowStroke,
+  cx: flowStroke,
+  sy: css({ stroke: 'dark' }),
+  ai: undefined,
+};
+
+function flowStrokeUrl(
+  challenge: BowtieChallenge | undefined,
+  neutralId: string,
+  aiId: string,
+) {
+  if (!challenge) return `url(#${neutralId})`;
+  return challenge === 'ai' ? `url(#${aiId})` : undefined;
+}
 const paletteBorder = css({ borderColor: 'colorPalette' });
 const paletteDot = css({ bg: 'colorPalette' });
 
@@ -163,7 +184,9 @@ export const UnifiedBowtie = ({
 }: UnifiedBowtieProps) => {
   const { t } = useTranslation(BOWTIE_NAMESPACE);
   // Unique per instance: several bow ties can share a page.
-  const gradientId = `${useId()}flow`;
+  const instanceId = useId();
+  const gradientId = `${instanceId}flow`;
+  const aiGradientId = `${instanceId}ai`;
   const stages = getStageStates(activeStages);
   const label = (id: StageId) => t(getStageLabelKey(id, 'label'));
   const paths = FLOW_LINES.map(flowPath);
@@ -222,6 +245,19 @@ export const UnifiedBowtie = ({
                 <stop offset="65%" stopColor="var(--colors-yellow)" />
                 <stop offset="100%" stopColor="var(--colors-sky)" />
               </linearGradient>
+              {challenge === 'ai' && (
+                <linearGradient
+                  id={aiGradientId}
+                  gradientUnits="userSpaceOnUse"
+                  x1="0"
+                  y1="0"
+                  x2={BOWTIE_VIEWBOX.width}
+                  y2="0"
+                >
+                  <stop offset="0%" stopColor="var(--colors-coral)" />
+                  <stop offset="100%" stopColor="var(--colors-yellow)" />
+                </linearGradient>
+              )}
             </defs>
             {paths.map((d) => (
               <path
@@ -252,9 +288,12 @@ export const UnifiedBowtie = ({
                     viewBox={VIEWBOX}
                     preserveAspectRatio="none"
                     fill="none"
-                    className={cx(flowSvg, challenge && flowStroke)}
+                    className={cx(
+                      flowSvg,
+                      challenge && flowStrokeClass[challenge],
+                    )}
                     style={columnSlice(index, stages.length)}
-                    stroke={challenge ? undefined : `url(#${gradientId})`}
+                    stroke={flowStrokeUrl(challenge, gradientId, aiGradientId)}
                   >
                     {paths.map((d) => (
                       <path
