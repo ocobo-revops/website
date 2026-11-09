@@ -24,34 +24,47 @@ const STEP_DOTS = {
   insight: css({ bg: 'yellow' }),
 } as const;
 
+const STEP_LABELS = {
+  prospecting: css({ color: 'mint' }),
+  crm: css({ color: 'sky' }),
+  brief: css({ color: 'coral' }),
+  insight: css({ color: 'yellow' }),
+} as const;
+
 type AgentKey = keyof typeof STEP_DOTS;
 
+// The windows draw a small app UI: the mockup sets them at 11 to 12px, under
+// the six v2 sizes, so they use the `xs` and `label` font sizes.
 const windowFrame = css({
   display: 'flex',
   flexDirection: 'column',
-  flex: '1',
-  minH: '64',
+  // The mockup gives every window the same 250px height.
+  h: '64',
   overflow: 'hidden',
   bg: 'white',
   color: 'dark',
   rounded: '2xl',
   boxShadow: 'window',
+  fontSize: 'xs',
+  lineHeight: 'snug',
+  transitionProperty: 'common',
+  transitionDuration: 'slow',
+  _groupHover: { transform: 'translateY(-4px)' },
 });
 
-const titleBar = cx(
-  text({ variant: 'small', color: 'muted' }),
-  css({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1.5',
-    h: '8',
-    px: '3',
-    flexShrink: '0',
-    borderBottomWidth: '1px',
-    borderColor: 'line',
-    fontSize: 'xs',
-  }),
-);
+const titleBar = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '2.5',
+  h: '8',
+  px: '2.5',
+  flexShrink: '0',
+  bg: 'gray.50',
+  borderBottomWidth: '1px',
+  borderColor: 'line',
+  fontWeight: 'semibold',
+  color: 'gray.700',
+});
 
 const trafficDot = css({ w: '2', h: '2', rounded: 'full' });
 
@@ -67,17 +80,47 @@ const avatar = css({
   color: 'dark',
 });
 
-const small = text({ variant: 'small' });
-const muted = text({ variant: 'small', color: 'muted' });
+const strong = css({ display: 'block', fontWeight: 'semibold' });
+const meta = css({
+  display: 'block',
+  fontSize: 'label',
+  fontWeight: 'medium',
+  color: 'gray.400',
+});
+
+// Each list row sits under a hairline, as in the mockup.
+const divided = css({ borderTopWidth: '1px', borderColor: 'gray.100' });
 
 function Sparkle() {
   return (
-    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"
-      />
+    <svg
+      viewBox="0 0 24 24"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3l1.9 5.8L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.2z" />
     </svg>
+  );
+}
+
+function AgentHeader({ agent }: { agent: AgentKey }) {
+  const { t } = useTranslation('home');
+  return (
+    <div className={css({ display: 'flex', gap: '2.5', alignItems: 'center' })}>
+      <span className={avatar}>
+        <Sparkle />
+      </span>
+      <span className={css({ minW: '0' })}>
+        <b className={strong}>{t(`ai.agents.${agent}.heading`)}</b>
+        <small className={meta}>{t(`ai.agents.${agent}.meta`)}</small>
+      </span>
+    </div>
   );
 }
 
@@ -91,63 +134,57 @@ function AgentWindow({
   const { t } = useTranslation('home');
   return (
     <Reveal
-      className={css({ display: 'flex', flexDirection: 'column', gap: '4' })}
+      className={cx(
+        'group',
+        css({ display: 'flex', flexDirection: 'column', gap: '4' }),
+      )}
     >
       <div className={windowFrame}>
         <div className={titleBar}>
           <span
             aria-hidden="true"
-            className={cx(trafficDot, css({ bg: 'coral' }))}
-          />
-          <span
-            aria-hidden="true"
-            className={cx(trafficDot, css({ bg: 'yellow' }))}
-          />
-          <span
-            aria-hidden="true"
-            className={cx(trafficDot, css({ bg: 'mint' }))}
-          />
-          <span className={css({ ml: '2' })}>
-            {t(`ai.agents.${agent}.window`)}
+            className={css({ display: 'flex', gap: '1' })}
+          >
+            <span className={cx(trafficDot, css({ bg: 'coral' }))} />
+            <span className={cx(trafficDot, css({ bg: 'yellow' }))} />
+            <span className={cx(trafficDot, css({ bg: 'mint' }))} />
           </span>
+          <span>{t(`ai.agents.${agent}.window`)}</span>
         </div>
         <div
           className={css({
             display: 'flex',
             flexDirection: 'column',
-            gap: '3',
-            p: '4',
+            gap: '2',
+            px: '3.5',
+            py: '3',
             flex: '1',
             minH: '0',
           })}
         >
-          <div
-            className={css({
-              display: 'flex',
-              gap: '2.5',
-              alignItems: 'center',
-            })}
-          >
-            <span className={avatar}>
-              <Sparkle />
-            </span>
-            <div className={css({ minW: '0' })}>
-              <p className={cx(small, css({ fontWeight: 'bold' }))}>
-                {t(`ai.agents.${agent}.heading`)}
-              </p>
-              <p className={cx(muted, css({ fontSize: 'xs' }))}>
-                {t(`ai.agents.${agent}.meta`)}
-              </p>
-            </div>
-          </div>
           {children}
         </div>
       </div>
-      <div>
+      <div
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5',
+          px: '1',
+        })}
+      >
         <p
           className={cx(
-            text({ variant: 'label', color: 'white' }),
-            css({ display: 'flex', alignItems: 'center', gap: '2', mb: '1' }),
+            css({
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '2',
+              fontSize: 'label',
+              fontWeight: 'bold',
+              letterSpacing: 'tag',
+              textTransform: 'uppercase',
+            }),
+            STEP_LABELS[agent],
           )}
         >
           <span
@@ -156,10 +193,16 @@ function AgentWindow({
           />
           {t(`ai.agents.${agent}.step`)}
         </p>
+        {/* Bermia at 17px in the mockup: the display face, at the nearest size. */}
         <p
           className={cx(
-            text({ variant: 'small', color: 'white' }),
-            css({ fontWeight: 'bold' }),
+            text({ variant: 'display-lg', color: 'white' }),
+            css({
+              fontSize: 'lg',
+              mt: '0',
+              lineHeight: 'tight',
+              letterSpacing: 'normal',
+            }),
           )}
         >
           {t(`ai.agents.${agent}.caption`)}
@@ -168,8 +211,6 @@ function AgentWindow({
     </Reveal>
   );
 }
-
-const list = css({ display: 'flex', flexDirection: 'column', gap: '2.5' });
 
 /** The four agents of the mockup, each drawn as a small app window. */
 export function AiAgentWindows() {
@@ -192,84 +233,103 @@ export function AiAgentWindows() {
           md: 'repeat(2, minmax(0, 1fr))',
           xl: 'repeat(4, minmax(0, 1fr))',
         },
-        gap: '6',
+        gap: '5',
       })}
     >
       <AgentWindow agent="prospecting">
-        <ul className={list}>
+        <AgentHeader agent="prospecting" />
+        <ul>
           {accounts.map((account, index) => (
-            <li key={account.name}>
-              <p className={cx(small, css({ fontWeight: 'semibold' }))}>
-                {account.name}
-              </p>
-              <p className={cx(muted, css({ fontSize: 'xs', mb: '1' }))}>
-                {account.signal}
-              </p>
-              <div
-                className={css({ h: '1', rounded: 'full', bg: 'gray.light' })}
+            <li
+              key={account.name}
+              className={cx(
+                divided,
+                css({
+                  display: 'grid',
+                  gridTemplateColumns: 'minmax(0, 1fr) 54px',
+                  columnGap: '2.5',
+                  rowGap: '0.5',
+                  alignItems: 'center',
+                  py: '1.5',
+                }),
+              )}
+            >
+              <b className={css({ fontWeight: 'semibold' })}>{account.name}</b>
+              <span
+                aria-hidden="true"
+                className={css({
+                  gridRow: '1 / 3',
+                  gridColumn: '2',
+                  h: '1',
+                  rounded: 'full',
+                  bg: 'gray.100',
+                  overflow: 'hidden',
+                })}
               >
-                <div
+                <span
                   className={cx(
-                    css({ h: 'full', rounded: 'full', bgGradient: 'ai' }),
+                    css({
+                      display: 'block',
+                      h: 'full',
+                      rounded: 'full',
+                      bgGradient: 'ai',
+                    }),
                     SCORES[index],
                   )}
                 />
-              </div>
+              </span>
+              <small className={cx(meta, css({ gridColumn: '1' }))}>
+                {account.signal}
+              </small>
             </li>
           ))}
         </ul>
       </AgentWindow>
 
       <AgentWindow agent="crm">
-        <dl className={list}>
+        <AgentHeader agent="crm" />
+        <dl>
           {fields.map((field) => (
             <div
               key={field.name}
-              className={css({
-                display: 'flex',
-                alignItems: 'center',
-                gap: '2',
-              })}
+              className={cx(
+                divided,
+                css({
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '2.5',
+                  py: '1.5',
+                }),
+              )}
             >
-              <dt
-                className={cx(
-                  muted,
-                  css({
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '2',
-                    fontSize: 'xs',
-                  }),
-                )}
+              <dt className={css({ color: 'gray' })}>{field.name}</dt>
+              <dd
+                className={css({
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '1.5',
+                  fontWeight: 'semibold',
+                  textAlign: 'right',
+                })}
               >
+                {field.value}
                 <span
                   aria-hidden="true"
                   className={css({
-                    display: 'flex',
+                    display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: '0',
                     w: '4',
                     h: '4',
                     rounded: 'full',
-                    bg: 'mint',
+                    bg: 'mint.light',
+                    color: 'mint.dark',
                   })}
                 >
                   <Check size={10} strokeWidth={3} />
                 </span>
-                {field.name}
-              </dt>
-              <dd
-                className={cx(
-                  small,
-                  css({
-                    ml: 'auto',
-                    fontWeight: 'semibold',
-                    textAlign: 'right',
-                  }),
-                )}
-              >
-                {field.value}
               </dd>
             </div>
           ))}
@@ -277,40 +337,77 @@ export function AiAgentWindows() {
       </AgentWindow>
 
       <AgentWindow agent="brief">
-        <ul className={cx(list, css({ listStyleType: 'disc', pl: '4' }))}>
+        <AgentHeader agent="brief" />
+        <ul
+          className={css({
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5',
+            listStyleType: 'disc',
+            pl: '4',
+            color: 'gray.700',
+          })}
+        >
           {points.map((point) => (
-            <li key={point.name} className={small}>
-              <strong>{point.name}</strong> {point.value}
+            <li key={point.name}>
+              <b className={css({ fontWeight: 'semibold', color: 'dark' })}>
+                {point.name}
+              </b>{' '}
+              {point.value}
             </li>
           ))}
         </ul>
       </AgentWindow>
 
       <AgentWindow agent="insight">
-        <p className={small}>{t('ai.agents.insight.message')}</p>
-        <div className={css({ display: 'flex', gap: '2', mt: 'auto' })}>
-          {actions.map((action, index) => (
-            <span
-              key={action}
-              className={cx(
-                text({ variant: 'small' }),
-                css({
-                  px: '3',
-                  py: '1',
-                  rounded: 'lg',
-                  borderWidth: '1px',
-                  borderColor: 'line',
-                  fontSize: 'xs',
-                  fontWeight: 'semibold',
-                }),
-                index === actions.length - 1
-                  ? css({ bg: 'dark', color: 'white', borderColor: 'dark' })
-                  : undefined,
-              )}
-            >
-              {action}
-            </span>
-          ))}
+        <div
+          className={css({ display: 'flex', gap: '2.5', alignItems: 'start' })}
+        >
+          <span className={avatar}>
+            <Sparkle />
+          </span>
+          <div className={css({ minW: '0' })}>
+            <p className={css({ fontWeight: 'semibold' })}>
+              {t('ai.agents.insight.heading')}{' '}
+              <small
+                className={css({
+                  ml: '0.5',
+                  fontSize: 'label',
+                  fontWeight: 'medium',
+                  color: 'gray.400',
+                })}
+              >
+                {t('ai.agents.insight.meta')}
+              </small>
+            </p>
+            <p className={css({ mt: '1', color: 'gray.700' })}>
+              {t('ai.agents.insight.message')}
+            </p>
+            <div className={css({ display: 'flex', gap: '1.5', mt: '2' })}>
+              {actions.map((action, index) => (
+                <span
+                  key={action}
+                  className={cx(
+                    css({
+                      px: '2',
+                      py: '1',
+                      rounded: 'lg',
+                      borderWidth: '1px',
+                      borderColor: 'line',
+                      bg: 'white',
+                      fontSize: 'label',
+                      fontWeight: 'semibold',
+                    }),
+                    index === actions.length - 1
+                      ? css({ bg: 'dark', color: 'white', borderColor: 'dark' })
+                      : undefined,
+                  )}
+                >
+                  {action}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </AgentWindow>
     </div>
