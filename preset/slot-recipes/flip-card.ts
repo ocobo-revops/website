@@ -13,6 +13,14 @@ const face = {
   overflowY: 'auto',
   backfaceVisibility: 'hidden',
   WebkitBackfaceVisibility: 'hidden',
+  // WebKit paints the turned-away face through `backfaceVisibility`
+  // (mirrored back over the front at rest), so the turned-away face is also
+  // hidden. The swap waits until the turn passes 90deg, about 64ms into
+  // the `smooth` easing.
+  transitionProperty: 'visibility',
+  transitionDuration: 'instant',
+  transitionDelay: 'faster',
+  _motionReduce: { transitionDelay: 'instant' },
 } as const;
 
 /**
@@ -73,6 +81,7 @@ export const flipCard = defineSlotRecipe({
       ...face,
       // Its own transform keeps Safari from flickering through the back.
       transform: 'rotateY(0deg)',
+      '[data-state=back] > &': { visibility: 'hidden' },
       bg: 'white',
       color: 'dark',
       borderWidth: '1px',
@@ -85,6 +94,7 @@ export const flipCard = defineSlotRecipe({
       bg: 'dark',
       color: 'white',
       transform: 'rotateY(180deg)',
+      '[data-state=front] > &': { visibility: 'hidden' },
     },
   },
   variants: {
