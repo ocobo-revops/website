@@ -32,8 +32,10 @@ const subtitle = cx(
 const struck = css({
   position: 'relative',
   textDecoration: 'none',
-  color: 'gray.400',
+  color: 'gray',
   whiteSpace: 'nowrap',
+  // Forced colours drop the coral bar: fall back to the native strike.
+  _highContrast: { textDecoration: 'line-through' },
 });
 
 const strikeLine = css({
@@ -45,6 +47,7 @@ const strikeLine = css({
   rounded: 'full',
   bg: 'coral',
   transformOrigin: 'left center',
+  _highContrast: { display: 'none' },
 });
 
 const tag = css({
@@ -123,6 +126,11 @@ const HeroCopy = memo(function HeroCopy({
         {t('heroV2.title.before')}{' '}
         <del className={struck}>
           {t('heroV2.title.struck')}
+          {/* Screen readers rarely announce a deletion: say it. */}
+          <span className={css({ srOnly: true })}>
+            {' '}
+            {t('heroV2.title.struckSr')}
+          </span>
           <span
             aria-hidden="true"
             className={strikeLine}
