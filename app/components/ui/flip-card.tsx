@@ -15,6 +15,22 @@ const INTERACTIVE_SELECTOR =
 // React 19 reads `inert=""` as false: switch to `inert` on upgrade.
 const INERT = { inert: '' } as React.HTMLAttributes<HTMLDivElement>;
 
+// Hover intent: a mouse that only grazes the card does not turn it.
+const HOVER_DELAY_MS = 150;
+
+// The turning face swings outside the card box in perspective. A pointer
+// over that overhang is not hovering the card: counting it would flip the
+// card back and forth while the mouse rests near an edge.
+function isInsideBox(event: React.PointerEvent<HTMLElement>): boolean {
+  const box = event.currentTarget.getBoundingClientRect();
+  return (
+    event.clientX >= box.left &&
+    event.clientX <= box.right &&
+    event.clientY >= box.top &&
+    event.clientY <= box.bottom
+  );
+}
+
 type FlipCardProps = FlipCardVariantProps & {
   /** Names the card in the flip button's accessible name. */
   label: string;
@@ -48,24 +64,56 @@ export function FlipCard({
   // True while the back shows only because a mouse hovers the card. Leaving
   // then shows the front; a flip from the button or a tap stays put.
   const flippedByHover = React.useRef(false);
+  // The pending hover turn, in either direction.
+  const hoverTimer = React.useRef<ReturnType<typeof setTimeout>>();
   const backId = React.useId();
   const styles = flipCard({ size, variant });
 
+  const cancelHover = () => {
+    clearTimeout(hoverTimer.current);
+    hoverTimer.current = undefined;
+  };
+
+  React.useEffect(() => cancelHover, []);
+
   const toggle = () => {
+    cancelHover();
     flippedByHover.current = false;
     setFlipped((value) => !value);
   };
 
-  const onPointerEnter = (event: React.PointerEvent) => {
-    if (event.pointerType !== 'mouse' || flipped) return;
-    flippedByHover.current = true;
-    setFlipped(true);
+  // Enter and move share this: the pointer may enter over the overhang,
+  // then move into the card box.
+  const onPointerHover = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse') return;
+    const inside = isInsideBox(event);
+    if (flippedByHover.current) {
+      // Back inside before the pending return: keep the back.
+      if (inside) cancelHover();
+      return;
+    }
+    if (flipped) return;
+    if (!inside) {
+      cancelHover();
+      return;
+    }
+    if (hoverTimer.current) return;
+    hoverTimer.current = setTimeout(() => {
+      hoverTimer.current = undefined;
+      flippedByHover.current = true;
+      setFlipped(true);
+    }, HOVER_DELAY_MS);
   };
 
   const onPointerLeave = (event: React.PointerEvent) => {
-    if (event.pointerType !== 'mouse' || !flippedByHover.current) return;
-    flippedByHover.current = false;
-    setFlipped(false);
+    if (event.pointerType !== 'mouse') return;
+    cancelHover();
+    if (!flippedByHover.current) return;
+    hoverTimer.current = setTimeout(() => {
+      hoverTimer.current = undefined;
+      flippedByHover.current = false;
+      setFlipped(false);
+    }, HOVER_DELAY_MS);
   };
 
   const onPointerDown = (event: React.PointerEvent) => {
@@ -87,7 +135,8 @@ export function FlipCard({
     // only widens the tap target.
     <div
       className={cx(styles.root, className)}
-      onPointerEnter={onPointerEnter}
+      onPointerEnter={onPointerHover}
+      onPointerMove={onPointerHover}
       onPointerLeave={onPointerLeave}
       onPointerDown={onPointerDown}
       onClick={onClick}
