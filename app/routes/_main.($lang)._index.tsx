@@ -118,18 +118,18 @@ export default function Index() {
   const aiChallengeSlug =
     challenges.find((challenge) => challenge.key === 'ai')?.slug ?? null;
 
-  // The mockup order (`accueil.html`): hero, clients, mission, AI,
-  // challenges, method, why Ocobo, stack, diagnostic.
+  // The mockup order (`accueil.html`): hero, clients, mission, method,
+  // challenges, why Ocobo, stack, AI, diagnostic.
   return (
     <div>
       <HomeHero hasChallenges={hasChallenges} />
       <SocialProofSection testimonials={testimonials} />
       <MissionSection />
-      <AiSection aiChallengeSlug={aiChallengeSlug} />
-      {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
       <InterventionsSection />
+      {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
       <ComparatifSection />
       <StackSection showTechnology={showTechnology} />
+      <AiSection aiChallengeSlug={aiChallengeSlug} />
       <CtaSection
         id={DIAGNOSTIC_ID}
         variant="yellow"
