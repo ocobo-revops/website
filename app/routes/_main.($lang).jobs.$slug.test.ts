@@ -5,7 +5,7 @@
  *  1. Redirect to `/{lang}/jobs` when slug is missing (FR and EN)
  *  2. Redirect when `fetchJob` returns a non-200 status
  *  3. Redirect when job status is `draft`
- *  4. Redirect when job status is `closed`
+ *  4. Redirect when job status is `closed`; serve `unlisted` with noindex
  *  5. Happy path FR: returns job data with correct lang and slug
  *  6. Happy path EN: same with lang param `en`
  *
@@ -146,6 +146,27 @@ describe('jobs detail loader', () => {
     if (outcome.type !== 'response') return;
     expect(outcome.response.status).toBe(302);
     expect(outcome.response.headers.get('Location')).toBe('/fr/jobs');
+  });
+
+  it('serves an unlisted job by direct link, marked noindex', async () => {
+    const job = jobEntry({ status: 'unlisted' });
+    fetchJobMock.mockResolvedValueOnce([200, 'success', job]);
+    loadMemberRegistryMock.mockResolvedValueOnce({});
+    resolveMemberMock.mockReturnValueOnce(null);
+    extractJobSectionsMock.mockReturnValueOnce(fakeSections);
+    buildJobPostingLdMock.mockReturnValueOnce({});
+    serializeJsonLdMock.mockReturnValueOnce('{}');
+
+    const { loader, meta } = await import('./_main.($lang).jobs.$slug');
+    const outcome = await invokeLoader(loader, {
+      url: 'http://test.local/jobs/revops-consultant',
+      params: { slug: 'revops-consultant' },
+    });
+
+    expect(outcome.type).toBe('data');
+    if (outcome.type !== 'data') return;
+    const tags = meta({ data: outcome.data } as Parameters<typeof meta>[0]);
+    expect(tags).toContainEqual({ name: 'robots', content: 'noindex' });
   });
 
   it('returns job data with lang and slug on happy path (FR)', async () => {

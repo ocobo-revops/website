@@ -260,7 +260,7 @@ export const JobFrontmatterSchema = z.object({
     .string()
     .regex(/^[A-Za-z0-9]+$/)
     .optional(),
-  status: z.enum(['draft', 'published', 'closed']),
+  status: z.enum(['draft', 'published', 'unlisted', 'closed']),
   publishedAt: CommonSchemas.dateString,
   intro: CommonSchemas.nonEmptyString,
 });

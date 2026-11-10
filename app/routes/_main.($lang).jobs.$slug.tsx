@@ -45,7 +45,9 @@ export const loader = createHybridLoader(
       return redirect(`/${lang}/jobs`);
     }
 
-    if (job.frontmatter.status !== 'published') {
+    // `unlisted` jobs are off the jobs list but stay reachable by direct link.
+    const { status: jobStatus } = job.frontmatter;
+    if (jobStatus !== 'published' && jobStatus !== 'unlisted') {
       return redirect(`/${lang}/jobs`);
     }
 
@@ -70,6 +72,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     description: data.job.frontmatter.intro,
     locale: data.lang as 'fr' | 'en',
     type: 'website',
+    noIndex: data.job.frontmatter.status === 'unlisted',
   });
 };
 
