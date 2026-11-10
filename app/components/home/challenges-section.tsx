@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { button, card, section, text } from '@ocobo/styled-system/recipes';
@@ -34,6 +34,10 @@ const startPanel = cx(
   }),
 );
 
+// Light coral as in the mockup (prototype PR 31): about 2:1 on white, below
+// the 3:1 of large text. Kept pending Ocobo validation.
+const titleAccent = css({ color: 'coral', fontStyle: 'italic' });
+
 type ChallengesSectionProps = {
   challenges: HomeChallengeCard[];
 };
@@ -60,7 +64,11 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
             css({ mb: '4', textAlign: 'center' }),
           )}
         >
-          {t('challenges.title')}
+          <Trans
+            i18nKey="challenges.title"
+            t={t}
+            components={[<em key="accent" className={titleAccent} />]}
+          />
         </h2>
         <p className={subtitle}>{t('challenges.subtitle')}</p>
         <div className={css({ mb: { base: '12', md: '6' } })}>
