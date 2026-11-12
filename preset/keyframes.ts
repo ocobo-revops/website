@@ -15,6 +15,11 @@ export const keyframes = defineKeyframes({
         'translate3d(var(--shadow-panda-exit-translate-x, 0), var(--shadow-panda-exit-translate-y, 0), 0) scale3d(var(--shadow-panda-exit-scale, 1), var(--shadow-panda-exit-scale, 1), var(--shadow-panda-exit-scale, 1)) rotate(var(--shadow-panda-exit-rotate, 0))',
     },
   },
+  // Entrance of a navbar panel link: it slides 10px in from the left.
+  'nav-link-in': {
+    from: { opacity: 0, transform: 'translateX(-10px)' },
+    to: { opacity: 1, transform: 'none' },
+  },
   'accordion-down': {
     from: { height: 0 },
     to: { height: 'var(--height)' }, // Ark UI provides --height CSS variable
