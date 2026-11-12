@@ -304,30 +304,6 @@ describe('NavbarBar panels (#315)', () => {
     ).toHaveAttribute('href', '/fr/contact');
   });
 
-  it('links the method chips to anchors of their page', async () => {
-    const user = userEvent.setup();
-    render(<NavbarBar scrolled={false} />);
-    const { button, panel } = openPanel('Méthode');
-
-    await user.click(button);
-    const chips = within(panel()).getAllByRole('list', {
-      name: /^Sections de la page/,
-    });
-    const hrefs = chips.flatMap((list) =>
-      within(list)
-        .getAllByRole('link')
-        .map((link) => link.getAttribute('href')),
-    );
-
-    expect(hrefs).toEqual([
-      '/fr/method#piliers',
-      '/fr/method#perimetre',
-      '/fr/technology#badges',
-      '/fr/studio#squad',
-      '/fr/studio#expertises',
-    ]);
-  });
-
   function methodItems(roiHidden: boolean): NavItem[] {
     return [
       {

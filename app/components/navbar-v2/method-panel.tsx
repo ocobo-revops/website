@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { center } from '@ocobo/styled-system/patterns';
@@ -15,48 +15,10 @@ type MethodPanelProps = {
   items: DropdownItem[];
   /** The ROI calculator entry, or `undefined` while its page is off. */
   roiItem?: DropdownItem;
-  /** Mobile accordion: one column, no phase steps. */
+  /** Mobile accordion: one column. */
   compact: boolean;
   onSelect: () => void;
 };
-
-/**
- * Section shortcuts per method page. Each anchor must exist on its page:
- * the maturity matrix (#243), the useful and ideal stacks (#246) and the
- * offices (#244) come back once those pages are rebuilt.
- */
-const chipsByKey: Record<string, { anchor: string; labelKey: string }[]> = {
-  framework: [
-    { anchor: 'piliers', labelKey: 'navigation.method.panel.chip.pillars' },
-    { anchor: 'perimetre', labelKey: 'navigation.method.panel.chip.scope' },
-  ],
-  technology: [
-    { anchor: 'badges', labelKey: 'navigation.method.panel.chip.partners' },
-  ],
-  studio: [
-    { anchor: 'squad', labelKey: 'navigation.method.panel.chip.squads' },
-    { anchor: 'expertises', labelKey: 'navigation.method.panel.chip.faces' },
-  ],
-};
-
-const chipStyles = cx(
-  css({
-    display: 'inline-flex',
-    px: '2.5',
-    py: '1',
-    fontSize: 'caption',
-    fontWeight: 'semibold',
-    color: 'gray',
-    bg: 'white',
-    borderWidth: '1px',
-    borderColor: 'line',
-    rounded: 'full',
-    textDecoration: 'none',
-    transition: 'colors',
-    _hover: { bg: 'dark', borderColor: 'dark', color: 'white' },
-  }),
-  focusRing,
-);
 
 const arrowStyles = cx('nav-cta-arrow', css({ transition: 'transform' }));
 
@@ -67,10 +29,8 @@ function MethodRow({
   item: DropdownItem;
   onSelect: () => void;
 }) {
-  const { t } = useTranslation('common');
   const tint = panelItemTint(item);
   const Icon = item.icon;
-  const chips = chipsByKey[item.key] ?? [];
 
   return (
     <div
@@ -146,26 +106,6 @@ function MethodRow({
             </span>
           )}
         </NavLink>
-        {chips.length > 0 && (
-          <ul
-            aria-label={t('navigation.method.panel.chips', {
-              page: item.label,
-            })}
-            className={css({ display: 'flex', flexWrap: 'wrap', gap: '1.5' })}
-          >
-            {chips.map((chip) => (
-              <li key={chip.anchor}>
-                <Link
-                  to={`${item.path}#${chip.anchor}`}
-                  onClick={onSelect}
-                  className={chipStyles}
-                >
-                  {t(chip.labelKey)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
     </div>
   );
@@ -260,48 +200,9 @@ function RoiCard({
   );
 }
 
-function PhaseSteps() {
-  const { t } = useTranslation('common');
-  const phases = ['design', 'operate', 'grow'] as const;
-
-  return (
-    <ol
-      aria-label={t('navigation.method.panel.phases')}
-      className={css({ display: 'flex', alignItems: 'center' })}
-    >
-      {phases.map((phase, index) => (
-        <li
-          key={phase}
-          className={css({ display: 'flex', alignItems: 'center' })}
-        >
-          {index > 0 && (
-            <span
-              aria-hidden="true"
-              className={css({ w: '3.5', h: '[1px]', bg: 'line' })}
-            />
-          )}
-          <span
-            className={css({
-              px: '2.5',
-              py: '1',
-              fontSize: 'caption',
-              fontWeight: 'bold',
-              color: 'dark',
-              bg: 'ocobo.gray',
-              rounded: 'full',
-            })}
-          >
-            {t(`navigation.method.panel.phase.${phase}`)}
-          </span>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
 /**
- * "Méthode" mega panel (#315): the three method pages with section chips,
- * the ROI calculator card while its page is on, and the three phases.
+ * "Méthode" mega panel (#315): the three method pages and the ROI
+ * calculator card while its page is on.
  */
 export function MethodPanel({
   items,
@@ -336,7 +237,6 @@ export function MethodPanel({
         {roiItem && <RoiCard item={roiItem} onSelect={onSelect} />}
       </div>
       <PanelFooter compact={compact}>
-        {!compact && <PhaseSteps />}
         <span>{t('navigation.method.panel.tagline')}</span>
       </PanelFooter>
     </div>
