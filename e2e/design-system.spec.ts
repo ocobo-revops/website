@@ -42,7 +42,7 @@ const groups = [
         name: 'Actions',
         sections: [
           'Buttons',
-          'Button: secondary and link',
+          'Button: secondary, link and AI',
           'Badge: ai variant and xs size',
           'Eyebrow',
           'MetaPill',
