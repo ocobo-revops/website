@@ -35,7 +35,7 @@ const startPanel = cx(
 );
 
 // Light coral as in the mockup (prototype PR 31): about 2:1 on white, below
-// the 3:1 of large text, accepted by Ocobo.
+// the 3:1 of large text. Waits for Ocobo's approval; `coral.dark` passes.
 const titleAccent = css({ color: 'coral', fontStyle: 'italic' });
 
 type ChallengesSectionProps = {
