@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { css } from '@ocobo/styled-system/css';
 
-import { Footer } from '~/components/Footer';
-import { Navbar } from '~/components/navbar/navbar';
+import { FooterV2 } from '~/components/footer-v2/footer-v2';
+import { NavbarV2 } from '~/components/navbar-v2/navbar';
 
 import { Loader } from './ui/Loader';
 
@@ -18,7 +18,7 @@ export function LayoutMain({ children }: LayoutMainProps) {
         textStyle: 'medium',
       })}
     >
-      <Navbar />
+      <NavbarV2 />
       <div
         className={css({
           pt: { base: '24', md: '28', lg: '32' },
@@ -28,7 +28,7 @@ export function LayoutMain({ children }: LayoutMainProps) {
           {children}
         </React.Suspense>
       </div>
-      <Footer />
+      <FooterV2 />
     </div>
   );
 }

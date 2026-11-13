@@ -10,10 +10,10 @@ export function HomeHeroSection() {
   return (
     <ShowcaseSection title="Home hero">
       <p className={caption}>
-        Home page only (#240, wired on the home by #242). The four teams
-        converge on the RevOps axis, then growth rises above it; the flow then
-        keeps moving along the axis, so the button pauses it. Under reduced
-        motion the hero shows its final state and the button is hidden.
+        Home page only (#240). The four teams converge on the RevOps axis, then
+        growth rises above it; the flow then keeps moving along the axis, so the
+        button pauses it. Under reduced motion the hero shows its final state
+        and the button is hidden.
       </p>
       <HomeHero titleAs="h2" />
     </ShowcaseSection>

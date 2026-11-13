@@ -142,6 +142,19 @@ export const button = defineRecipe({
           outlineColor: 'ocobo.dark',
         },
       },
+      // Revenue AI calls to action only: the `gradients.ai` pill (ADR 0002).
+      ai: {
+        bgGradient: 'ai',
+        color: 'dark',
+        fontWeight: 'bold',
+        _hover: {
+          transform: 'translateY(-0.125rem)',
+          boxShadow: 'hover',
+        },
+        _focusVisible: {
+          outlineColor: 'dark',
+        },
+      },
     },
     size: {
       sm: {

@@ -74,7 +74,7 @@ export const designSystemGroups = [
         description: 'Buttons, badges, eyebrow and meta pill.',
         sections: [
           'Buttons',
-          'Button: secondary and link',
+          'Button: secondary, link and AI',
           'Badge: ai variant and xs size',
           'Eyebrow',
           'MetaPill',

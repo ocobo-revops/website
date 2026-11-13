@@ -1,11 +1,12 @@
 import { Check, RefreshCw } from 'lucide-react';
-import { useId } from 'react';
+import { type CSSProperties, useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
 import { Tooltip } from '~/components/ui/tooltip';
+import { useInView } from '~/hooks/use-in-view';
 import {
   BOWTIE_NAMESPACE,
   MILESTONE_PREFIX_KEY,
@@ -47,8 +48,94 @@ const challengePalette: Record<BowtieChallenge, string> = {
 };
 
 const flowStroke = css({ stroke: 'colorPalette' });
+
+// Revenue Systems spans the whole cycle, so its flow takes the colour of each
+// phase, as in the prototype: mint to acquire, yellow to close, sky to retain.
+// Revenue AI's flow takes the `gradients.ai` stops instead (an SVG stroke
+// cannot use a CSS gradient), set as an attribute below.
+const flowStrokeClass: Record<BowtieChallenge, string | undefined> = {
+  rp: flowStroke,
+  se: flowStroke,
+  sc: flowStroke,
+  cx: flowStroke,
+  sy: undefined,
+  ai: undefined,
+};
+
+type PhaseTone = 'acquire' | 'close' | 'retain';
+
+const stagePhase: Record<StageId, PhaseTone> = {
+  'demand-generation': 'acquire',
+  discovery: 'acquire',
+  negotiation: 'acquire',
+  closing: 'close',
+  onboarding: 'retain',
+  adoption: 'retain',
+  expansion: 'retain',
+};
+
+// Static literals per phase (CLAUDE.md, static analysis trap).
+const phaseStroke: Record<PhaseTone, string> = {
+  acquire: css({ stroke: 'mint' }),
+  close: css({ stroke: 'yellow' }),
+  retain: css({ stroke: 'sky' }),
+};
+const phaseBorder: Record<PhaseTone, string> = {
+  acquire: css({ borderColor: 'mint' }),
+  close: css({ borderColor: 'yellow' }),
+  retain: css({ borderColor: 'sky' }),
+};
+const phaseDot: Record<PhaseTone, string> = {
+  acquire: css({ bg: 'mint' }),
+  close: css({ bg: 'yellow' }),
+  retain: css({ bg: 'sky' }),
+};
+const phaseAccent: Record<PhaseTone, string> = {
+  acquire: css({ borderTopWidth: '4px', borderTopColor: 'mint' }),
+  close: css({ borderTopWidth: '4px', borderTopColor: 'yellow' }),
+  retain: css({ borderTopWidth: '4px', borderTopColor: 'sky' }),
+};
+
+function stageStrokeClass(challenge: BowtieChallenge | undefined, id: StageId) {
+  if (!challenge) return undefined;
+  return challenge === 'sy'
+    ? phaseStroke[stagePhase[id]]
+    : flowStrokeClass[challenge];
+}
+
+function flowStrokeUrl(
+  challenge: BowtieChallenge | undefined,
+  neutralId: string,
+  aiId: string,
+) {
+  if (!challenge) return `url(#${neutralId})`;
+  return challenge === 'ai' ? `url(#${aiId})` : undefined;
+}
 const paletteBorder = css({ borderColor: 'colorPalette' });
 const paletteDot = css({ bg: 'colorPalette' });
+
+function chipBorder(challenge: BowtieChallenge, id: StageId) {
+  return challenge === 'sy' ? phaseBorder[stagePhase[id]] : paletteBorder;
+}
+function chipDot(challenge: BowtieChallenge, id: StageId) {
+  return challenge === 'sy' ? phaseDot[stagePhase[id]] : paletteDot;
+}
+
+// Before the reveal, the active lines wait hidden; then each column uncovers
+// them in turn, left to right, so the flow reads as one stroke.
+const drawState = {
+  waiting: css({ clipPath: 'inset(0 100% 0 0)' }),
+  drawing: css({
+    animation: 'bowtie-draw',
+    _motionReduce: { animation: '[none]' },
+  }),
+};
+const DRAW_START_S = 0.2;
+const DRAW_STEP_S = 0.32;
+
+function drawDelay(index: number): CSSProperties {
+  return { animationDelay: `${DRAW_START_S + index * DRAW_STEP_S}s` };
+}
 
 const tooltipAccent = css({
   borderTopWidth: '4px',
@@ -144,6 +231,15 @@ const centred = css({
 });
 
 // Active labels are dark with a challenge; without one, only closing is.
+function tooltipClass(
+  stage: StageWithState,
+  challenge: BowtieChallenge | undefined,
+) {
+  if (!challenge) return undefined;
+  if (stage.state !== 'active') return tooltipAccentInactive;
+  return challenge === 'sy' ? phaseAccent[stagePhase[stage.id]] : tooltipAccent;
+}
+
 function labelClass(stage: StageWithState, challenge?: BowtieChallenge) {
   if (stage.state === 'inactive') return labelState.inactive;
   if (challenge || stage.id === 'closing') return labelState.emphasis;
@@ -163,13 +259,17 @@ export const UnifiedBowtie = ({
 }: UnifiedBowtieProps) => {
   const { t } = useTranslation(BOWTIE_NAMESPACE);
   // Unique per instance: several bow ties can share a page.
-  const gradientId = `${useId()}flow`;
+  const instanceId = useId();
+  const gradientId = `${instanceId}flow`;
+  const aiGradientId = `${instanceId}ai`;
   const stages = getStageStates(activeStages);
   const label = (id: StageId) => t(getStageLabelKey(id, 'label'));
   const paths = FLOW_LINES.map(flowPath);
+  const { ref, inView } = useInView<HTMLDivElement>();
 
   return (
     <div
+      ref={ref}
       role="group"
       aria-label={t('title')}
       className={cx(
@@ -222,6 +322,19 @@ export const UnifiedBowtie = ({
                 <stop offset="65%" stopColor="var(--colors-yellow)" />
                 <stop offset="100%" stopColor="var(--colors-sky)" />
               </linearGradient>
+              {challenge === 'ai' && (
+                <linearGradient
+                  id={aiGradientId}
+                  gradientUnits="userSpaceOnUse"
+                  x1="0"
+                  y1="0"
+                  x2={BOWTIE_VIEWBOX.width}
+                  y2="0"
+                >
+                  <stop offset="0%" stopColor="var(--colors-coral)" />
+                  <stop offset="100%" stopColor="var(--colors-yellow)" />
+                </linearGradient>
+              )}
             </defs>
             {paths.map((d) => (
               <path
@@ -247,25 +360,41 @@ export const UnifiedBowtie = ({
                   className={cx(centreLine, centreLineState[stage.state])}
                 />
                 {stage.state === 'active' && (
-                  <svg
-                    data-stage-tint={challenge ?? 'neutral'}
-                    viewBox={VIEWBOX}
-                    preserveAspectRatio="none"
-                    fill="none"
-                    className={cx(flowSvg, challenge && flowStroke)}
-                    style={columnSlice(index, stages.length)}
-                    stroke={challenge ? undefined : `url(#${gradientId})`}
+                  <div
+                    data-stage-draw
+                    className={cx(
+                      css({ position: 'absolute', inset: '0' }),
+                      inView ? drawState.drawing : drawState.waiting,
+                    )}
+                    style={drawDelay(index)}
                   >
-                    {paths.map((d) => (
-                      <path
-                        key={d}
-                        d={d}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        vectorEffect="non-scaling-stroke"
-                      />
-                    ))}
-                  </svg>
+                    <svg
+                      data-stage-tint={challenge ?? 'neutral'}
+                      viewBox={VIEWBOX}
+                      preserveAspectRatio="none"
+                      fill="none"
+                      className={cx(
+                        flowSvg,
+                        stageStrokeClass(challenge, stage.id),
+                      )}
+                      style={columnSlice(index, stages.length)}
+                      stroke={flowStrokeUrl(
+                        challenge,
+                        gradientId,
+                        aiGradientId,
+                      )}
+                    >
+                      {paths.map((d) => (
+                        <path
+                          key={d}
+                          d={d}
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      ))}
+                    </svg>
+                  </div>
                 )}
               </div>
             ))}
@@ -292,16 +421,16 @@ export const UnifiedBowtie = ({
                   paletteBorder,
                   css({
                     position: 'absolute',
-                    inset: '-1.5',
+                    inset: '-1',
                     rounded: 'full',
-                    borderWidth: '2px',
+                    borderWidth: '3px',
                     borderStyle: 'solid',
-                    animation: 'pulse',
-                    // Stops before 5 seconds, so it needs no pause control
-                    // (WCAG 2.2.2).
-                    animationIterationCount: '3',
-                    _motionReduce: { animation: '[none]' },
+                    opacity: '0',
+                    _motionReduce: { animation: '[none]', opacity: '1' },
                   }),
+                  // Rings once the lines reach the knot.
+                  inView &&
+                    css({ animation: 'bowtie-ring', animationDelay: '[1.4s]' }),
                 )}
               />
               <Check className={css({ h: '6', w: '6' })} strokeWidth={3} />
@@ -365,13 +494,7 @@ export const UnifiedBowtie = ({
           {stages.map((stage) => (
             <li key={stage.id}>
               <Tooltip
-                className={
-                  challenge
-                    ? stage.state === 'active'
-                      ? tooltipAccent
-                      : tooltipAccentInactive
-                    : undefined
-                }
+                className={tooltipClass(stage, challenge)}
                 asChild
                 content={
                   <span className={kpiContent} data-stage-kpi={stage.id}>
@@ -419,12 +542,12 @@ export const UnifiedBowtie = ({
               {stage.state === 'active' && (
                 <span
                   data-stage-chip={stage.id}
-                  className={cx(chip, paletteBorder)}
+                  className={cx(chip, chipBorder(challenge, stage.id))}
                 >
                   <span
                     className={cx(
                       css({ h: '1.5', w: '1.5', rounded: 'full' }),
-                      paletteDot,
+                      chipDot(challenge, stage.id),
                     )}
                   />
                   <span className={css({ srOnly: true })}>

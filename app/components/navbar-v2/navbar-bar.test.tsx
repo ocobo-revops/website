@@ -135,20 +135,12 @@ describe('NavbarBar', () => {
     ).toHaveAttribute('href', '/fr/enjeux/rp');
   });
 
-  it('links to the same page in the other language', () => {
+  it('leaves the language switch to the footer', () => {
     render(<NavbarBar scrolled={false} />, { initialEntries: ['/fr/offer'] });
-    const switcher = screen.getAllByRole('navigation', {
-      name: 'Choisir la langue',
-    })[0];
 
-    expect(within(switcher).getByRole('link', { name: 'EN' })).toHaveAttribute(
-      'href',
-      '/en/offer',
-    );
-    expect(within(switcher).getByRole('link', { name: 'FR' })).toHaveAttribute(
-      'aria-current',
-      'true',
-    );
+    expect(
+      screen.queryByRole('navigation', { name: 'Choisir la langue' }),
+    ).toBeNull();
   });
 
   it('marks the current page', () => {
@@ -310,30 +302,6 @@ describe('NavbarBar panels (#315)', () => {
     expect(
       content.getByRole('link', { name: 'Échanger avec un architecte' }),
     ).toHaveAttribute('href', '/fr/contact');
-  });
-
-  it('links the method chips to anchors of their page', async () => {
-    const user = userEvent.setup();
-    render(<NavbarBar scrolled={false} />);
-    const { button, panel } = openPanel('Méthode');
-
-    await user.click(button);
-    const chips = within(panel()).getAllByRole('list', {
-      name: /^Sections de la page/,
-    });
-    const hrefs = chips.flatMap((list) =>
-      within(list)
-        .getAllByRole('link')
-        .map((link) => link.getAttribute('href')),
-    );
-
-    expect(hrefs).toEqual([
-      '/fr/method#piliers',
-      '/fr/method#perimetre',
-      '/fr/technology#badges',
-      '/fr/studio#squad',
-      '/fr/studio#expertises',
-    ]);
   });
 
   function methodItems(roiHidden: boolean): NavItem[] {

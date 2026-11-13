@@ -8,7 +8,7 @@
  * The other challenges come from the `_main` layout data, as on the site.
  */
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   type ChallengeMenuEntry,
@@ -152,11 +152,6 @@ function resolvedReferences({
 /** The `_main` navbar list, the current challenge included. */
 const menu = toChallengeMenu([fixture, revenueAiFixture]);
 
-beforeEach(() => {
-  // Challenges are disabled by default: enable every page.
-  vi.stubEnv('DISABLED_PAGES', '');
-});
-
 afterEach(() => {
   vi.unstubAllEnvs();
   fetchChallengeMock.mockReset();
@@ -296,37 +291,6 @@ describe('challenge loader', () => {
     expect(outcome.type).toBe('response');
     if (outcome.type !== 'response') return;
     expect(outcome.response.status).toBe(404);
-  });
-
-  describe('with the challenges flag disabled', () => {
-    beforeEach(() => {
-      vi.stubEnv('DISABLED_PAGES', undefined);
-    });
-
-    it('returns 404 without fetching', async () => {
-      fetchChallengeMock.mockResolvedValue([200, 'success', fixture]);
-
-      const outcome = await invokeLoader(loader, {
-        url: 'http://test.local/fr/challenges/revenue-performance',
-        params: { lang: 'fr', slug: 'revenue-performance' },
-      });
-
-      expect(fetchChallengeMock).not.toHaveBeenCalled();
-      expect(outcome.type).toBe('response');
-      if (outcome.type !== 'response') return;
-      expect(outcome.response.status).toBe(404);
-    });
-
-    it('returns 404 instead of redirecting /challenges/<slug>', async () => {
-      const outcome = await invokeLoader(loader, {
-        url: 'http://test.local/challenges/revenue-performance',
-        params: { slug: 'revenue-performance' },
-      });
-
-      expect(outcome.type).toBe('response');
-      if (outcome.type !== 'response') return;
-      expect(outcome.response.status).toBe(404);
-    });
   });
 
   it('redirects /challenges/<slug> to the French URL', async () => {

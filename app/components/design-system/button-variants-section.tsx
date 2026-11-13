@@ -66,13 +66,24 @@ function Variants() {
           disabled
         </button>
       </li>
+      <li className={row}>
+        <button type="button" className={button({ variant: 'ai', size: 'sm' })}>
+          ai sm
+        </button>
+        <button type="button" className={button({ variant: 'ai', size: 'md' })}>
+          ai md
+        </button>
+        <button type="button" className={button({ variant: 'ai', size: 'lg' })}>
+          ai lg
+        </button>
+      </li>
     </>
   );
 }
 
 export function ButtonVariantsSection() {
   return (
-    <ShowcaseSection title="Button: secondary and link">
+    <ShowcaseSection title="Button: secondary, link and AI">
       <ul>
         <Variants />
       </ul>

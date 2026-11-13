@@ -1,5 +1,5 @@
-// Geometry and timeline of the home hero visual: four teams converge on the
-// RevOps axis, then the growth curve rises above it. Pure functions, so the
+// Geometry and timeline of the home hero visual: four teams and the AI agents
+// converge on the RevOps axis, then the growth curve rises above it. Pure functions, so the
 // server render, the reduced motion render and every animation frame share
 // one source.
 //
@@ -15,7 +15,13 @@ const AXIS_SPAN = AXIS_END - AXIS_START;
 export const AXIS_Y = 250;
 
 /** Horizontal place of each team, from Marketing to Finance. */
-export const TEAM_X = [150, 400, 650, 900] as const;
+export const TEAM_X = [150, 345, 540, 735] as const;
+/** The AI agents settle on the axis after Finance. */
+export const AI_X = 930;
+/** One gain per team, the fifth for the AI agents. */
+export const GAIN_X = [...TEAM_X, AI_X] as const;
+/** The AI agents enter from the top right, then slide onto the axis. */
+const AI_START = { x: 985, y: 62 } as const;
 /** Scattered height of each team before it joins the axis. */
 const TEAM_START_Y = [118, 186, 100, 170] as const;
 
@@ -35,6 +41,14 @@ type TeamIndex = 0 | 1 | 2 | 3;
 
 export type HeroFrame = {
   teams: readonly { y: number; opacity: number }[];
+  /** The AI agents node, with the dashed ring that turns while it floats. */
+  ai: {
+    x: number;
+    y: number;
+    opacity: number;
+    ringOpacity: number;
+    ringRotation: number;
+  };
   /** Top of the vertical guide from each team to the curve. */
   guides: readonly { y2: number; opacity: number }[];
   /** The point where each guide meets the curve. */
@@ -124,7 +138,7 @@ export const CURVE_END = {
 } as const;
 
 /** Resting place of each gain label: just above its node, on the left. */
-export const GAIN_ANCHORS = TEAM_X.map((x) => ({ x, y: curveY(x) }));
+export const GAIN_ANCHORS = GAIN_X.map((x) => ({ x, y: curveY(x) }));
 
 function handoffDot(t: number, k: number): HeroDot {
   const team = (k % 3) as 0 | 1 | 2;
@@ -200,11 +214,26 @@ function computeFrame(t: number): HeroFrame {
     return { y, opacity: arrival };
   });
 
-  const guideProgress = TEAM_X.map((_, i) =>
-    easeInOut(segment(growth, 0.05 + i * 0.16, 0.3 + i * 0.16)),
+  const aiArrival = easeOut(segment(t, 1, 1.7));
+  const aiAligned = easeInOut(segment(axisEnd, 850, 1020));
+  const aiBob = (1 - aiAligned) * 5 * Math.sin(t * 1.3 + 2.4);
+  const ai = {
+    x: AI_START.x - (AI_START.x - AI_X) * aiAligned,
+    y:
+      AI_START.y +
+      (AXIS_Y - AI_START.y) * aiAligned +
+      aiBob +
+      (1 - aiArrival) * 12,
+    opacity: aiArrival,
+    ringOpacity: 0.9 * (1 - aiAligned),
+    ringRotation: t * 40,
+  };
+
+  const guideProgress = GAIN_X.map((_, i) =>
+    easeInOut(segment(growth, 0.05 + i * 0.13, 0.3 + i * 0.13)),
   );
 
-  const guides = TEAM_X.map((x, i) => {
+  const guides = GAIN_X.map((x, i) => {
     const g = guideProgress[i] ?? 0;
     const top = AXIS_Y - 8 + (curveY(x) + 5 - (AXIS_Y - 8)) * g;
     return { y2: top, opacity: g > 0.01 ? 1 : 0 };
@@ -235,6 +264,7 @@ function computeFrame(t: number): HeroFrame {
 
   return {
     teams,
+    ai,
     guides,
     nodes,
     gains,

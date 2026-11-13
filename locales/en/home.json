@@ -1,16 +1,6 @@
 {
   "meta.title": "Ocobo · RevOps & Revenue Experience",
   "meta.description": "Ocobo designs the RevOps architecture that makes growth simple, fluid, and controllable.",
-  "hero.title.lines": [
-    "The architecture",
-    "that sustains",
-    "your growth."
-  ],
-  "hero.subtitle.before": "Here is how we turn growth into",
-  "hero.subtitle.highlight": "a simple, fluid, and manageable experience.",
-  "hero.callout.before": "RevOps is not a tool: it's",
-  "hero.callout.emphasis": "the science that organizes your revenue.",
-  "hero.cta": "Meet an architect",
   "heroV2.title.before": "Growth is",
   "heroV2.title.accent": "a system.",
   "heroV2.title.after": "We build it.",
@@ -18,92 +8,81 @@
   "heroV2.cta.challenges": "See your challenges",
   "heroV2.cta.diagnostic": "Talk to an architect",
   "heroV2.teams": ["Marketing", "Sales", "Customer Success", "Finance"],
-  "heroV2.gains": ["More opportunities", "More deals signed", "Customers who stay", "A predictable number"],
+  "heroV2.agents": "AI agents",
+  "heroV2.tipLabel": "How",
+  "heroV2.tips": ["Clear targeting shared by Marketing and Sales, with qualified leads handled fast.", "A sales process the whole team follows, and a pipeline you can read at every stage.", "A clean onboarding, risk signals tracked, renewals planned ahead.", "Reliable data and a forecast reviewed every week, with the same definitions for everyone.", "Agents that prepare meetings, keep the CRM up to date and follow up at the right time."],
+  "heroV2.gains": ["More opportunities", "More deals signed", "Customers who stay", "A predictable number", "More time to sell"],
   "heroV2.axis": "RevOps axis",
   "heroV2.withoutSystem": "Without a system",
-  "heroV2.visualLabel": "Marketing, Sales, Customer Success and Finance meet on a single RevOps axis. Growth follows: more opportunities, more deals signed, customers who stay and a predictable number.",
+  "heroV2.visualLabel": "Marketing, Sales, Customer Success, Finance and the AI agents meet on a single RevOps axis. Growth follows: more opportunities, more deals signed, customers who stay, a predictable number and more time to sell.",
   "heroV2.pause": "Pause the animation",
   "heroV2.play": "Resume the animation",
   "socialProof.label": "They trust us",
-  "socialProof.title": "Proof through experience",
+  "socialProof.title": "60+ companies have trusted us with their commercial machine.",
   "socialProof.ctaText": "Discover our stories",
-  "painPoint.title.line1": "RevOps is everywhere.",
-  "painPoint.title.line2": "But nobody really understands what it is.",
-  "painPoint.description": "The market turned a vital role into a catch‑all discipline: CRM, integration, automation, data, growth… The result: noise, bloated stacks, and organizations moving by feel.",
-  "painPoint.badge": "We reject this blur",
-  "painPoint.cards": [
-    {
-      "title": "Align",
-      "description": "teams",
-      "label": "Organize =",
-      "colour": "coral"
-    },
-    {
-      "title": "Simplify",
-      "description": "processes",
-      "label": "Organize =",
-      "colour": "yellow"
-    },
-    {
-      "title": "Stabilize",
-      "description": "the data",
-      "label": "Organize =",
-      "colour": "sky"
-    },
-    {
-      "title": "Drive",
-      "description": "growth",
-      "label": "Organize =",
-      "colour": "mint"
-    }
+  "mission.label": "Our mission",
+  "mission.title": "Democratise the science of revenue.",
+  "mission.description": "The Revenue discipline of the best scale-ups, <0>finally within reach of B2B companies</0>.",
+  "mission.body": [
+    "The fastest scale-ups have learnt to build their growth on a commercial machine: a readable pipeline, clean handovers, tools the teams actually use.",
+    "Most B2B companies do not have one yet. Their growth rests on individual effort: a few salespeople who outperform the rest, methods that live in people's heads, and results that waver as soon as one of them leaves."
   ],
-  "painPoint.mission.label": "Our Mission",
-  "painPoint.mission.title": "Democratize the science of revenue.",
-  "painPoint.mission.description": "So every organization can experience healthy, controlled growth.",
-  "transformation.title": "You don't scale with tools. You scale with a system.",
-  "transformation.description": "Most organizations grow by stacking tools. We prefer to build solid foundations and a system that carries the load.",
-  "transformation.items": [
-    {
-      "title": "Radical clarity",
-      "description": "A shared truth across teams. Informed decisions. The end of gut‑feel steering."
-    },
-    {
-      "title": "Operational simplicity",
-      "description": "Less friction, less complexity, fewer tools. Teams focused on closing."
-    },
-    {
-      "title": "Measurable performance",
-      "description": "Higher conversions. Shorter cycles. Finally predictable revenue."
-    }
+  "mission.cta": "Read our manifesto",
+  "mission.conclusion": "Our job: build it with you, with your teams, in your tools.",
+  "ai.label": "AI, on solid foundations",
+  "ai.title": "Your AI agents will never be better than the data and processes you give them.",
+  "ai.lead": "Many AI projects stay at the proof-of-concept stage. Not because the models are poor, but because they work on incomplete data, definitions that change from one team to the next and processes nobody has written down.",
+  "ai.promise": "We structure the context first, then bring AI where it really serves your teams.",
+  "ai.layersLabel": "The three layers of an AI project",
+  "ai.layers": [
+    { "label": "Activation", "title": "AI that gets adopted", "description": "Useful AI uses, measured and adopted by your teams, connected to your CRM and your context." },
+    { "label": "Context", "title": "A structured context", "description": "Processes, playbooks, definitions and customer conversations, documented and accessible." },
+    { "label": "Foundation", "title": "Reliable data", "description": "A clean CRM, a clear data model, a single truth for every team." }
   ],
-  "transformation.method.title.line1": "It's not a coincidence.",
-  "transformation.method.title.line2": "It's a method.",
-  "transformation.method.items": [
-    {
-      "title": "Alignment",
-      "description": "Align the teams that generate revenue.",
-      "colour": "yellow"
-    },
-    {
-      "title": "Technology",
-      "description": "A clear, connected, useful stack.",
-      "colour": "sky"
-    },
-    {
-      "title": "Performance",
-      "description": "Reliable metrics, steering, cockpit.",
-      "colour": "mint"
-    },
-    {
-      "title": "Enablement",
-      "description": "Trained and autonomous teams.",
-      "colour": "coral"
-    }
+  "ai.layersCaption": "Each layer rests on the one below. That is what takes you from proof of concept to daily use.",
+  "ai.agents.title": "Already in production at our clients.",
+  "ai.agents.subtitle": "Not proofs of concept: agents connected to the CRM, used every day.",
+  "ai.agents.prospecting.window": "Prospecting agent",
+  "ai.agents.prospecting.heading": "Accounts to call",
+  "ai.agents.prospecting.meta": "Prioritised this morning",
+  "ai.agents.prospecting.accounts": [
+    { "name": "Northwind", "signal": "Raised funds, hiring 3 SDRs" },
+    { "name": "Brightlane", "signal": "New VP Sales" },
+    { "name": "Kestrel", "signal": "Visited the pricing page" }
   ],
-  "transformation.method.label": "The Revenue Experience System™",
-  "transformation.method.cta": "Discover our method",
-  "interventions.title": "Our interventions",
-  "interventions.subtitle": "We help you build the RevOps foundations your growth depends on.",
+  "ai.agents.prospecting.step": "Target",
+  "ai.agents.prospecting.caption": "The right accounts, enriched and prioritised",
+  "ai.agents.crm.window": "CRM agent",
+  "ai.agents.crm.heading": "Update after the call",
+  "ai.agents.crm.meta": "Northwind · opportunity",
+  "ai.agents.crm.fields": [
+    { "name": "Stage", "value": "Demo scheduled" },
+    { "name": "Amount", "value": "€48k" },
+    { "name": "Champion", "value": "Claire, VP Sales" },
+    { "name": "Next step", "value": "Proposal" }
+  ],
+  "ai.agents.crm.step": "Capture",
+  "ai.agents.crm.caption": "Call notes fill the CRM",
+  "ai.agents.brief.window": "Meeting brief",
+  "ai.agents.brief.heading": "Brightlane · tomorrow 10:00",
+  "ai.agents.brief.meta": "Prepared in 40 s",
+  "ai.agents.brief.points": [
+    { "name": "History:", "value": "2 exchanges, a demo in June." },
+    { "name": "Likely stake:", "value": "a more reliable forecast." },
+    { "name": "To ask:", "value": "the decision process and the timeline." }
+  ],
+  "ai.agents.brief.step": "Prepare",
+  "ai.agents.brief.caption": "A meeting prepared in one minute",
+  "ai.agents.insight.window": "# revenue-weekly",
+  "ai.agents.insight.heading": "Insight agent",
+  "ai.agents.insight.meta": "09:02",
+  "ai.agents.insight.message": "3 deals with no activity for 14 days. Risk: no next step. Follow-ups ready for Léa and Thomas.",
+  "ai.agents.insight.actions": ["See the deals", "Send"],
+  "ai.agents.insight.step": "Steer",
+  "ai.agents.insight.caption": "An assisted pipeline review",
+  "ai.cta": "Deploy AI in your teams",
+  "interventions.title": "How we work",
+  "interventions.subtitle": "A senior squad, embedded with you, from the diagnosis until the machine runs without us.",
   "interventions.items": [
     {
       "badge": "DESIGN",
@@ -122,44 +101,42 @@
     {
       "badge": "GROW",
       "badgeColor": "mint",
-      "subtitle": "Growth",
+      "subtitle": "Running",
       "title": "The handover to durable performance.",
       "description": "We run your day‑to‑day operations to maximize ROI and harvest the results of the work accomplished."
     }
   ],
   "interventions.more": "See details",
-  "interventions.cta": "See all our interventions",
+  "interventions.squad.alt": "The Ocobo team",
+  "interventions.squad.label": "The Ocobo squad",
+  "interventions.cta": "Discover our method",
   "challengeCards.number": "Challenge {{number}}",
   "challengeCards.backLabel": "Challenge {{number}} · What we deploy",
   "challengeCards.link": "See the workstreams",
   "challengeCards.linkLabel": "See the workstreams: {{name}}",
+  "challenges.title": "Do these <0>sound familiar?</0>",
+  "challenges.subtitle": "Six things we hear from leaders every week. Each one has its answer, with the same method.",
+  "challenges.start.title": "Not sure where to start?",
+  "challenges.start.text": "That is what the diagnosis is for: finding where your growth still depends on a few people, and what to build first.",
+  "challenges.start.cta": "Talk to an architect",
   "challengeCards.quote": "“{{quote}}”",
   "comparatif.title.line1": "Why Ocobo is more than an integrator.",
-  "comparatif.title.line2": "More than a consultancy. More than a freelance CRM.",
+  "comparatif.title.line2": "More than a consultancy.",
   "comparatif.subtitle": "Our craft: turning a stuck commercial machine into a precision mechanism.",
-  "comparatif.ocobo.label": "Ocobo",
-  "comparatif.ocobo.title": "The Revenue Experience",
-  "comparatif.ocobo.items": [
-    "Starts with strategy, not tools",
-    "Designs the full architecture of your growth",
-    "Works in immersion, in short sprints",
-    "Operates like a revenue leadership team, not a vendor",
-    "Measures impact, not deliverables"
-  ],
-  "comparatif.others.title": "Other players",
-  "comparatif.others.items": [
-    "Think \"tool\" before \"system\"",
-    "Pile up automations",
-    "Recreate silos (Sales Ops, Marketing Ops…)",
-    "Deliver unreadable dashboards",
-    "Confuse complexity with performance"
-  ],
-  "comparatif.cta": "Discover the RevOps Studio",
-  "stack.title": "The right technology. At the right time. For the right reasons.",
-  "stack.description": "We are not here to stack tools, but to build a coherent ecosystem. We certify and implement market‑leading solutions.",
+  "comparatif.gap.consulting.title": "Consultancy",
+  "comparatif.gap.consulting.text": "Strategy, organisation, recommendations. Stops before the tools.",
+  "comparatif.gap.integrator.title": "Integrator",
+  "comparatif.gap.integrator.text": "Configuration, integrations, automations. Starts without the strategy.",
+  "comparatif.gap.label": "The gap",
+  "comparatif.gap.conclusion": "In between, strategy never reaches the tools, and the tools never serve the strategy.",
+  "comparatif.gap.promise": "Ocobo closes this gap: we decide with you, then we build.",
+  "comparatif.cta": "Talk to an architect",
+  "stack.title.line1": "The right technology. At the right time.",
+  "stack.title.line2": "For the right reasons.",
+  "stack.description": "We never start from a tool, but from your context: your organisation, your processes, what you already use. We recommend only what serves your teams, and we build a system that fits what is already there.",
   "stack.cta": "Our partner solutions",
   "stack.tagline": "Our role: dismantle bloated stacks and make yours useful.",
-  "cta.title": "Meet a RevOps architect",
-  "cta.subtitle": "In 30 minutes, we assess the maturity of your revenue machine. You leave with more clarity.",
-  "cta.button": "Book a call"
+  "cta.title": "What is still holding your growth back?",
+  "cta.subtitle": "In 30 minutes, a revenue architect talks with you about your challenges and the maturity of your commercial machine. You leave with your priorities and know where to start.",
+  "cta.button": "Talk to an architect"
 }

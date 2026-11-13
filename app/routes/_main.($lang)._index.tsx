@@ -2,14 +2,18 @@ import { useTranslation } from 'react-i18next';
 import { type LoaderFunctionArgs, type MetaFunction } from 'react-router';
 import { useLoaderData } from 'react-router';
 
+import { AiSection } from '~/components/home/ai-section';
+import {
+  ChallengesSection,
+  DIAGNOSTIC_ID,
+} from '~/components/home/challenges-section';
 import { ComparatifSection } from '~/components/home/comparatif-section';
 import { CtaSection } from '~/components/home/cta-section';
-import { HeroSection } from '~/components/home/hero-section';
+import { HomeHero } from '~/components/home/home-hero';
 import { InterventionsSection } from '~/components/home/interventions-section';
-import { PainPointSection } from '~/components/home/pain-point-section';
+import { MissionSection } from '~/components/home/mission-section';
 import { SocialProofSection } from '~/components/home/social-proof-section';
 import { StackSection } from '~/components/home/stack-section';
-import { TransformationSection } from '~/components/home/transformation-section';
 import { ASSETS_BASE_URL } from '~/config/assets';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
@@ -88,10 +92,8 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     title: t('meta.title'),
     description: t('meta.description'),
     ogImageSrc: getImageOgFullPath('homepage', args.request.url),
-    showStudio: isPageEnabled('studio'),
     showTechnology: isPageEnabled('technology'),
     testimonials,
-    // Rendered on the home by #242; shown on `/design-system` until then.
     challenges,
   };
 }, 'story');
@@ -109,20 +111,27 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function Index() {
-  const { showStudio, showTechnology, testimonials } =
+  const { showTechnology, testimonials, challenges } =
     useLoaderData<typeof loader>();
   const { t } = useTranslation('home');
+  const hasChallenges = challenges.length > 0;
+  const aiChallengeSlug =
+    challenges.find((challenge) => challenge.key === 'ai')?.slug ?? null;
 
+  // The mockup order (`accueil.html`, prototype PR 31): hero, clients,
+  // challenges, mission, method, why Ocobo, stack, AI, diagnostic.
   return (
     <div>
-      <HeroSection />
+      <HomeHero hasChallenges={hasChallenges} />
       <SocialProofSection testimonials={testimonials} />
-      <PainPointSection />
-      <TransformationSection />
+      {hasChallenges ? <ChallengesSection challenges={challenges} /> : null}
+      <MissionSection />
       <InterventionsSection />
-      <ComparatifSection showStudio={showStudio} />
+      <ComparatifSection />
       <StackSection showTechnology={showTechnology} />
+      <AiSection aiChallengeSlug={aiChallengeSlug} />
       <CtaSection
+        id={DIAGNOSTIC_ID}
         variant="yellow"
         title={t('cta.title')}
         subtitle={t('cta.subtitle')}
