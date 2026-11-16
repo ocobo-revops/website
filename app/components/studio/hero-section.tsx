@@ -1,12 +1,12 @@
+import { ArrowRight } from 'lucide-react';
 import * as React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { badge, text } from '@ocobo/styled-system/recipes';
+import { badge, button, text } from '@ocobo/styled-system/recipes';
 
 import { MemberAvatar } from '~/components/member/member-avatar';
 import { Container } from '~/components/ui/Container';
-import { ContactCta } from '~/components/ui/contact-cta';
 import { headlineAccent } from '~/components/ui/headline-accent';
 import type { StudioMemberCard } from '~/modules/studio-team';
 import { getFirstName } from '~/utils/first-name';
@@ -97,7 +97,7 @@ type HeroSectionProps = {
 };
 
 /**
- * The promise, then two tilted rows of member cards that scroll in opposite
+ * The promise and a link to the team, then two tilted rows of member cards that scroll in opposite
  * directions. A visible button pauses them (WCAG 2.2.2). Reduced motion
  * stops them, and a small team shows as a static grid.
  */
@@ -127,6 +127,8 @@ export function HeroSection({ members }: HeroSectionProps) {
           <h1 className={cx(text({ variant: 'display-xl' }), css({ mb: '8' }))}>
             {t('hero.title.line1')}
             <br />
+            {t('hero.title.line2')}
+            <br />
             <span className={headlineAccent.mint}>
               {t('hero.title.highlight')}
             </span>
@@ -137,15 +139,12 @@ export function HeroSection({ members }: HeroSectionProps) {
               css({ maxW: '2xl', mx: 'auto', mb: '10' }),
             )}
           >
-            <Trans
-              i18nKey="hero.subtitle"
-              ns="studio"
-              components={{ bold: <strong /> }}
-            />
+            {t('hero.subtitle')}
           </p>
-          <ContactCta variant="cta" size="lg">
+          <a href="#equipe" className={button({ variant: 'cta', size: 'lg' })}>
             {t('hero.cta')}
-          </ContactCta>
+            <ArrowRight size={18} aria-hidden="true" />
+          </a>
         </div>
       </Container>
 
