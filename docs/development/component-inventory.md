@@ -55,7 +55,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
 | **Loader** | `Loader.tsx` | Loading states | SVG animations |
-| **Spinner** | `Spinner.tsx` | Inline loading indicator | CSS animations |
+| **Spinner** | `Spinner.tsx` | Inline loading indicator, unused since the v1 navbar was deleted | CSS animations |
 | **ScrollProgressBar** | `ScrollProgressBar.tsx` | Reading progress indicator | Scroll events |
 
 ## Feature-Specific Components
