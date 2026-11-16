@@ -12,7 +12,7 @@
 import type { Language } from '~/localization/resources';
 import {
   type ExpertCard,
-  buildExpertCards,
+  buildExpertCard,
 } from './challenge-reference-sections';
 import type { ChallengeKey } from './challenge-schema';
 import {
@@ -60,12 +60,10 @@ export function buildStudioTeam(
     console.error(`[${SCOPE}] studio: ${message}`),
   );
   const reportDrop = dropReporter(SCOPE, 'studio');
-  // One member at a time, so a card can never take another member's fields.
   const members = getActiveMembers(registry).map((member) => {
     const expert = resolveExpertFields(member, tools, reportTool, reportDrop);
-    const [card] = buildExpertCards([expert], lang);
     return {
-      ...card,
+      ...buildExpertCard(expert, lang),
       challenge: expert.challenge ?? null,
       bio: writtenOrNull(member.bio[lang], () =>
         reportDrop(`team/${member.slug} bio.${lang}`),
