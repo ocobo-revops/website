@@ -7,7 +7,7 @@ import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import type { ChallengeDiagnostic as ChallengeDiagnosticData } from '~/modules/challenge-page';
 import { url } from '~/utils/url';
 
-/** Anchor of the block, the target of the hero CTA. */
+/** Anchor of the block, the target of the experts CTA. */
 export const DIAGNOSTIC_ID = 'diagnostic';
 
 type ChallengeDiagnosticProps = {

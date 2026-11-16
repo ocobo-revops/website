@@ -7,10 +7,12 @@ import { button, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
+import { ButtonLink } from '~/components/ui/button-link';
+import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-page';
 import type { ChallengeKey } from '~/modules/challenge-schema';
+import { url } from '~/utils/url';
 
-import { DIAGNOSTIC_ID } from './challenge-diagnostic';
 import { challengeHeadlineAccent } from './challenge-palette';
 import { challengePill } from './challenge-pill';
 import { WORKSTREAMS_ID } from './challenge-workstreams';
@@ -27,8 +29,6 @@ type ChallengeHeroProps = {
   challenge: ChallengeKey;
   name: string;
   order: number;
-  /** Shows the CTA, which scrolls to the diagnostic block. */
-  hasDiagnostic: boolean;
   /** Shows the secondary CTA, which scrolls to the workstreams. */
   hasWorkstreams: boolean;
 };
@@ -38,12 +38,12 @@ export function ChallengeHero({
   challenge,
   name,
   order,
-  hasDiagnostic,
   hasWorkstreams,
 }: ChallengeHeroProps) {
   const { t } = useTranslation('challenges');
   const titleId = useId();
-  const showCta = hero.cta !== null && hasDiagnostic;
+  const getLocalizedPath = useLocalizedPathname();
+  const showCta = hero.cta !== null;
 
   return (
     <section
@@ -122,13 +122,14 @@ export function ChallengeHero({
               })}
             >
               {showCta ? (
-                <a
-                  href={`#${DIAGNOSTIC_ID}`}
-                  className={button({ variant: 'primary', size: 'lg' })}
+                <ButtonLink
+                  to={getLocalizedPath(url.contact)}
+                  variant="primary"
+                  size="lg"
                 >
                   {hero.cta}
                   <ArrowRight size={18} aria-hidden="true" />
-                </a>
+                </ButtonLink>
               ) : null}
               {hasWorkstreams ? (
                 <a

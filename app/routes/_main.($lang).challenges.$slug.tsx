@@ -111,7 +111,6 @@ export default function ChallengeRoute() {
         challenge={page.key}
         name={page.name}
         order={page.order}
-        hasDiagnostic={page.diagnostic !== null}
         hasWorkstreams={page.workstreams !== null}
       />
       {page.symptoms ? (
