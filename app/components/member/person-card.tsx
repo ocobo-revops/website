@@ -6,6 +6,9 @@ import { text } from '@ocobo/styled-system/recipes';
 
 import { challengeFill } from '~/components/challenges/challenge-palette';
 import { FlipCard } from '~/components/ui/flip-card';
+import { getFirstName } from '~/utils/first-name';
+
+import { MemberAvatar } from './member-avatar';
 
 /** Challenge keys, as in the posts frontmatter and the `challenge` tokens. */
 export type ChallengeKey = 'rp' | 'se' | 'sc' | 'cx' | 'sy' | 'ai';
@@ -35,57 +38,6 @@ type PersonCardProps = {
   className?: string;
 };
 
-// One static class per challenge: Panda only ships literal values.
-const ringColour: Record<ChallengeKey, string> = {
-  rp: css({ bg: 'challenge.rp' }),
-  se: css({ bg: 'challenge.se' }),
-  sc: css({ bg: 'challenge.sc' }),
-  cx: css({ bg: 'challenge.cx' }),
-  sy: css({ bg: 'challenge.sy' }),
-  ai: css({ bg: 'challenge.ai' }),
-};
-
-const avatarColour: Record<ChallengeKey, string> = {
-  rp: css({ bg: 'challenge.rp.light' }),
-  se: css({ bg: 'challenge.se.light' }),
-  sc: css({ bg: 'challenge.sc.light' }),
-  cx: css({ bg: 'challenge.cx.light' }),
-  sy: css({ bg: 'challenge.sy.light' }),
-  ai: css({ bg: 'challenge.ai.light' }),
-};
-
-const ring = css({
-  display: 'flex',
-  flexShrink: '0',
-  w: '24',
-  h: '24',
-  p: '1',
-  borderRadius: 'full',
-});
-const ringGrey = css({ bg: 'gray.200' });
-const avatar = cx(
-  text({ variant: 'display-md-bold' }),
-  css({
-    position: 'relative',
-    flex: '1',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    borderRadius: 'full',
-    borderWidth: '3px',
-    borderStyle: 'solid',
-    borderColor: 'white',
-  }),
-);
-const avatarGrey = css({ bg: 'gray.50' });
-const photoStyle = css({
-  position: 'absolute',
-  inset: '0',
-  w: 'full',
-  h: 'full',
-  objectFit: 'cover',
-});
 const identity = css({
   display: 'flex',
   flexDirection: 'column',
@@ -132,16 +84,6 @@ const footer = cx(
   css({ mt: 'auto', fontWeight: 'bold' }),
 );
 
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
-}
-
 /**
  * Person variant of `FlipCard` (ADR 0002), for the team, challenge and
  * about-us pages. Front: photo, name, role and challenge label. Back: first
@@ -165,21 +107,13 @@ export function PersonCard({
   className,
 }: PersonCardProps) {
   const { t } = useTranslation();
-  const [photoFailed, setPhotoFailed] = React.useState(false);
-  const photoRef = React.useRef<HTMLImageElement>(null);
   const toolsId = React.useId();
   const summaryId = React.useId();
-  const firstName = name.trim().split(/\s+/)[0];
+  const firstName = getFirstName(name);
   const summary = showBio ? bio : contribution;
   const visibleTools =
     toolLimit === undefined ? tools : tools.slice(0, Math.max(0, toolLimit));
   const companies = hidePreviousCompanies ? [] : previousCompanies;
-
-  // A photo that fails before hydration never fires `onError`.
-  React.useEffect(() => {
-    const image = photoRef.current;
-    if (image?.complete && image.naturalWidth === 0) setPhotoFailed(true);
-  }, []);
 
   return (
     <FlipCard
@@ -189,31 +123,7 @@ export function PersonCard({
       backClassName={challenge ? challengeFill[challenge] : undefined}
       front={
         <>
-          <span
-            className={cx(ring, challenge ? ringColour[challenge] : ringGrey)}
-          >
-            <span
-              className={cx(
-                avatar,
-                challenge ? avatarColour[challenge] : avatarGrey,
-              )}
-            >
-              <span aria-hidden="true">{getInitials(name)}</span>
-              {photo && !photoFailed && (
-                <img
-                  ref={photoRef}
-                  src={photo}
-                  // The name follows as text: the photo adds nothing to read.
-                  alt=""
-                  width={96}
-                  height={96}
-                  loading="lazy"
-                  className={photoStyle}
-                  onError={() => setPhotoFailed(true)}
-                />
-              )}
-            </span>
-          </span>
+          <MemberAvatar name={name} photo={photo} challenge={challenge} />
           <div className={identity}>
             <Heading className={nameStyle}>{name}</Heading>
             <p className={roleStyle}>{role}</p>
