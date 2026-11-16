@@ -4,9 +4,13 @@
 import { cleanup } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
+import { challengePalette } from '~/components/challenges/challenge-palette';
 import type { NavItem } from '~/components/navbar-v2/types';
 import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
-import { didChallengeLoadFail } from '~/modules/challenge-menu-state';
+import {
+  didChallengeLoadFail,
+  setChallengeLoadFailed,
+} from '~/modules/challenge-menu-state';
 import { type PageSlug, getDisabledPages } from '~/modules/feature-flags';
 import { render, screen } from '~/test/utils';
 
@@ -125,6 +129,32 @@ const find = (items: NavItem[], key: string) =>
   items.find((item) => item.key === key);
 
 describe('useMenuItems', () => {
+  // The flag is module state: reset it so no test sees another's value.
+  afterEach(() => setChallengeLoadFailed(false));
+
+  it('maps each published challenge to a tinted, localised entry', () => {
+    expect(find(renderMenu(), 'challenges')?.dropdown).toMatchObject([
+      {
+        key: 'challenge-revenue-performance',
+        label: 'Revenue Performance',
+        description: 'Un chiffre que vous voyez venir',
+        path: '/fr/challenges/revenue-performance',
+        palette: challengePalette.rp,
+      },
+      {
+        key: 'challenge-revenue-ai',
+        path: '/fr/challenges/revenue-ai',
+        palette: challengePalette.ai,
+      },
+    ]);
+    cleanup();
+
+    const english = find(renderMenu({ lang: 'en' }), 'challenges');
+    expect(english?.dropdown?.[0]?.path).toBe(
+      '/en/challenges/revenue-performance',
+    );
+  });
+
   it('records whether the last challenge load failed, for shouldRevalidate', () => {
     renderMenu({ challenges: [], failed: true });
     expect(didChallengeLoadFail()).toBe(true);
