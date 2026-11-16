@@ -109,7 +109,12 @@ export function ShareSection() {
                 >
                   {t(`share.${key}.label`)}
                 </p>
-                <h3 className={text({ variant: 'display-md-black' })}>
+                <h3
+                  className={text({
+                    variant: 'display-md-black',
+                    color: dark ? 'white' : 'dark',
+                  })}
+                >
                   {title}
                 </h3>
                 <p
