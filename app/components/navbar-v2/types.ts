@@ -3,10 +3,6 @@ import type { LucideIcon } from 'lucide-react';
 // Matching prototype naming exactly
 export type Color = 'yellow' | 'sky' | 'coral' | 'mint';
 
-export type NavbarScrollState = 'at-top' | 'scrolled';
-
-export type ScrollDirection = 'up' | 'down';
-
 /**
  * Item tint: a navbar colour, or a class that sets `colorPalette` (the
  * challenge entries pass `challengePalette[key]`).
