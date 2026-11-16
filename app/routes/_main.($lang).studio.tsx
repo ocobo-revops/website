@@ -8,9 +8,9 @@ import { ClosingSection } from '~/components/studio/closing-section';
 import { CompaniesStrip } from '~/components/studio/companies-strip';
 import { ExpertisesSection } from '~/components/studio/expertises-section';
 import { HeroSection } from '~/components/studio/hero-section';
-import { ModelSection } from '~/components/studio/model-section';
 import { OfficesSection } from '~/components/studio/offices-section';
 import { ShareSection } from '~/components/studio/share-section';
+import { SquadSection } from '~/components/studio/squad-section';
 import { TeamSection } from '~/components/studio/team-section';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
@@ -65,7 +65,7 @@ export default function StudioPage() {
     <div>
       <HeroSection members={members} />
       <CompaniesStrip companies={previousCompanies} />
-      <ModelSection />
+      <SquadSection />
       <ExpertisesSection members={members} />
       <TeamSection members={members} />
       <OfficesSection />

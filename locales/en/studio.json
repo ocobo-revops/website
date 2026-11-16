@@ -11,25 +11,33 @@
   "marquee.pause": "Pause the animation",
   "marquee.play": "Resume the animation",
   "companies.label": "Before Ocobo, we worked at",
-  "model.title": "The Ocobo Studio™ model",
-  "model.subtitle": "The traditional agency is often too slow and too far from the reality on the ground. We designed a pragmatic alternative to truly scale.",
-  "model.cards": [
+  "squad.badge": "Revenue Squad",
+  "squad.title": "How we work",
+  "squad.subtitle": "Every mission gets a dedicated squad. A manager who builds with you day to day, a director who holds the course, and data, tech or AI expertise when the project calls for it.",
+  "squad.roles": [
     {
-      "icon": "users",
-      "title": "Embedded Squad",
-      "description": "We deploy a multidisciplinary squad that joins your daily work environment."
+      "name": "RevOps Director",
+      "tag": "Strategy",
+      "description": "Holds the course, aligns the teams and leadership"
     },
     {
-      "icon": "zap",
-      "title": "100% Impact",
-      "description": "No lengthy theoretical reports. We deliver ready-to-use system building blocks."
+      "name": "RevOps Manager",
+      "tag": "Builder",
+      "description": "Builds with your teams, day to day, in your tools"
     },
     {
-      "icon": "target",
-      "title": "Zero Junior",
-      "description": "On every account, only senior profiles who have already scaled leading companies."
+      "name": "RevOps Engineer / Analyst",
+      "tag": "On demand",
+      "description": "Data, integrations and AI, when the project calls for it"
     }
   ],
+  "squad.sprint.title": "2-week sprints",
+  "squad.sprint.description": "To iterate fast, stay flexible as things change and deliver value from the first weeks.",
+  "squad.sprint.week1": "Week 1",
+  "squad.sprint.week2": "Week 2",
+  "squad.sprint.phases.planning": "Planning",
+  "squad.sprint.phases.build": "We build, we test",
+  "squad.sprint.phases.review": "Demo and review",
   "expertises.title": "One expertise, real faces",
   "expertises.subtitle": "Each expertise is carried by people who practised it before advising on it. You know who you will be working with.",
   "team.title": "Your Studio team",

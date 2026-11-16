@@ -11,25 +11,33 @@
   "marquee.pause": "Mettre en pause l'animation",
   "marquee.play": "Reprendre l'animation",
   "companies.label": "Avant Ocobo, nous étions chez",
-  "model.title": "Le modèle Studio Ocobo™",
-  "model.subtitle": "L'agence traditionnelle est souvent trop lente et trop loin de la réalité du terrain. Nous avons conçu une alternative pragmatique pour scaler vraiment.",
-  "model.cards": [
+  "squad.badge": "Revenue Squad",
+  "squad.title": "Comment nous travaillons",
+  "squad.subtitle": "Pour chaque mission, une squad dédiée. Un manager qui construit avec vous au quotidien, un directeur qui tient le cap, et l'expertise data, tech ou IA quand le chantier la demande.",
+  "squad.roles": [
     {
-      "icon": "users",
-      "title": "Squad Immergée",
-      "description": "Nous déployons une squad pluridisciplinaire qui rejoint votre environnement de travail quotidien."
+      "name": "RevOps Director",
+      "tag": "Stratégie",
+      "description": "Tient le cap, aligne les équipes et la direction"
     },
     {
-      "icon": "zap",
-      "title": "100% Impact",
-      "description": "Pas de grands rapports théoriques. Nous délivrons des briques de système prêtes à l'emploi."
+      "name": "RevOps Manager",
+      "tag": "Builder",
+      "description": "Construit avec vos équipes, au quotidien, dans vos outils"
     },
     {
-      "icon": "target",
-      "title": "Zéro Junior",
-      "description": "Sur chaque compte, uniquement des profils seniors ayant déjà scalé des entreprises leaders."
+      "name": "RevOps Engineer / Analyst",
+      "tag": "À la demande",
+      "description": "Data, intégrations et IA, quand le chantier le demande"
     }
   ],
+  "squad.sprint.title": "Sprints de 2 semaines",
+  "squad.sprint.description": "Pour itérer vite, rester flexible face aux évolutions et livrer de la valeur dès les premières semaines.",
+  "squad.sprint.week1": "Semaine 1",
+  "squad.sprint.week2": "Semaine 2",
+  "squad.sprint.phases.planning": "Planning",
+  "squad.sprint.phases.build": "Nous construisons, nous testons",
+  "squad.sprint.phases.review": "Démo et revue",
   "expertises.title": "Une expertise, des visages",
   "expertises.subtitle": "Chaque expertise est portée par des personnes qui l'ont pratiquée avant de la conseiller. Vous savez qui vous aurez en face de vous.",
   "team.title": "Votre équipe Studio",
