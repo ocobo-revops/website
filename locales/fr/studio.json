@@ -37,6 +37,11 @@
   "offices.subtitle": "Paris, Bordeaux, Marseille : une équipe à portée de vos bureaux, qui travaille dans vos outils et vient sur place quand le chantier le demande. Et entre nous, un séminaire chaque année et des rituels qui nous font avancer ensemble.",
   "offices.label": "Nos bureaux",
   "offices.heading": "Trois villes, une seule équipe.",
+  "offices.map": "Carte de France : bureaux à Paris, Bordeaux et Marseille",
+  "offices.photos.seminar": "Le séminaire Ocobo",
+  "offices.photos.rooftop": "Le rooftop",
+  "offices.photos.cafeteria": "La cafétéria",
+  "offices.photos.office": "Les bureaux",
   "offices.list": [
     { "city": "Paris", "note": "Le siège" },
     { "city": "Bordeaux", "note": "Depuis 2026" },

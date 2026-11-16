@@ -37,6 +37,11 @@
   "offices.subtitle": "Paris, Bordeaux, Marseille: a team within reach of your offices, working in your tools and on site when the project calls for it. And among ourselves, a yearly offsite and rituals that move us forward together.",
   "offices.label": "Our offices",
   "offices.heading": "Three cities, one team.",
+  "offices.map": "Map of France: offices in Paris, Bordeaux and Marseille",
+  "offices.photos.seminar": "The Ocobo seminar",
+  "offices.photos.rooftop": "The rooftop",
+  "offices.photos.cafeteria": "The cafeteria",
+  "offices.photos.office": "The offices",
   "offices.list": [
     { "city": "Paris", "note": "Headquarters" },
     { "city": "Bordeaux", "note": "Since 2026" },
