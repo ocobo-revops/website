@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
@@ -17,29 +16,39 @@ type ExpertisesSectionProps = {
   members: StudioMemberCard[];
 };
 
-const bar = css({ w: '10', h: '1.5', borderRadius: 'full' });
+const pill = cx(
+  text({ variant: 'label' }),
+  css({
+    alignSelf: 'flex-start',
+    px: '3',
+    py: '1',
+    borderRadius: 'full',
+  }),
+);
 // The whole card is the link target, through the heading link.
 const cardLink = css({
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '2',
   _hover: { textDecoration: 'underline' },
   _after: { content: '""', position: 'absolute', inset: '0' },
 });
 const faces = css({
   display: 'flex',
-  '& > li:not(:first-child)': { ml: '-2' },
+  '& > li:not(:first-child)': { ml: '-2.5' },
 });
 
 /**
- * One card per published challenge, with the faces of its experts and a link
- * to the challenge page (`#expertises`). Hidden when no challenge loaded.
+ * One card per published challenge (`#expertises`): the challenge name in a
+ * pill of its colour, its promise as the title, then its experts' faces and
+ * first names. The whole card links to the challenge page. Hidden when no
+ * challenge loaded.
  */
 export function ExpertisesSection({ members }: ExpertisesSectionProps) {
-  const { t } = useTranslation('studio');
+  const { t, i18n } = useTranslation('studio');
   const { challenges } = useChallengeMenu();
   const getLocalizedPath = useLocalizedPathname();
   if (challenges.length === 0) return null;
+
+  // "Jeanne et Hugo", "Jeanne, Hugo et Clara" in the page language.
+  const names = new Intl.ListFormat(i18n.language, { type: 'conjunction' });
 
   return (
     <section
@@ -47,7 +56,14 @@ export function ExpertisesSection({ members }: ExpertisesSectionProps) {
       className={cx(section({ bg: 'gray' }), css({ scrollMarginTop: '24' }))}
     >
       <Container>
-        <div className={css({ maxW: '3xl', mb: '14' })}>
+        <div
+          className={css({
+            maxW: '3xl',
+            mx: 'auto',
+            mb: '16',
+            textAlign: 'center',
+          })}
+        >
           <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '5' }))}>
             {t('expertises.title')}
           </h2>
@@ -76,30 +92,24 @@ export function ExpertisesSection({ members }: ExpertisesSectionProps) {
                 key={challenge.slug}
                 className={cx(card(), css({ position: 'relative', gap: '4' }))}
               >
-                <span
-                  aria-hidden="true"
-                  className={cx(bar, challengeFill[challenge.key])}
-                />
+                <span className={cx(pill, challengeFill[challenge.key])}>
+                  {challenge.name}
+                </span>
                 <h3 className={text({ variant: 'display-md-black' })}>
                   <Link
                     to={getLocalizedPath(`/challenges/${challenge.slug}`)}
                     className={cardLink}
                   >
-                    {challenge.name}
-                    <ArrowRight size={20} aria-hidden="true" />
+                    {challenge.tagline ?? challenge.name}
                   </Link>
                 </h3>
-                {challenge.tagline && (
-                  <p className={text({ variant: 'body', color: 'muted' })}>
-                    {challenge.tagline}
-                  </p>
-                )}
                 {experts.length > 0 && (
                   <div
                     className={css({
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '3',
+                      gap: '3.5',
+                      mt: 'auto',
                     })}
                   >
                     <ul aria-hidden="true" className={faces}>
@@ -114,13 +124,15 @@ export function ExpertisesSection({ members }: ExpertisesSectionProps) {
                         </li>
                       ))}
                     </ul>
-                    <p className={text({ variant: 'small', color: 'muted' })}>
-                      {t('expertises.experts', {
-                        names: experts
-                          .map((expert) => getFirstName(expert.name))
-                          .join(', '),
-                        interpolation: { escapeValue: false },
-                      })}
+                    <p
+                      className={cx(
+                        text({ variant: 'small', color: 'muted' }),
+                        css({ fontWeight: 'semibold' }),
+                      )}
+                    >
+                      {names.format(
+                        experts.map((expert) => getFirstName(expert.name)),
+                      )}
                     </p>
                   </div>
                 )}
