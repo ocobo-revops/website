@@ -1,4 +1,4 @@
-import { ArrowRight, Pause, Play } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { memo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -6,6 +6,7 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { button, section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
+import { ContactCta } from '~/components/ui/contact-cta';
 
 import { CHALLENGES_ID } from './challenges-section';
 import { SETTLED_FRAME, heroFrame } from './home-hero-frame';
@@ -169,14 +170,9 @@ export function HomeHero({
               {t('heroV2.cta.challenges')}
             </a>
           ) : null}
-          <a
-            href="#diagnostic"
-            className={button({ variant: 'primary' })}
-            data-testid="hero-cta"
-          >
+          <ContactCta data-testid="hero-cta">
             {t('heroV2.cta.diagnostic')}
-            <ArrowRight className={iconSize} aria-hidden="true" />
-          </a>
+          </ContactCta>
         </div>
         <div className={frameStyles}>
           <HomeHeroVisual frame={frame} />

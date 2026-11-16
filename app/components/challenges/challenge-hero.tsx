@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,10 +6,10 @@ import { button, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
+import { ContactCta } from '~/components/ui/contact-cta';
 import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-page';
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
-import { DIAGNOSTIC_ID } from './challenge-diagnostic';
 import { challengeHeadlineAccent } from './challenge-palette';
 import { challengePill } from './challenge-pill';
 import { WORKSTREAMS_ID } from './challenge-workstreams';
@@ -27,8 +26,6 @@ type ChallengeHeroProps = {
   challenge: ChallengeKey;
   name: string;
   order: number;
-  /** Shows the CTA, which scrolls to the diagnostic block. */
-  hasDiagnostic: boolean;
   /** Shows the secondary CTA, which scrolls to the workstreams. */
   hasWorkstreams: boolean;
 };
@@ -38,12 +35,11 @@ export function ChallengeHero({
   challenge,
   name,
   order,
-  hasDiagnostic,
   hasWorkstreams,
 }: ChallengeHeroProps) {
   const { t } = useTranslation('challenges');
   const titleId = useId();
-  const showCta = hero.cta !== null && hasDiagnostic;
+  const showCta = hero.cta !== null;
 
   return (
     <section
@@ -121,15 +117,7 @@ export function ChallengeHero({
                 justifyContent: 'center',
               })}
             >
-              {showCta ? (
-                <a
-                  href={`#${DIAGNOSTIC_ID}`}
-                  className={button({ variant: 'primary', size: 'lg' })}
-                >
-                  {hero.cta}
-                  <ArrowRight size={18} aria-hidden="true" />
-                </a>
-              ) : null}
+              {showCta ? <ContactCta size="lg">{hero.cta}</ContactCta> : null}
               {hasWorkstreams ? (
                 <a
                   href={`#${WORKSTREAMS_ID}`}

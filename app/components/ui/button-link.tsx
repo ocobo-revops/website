@@ -24,7 +24,7 @@ export const ButtonLink = ({
   return (
     <NavLink className={cx(button({ variant, size }), className)} {...props}>
       {children}
-      <ArrowRight size={arrowSize} />
+      <ArrowRight size={arrowSize} aria-hidden="true" />
     </NavLink>
   );
 };

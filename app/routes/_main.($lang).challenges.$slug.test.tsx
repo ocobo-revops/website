@@ -364,7 +364,7 @@ describe('challenge page', () => {
       name: 'Make my forecast reliable',
     });
     expect(ctas.map((cta) => cta.getAttribute('href'))).toEqual([
-      '#diagnostic',
+      '/en/contact',
       '/en/contact',
     ]);
   });
@@ -434,7 +434,7 @@ describe('challenge page', () => {
     expect(screen.queryByText('[Step]')).not.toBeInTheDocument();
   });
 
-  it('drops the hero CTA when the diagnostic block is absent', () => {
+  it('keeps the hero CTA on the contact page when the diagnostic block is absent', () => {
     const { frontmatter } = fixture;
     renderPage({
       ...frontmatter,
@@ -443,10 +443,10 @@ describe('challenge page', () => {
 
     expect(document.getElementById('diagnostic')).toBeNull();
     expect(
-      screen.queryByRole('link', { name: 'Make my forecast reliable' }),
-    ).not.toBeInTheDocument();
+      screen.getByRole('link', { name: 'Make my forecast reliable' }),
+    ).toHaveAttribute('href', '/en/contact');
     expect(screen.queryByText('[Question]')).not.toBeInTheDocument();
-    // The workstreams CTA stays, alone and secondary.
+    // The workstreams CTA stays, secondary.
     expect(screen.getByRole('link', { name: 'What we build' })).toHaveAttribute(
       'href',
       '#chantiers',

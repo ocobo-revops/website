@@ -2,12 +2,10 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
-import { ButtonLink } from '~/components/ui/button-link';
-import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
+import { ContactCta } from '~/components/ui/contact-cta';
 import type { ChallengeDiagnostic as ChallengeDiagnosticData } from '~/modules/challenge-page';
-import { url } from '~/utils/url';
 
-/** Anchor of the block, the target of the hero CTA. */
+/** Anchor of the block, the target of the experts CTA. */
 export const DIAGNOSTIC_ID = 'diagnostic';
 
 type ChallengeDiagnosticProps = {
@@ -20,8 +18,6 @@ export function ChallengeDiagnostic({
   diagnostic,
   fallbackCta,
 }: ChallengeDiagnosticProps) {
-  const getLocalizedPath = useLocalizedPathname();
-
   return (
     <section
       id={DIAGNOSTIC_ID}
@@ -44,13 +40,7 @@ export function ChallengeDiagnostic({
             {diagnostic.subtitle}
           </p>
         ) : null}
-        <ButtonLink
-          to={getLocalizedPath(url.contact)}
-          variant="primary"
-          size="lg"
-        >
-          {diagnostic.cta ?? fallbackCta}
-        </ButtonLink>
+        <ContactCta size="lg">{diagnostic.cta ?? fallbackCta}</ContactCta>
       </Container>
     </section>
   );

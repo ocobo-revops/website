@@ -27,7 +27,6 @@ function renderHero(data: ChallengeHeroData, challenge: 'sc' | 'ai') {
       challenge={challenge}
       name="Sales Compensation"
       order={3}
-      hasDiagnostic={false}
       hasWorkstreams={false}
     />,
     { i18nLang: 'en' },

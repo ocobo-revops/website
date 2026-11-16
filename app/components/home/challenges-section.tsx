@@ -1,15 +1,19 @@
 import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { button, card, section, text } from '@ocobo/styled-system/recipes';
+import { card, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
+import { ContactCta } from '~/components/ui/contact-cta';
 import type { HomeChallengeCard } from '~/modules/home-challenges';
 
 import { HomeChallengeCards } from './home-challenge-cards';
 
-/** Target of the final call to action, which the start panel links to. */
+/**
+ * Id of the final call to action. No home link targets it any more, but it
+ * keeps `/#diagnostic` links from outside working and gives the e2e test hook.
+ */
 export const DIAGNOSTIC_ID = 'diagnostic';
 
 /** Target of the hero's "challenges" call to action. */
@@ -89,12 +93,7 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
               {t('challenges.start.text')}
             </p>
           </div>
-          <a
-            href={`#${DIAGNOSTIC_ID}`}
-            className={button({ variant: 'primary', size: 'md' })}
-          >
-            {t('challenges.start.cta')}
-          </a>
+          <ContactCta size="md">{t('challenges.start.cta')}</ContactCta>
         </div>
       </Container>
     </section>
