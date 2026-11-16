@@ -41,8 +41,8 @@ const photos = [
   { src: '/images/jobs/seminaire.jpeg', altKey: 'offices.photos.seminar' },
   { src: '/images/jobs/rooftop.jpeg', altKey: 'offices.photos.rooftop' },
   { src: '/images/jobs/cafet.jpeg', altKey: 'offices.photos.cafeteria' },
-  { src: '/images/jobs/bureau-1.jpeg', altKey: 'offices.photos.office' },
-  { src: '/images/jobs/bureau-2.jpeg', altKey: 'offices.photos.office' },
+  { src: '/images/jobs/bureau-1.jpeg', altKey: 'offices.photos.workspace' },
+  { src: '/images/jobs/bureau-2.jpeg', altKey: 'offices.photos.meetingRoom' },
 ] as const;
 
 const land = css({ fill: 'gray.100', stroke: 'gray.300' });
@@ -86,12 +86,11 @@ const photoStyle = css({
 });
 
 function FranceMap({ offices }: { offices: Office[] }) {
-  const { t } = useTranslation('studio');
   return (
     <svg
       viewBox="-2 -2 104 104"
-      role="img"
-      aria-label={t('offices.map')}
+      // Decorative: the city list before it carries the same facts.
+      aria-hidden="true"
       className={css({ w: 'full', maxW: 'md', mx: 'auto' })}
     >
       <path d={FRANCE_OUTLINE} className={land} strokeWidth="0.6" />
