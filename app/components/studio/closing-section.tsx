@@ -18,10 +18,15 @@ type ClosingSectionProps = {
 const oneDoor = css({ display: 'grid', gap: '6' });
 const twoDoors = css({
   display: 'grid',
-  gridTemplateColumns: { base: '1fr', lg: 'repeat(2, minmax(0, 1fr))' },
+  gridTemplateColumns: { base: '1fr', md: 'repeat(2, minmax(0, 1fr))' },
   gap: '6',
 });
 const column = css({ gap: '5', alignItems: 'flex-start' });
+// Flat cards on the yellow band, as in the mockup.
+const door = card({ padding: 'xl', border: false, shadow: 'none' });
+// The card recipe has no dark tone yet (PR #332, open question on the dark
+// tone): a static class until it gets one.
+const darkTone = css({ bg: 'dark', color: 'white' });
 
 /** Two closing doors: work with the Studio, or join it. */
 export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
@@ -31,7 +36,7 @@ export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
   return (
     <section className={section({ bg: 'yellow' })}>
       <Container className={jobsEnabled ? twoDoors : oneDoor}>
-        <div className={cx(card({ padding: 'xl' }), column)}>
+        <div className={cx(door, column)}>
           <p className={text({ variant: 'label', color: 'muted' })}>
             {t('closing.work.eyebrow')}
           </p>
@@ -45,15 +50,8 @@ export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
         </div>
 
         {jobsEnabled && (
-          <div
-            className={cx(
-              card({ padding: 'xl', border: false }),
-              column,
-              // The card recipe has no dark tone yet (open question on #244).
-              css({ bg: 'dark', color: 'white' }),
-            )}
-          >
-            <p className={text({ variant: 'label', color: 'muted-light' })}>
+          <div className={cx(door, column, darkTone)}>
+            <p className={text({ variant: 'label', color: 'yellow' })}>
               {t('closing.join.eyebrow')}
             </p>
             <h2 className={text({ variant: 'display-lg', color: 'white' })}>
@@ -64,7 +62,7 @@ export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
             </p>
             <ButtonLink
               to={getLocalizedPath(url.jobs)}
-              variant="white"
+              variant="yellow"
               className={css({ mt: 'auto' })}
             >
               {t('closing.join.cta')}
