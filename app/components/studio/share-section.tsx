@@ -1,27 +1,31 @@
-import { ArrowRight, BookOpen, Mic, Users } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import {
-  button,
-  card,
-  iconBox,
-  section,
-  text,
-} from '@ocobo/styled-system/recipes';
+import { button, card, section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
-const cardStyle = cx(card({ padding: 'lg' }), css({ gap: '4' }));
+const cardStyle = cx(
+  card({ padding: 'lg', border: false, shadow: 'none' }),
+  css({ gap: '3.5' }),
+);
+// The card recipe has no dark, yellow or sky tone yet: one static class per
+// card until it gets a tone variant (PR #332, open question on the dark tone).
+const toneStyles = {
+  podcast: css({ bg: 'dark', color: 'white' }),
+  club: css({ bg: 'yellow.light' }),
+  blog: css({ bg: 'sky.light' }),
+} as const;
 const linkStyle = cx(
   button({ variant: 'link' }),
-  css({ mt: 'auto', alignSelf: 'flex-start' }),
+  // Reads the card text colour, white on the dark card.
+  css({ color: '[inherit]', mt: 'auto', pt: '4', alignSelf: 'flex-start' }),
 );
 const srOnly = css({ srOnly: true });
-const iconStyle = iconBox({ size: 'xl', variant: 'solid', color: 'yellow' });
 
 /** Podcast, club and blog: what the team shares (`#partage`). */
 export function ShareSection() {
@@ -31,27 +35,27 @@ export function ShareSection() {
   const items = [
     {
       key: 'podcast',
-      icon: Mic,
       title: t('common:navigation.resources.podcasts'),
       description: t('common:navigation.resources.podcasts.description'),
       href: url.podcasts,
       external: true,
+      dark: true,
     },
     {
       key: 'club',
-      icon: Users,
       title: t('common:navigation.resources.club'),
       description: t('common:navigation.resources.club.description'),
       href: url.modernRevenueClub,
       external: true,
+      dark: false,
     },
     {
       key: 'blog',
-      icon: BookOpen,
       title: t('common:navigation.resources.blog'),
       description: t('common:navigation.resources.blog.description'),
       href: getLocalizedPath(url.blog),
       external: false,
+      dark: false,
     },
   ] as const;
 
@@ -61,7 +65,14 @@ export function ShareSection() {
       className={cx(section({ bg: 'white' }), css({ scrollMarginTop: '24' }))}
     >
       <Container>
-        <div className={css({ maxW: '3xl', mb: '14' })}>
+        <div
+          className={css({
+            maxW: '3xl',
+            mx: 'auto',
+            mb: '16',
+            textAlign: 'center',
+          })}
+        >
           <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '5' }))}>
             {t('share.title')}
           </h2>
@@ -80,47 +91,52 @@ export function ShareSection() {
             gap: '6',
           })}
         >
-          {items.map(
-            ({ key, icon: Icon, title, description, href, external }) => {
-              const cta = (
-                <>
-                  {t(`share.${key}.cta`)}
-                  <span className={srOnly}> {title}</span>
-                  <ArrowRight size={16} aria-hidden="true" />
-                </>
-              );
-              return (
-                <li key={key} className={cardStyle}>
-                  <span className={iconStyle}>
-                    <Icon size={26} aria-hidden="true" />
-                  </span>
-                  <p className={text({ variant: 'label', color: 'muted' })}>
-                    {t(`share.${key}.label`)}
-                  </p>
-                  <h3 className={text({ variant: 'display-md-bold' })}>
-                    {title}
-                  </h3>
-                  <p className={text({ variant: 'body', color: 'muted' })}>
-                    {description}
-                  </p>
-                  {external ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={linkStyle}
-                    >
-                      {cta}
-                    </a>
-                  ) : (
-                    <Link to={href} className={linkStyle}>
-                      {cta}
-                    </Link>
-                  )}
-                </li>
-              );
-            },
-          )}
+          {items.map(({ key, title, description, href, external, dark }) => {
+            const cta = (
+              <>
+                {t(`share.${key}.cta`)}
+                <span className={srOnly}> {title}</span>
+                <ArrowRight size={16} aria-hidden="true" />
+              </>
+            );
+            return (
+              <li key={key} className={cx(cardStyle, toneStyles[key])}>
+                <p
+                  className={text({
+                    variant: 'label',
+                    color: dark ? 'yellow' : 'muted',
+                  })}
+                >
+                  {t(`share.${key}.label`)}
+                </p>
+                <h3 className={text({ variant: 'display-md-black' })}>
+                  {title}
+                </h3>
+                <p
+                  className={text({
+                    variant: 'body',
+                    color: dark ? 'muted-light' : 'muted',
+                  })}
+                >
+                  {description}
+                </p>
+                {external ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkStyle}
+                  >
+                    {cta}
+                  </a>
+                ) : (
+                  <Link to={href} className={linkStyle}>
+                    {cta}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </Container>
     </section>
