@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useRouteLoaderData } from 'react-router';
 
-import type { DropdownItem, NavItem } from '~/components/navbar/types';
+import type { DropdownItem, NavItem } from '~/components/navbar-v2/types';
 import type { PageSlug } from '~/modules/feature-flags';
 import type { loader as rootLoader } from '~/root';
 import { url } from '~/utils/url';

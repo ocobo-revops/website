@@ -1,6 +1,6 @@
 import { css, cx } from '@ocobo/styled-system/css';
 
-import type { Color, DropdownItemTint } from './types';
+import type { Color, DropdownItemTint } from '~/components/navbar-v2/types';
 
 /**
  * Icon background/colour styles per colour variant.

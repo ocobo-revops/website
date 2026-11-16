@@ -9,7 +9,7 @@ import { center } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
 import { challengePalette } from '~/components/challenges/challenge-palette';
-import type { DropdownItem } from '~/components/navbar/types';
+import type { DropdownItem } from '~/components/navbar-v2/types';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 

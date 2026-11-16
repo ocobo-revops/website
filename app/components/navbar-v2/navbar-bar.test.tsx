@@ -1,7 +1,7 @@
 import { Target } from 'lucide-react';
 import { describe, expect, it } from 'vitest';
 
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { axe, render, screen, userEvent, waitFor, within } from '~/test/utils';
 
 import { NavbarBar } from './navbar-bar';

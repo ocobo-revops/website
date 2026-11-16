@@ -5,7 +5,7 @@ import { NavLink, useLocation } from 'react-router';
 
 import { css, cx } from '@ocobo/styled-system/css';
 
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { useMenuItems } from '~/hooks/useMenuItems';

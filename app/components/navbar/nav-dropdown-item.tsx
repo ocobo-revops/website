@@ -6,8 +6,8 @@ import { NavLink } from 'react-router';
 import { css, cx } from '@ocobo/styled-system/css';
 import { center, flex } from '@ocobo/styled-system/patterns';
 
+import type { DropdownItem } from '~/components/navbar-v2/types';
 import { dropdownItemTint } from './styles';
-import type { DropdownItem } from './types';
 
 type NavDropdownItemProps = React.ComponentPropsWithoutRef<'a'> & {
   item: DropdownItem;

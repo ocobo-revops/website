@@ -3,7 +3,7 @@
  */
 import { afterEach, describe, expect, it } from 'vitest';
 
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
 import { type PageSlug, getDisabledPages } from '~/modules/feature-flags';
 import { render, screen } from '~/test/utils';

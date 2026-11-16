@@ -11,8 +11,8 @@ import { center, flex, hstack, vstack } from '@ocobo/styled-system/patterns';
 import { ButtonLink } from '~/components/ui/button-link';
 import { useMenuItems } from '~/hooks/useMenuItems';
 
+import type { DropdownItem, NavItem } from '~/components/navbar-v2/types';
 import { dropdownItemTint } from './styles';
-import type { DropdownItem, NavItem } from './types';
 
 type MobileMenuProps = {
   open: boolean;

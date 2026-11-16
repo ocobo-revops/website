@@ -4,8 +4,8 @@ import { ChevronDown } from 'lucide-react';
 import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 
+import type { NavItem } from '~/components/navbar-v2/types';
 import { NavDropdownItem } from './nav-dropdown-item';
-import type { NavItem } from './types';
 
 type NavItemWithDropdownProps = {
   item: NavItem;

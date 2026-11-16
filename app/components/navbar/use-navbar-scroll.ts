@@ -1,7 +1,10 @@
 import * as React from 'react';
 
+import type {
+  NavbarScrollState,
+  ScrollDirection,
+} from '~/components/navbar-v2/types';
 import { SCROLL_THRESHOLD } from './styles';
-import type { NavbarScrollState, ScrollDirection } from './types';
 
 type UseNavbarScrollReturn = {
   scrollState: NavbarScrollState;
