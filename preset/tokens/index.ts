@@ -97,9 +97,6 @@ export const tokens = defineTokens({
       value:
         'fade-in-up-small 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
     },
-    'hero-reveal': {
-      value: 'hero-reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-    },
     'gentle-reveal': {
       value: 'gentle-reveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
     },

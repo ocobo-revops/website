@@ -38,15 +38,15 @@ type AgentKey = keyof typeof STEP_DOTS;
 // own delay. The transition sits on the shown state only, so hiding after
 // hydration is instant.
 const contentWaiting = css({
-  '& .pw-s': { opacity: '0', translate: '[0 5px]' },
+  '& .pw-s': { opacity: '0', transform: 'translateY(5px)' },
   '& .pw-score': { transform: 'scaleX(0)' },
   '& .pw-typing': { display: 'none' },
 });
 const contentShown = css({
   '& .pw-s': {
     opacity: '1',
-    translate: '[0 0]',
-    transitionProperty: '[opacity, translate]',
+    transform: 'none',
+    transitionProperty: '[opacity, transform]',
     transitionDuration: 'slower',
     transitionTimingFunction: 'smooth',
   },

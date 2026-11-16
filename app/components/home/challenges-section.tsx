@@ -10,7 +10,10 @@ import type { HomeChallengeCard } from '~/modules/home-challenges';
 
 import { HomeChallengeCards } from './home-challenge-cards';
 
-/** Target of the final call to action, which the start panel links to. */
+/**
+ * Id of the final call to action. No home link targets it any more, but it
+ * keeps `/#diagnostic` links from outside working and gives the e2e test hook.
+ */
 export const DIAGNOSTIC_ID = 'diagnostic';
 
 /** Target of the hero's "challenges" call to action. */

@@ -16,7 +16,7 @@ const box = css({
   maxW: '[580px]',
   aspectRatio: 'square',
   '& .il-w': {
-    transitionProperty: '[translate]',
+    transitionProperty: '[transform]',
     transitionDuration: 'slower',
     transitionTimingFunction: 'smooth',
   },
@@ -27,12 +27,15 @@ const box = css({
   '& .il-bar': { transformOrigin: 'center bottom' },
   '& .il-pie': { transformOrigin: 'center' },
   '& .il-wave': { strokeDasharray: '1' },
-  '&:hover .il-w1': { translate: '[-4px -6px]' },
-  '&:hover .il-w2': { translate: '[5px -8px]' },
-  '&:hover .il-w3': { translate: '[6px 4px]' },
-  '&:hover .il-w4': { translate: '[0 -5px]' },
-  '&:hover .il-w5': { translate: '[-5px 3px]' },
-  '&:hover .il-s': { scale: '[1.08]' },
+  // No hover drift under reduced motion.
+  _motionSafe: {
+    '&:hover .il-w1': { transform: 'translate(-4px, -6px)' },
+    '&:hover .il-w2': { transform: 'translate(5px, -8px)' },
+    '&:hover .il-w3': { transform: 'translate(6px, 4px)' },
+    '&:hover .il-w4': { transform: 'translate(0px, -5px)' },
+    '&:hover .il-w5': { transform: 'translate(-5px, 3px)' },
+    '&:hover .il-s': { scale: '[1.08]' },
+  },
 });
 
 const waiting = css({ '& .il-s, & .il-w': { opacity: '0' } });

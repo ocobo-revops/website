@@ -169,12 +169,14 @@ const STEP_THRESHOLDS = [0.04, 0.38, 0.7, 0.85] as const;
 // The transition sits on both states: scrolling back up hides the steps
 // again, as in the mockup.
 const step = css({
-  transitionProperty: '[opacity, translate]',
+  transitionProperty: '[opacity, transform]',
   transitionDuration: '[0.6s, 0.75s]',
   transitionTimingFunction: 'smooth',
 });
-const stepHidden = css({ opacity: '0', translate: '[0 28px]' });
-const stepShown = css({ opacity: '1', translate: '[0 0]' });
+// `transform`, not `translate`: the preset maps `translate` to its own
+// transform variables, which nothing here reads.
+const stepHidden = css({ opacity: '0', transform: 'translateY(28px)' });
+const stepShown = css({ opacity: '1', transform: 'none' });
 
 function stepClass(reached: number | null, animate: boolean, index: number) {
   if (reached === null) return undefined;

@@ -17,7 +17,7 @@ interface CtaSectionProps {
   subtitle?: string;
   ctaText: string;
   ctaLink: string;
-  /** Anchor target, for example the hero's `#diagnostic` link. */
+  /** Anchor target, for example `#diagnostic` on the home. */
   id?: string;
 }
 

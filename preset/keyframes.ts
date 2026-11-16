@@ -69,10 +69,6 @@ export const keyframes = defineKeyframes({
     from: { opacity: '0', transform: 'translateY(15px)' },
     to: { opacity: '1', transform: 'translateY(0)' },
   },
-  'hero-reveal': {
-    from: { opacity: '0', transform: 'translateY(15px)' },
-    to: { opacity: '1', transform: 'translateY(0)' },
-  },
   'gentle-reveal': {
     '0%': { opacity: '0', transform: 'translateY(10px)' },
     '100%': { opacity: '1', transform: 'translateY(0)' },

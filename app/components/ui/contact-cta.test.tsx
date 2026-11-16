@@ -17,6 +17,14 @@ describe('ContactCta', () => {
     ).toHaveAttribute('href', '/fr/contact');
   });
 
+  it('opens the French contact page on the unprefixed home', async () => {
+    render(<ContactCta />, { initialEntries: ['/'], i18nLang: 'fr' });
+
+    expect(
+      await screen.findByRole('link', { name: 'Échanger avec un architecte' }),
+    ).toHaveAttribute('href', '/fr/contact');
+  });
+
   it('opens the English contact page on an English page', async () => {
     render(<ContactCta>Talk to one of us</ContactCta>, {
       initialEntries: ['/en'],
