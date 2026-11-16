@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
@@ -10,66 +11,70 @@ import { headlineAccent } from '~/components/ui/headline-accent';
 import type { StudioMemberCard } from '~/modules/studio-team';
 import { getFirstName } from '~/utils/first-name';
 
-/** Copies of the member list in the marquee: its keyframes move by a third. */
-const COPIES = [0, 1, 2] as const;
+import {
+  MarqueePauseButton,
+  MarqueeTrack,
+  marqueeEdgeFade,
+  marqueeHoverPause,
+} from './studio-marquee';
+
 /**
- * Below this many members, one copy of 160px tiles leaves a gap on a wide
- * screen before the loop restarts: the faces then sit in a static row.
+ * Below this many members, a row of 208px cards leaves a gap on a wide
+ * screen before its loop restarts: the cards then sit in a static grid.
  */
 const MARQUEE_MIN_MEMBERS = 12;
 
-const marqueeTrack = css({
+// Two rows, tilted, a little wider than the screen (mockup `equipe`).
+const tiltedRows = css({
   display: 'flex',
-  w: 'max',
-  animation: 'marquee-ultra-slow',
-  _motionReduce: {
-    animation: '[none]',
-    w: 'full',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
+  flexDirection: 'column',
+  gap: '6',
+  w: '[108%]',
+  ml: '[-4%]',
+  py: '6',
+  transform: 'rotate(-3deg)',
 });
-const marqueeList = css({
-  display: 'flex',
-  _motionReduce: { flexWrap: 'wrap', justifyContent: 'center' },
-});
-// Without motion, one copy of the list is enough.
-const extraCopy = css({ _motionReduce: { display: 'none' } });
+const rowList = css({ display: 'flex', gap: '5', pr: '5' });
 const staticList = css({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  gap: '5',
 });
-const tile = css({
+const memberCard = css({
+  flex: 'none',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '2',
-  w: '40',
-  px: '3',
+  gap: '4',
+  w: '52',
+  px: '4',
+  pt: '7',
+  pb: '5',
+  bg: 'gray.100',
+  borderRadius: '2xl',
   textAlign: 'center',
 });
-const tileName = cx(text({ variant: 'small' }), css({ fontWeight: 'bold' }));
-const tileRole = text({ variant: 'small', color: 'muted' });
+const cardName = text({ variant: 'display-md-black' });
+const cardRole = text({ variant: 'small', color: 'muted' });
 
-type MemberTilesProps = {
+type MemberCardsProps = {
   members: StudioMemberCard[];
-  /** Names the list. The copies of the marquee have none. */
-  label?: string;
   /** A marquee copy: hidden from assistive tech, photos load lazily. */
   hidden?: boolean;
+  label?: string;
   className: string;
 };
 
-function MemberTiles({ members, label, hidden, className }: MemberTilesProps) {
+function MemberCards({ members, hidden, label, className }: MemberCardsProps) {
   return (
     <ul
-      aria-label={label}
       aria-hidden={hidden || undefined}
+      aria-label={label}
       className={className}
     >
       {members.map((member) => (
-        <li key={member.slug} className={tile}>
+        <li key={member.slug} className={memberCard}>
           <MemberAvatar
             name={member.name}
             photo={member.photo}
@@ -77,8 +82,10 @@ function MemberTiles({ members, label, hidden, className }: MemberTilesProps) {
             // The first copy sits just below the CTA, above the fold.
             loading={hidden ? 'lazy' : 'eager'}
           />
-          <span className={tileName}>{getFirstName(member.name)}</span>
-          <span className={tileRole}>{member.role}</span>
+          <span className={css({ display: 'flex', flexDirection: 'column' })}>
+            <span className={cardName}>{getFirstName(member.name)}</span>
+            <span className={cardRole}>{member.role}</span>
+          </span>
         </li>
       ))}
     </ul>
@@ -89,8 +96,19 @@ type HeroSectionProps = {
   members: StudioMemberCard[];
 };
 
+/**
+ * The promise, then two tilted rows of member cards that scroll in opposite
+ * directions. A visible button pauses them (WCAG 2.2.2). Reduced motion
+ * stops them, and a small team shows as a static grid.
+ */
 export function HeroSection({ members }: HeroSectionProps) {
   const { t } = useTranslation('studio');
+  const [paused, setPaused] = React.useState(false);
+  const half = Math.ceil(members.length / 2);
+  const rows = [
+    { key: 'first', direction: 'left', members: members.slice(0, half) },
+    { key: 'second', direction: 'right', members: members.slice(half) },
+  ] as const;
 
   return (
     <section
@@ -131,36 +149,53 @@ export function HeroSection({ members }: HeroSectionProps) {
         </div>
       </Container>
 
-      {members.length > 0 && (
-        <div className={css({ mt: '16', overflow: 'hidden' })}>
-          {members.length < MARQUEE_MIN_MEMBERS ? (
-            <MemberTiles
-              members={members}
-              label={t('hero.members')}
-              className={staticList}
-            />
-          ) : (
-            <div className={marqueeTrack}>
-              {COPIES.map((copy) =>
-                copy === 0 ? (
-                  <MemberTiles
-                    key={copy}
-                    members={members}
-                    label={t('hero.members')}
-                    className={marqueeList}
+      {members.length > 0 && members.length < MARQUEE_MIN_MEMBERS && (
+        <Container className={css({ mt: '16' })}>
+          <MemberCards
+            members={members}
+            label={t('hero.members')}
+            className={staticList}
+          />
+        </Container>
+      )}
+
+      {members.length >= MARQUEE_MIN_MEMBERS && (
+        <>
+          <div
+            role="group"
+            aria-label={t('hero.members')}
+            className={cx(
+              css({ mt: '10', py: '7', overflow: 'hidden' }),
+              marqueeHoverPause,
+            )}
+          >
+            <div className={tiltedRows}>
+              {rows.map((row) => (
+                <div key={row.key} className={marqueeEdgeFade}>
+                  <MarqueeTrack
+                    direction={row.direction}
+                    paused={paused}
+                    renderCopy={({ hidden, className }) => (
+                      <MemberCards
+                        members={row.members}
+                        hidden={hidden}
+                        className={cx(rowList, className)}
+                      />
+                    )}
                   />
-                ) : (
-                  <MemberTiles
-                    key={copy}
-                    members={members}
-                    className={cx(marqueeList, extraCopy)}
-                    hidden
-                  />
-                ),
-              )}
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
+          <Container
+            className={css({ display: 'flex', justifyContent: 'flex-end' })}
+          >
+            <MarqueePauseButton
+              paused={paused}
+              onToggle={() => setPaused((value) => !value)}
+            />
+          </Container>
+        </>
       )}
     </section>
   );
