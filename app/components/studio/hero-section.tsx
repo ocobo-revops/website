@@ -16,6 +16,7 @@ import {
   MarqueeTrack,
   marqueeEdgeFade,
   marqueeHoverPause,
+  marqueeWrapWhenStill,
 } from './studio-marquee';
 
 /**
@@ -23,6 +24,9 @@ import {
  * screen before its loop restarts: the cards then sit in a static grid.
  */
 const MARQUEE_MIN_MEMBERS = 12;
+
+/** Photos loaded eagerly per row: the ones in view below the CTA. */
+const EAGER_PHOTOS = 4;
 
 // Two rows, tilted, a little wider than the screen (mockup `equipe`).
 const tiltedRows = css({
@@ -33,6 +37,8 @@ const tiltedRows = css({
   ml: '[-4%]',
   py: '6',
   transform: 'rotate(-3deg)',
+  // Still rows sit flat and inside the screen.
+  _motionReduce: { w: 'full', ml: '0', transform: 'none' },
 });
 const rowList = css({ display: 'flex', gap: '5', pr: '5' });
 const staticList = css({
@@ -73,14 +79,14 @@ function MemberCards({ members, hidden, label, className }: MemberCardsProps) {
       aria-label={label}
       className={className}
     >
-      {members.map((member) => (
+      {members.map((member, index) => (
         <li key={member.slug} className={memberCard}>
           <MemberAvatar
             name={member.name}
             photo={member.photo}
             challenge={member.challenge}
-            // The first copy sits just below the CTA, above the fold.
-            loading={hidden ? 'lazy' : 'eager'}
+            // The first cards sit just below the CTA, above the fold.
+            loading={!hidden && index < EAGER_PHOTOS ? 'eager' : 'lazy'}
           />
           <span className={css({ display: 'flex', flexDirection: 'column' })}>
             <span className={cardName}>{getFirstName(member.name)}</span>
@@ -178,7 +184,7 @@ export function HeroSection({ members }: HeroSectionProps) {
                       <MemberCards
                         members={row.members}
                         hidden={hidden}
-                        className={cx(rowList, className)}
+                        className={cx(rowList, marqueeWrapWhenStill, className)}
                       />
                     )}
                   />

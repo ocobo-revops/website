@@ -14,7 +14,8 @@ const track = css({
   display: 'flex',
   w: 'max',
   animation: 'marquee-ultra-slow',
-  _motionReduce: { animation: '[none]' },
+  // No motion: the one visible copy fits the width and wraps.
+  _motionReduce: { animation: '[none]', w: 'full' },
 });
 // Static literals per direction and state: Panda drops runtime values.
 const directionStyles = {
@@ -35,11 +36,20 @@ export const marqueeHoverPause = css({
   },
 });
 
-/** Fades both ends of a marquee row. */
+/** Fades both ends of a marquee row, except under reduced motion. */
 export const marqueeEdgeFade = css({
   overflow: 'hidden',
   maskImage:
     '[linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%)]',
+  _motionReduce: { maskImage: '[none]' },
+});
+
+/**
+ * Goes on the list inside a track: under reduced motion, its items wrap so
+ * that none is clipped.
+ */
+export const marqueeWrapWhenStill = css({
+  _motionReduce: { flexWrap: 'wrap', justifyContent: 'center' },
 });
 
 type MarqueeTrackProps = {
@@ -98,6 +108,11 @@ type MarqueePauseButtonProps = {
   onToggle: () => void;
   /** Keeps the label for assistive tech only. */
   iconOnly?: boolean;
+  /**
+   * Names the marquee, when the page has more than one, so that each
+   * button has its own name.
+   */
+  labels?: { pause: string; play: string };
   className?: string;
 };
 
@@ -109,11 +124,16 @@ export function MarqueePauseButton({
   paused,
   onToggle,
   iconOnly = false,
+  labels,
   className,
 }: MarqueePauseButtonProps) {
   const { t } = useTranslation('studio');
   const Icon = paused ? Play : Pause;
-  const label = paused ? t('marquee.play') : t('marquee.pause');
+  const { pause, play } = labels ?? {
+    pause: t('marquee.pause'),
+    play: t('marquee.play'),
+  };
+  const label = paused ? play : pause;
 
   return (
     <button

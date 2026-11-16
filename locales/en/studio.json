@@ -11,6 +11,8 @@
   "marquee.pause": "Pause the animation",
   "marquee.play": "Resume the animation",
   "companies.label": "Before Ocobo, we worked at",
+  "companies.pause": "Pause the companies animation",
+  "companies.play": "Resume the companies animation",
   "squad.badge": "Revenue Squad",
   "squad.title": "How we work",
   "squad.subtitle": "Every mission gets a dedicated squad. A manager who builds with you day to day, a director who holds the course, and data, tech or AI expertise when the project calls for it.",

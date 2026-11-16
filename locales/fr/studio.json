@@ -11,6 +11,8 @@
   "marquee.pause": "Mettre en pause l'animation",
   "marquee.play": "Reprendre l'animation",
   "companies.label": "Avant Ocobo, nous étions chez",
+  "companies.pause": "Mettre en pause le défilement des entreprises",
+  "companies.play": "Reprendre le défilement des entreprises",
   "squad.badge": "Revenue Squad",
   "squad.title": "Comment nous travaillons",
   "squad.subtitle": "Pour chaque mission, une squad dédiée. Un manager qui construit avec vous au quotidien, un directeur qui tient le cap, et l'expertise data, tech ou IA quand le chantier la demande.",
