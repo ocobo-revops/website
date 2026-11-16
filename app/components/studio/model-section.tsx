@@ -1,111 +1,85 @@
-import { Target, Users, Zap } from 'lucide-react';
+import { type LucideIcon, Target, Users, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
-import { grid } from '@ocobo/styled-system/patterns';
-import { iconBox, text } from '@ocobo/styled-system/recipes';
+import { css, cx } from '@ocobo/styled-system/css';
+import { card, iconBox, section, text } from '@ocobo/styled-system/recipes';
 
-import { Container } from '../ui/Container';
+import { Container } from '~/components/ui/Container';
 
-const ICON_MAP: Record<string, React.ElementType> = {
+const ICONS: Record<string, LucideIcon> = {
   users: Users,
   zap: Zap,
   target: Target,
 };
 
-interface ModelCard {
+type ModelCard = {
   icon: string;
   title: string;
   description: string;
-  hoverColor: string;
-}
+};
 
-export const ModelSection = () => {
+/** The Studio model: three principles on a dark band (`#squad`). */
+export function ModelSection() {
   const { t } = useTranslation('studio');
-
   const cards = t('model.cards', { returnObjects: true }) as ModelCard[];
 
   return (
     <section
       id="squad"
-      className={css({
-        scrollMarginTop: '24',
-        bg: 'ocobo.dark',
-        py: '32',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden',
-      })}
+      className={cx(section({ bg: 'dark' }), css({ scrollMarginTop: '24' }))}
     >
-      {/* Dot pattern background */}
-      <div
-        className={css({
-          position: 'absolute',
-          inset: '0',
-          opacity: 0.03,
-          backgroundImage: '[radial-gradient(#ffffff 1px, transparent 1px)]',
-          backgroundSize: '40px 40px',
-        })}
-      />
-
-      <Container className={css({ position: 'relative', zIndex: 10 })}>
-        <div className={css({ maxW: '3xl', mb: '20' })}>
-          <h2 className={text({ variant: 'display-lg', color: 'white' })}>
+      <Container>
+        <div className={css({ maxW: '3xl', mb: '14' })}>
+          <h2
+            className={cx(
+              text({ variant: 'display-lg', color: 'white' }),
+              css({ mb: '5' }),
+            )}
+          >
             {t('model.title')}
           </h2>
-          <p
-            className={css({
-              color: 'gray.400',
-              fontSize: 'lg',
-              fontWeight: 'medium',
-              lineHeight: 'relaxed',
-            })}
-          >
+          <p className={text({ variant: 'body', color: 'muted-light' })}>
             {t('model.subtitle')}
           </p>
         </div>
 
-        <div className={grid({ columns: { base: 1, md: 3 }, gap: '10' })}>
-          {cards.map((card) => {
-            const IconComponent = ICON_MAP[card.icon] ?? Users;
-
+        <ul
+          className={css({
+            display: 'grid',
+            gridTemplateColumns: {
+              base: '1fr',
+              md: 'repeat(3, minmax(0, 1fr))',
+            },
+            gap: '6',
+          })}
+        >
+          {cards.map((item) => {
+            const Icon = ICONS[item.icon] ?? Users;
             return (
-              <div
-                key={card.title}
-                className={css({
-                  bg: 'white',
-                  p: '10',
-                  rounded: 'xl',
-                  shadow: 'xl',
-                  transition: 'transform',
-                  transitionDuration: 'slow',
-                  _hover: { transform: 'translateY(-4px)' },
-                })}
+              <li
+                key={item.title}
+                className={cx(card({ padding: 'lg' }), css({ gap: '4' }))}
               >
-                <div
-                  className={`${iconBox({ size: 'lg' })} ${css({ mb: '8' })}`}
-                >
-                  <IconComponent size={28} />
-                </div>
-                <h3
-                  className={`${text({ variant: 'display-md', color: 'dark' })} ${css({ mb: '4' })}`}
-                >
-                  {card.title}
-                </h3>
-                <p
-                  className={css({
-                    color: 'gray.600',
-                    lineHeight: 'relaxed',
-                    fontWeight: 'medium',
+                <span
+                  className={iconBox({
+                    size: 'xl',
+                    variant: 'solid',
+                    color: 'mint',
                   })}
                 >
-                  {card.description}
+                  <Icon size={26} aria-hidden="true" />
+                </span>
+                <h3 className={text({ variant: 'display-md-bold' })}>
+                  {item.title}
+                </h3>
+                <p className={text({ variant: 'body', color: 'muted' })}>
+                  {item.description}
                 </p>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </Container>
     </section>
   );
-};
+}

@@ -1,133 +1,90 @@
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { css } from '@ocobo/styled-system/css';
-import { flex, grid } from '@ocobo/styled-system/patterns';
-import { text } from '@ocobo/styled-system/recipes';
+import { css, cx } from '@ocobo/styled-system/css';
+import { section, text } from '@ocobo/styled-system/recipes';
 
-import type { Member } from '~/modules/content/members';
-import { type MemberTrack, MemberTrackSchema } from '~/modules/schemas';
+import { PersonCard } from '~/components/member/person-card';
+import { Container } from '~/components/ui/Container';
+import { useChallengeMenu } from '~/hooks/use-challenge-menu';
+import type { StudioMemberCard } from '~/modules/studio-team';
 
-import { Container } from '../ui/Container';
-import { TeamMemberCard } from './team-member-card';
-
-type Filter = MemberTrack | 'all';
-
-const FILTERS = [
-  'all',
-  ...MemberTrackSchema.options,
-] as const satisfies readonly Filter[];
-
-const TRACK_LABEL_FALLBACKS: Record<MemberTrack, string> = {
-  architect: 'Architect',
-  builder: 'Builder',
-  'expert-engineer': 'Expert Engineer',
+type TeamSectionProps = {
+  members: StudioMemberCard[];
 };
 
-interface TeamSectionProps {
-  members: Member[];
-  lang: 'fr' | 'en';
-}
-
-export const TeamSection = ({ members, lang }: TeamSectionProps) => {
-  const { t } = useTranslation('studio');
-  const [filter, setFilter] = useState<Filter>('all');
-  const [animate, setAnimate] = useState(false);
-
-  const filters = t('team.filters', { returnObjects: true }) as Record<
-    string,
-    string
-  >;
-
-  useEffect(() => {
-    setAnimate(false);
-    const timer = setTimeout(() => setAnimate(true), 10);
-    return () => clearTimeout(timer);
-  }, [filter]);
-
-  const filtered =
-    filter === 'all' ? members : members.filter((m) => m.track === filter);
+/**
+ * Every active Team member as a `PersonCard`, with all their tools (#244).
+ * A member without expert fields gets a card without those lines, and the
+ * bio on the back.
+ */
+export function TeamSection({ members }: TeamSectionProps) {
+  const { t } = useTranslation(['studio', 'challenges']);
+  const { challenges } = useChallengeMenu();
+  const challengeName = new Map(
+    challenges.map((challenge) => [challenge.key, challenge.name]),
+  );
 
   return (
     <section
-      id="expertises"
-      className={css({ py: '24', bg: 'white', scrollMarginTop: '24' })}
+      id="equipe"
+      className={cx(section({ bg: 'white' }), css({ scrollMarginTop: '24' }))}
     >
       <Container>
-        <div
-          className={`${flex({
-            direction: { base: 'column', md: 'row' },
-            justify: 'space-between',
-            align: 'end',
-            gap: '8',
-          })} ${css({ mb: '16' })}`}
-        >
-          <div>
-            <h2
-              className={`${text({ variant: 'display-lg', color: 'dark' })} ${css({ mb: '4' })}`}
-            >
-              {t('team.title')}
-            </h2>
-            <p className={css({ color: 'gray.500', fontWeight: 'medium' })}>
-              {t('team.subtitle')}
-            </p>
-          </div>
-
-          <div className={flex({ wrap: 'wrap', gap: '2' })}>
-            {FILTERS.map((f) => (
-              <button
-                type="button"
-                key={f}
-                onClick={() => setFilter(f)}
-                className={css({
-                  px: '6',
-                  py: '2.5',
-                  rounded: 'full',
-                  fontSize: 'xs',
-                  fontWeight: 'black',
-                  textTransform: 'uppercase',
-                  letterSpacing: 'widest',
-                  transition: 'all',
-                  borderWidth: '1px',
-                  cursor: 'pointer',
-                  bg: filter === f ? 'ocobo.dark' : 'gray.50',
-                  color: filter === f ? 'white' : 'gray.500',
-                  borderColor: filter === f ? 'ocobo.dark' : 'gray.100',
-                  shadow: filter === f ? 'lg' : 'none',
-                  _hover: filter !== f ? { borderColor: 'ocobo.dark' } : {},
-                })}
-              >
-                {f === 'all'
-                  ? (filters[f] ?? f)
-                  : (filters[f] ?? TRACK_LABEL_FALLBACKS[f])}
-              </button>
-            ))}
-          </div>
+        <div className={css({ maxW: '3xl', mb: '14' })}>
+          <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '5' }))}>
+            {t('team.title')}
+          </h2>
+          <p className={text({ variant: 'body', color: 'muted' })}>
+            {t('team.subtitle')}
+          </p>
         </div>
 
-        <div
-          className={grid({
-            columns: { base: 1, md: 2, lg: 3 },
-            gap: '8',
+        <ul
+          className={css({
+            display: 'grid',
+            // The card back needs about 250px (#223).
+            gridTemplateColumns: {
+              base: '1fr',
+              sm: 'repeat(2, minmax(0, 1fr))',
+              lg: 'repeat(3, minmax(0, 1fr))',
+              xl: 'repeat(4, minmax(0, 1fr))',
+            },
+            gap: '5',
           })}
         >
-          {filtered.map((member) => (
-            <TeamMemberCard
-              key={`${member.slug}-${filter}`}
-              name={member.name}
-              track={member.track}
-              trackLabel={
-                filters[member.track] ?? TRACK_LABEL_FALLBACKS[member.track]
-              }
-              role={member.role[lang]}
-              bio={member.bio[lang]}
-              avatar={member.avatar}
-              linkedin={member.linkedin}
-              animate={animate}
-            />
-          ))}
-        </div>
+          {members.map((member) => {
+            const name = member.challenge
+              ? challengeName.get(member.challenge)
+              : undefined;
+            return (
+              <li key={member.slug} className={css({ display: 'flex' })}>
+                <PersonCard
+                  name={member.name}
+                  role={member.role}
+                  photo={member.photo || undefined}
+                  challenge={member.challenge ?? undefined}
+                  challengeLabel={
+                    name
+                      ? t('challenges:experts.label', {
+                          name,
+                          interpolation: { escapeValue: false },
+                        })
+                      : undefined
+                  }
+                  contribution={member.contribution ?? undefined}
+                  // Without a contribution, the bio fills the back.
+                  bio={member.bio ?? undefined}
+                  showBio={!member.contribution}
+                  tools={member.tools}
+                  previousCompanies={member.previousCompanies}
+                  headingLevel="h3"
+                  className={css({ flex: '1' })}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </Container>
     </section>
   );
-};
+}

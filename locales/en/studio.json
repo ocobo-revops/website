@@ -5,40 +5,55 @@
   "hero.title.line1": "A Revenue Ops direction",
   "hero.title.highlight": "embedded.",
   "hero.subtitle": "We are not a traditional agency. We are <bold>a studio of senior experts</bold> who embed within your teams to operate from the inside.",
-  "hero.quote": "\"We join your Slacks, your rituals, and we build the system alongside you.\"",
   "hero.cta": "Talk to the Studio",
-  "hero.captionBadge": "The Ocobo Squad",
-  "hero.photoAlt": "The Ocobo team",
+  "hero.members": "The members of the Ocobo team",
+  "companies.label": "Before Ocobo, we worked at",
   "model.title": "The Ocobo Studio™ model",
   "model.subtitle": "The traditional agency is often too slow and too far from the reality on the ground. We designed a pragmatic alternative to truly scale.",
   "model.cards": [
     {
       "icon": "users",
       "title": "Embedded Squad",
-      "description": "We deploy a multidisciplinary squad that joins your daily work environment.",
-      "hoverColor": "mint"
+      "description": "We deploy a multidisciplinary squad that joins your daily work environment."
     },
     {
       "icon": "zap",
       "title": "100% Impact",
-      "description": "No lengthy theoretical reports. We deliver ready-to-use system building blocks.",
-      "hoverColor": "sky"
+      "description": "No lengthy theoretical reports. We deliver ready-to-use system building blocks."
     },
     {
       "icon": "target",
       "title": "Zero Junior",
-      "description": "On every account, only senior profiles who have already scaled leading companies.",
-      "hoverColor": "yellow"
+      "description": "On every account, only senior profiles who have already scaled leading companies."
     }
   ],
+  "expertises.title": "One expertise, real faces",
+  "expertises.subtitle": "Each expertise is carried by people who practised it before advising on it. You know who you will be working with.",
+  "expertises.experts": "Experts: {{names}}",
   "team.title": "Your Studio team",
   "team.subtitle": "Senior experts accustomed to scaling complex organisations together.",
-  "team.filters": {
-    "all": "All profiles",
-    "architect": "Architect",
-    "builder": "Builder",
-    "expert-engineer": "Expert Engineer"
-  },
+  "offices.title": "Teams close to yours",
+  "offices.subtitle": "Paris, Bordeaux, Marseille: a team within reach of your offices, working in your tools and on site when the project calls for it. And among ourselves, a yearly offsite and rituals that move us forward together.",
+  "offices.label": "Our offices",
+  "offices.heading": "Three cities, one team.",
+  "offices.list": [
+    { "city": "Paris", "note": "Headquarters" },
+    { "city": "Bordeaux", "note": "Since 2026" },
+    { "city": "Marseille", "note": "Since 2026" }
+  ],
+  "share.title": "We share what we learn",
+  "share.subtitle": "Expertise is not claimed, it is shown.",
+  "share.podcast.label": "Podcast",
+  "share.podcast.cta": "Listen",
+  "share.club.label": "Community",
+  "share.club.cta": "Join",
+  "share.blog.label": "Blog and LinkedIn",
+  "share.blog.cta": "Read",
+  "closing.work.eyebrow": "You are a company",
+  "closing.join.eyebrow": "You are a talent",
+  "closing.join.title": "Join us",
+  "closing.join.text": "You have driven revenue in a scale-up and want to do it for others? We are hiring.",
+  "closing.join.cta": "See open positions",
   "cta.title": "Want a team that truly delivers?",
   "cta.subtitle": "Let's evaluate the squad you need to reach the next level.",
   "cta.button": "Talk to the Studio"
