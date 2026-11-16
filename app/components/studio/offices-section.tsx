@@ -173,11 +173,12 @@ export function OfficesSection() {
             card({ padding: 'xl', radius: 'lg' }),
             css({
               display: 'grid',
+              // Map beside the list from tablet, as in the mockup.
               gridTemplateColumns: {
                 base: '1fr',
-                lg: 'repeat(2, minmax(0, 1fr))',
+                md: 'repeat(2, minmax(0, 1fr))',
               },
-              gap: { base: '10', lg: '16' },
+              gap: { base: '10', md: '10', lg: '16' },
               alignItems: 'center',
             }),
           )}
