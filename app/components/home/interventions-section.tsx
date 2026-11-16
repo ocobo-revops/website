@@ -47,7 +47,7 @@ export const InterventionsSection = () => {
     <section
       id="methode"
       className={cx(
-        section({ bg: 'gray', padding: 'lg' }),
+        section({ bg: 'white', padding: 'lg' }),
         css({ scrollMarginTop: '24' }),
       )}
     >
