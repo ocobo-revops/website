@@ -85,6 +85,8 @@ export const tokens = defineTokens({
     'float-cursor': { value: 'float-cursor 5s infinite ease-in-out' },
     'float-very-slow': { value: 'float-very-slow 12s ease-in-out infinite' },
     'float-gentle': { value: 'float-gentle 8s ease-in-out infinite' },
+    // One bounce: the dots collapse 0.9s after the window shows (`typing-hide`).
+    'typing-dot': { value: 'typing-dot 1s ease-in-out' },
     'float-grid': { value: 'float-grid 6s ease-in-out infinite' },
     'float-blob': { value: 'float-blob 12s infinite ease-in-out' },
     'slow-fade': { value: 'slow-fade 6s infinite ease-in-out' },

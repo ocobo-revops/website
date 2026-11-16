@@ -5,7 +5,7 @@ import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 import { ButtonLink } from '~/components/ui/button-link';
-import { Reveal } from '~/components/ui/reveal';
+import { useScrollSteps } from '~/hooks/use-scroll-steps';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
 import { AiAgentWindows } from './ai-agent-windows';
@@ -162,6 +162,25 @@ const toolLogo = css({
   objectFit: 'contain',
 });
 
+// The layers rise one by one as the block scrolls in, top layer first, then
+// the caption (the mockup `#ia8` thresholds).
+const STEP_THRESHOLDS = [0.04, 0.38, 0.7, 0.85] as const;
+
+// The transition sits on both states: scrolling back up hides the steps
+// again, as in the mockup.
+const step = css({
+  transitionProperty: '[opacity, translate]',
+  transitionDuration: '[0.6s, 0.75s]',
+  transitionTimingFunction: 'smooth',
+});
+const stepHidden = css({ opacity: '0', translate: '[0 28px]' });
+const stepShown = css({ opacity: '1', translate: '[0 0]' });
+
+function stepClass(reached: number | null, animate: boolean, index: number) {
+  if (reached === null) return undefined;
+  return cx(animate && step, index < reached ? stepShown : stepHidden);
+}
+
 type AiSectionProps = {
   /** Slug of the Revenue AI challenge page; hides the CTA when missing. */
   aiChallengeSlug: string | null;
@@ -175,6 +194,11 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
   const { t } = useTranslation('home');
   const getLocalizedPath = useLocalizedPathname();
   const layers = t('ai.layers', { returnObjects: true }) as Layer[];
+  const {
+    ref: layersRef,
+    reached,
+    animate,
+  } = useScrollSteps<HTMLDivElement>(STEP_THRESHOLDS);
 
   return (
     <section
@@ -225,7 +249,7 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
             </p>
           </div>
 
-          <div>
+          <div ref={layersRef}>
             <ol
               aria-label={t('ai.layersLabel')}
               className={css({
@@ -238,7 +262,10 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
                 const copy = layers[index];
                 if (!copy) return null;
                 return (
-                  <li key={layer.number} className={row}>
+                  <li
+                    key={layer.number}
+                    className={cx(row, stepClass(reached, animate, index))}
+                  >
                     {layer.line ? (
                       <span
                         aria-hidden="true"
@@ -248,57 +275,55 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
                     <span aria-hidden="true" className={cx(node, layer.node)}>
                       {layer.number}
                     </span>
-                    <Reveal>
-                      <div className={cx(layerCard, layer.card)}>
-                        <span
-                          className={cx(
-                            text({ variant: 'label' }),
-                            css({ alignSelf: 'flex-start' }),
-                            layer.label,
-                          )}
-                        >
-                          {copy.label}
-                        </span>
-                        <h3
-                          className={text({
-                            variant: 'display-md-bold',
-                            color: 'white',
-                          })}
-                        >
-                          {copy.title}
-                        </h3>
-                        <p
-                          className={cx(
-                            text({ variant: 'small', color: 'white' }),
-                            css({ color: 'white/60' }),
-                          )}
-                        >
-                          {copy.description}
-                        </p>
-                        <ul
-                          className={css({
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: '2',
-                            mt: '2',
-                          })}
-                        >
-                          {layer.tools.map((name) => (
-                            <li key={name} className={tool}>
-                              <img
-                                src={TOOL_LOGOS[name]}
-                                alt=""
-                                width={20}
-                                height={20}
-                                loading="lazy"
-                                className={toolLogo}
-                              />
-                              {name}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </Reveal>
+                    <div className={cx(layerCard, layer.card)}>
+                      <span
+                        className={cx(
+                          text({ variant: 'label' }),
+                          css({ alignSelf: 'flex-start' }),
+                          layer.label,
+                        )}
+                      >
+                        {copy.label}
+                      </span>
+                      <h3
+                        className={text({
+                          variant: 'display-md-bold',
+                          color: 'white',
+                        })}
+                      >
+                        {copy.title}
+                      </h3>
+                      <p
+                        className={cx(
+                          text({ variant: 'small', color: 'white' }),
+                          css({ color: 'white/60' }),
+                        )}
+                      >
+                        {copy.description}
+                      </p>
+                      <ul
+                        className={css({
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '2',
+                          mt: '2',
+                        })}
+                      >
+                        {layer.tools.map((name) => (
+                          <li key={name} className={tool}>
+                            <img
+                              src={TOOL_LOGOS[name]}
+                              alt=""
+                              width={20}
+                              height={20}
+                              loading="lazy"
+                              className={toolLogo}
+                            />
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </li>
                 );
               })}
@@ -307,6 +332,7 @@ export function AiSection({ aiChallengeSlug }: AiSectionProps) {
               className={cx(
                 text({ variant: 'small', color: 'white' }),
                 css({ color: 'white/50', mt: '3', ml: '14' }),
+                stepClass(reached, animate, LAYERS.length),
               )}
             >
               {t('ai.layersCaption')}

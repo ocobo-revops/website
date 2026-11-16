@@ -147,4 +147,43 @@ export const keyframes = defineKeyframes({
     '0%': { transform: 'scale(1)', opacity: '0.8' },
     '100%': { transform: 'scale(2.5)', opacity: '0' },
   },
+  // Mission illustration (the mockup `#mission`): on appearance the shapes pop,
+  // the windows rise, then their content grows and the wave draws itself.
+  'il-pop': {
+    from: { opacity: '0', scale: '0.3' },
+    to: { opacity: '1', scale: '1' },
+  },
+  'il-up': {
+    from: { opacity: '0', transform: 'translateY(48px)' },
+    to: { opacity: '1', transform: 'none' },
+  },
+  'il-x': {
+    from: { transform: 'scaleX(0)' },
+    to: { transform: 'scaleX(1)' },
+  },
+  'il-y': {
+    from: { transform: 'scaleY(0)' },
+    to: { transform: 'scaleY(1)' },
+  },
+  'il-pie': {
+    from: { opacity: '0', transform: 'rotate(-120deg) scale(0.5)' },
+    to: { opacity: '1', transform: 'none' },
+  },
+  'il-draw': {
+    from: { strokeDashoffset: '1' },
+    to: { strokeDashoffset: '0' },
+  },
+  'il-fade': {
+    from: { opacity: '0' },
+    to: { opacity: '1' },
+  },
+  // Agent windows of the home AI block: the typing dots bounce, then
+  // collapse once the message arrives.
+  'typing-dot': {
+    '0%, 100%': { opacity: '0.3', transform: 'none' },
+    '50%': { opacity: '1', transform: 'translateY(-2px)' },
+  },
+  'typing-hide': {
+    to: { height: '0', margin: '0', opacity: '0', overflow: 'hidden' },
+  },
 });

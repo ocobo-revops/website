@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
-import { Reveal } from '~/components/ui/reveal';
+import { useInView } from '~/hooks/use-in-view';
 
 type Account = { name: string; signal: string };
 type Pair = { name: string; value: string };
@@ -32,6 +32,52 @@ const STEP_LABELS = {
 } as const;
 
 type AgentKey = keyof typeof STEP_DOTS;
+
+// Once a window is nearly half in view, its rows fade in one after the
+// other and the score bars fill (the mockup `#pw8`). Each row carries its
+// own delay. The transition sits on the shown state only, so hiding after
+// hydration is instant.
+const contentWaiting = css({
+  '& .pw-s': { opacity: '0', translate: '[0 5px]' },
+  '& .pw-score': { transform: 'scaleX(0)' },
+  '& .pw-typing': { display: 'none' },
+});
+const contentShown = css({
+  '& .pw-s': {
+    opacity: '1',
+    translate: '[0 0]',
+    transitionProperty: '[opacity, translate]',
+    transitionDuration: 'slower',
+    transitionTimingFunction: 'smooth',
+  },
+  '& .pw-score': {
+    transform: 'scaleX(1)',
+    transformOrigin: 'left',
+    transitionProperty: '[transform]',
+    transitionDuration: '[0.9s]',
+    transitionTimingFunction: 'smooth',
+  },
+  '& .pw-typing': {
+    animation: '[typing-hide 0s linear 0.9s forwards]',
+  },
+  _motionReduce: {
+    '& .pw-s, & .pw-score': { transition: '[none]' },
+    '& .pw-typing': { display: 'none' },
+  },
+});
+
+/** Delay of the row at `index`, in the mockup rhythm. */
+const rowDelay = (index: number, offset = 0) => ({
+  transitionDelay: `${(0.2 + index * 0.3 + offset).toFixed(1)}s`,
+});
+
+const typingDot = css({
+  w: '[5px]',
+  h: '[5px]',
+  rounded: 'full',
+  bg: 'gray.300',
+  animation: 'typing-dot',
+});
 
 // The windows draw a small app UI: the mockup sets them at 11 to 12px, under
 // the six v2 sizes, so they use the `xs` and `label` font sizes.
@@ -133,11 +179,17 @@ function AgentWindow({
   children: ReactNode;
 }) {
   const { t } = useTranslation('home');
+  const { ref, inView } = useInView<HTMLDivElement>({
+    rootMargin: '0px',
+    threshold: 0.45,
+  });
   return (
-    <Reveal
+    <div
+      ref={ref}
       className={cx(
         'group',
         css({ display: 'flex', flexDirection: 'column', gap: '4' }),
+        inView ? contentShown : contentWaiting,
       )}
     >
       <div className={windowFrame}>
@@ -208,7 +260,7 @@ function AgentWindow({
           {t(`ai.agents.${agent}.caption`)}
         </p>
       </div>
-    </Reveal>
+    </div>
   );
 }
 
@@ -242,7 +294,9 @@ export function AiAgentWindows() {
           {accounts.map((account, index) => (
             <li
               key={account.name}
+              style={rowDelay(index)}
               className={cx(
+                'pw-s',
                 divided,
                 css({
                   display: 'grid',
@@ -268,15 +322,23 @@ export function AiAgentWindows() {
               >
                 <span
                   className={cx(
-                    css({
-                      display: 'block',
-                      h: 'full',
-                      rounded: 'full',
-                      bgGradient: 'ai',
-                    }),
+                    css({ display: 'block', h: 'full' }),
                     SCORES[index],
                   )}
-                />
+                >
+                  <span
+                    style={rowDelay(index, 0.2)}
+                    className={cx(
+                      'pw-score',
+                      css({
+                        display: 'block',
+                        h: 'full',
+                        rounded: 'full',
+                        bgGradient: 'ai',
+                      }),
+                    )}
+                  />
+                </span>
               </span>
               <small className={cx(meta, css({ gridColumn: '1' }))}>
                 {account.signal}
@@ -289,10 +351,12 @@ export function AiAgentWindows() {
       <AgentWindow agent="crm">
         <AgentHeader agent="crm" />
         <dl>
-          {fields.map((field) => (
+          {fields.map((field, index) => (
             <div
               key={field.name}
+              style={rowDelay(index)}
               className={cx(
+                'pw-s',
                 divided,
                 css({
                   display: 'flex',
@@ -348,8 +412,8 @@ export function AiAgentWindows() {
             color: 'gray.700',
           })}
         >
-          {points.map((point) => (
-            <li key={point.name}>
+          {points.map((point, index) => (
+            <li key={point.name} className="pw-s" style={rowDelay(index)}>
               <b className={css({ fontWeight: 'semibold', color: 'dark' })}>
                 {point.name}
               </b>{' '}
@@ -380,10 +444,30 @@ export function AiAgentWindows() {
                 {t('ai.agents.insight.meta')}
               </small>
             </p>
-            <p className={css({ mt: '1', color: 'gray.700' })}>
+            <span
+              aria-hidden="true"
+              className={cx(
+                'pw-typing',
+                css({ display: 'flex', gap: '1', mt: '1.5' }),
+              )}
+            >
+              <i className={typingDot} />
+              <i className={typingDot} style={{ animationDelay: '0.15s' }} />
+              <i className={typingDot} style={{ animationDelay: '0.3s' }} />
+            </span>
+            <p
+              className={cx('pw-s', css({ mt: '1', color: 'gray.700' }))}
+              style={rowDelay(0, 0.7)}
+            >
               {t('ai.agents.insight.message')}
             </p>
-            <div className={css({ display: 'flex', gap: '1.5', mt: '2' })}>
+            <div
+              className={cx(
+                'pw-s',
+                css({ display: 'flex', gap: '1.5', mt: '2' }),
+              )}
+              style={rowDelay(1, 0.7)}
+            >
               {actions.map((action, index) => (
                 <span
                   key={action}
