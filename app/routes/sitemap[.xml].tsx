@@ -4,7 +4,6 @@ import type { Language } from '~/localization/resources';
 import { shouldBypassCache } from '~/modules/cache';
 import { loadChallengeMenu } from '~/modules/challenge-menu.server';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
-import { isPageEnabled } from '~/modules/feature-flags';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -110,14 +109,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   // Challenge files carry no date: every file in the folder is published.
   // Same list as the navbar entry: it skips invalid files and slugs the
-  // route answers 404 to, and shares its in-memory cache. With the
-  // `challenges` page disabled, list none and call no source.
-  const challengesEnabled = isPageEnabled('challenges');
+  // route answers 404 to, and shares its in-memory cache.
   const refresh = shouldBypassCache(request);
   const challengesQuery = async (lang: Language) => {
-    if (!challengesEnabled) {
-      return [];
-    }
     const { challenges } = await loadChallengeMenu(lang, { refresh });
     return challenges.map(({ slug }) => ({ slug, lang }));
   };

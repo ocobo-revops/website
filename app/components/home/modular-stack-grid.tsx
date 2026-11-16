@@ -178,14 +178,14 @@ export const ModularStackGrid = ({
 
 export const DEFAULT_STACK_ITEMS: StackItem[] = [
   { type: 'logo', label: 'HubSpot', logo: '/images/partners/hubspot.png' },
-  { type: 'logo', label: 'Clay', logo: '/images/partners/clay.png' },
+  { type: 'logo', label: 'Claude', logo: '/images/partners/claude.png' },
   {
     type: 'logo',
     label: 'Salesforce',
     logo: '/images/partners/salesforce.png',
   },
   { type: 'logo', label: 'Notion', logo: '/images/partners/notion.png' },
-  { type: 'logo', label: 'Vasco', logo: '/images/partners/vasco.webp' },
+  { type: 'logo', label: 'Cargo', logo: '/images/partners/cargo.svg' },
   { type: 'logo', label: 'Aircall', logo: '/images/partners/aircall.png' },
   { type: 'empty' },
   { type: 'logo', label: 'Qobra', logo: '/images/partners/qobra.png' },

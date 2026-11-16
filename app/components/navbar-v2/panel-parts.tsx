@@ -21,7 +21,7 @@ const footerLayout = {
 
 /**
  * Footer line under the wide panels: a hairline, muted text and an
- * optional link or phase steps. One column in the mobile accordion.
+ * optional link. One column in the mobile accordion.
  */
 export function PanelFooter({
   compact,

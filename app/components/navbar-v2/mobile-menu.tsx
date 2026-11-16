@@ -14,7 +14,6 @@ import type { DropdownItem, NavItem } from '~/components/navbar/types';
 import { ButtonLink } from '~/components/ui/button-link';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 
-import { LanguageLinks } from './language-links';
 import { NavPanelContent } from './nav-panel-content';
 import { focusRing } from './nav-styles';
 
@@ -308,7 +307,7 @@ export function MobileMenu({
               className={css({
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 gap: '3',
                 pt: '3',
                 px: '2',
@@ -316,7 +315,6 @@ export function MobileMenu({
                 borderColor: 'line',
               })}
             >
-              <LanguageLinks />
               {cta?.path && (
                 <ButtonLink
                   to={cta.path}

@@ -64,13 +64,14 @@ AGO_BASEPATH="https://your-ago-instance.com"
 #### Feature flags (optional)
 ```bash
 # Pages to disable, comma-separated. Unset: the default list in
-# app/modules/feature-flags.ts (news, tools, challenges). Empty: all pages on.
-DISABLED_PAGES="news,tools,challenges"
+# app/modules/feature-flags.ts (news, tools, roi). Empty: all pages on,
+# except the pages not built yet (roi).
+DISABLED_PAGES="news,tools"
 ```
 
-The variable replaces the whole default list: to enable one page, list every other page that must stay disabled. For example `news,tools` turns challenges on. A slug with a typo is ignored, so the page it meant to disable goes live. On Vercel, a change to the variable applies only after a redeploy.
+The variable replaces the whole default list: to enable one page, list every other page that must stay disabled. A slug with a typo is ignored, so the page it meant to disable goes live. On Vercel, a change to the variable applies only after a redeploy.
 
-A disabled page answers 404 and is hidden from the navigation. With `challenges` disabled, every challenge URL answers 404 (the unprefixed `/challenges/<slug>` too), the sitemap lists no challenge, and the site makes no call to the content source for challenges.
+A disabled page answers 404 and is hidden from the navigation. The challenge pages carry no flag: every challenge file published on the content repository is live.
 
 ### Content Source Testing
 

@@ -31,7 +31,8 @@ export function ChallengeSymptoms({
             {symptoms.titleMuted ? (
               <>
                 {' '}
-                <span className={css({ color: 'gray' })}>
+                {/* The mockup muted grey, at display size only. */}
+                <span className={css({ color: 'gray.400' })}>
                   {symptoms.titleMuted}
                 </span>
               </>

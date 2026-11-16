@@ -12,25 +12,20 @@ import { LayoutMain } from '~/components/LayoutMain';
 import { createHybridLoader, shouldBypassCache } from '~/modules/cache';
 import { didChallengeLoadFail } from '~/modules/challenge-menu-state';
 import { loadChallengeMenu } from '~/modules/challenge-menu.server';
-import { isPageEnabled } from '~/modules/feature-flags';
 import { getLang, getLangParam } from '~/utils/lang';
 
 /**
  * Layout data shared by every page: the navbar challenge entry (#237). The
- * entry is hidden, and the page still renders, when the `challenges` page is
- * disabled (no fetch then), when the fetch fails or when it finds nothing.
+ * entry is hidden, and the page still renders, when the fetch fails or when
+ * it finds nothing.
  * The list is cached in memory per language (`challenge-menu.server.ts`);
  * `?refresh=1` fetches it again.
  */
 export const loader = createHybridLoader(
-  async ({ params, request }: LoaderFunctionArgs) => {
-    if (!isPageEnabled('challenges')) {
-      return { challenges: [], failed: false };
-    }
-    return loadChallengeMenu(getLang(params), {
+  async ({ params, request }: LoaderFunctionArgs) =>
+    loadChallengeMenu(getLang(params), {
       refresh: shouldBypassCache(request),
-    });
-  },
+    }),
 );
 
 /**

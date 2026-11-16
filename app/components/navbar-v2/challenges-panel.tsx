@@ -111,7 +111,8 @@ function ChallengeRow({
       <span
         className={cx(
           'nav-row-text',
-          text({ variant: 'body' }),
+          // The mockup row title is 15px: the nearest v2 size is Small.
+          text({ variant: 'small' }),
           css({
             display: 'flex',
             alignItems: 'center',

@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { axe, fireEvent, render, screen, userEvent } from '~/test/utils';
+import {
+  axe,
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from '~/test/utils';
 
 import { FlipCard } from './flip-card';
 
@@ -125,16 +132,50 @@ describe('FlipCard', () => {
     const heading = screen.getByRole('heading', { name: 'HubSpot' });
 
     await user.hover(heading);
-    expect(flipButton()).toHaveAttribute('aria-expanded', 'true');
+    await waitFor(() =>
+      expect(flipButton()).toHaveAttribute('aria-expanded', 'true'),
+    );
     await user.click(heading);
     expect(flipButton()).toHaveAttribute('aria-expanded', 'true');
     await user.unhover(heading);
+    await waitFor(() =>
+      expect(flipButton()).toHaveAttribute('aria-expanded', 'false'),
+    );
+  });
+
+  it('does not flip when a mouse only grazes the card', async () => {
+    const user = userEvent.setup();
+    renderCard();
+    const heading = screen.getByRole('heading', { name: 'HubSpot' });
+
+    await user.hover(heading);
+    await user.unhover(heading);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(flipButton()).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('ignores a mouse over the turning face outside the card box', async () => {
+    renderCard();
+    const root = flipButton().parentElement;
+    if (!root) throw new Error('root missing');
+    // jsdom lays the card out as an empty box at the origin.
+    fireEvent.pointerEnter(root, {
+      pointerType: 'mouse',
+      clientX: 40,
+      clientY: 40,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 200));
     expect(flipButton()).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('shows the front again when a hovering mouse clicks the button', async () => {
     const user = userEvent.setup();
     renderCard();
+    await user.hover(flipButton());
+    await waitFor(() =>
+      expect(flipButton()).toHaveAttribute('aria-expanded', 'true'),
+    );
     await user.click(flipButton());
     expect(flipButton()).toHaveAttribute('aria-expanded', 'false');
   });

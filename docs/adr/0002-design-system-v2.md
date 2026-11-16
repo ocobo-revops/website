@@ -33,6 +33,8 @@ The v2 scale has five sizes: Display (Bermia 900, 64 to 72px), H2 (Bermia 900, 3
 
 J1 also picks one existing name per v2 size as the name to keep, plus `label` for eyebrows and tags. That makes six kept names: `display-xl` (Display), `display-lg` (H2), `display-md-bold` (H3), `body` (Body), `small` (Small) and `label`. Each was the name with the most call sites for its size. No existing variant was close to Small (every body-size name sat at 16px or more), so `small` is a new variant with no call sites yet. Redesigned pages use only those six names, and J6 deletes the other names and migrates their remaining call sites, mostly on the offer page, the blog and stories. We rejected keeping the aliases for good, which leaves a porting agent five names for one style. The full mapping is in "J1 mapping" below.
 
+Amendment (#242): the home mockup sets its card titles in Bermia 900 at 24 to 28px, a size no kept name covered. A seventh kept name, `display-md-black`, gives the H3 size in Bermia. It replaces per-call `fontSize` overrides on `display-lg`.
+
 The legacy `textStyles` (`heading1` to `heading3`, `large`, `medium`, `small`, `nav`, about twenty call sites) follow the same rule; `heading2` (18 to 32px, weight 400) takes the v2 H2 values.
 
 The `label` variant keeps its .3em letter spacing, which is also the mockup pill's. The mockup eyebrow and tag use .16em. J1 keeps .3em so existing labels do not change, and adds the `tag` letter spacing (.16em) for the redesign. `Eyebrow` (#221) uses the `tag` letter spacing, as the mockup does, on top of the `label` variant. Its colour is `gray` (#71717A, 4.8:1 on white), not the mockup's #A1A1AA, which reaches only 2.6:1 and fails AA at 11px. The `xs` badge takes 10px horizontal padding (`2.5`) and the `label` spacing, the nearest token to the mockup's .25em. The `secondary` button takes a white background and a `gray.300` border; the `link` button keeps its vertical padding so its target stays above 24px.
@@ -97,6 +99,7 @@ The tables below record the value each existing name takes in J1. The kept names
 | **`display-xl`**, `display-2xl` | Display | Bermia 900, `fontSizes.display` (44 to 72px), line height 1 |
 | **`display-lg`**, `display-lg-bold`, `display-section`, `display-sm`, `display-heading` | H2 | Bermia 900, `fontSizes.h2` (34 to 48px), line height 1.05 |
 | **`display-md-bold`**, `display-md`, `display-card` | H3 | Bornia 700, `fontSizes.h3` (24px) |
+| **`display-md-black`** | H3 (Bermia) | Bermia 900, `fontSizes.h3` (24px), `lineHeight.tight`. Added in #242 for the home card titles |
 | **`body`**, `subtitle` | Body | Bornia 400, `fontSizes.body` (17px), line height 1.6 |
 | **`small`** (new) | Small | Bornia 500, `fontSizes.sm` (14px) |
 | **`label`**, `display-label` | Label | 700, `fontSizes.label` (11px), `letterSpacings.label` (.3em), uppercase |

@@ -51,20 +51,30 @@ const watermarkColor = {
 const above = css({ position: 'relative' });
 // Keeps the first line of a face clear of the flip button in the corner.
 const clearOfButton = css({ pr: '12' });
+// The quote leads the front, the challenge name follows it, as in the
+// mockup (prototype PR 31). The DOM keeps the heading first for screen
+// readers: `order` only swaps them on screen.
 const quote = cx(
-  text({ variant: 'body' }),
+  text({ variant: 'display-md-black' }),
+  css({ position: 'relative', order: '2', mt: '7' }),
+);
+const cardTitle = cx(
+  text({ variant: 'small', color: 'muted' }),
+  // `body` face: the global heading style would set Bermia on the `h3`.
   css({
     position: 'relative',
-    flex: '1',
+    order: '3',
     mt: '4',
-    fontStyle: 'italic',
-    color: 'gray.700',
+    fontFamily: 'body',
+    fontWeight: 'bold',
   }),
 );
+const pushedDown = css({ flex: '1', order: '4' });
 const frontFooter = cx(
   text({ variant: 'body' }),
   css({
     position: 'relative',
+    order: '5',
     mt: '6',
     pt: '4',
     borderTopWidth: '1px',
@@ -197,12 +207,16 @@ function ChallengeFlipCard({ challenge }: { challenge: HomeChallengeCard }) {
             {t('challengeCards.number', { number })}
           </span>
           <h3
-            className={cx(
-              text({ variant: 'display-md-bold' }),
-              above,
-              clearOfButton,
-              css({ mt: '7' }),
-            )}
+            className={
+              challenge.quote
+                ? cardTitle
+                : cx(
+                    text({ variant: 'display-md-bold' }),
+                    above,
+                    clearOfButton,
+                    css({ mt: '7' }),
+                  )
+            }
           >
             {title}
           </h3>
@@ -213,9 +227,8 @@ function ChallengeFlipCard({ challenge }: { challenge: HomeChallengeCard }) {
                 interpolation: { escapeValue: false },
               })}
             </p>
-          ) : (
-            <span className={css({ flex: '1' })} />
-          )}
+          ) : null}
+          <span className={pushedDown} />
           {/* A hint, not a link: the link sits on the back. */}
           <span aria-hidden="true" className={frontFooter}>
             {t('challengeCards.link')}

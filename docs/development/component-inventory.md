@@ -63,17 +63,17 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 ### Homepage Components (`app/components/home/`)
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
-| **HeroSection** | `hero-section.tsx` | Homepage hero section | Homepage-specific |
+| **HomeHero** | `home-hero.tsx` | v2 hero: promise, two calls to action, animated teams visual | Homepage-specific |
 | **SocialProofSection** | `social-proof-section.tsx` | Client marquee + testimonial | Homepage-specific |
-| **PainPointSection** | `pain-point-section.tsx` | RevOps pain point + mission | Homepage-specific |
-| **TransformationSection** | `transformation-section.tsx` | System vs tools + method summary | Homepage-specific |
+| **MissionSection** | `mission-section.tsx` | Mission statement + dashboard illustration | Homepage-specific |
+| **ChallengesSection** | `challenges-section.tsx` | Bowtie + challenge flip cards (`#enjeux`) | Homepage-specific |
+| **HomeChallengeCards** | `home-challenge-cards.tsx` | Challenge flip cards, one per published challenge | Homepage-specific |
 | **InterventionsSection** | `interventions-section.tsx` | Interventions cards | Homepage-specific |
 | **ComparatifSection** | `comparatif-section.tsx` | Ocobo vs others comparison | Homepage-specific |
 | **StackSection** | `stack-section.tsx` | Partner stack grid | Homepage-specific |
-| **CtaSection** | `cta-section.tsx` | Bottom CTA | Reusable with props |
+| **CtaSection** | `cta-section.tsx` | Bottom CTA, optional anchor `id` | Reusable with props |
 | **ClientMarquee** | `client-marquee.tsx` | Animated client list | Homepage-specific |
 | **TestimonialCard** | `testimonial-card.tsx` | Testimonial block | Homepage-specific |
-| **FeatureCard** | `feature-card.tsx` | Icon + label cards | Reusable |
 | **HeroSplit** | `hero-split.tsx` | Hero layout split | Reusable |
 | **FlexPair** | `flex-pair.tsx` | Icon + content rows | Reusable |
 | **ModularStackGrid** | `modular-stack-grid.tsx` | Tech stack grid | Reusable |
@@ -218,8 +218,8 @@ One `*-section.tsx` module per `/design-system` section, each wrapped in `Showca
 |-----------|------|---------|--------|
 | **LayoutMain** | `LayoutMain.tsx` | Main application layout | All public pages |
 | **LayoutPost** | `LayoutPost.tsx` | Blog/story layout | Content pages |
-| **Header** | `Header.tsx` | Global site header | All pages |
-| **Footer** | `Footer.tsx` | Global site footer | All pages |
+| **NavbarV2** | `navbar-v2/navbar.tsx` | v2 navbar, rendered by `LayoutMain` | All public pages |
+| **FooterV2** | `footer-v2/footer-v2.tsx` | v2 footer, rendered by `LayoutMain` | All public pages |
 
 ### Navigation Components
 | Component | File | Purpose | Usage |

@@ -155,7 +155,10 @@ export function ChallengeHero({
           <p className={text({ variant: 'label', color: 'muted' })}>
             {t('hero.bowtieLabel')}
           </p>
+          {/* A new bow tie per challenge, so the draw-in replays when the
+              visitor moves from one challenge page to another. */}
           <UnifiedBowtie
+            key={challenge}
             activeStages={hero.activeStages}
             challenge={challenge}
           />

@@ -77,7 +77,7 @@ export const SocialProofSection = ({
           >
             {t('socialProof.label')}
           </span>
-          <h3
+          <h2
             className={cx(
               text({ variant: 'display-lg', color: 'white' }),
               css({
@@ -87,7 +87,7 @@ export const SocialProofSection = ({
             )}
           >
             {t('socialProof.title')}
-          </h3>
+          </h2>
         </div>
 
         {clients.length > 0 && (

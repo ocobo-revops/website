@@ -12,7 +12,6 @@ export type PageSlug =
   | 'podcasts'
   | 'news'
   | 'tools'
-  | 'challenges'
   | 'roi';
 
 const VALID_SLUGS: Set<string> = new Set<PageSlug>([
@@ -22,22 +21,14 @@ const VALID_SLUGS: Set<string> = new Set<PageSlug>([
   'podcasts',
   'news',
   'tools',
-  'challenges',
   'roi',
 ]);
 
 /**
- * P2+ pages disabled by default until launched. `challenges` waits for a
- * website go-live decision: publishing a file on posts must not put the
- * pages and the navbar menu live on its own. `roi` waits for the ROI page
+ * P2+ pages disabled by default until launched. `roi` waits for the ROI page
  * (#248) and Ocobo's sign-off on its assumptions copy.
  */
-export const DISABLED_PAGES_DEFAULT: PageSlug[] = [
-  'news',
-  'tools',
-  'challenges',
-  'roi',
-];
+export const DISABLED_PAGES_DEFAULT: PageSlug[] = ['news', 'tools', 'roi'];
 
 /**
  * Pages not built yet: disabled whatever DISABLED_PAGES says, since that env

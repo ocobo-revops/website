@@ -7,6 +7,7 @@ import { button, section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
 
+import { CHALLENGES_ID } from './challenges-section';
 import { SETTLED_FRAME, heroFrame } from './home-hero-frame';
 import { HomeHeroVisual } from './home-hero-visual';
 import { useHeroTimeline } from './use-hero-timeline';
@@ -131,6 +132,8 @@ const HeroCopy = memo(function HeroCopy({
 type HomeHeroProps = {
   /** `h2` where the page already has its `h1`, as on the design system. */
   titleAs?: 'h1' | 'h2';
+  /** Hides the call to action to `#enjeux` when the home has no cards. */
+  hasChallenges?: boolean;
 };
 
 /**
@@ -141,24 +144,36 @@ type HomeHeroProps = {
  * axis, so a visible button pauses it (WCAG 2.2.2). The server render and
  * reduced motion show the settled picture, without the button.
  */
-export function HomeHero({ titleAs = 'h1' }: HomeHeroProps) {
+export function HomeHero({
+  titleAs = 'h1',
+  hasChallenges = true,
+}: HomeHeroProps) {
   const { t } = useTranslation('home');
   const { ref, time, paused, togglePaused } = useHeroTimeline();
   const frame = time === null ? SETTLED_FRAME : heroFrame(time);
   const PauseIcon = paused ? Play : Pause;
 
   return (
-    <header
+    <section
       ref={ref}
       className={cx(section({ bg: 'white', padding: 'lg' }), glow)}
     >
       <Container className={css({ textAlign: 'center' })}>
         <HeroCopy titleAs={titleAs} {...frame.accents} />
         <div className={actions}>
-          <a href="#enjeux" className={button({ variant: 'secondary' })}>
-            {t('heroV2.cta.challenges')}
-          </a>
-          <a href="#diagnostic" className={button({ variant: 'primary' })}>
+          {hasChallenges ? (
+            <a
+              href={`#${CHALLENGES_ID}`}
+              className={button({ variant: 'secondary' })}
+            >
+              {t('heroV2.cta.challenges')}
+            </a>
+          ) : null}
+          <a
+            href="#diagnostic"
+            className={button({ variant: 'primary' })}
+            data-testid="hero-cta"
+          >
             {t('heroV2.cta.diagnostic')}
             <ArrowRight className={iconSize} aria-hidden="true" />
           </a>
@@ -177,6 +192,6 @@ export function HomeHero({ titleAs = 'h1' }: HomeHeroProps) {
           </button>
         </div>
       </Container>
-    </header>
+    </section>
   );
 }

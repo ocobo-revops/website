@@ -37,6 +37,66 @@ const panelWidth: Record<PanelWidth, string> = {
   '4xl': css({ w: '4xl', p: '2.5' }),
 };
 
+// React 18 has no typed `inert` prop; an empty string renders the attribute.
+// React 19 reads `inert=""` as false: switch to `inert` on upgrade.
+const INERT = { inert: '' } as React.HTMLAttributes<HTMLDivElement>;
+
+// Opening motion of the prototype: the panel slides in from the left as it
+// fades, then its links follow one after the other. Closing only fades.
+const panelStyles = css({
+  position: 'absolute',
+  top: '[100%]',
+  left: '[50%]',
+  mt: '7',
+  maxW: '[calc(100vw - 32px)]',
+  bg: 'white',
+  borderWidth: '1px',
+  borderColor: 'line',
+  rounded: '3xl',
+  shadow: 'window',
+  zIndex: 10,
+  opacity: 0,
+  transform: 'translateX(calc(-50% - 24px))',
+  transitionProperty: '[opacity, transform, visibility]',
+  // 450ms in the prototype, snapped to the scale.
+  transitionDuration: 'slowest',
+  transitionTimingFunction: 'smooth',
+  '&[data-state=open]': { opacity: 1, transform: 'translateX(-50%)' },
+  // The links arrive one after the other. An animation, not a transition:
+  // it leaves the links' own hover transitions untouched. `backwards` holds
+  // the start frame during the delay only, so hover transforms still apply.
+  _motionSafe: {
+    '&[data-state=open] a': {
+      animationName: 'nav-link-in',
+      animationDuration: 'slow',
+      animationTimingFunction: 'smooth',
+      animationFillMode: 'backwards',
+    },
+    '&[data-state=open] li:nth-child(1) a': { animationDelay: 'fastest' },
+    '&[data-state=open] li:nth-child(2) a': { animationDelay: 'faster' },
+    '&[data-state=open] li:nth-child(3) a': { animationDelay: 'fast' },
+    '&[data-state=open] li:nth-child(4) a': { animationDelay: 'normal' },
+    '&[data-state=open] li:nth-child(n+5) a': { animationDelay: 'slow' },
+    // Links outside a list (scope and ROI cards) arrive with the third row.
+    '&[data-state=open] a:not(li a)': { animationDelay: 'fast' },
+  },
+  _motionReduce: {
+    transform: 'translateX(-50%)',
+    transitionProperty: '[opacity, visibility]',
+    transitionDuration: 'normal',
+  },
+  // Invisible bridge over the top margin, so the pointer stays inside the
+  // group on its way from the button to the panel.
+  _before: {
+    content: '""',
+    position: 'absolute',
+    left: '0',
+    right: '0',
+    bottom: '[100%]',
+    h: '7',
+  },
+});
+
 /**
  * Desktop dropdown, built on the disclosure navigation pattern: a button
  * with `aria-expanded` that shows a panel of plain links. Escape closes it
@@ -190,35 +250,12 @@ export function NavDisclosure({
       </button>
       <div
         id={panelId}
-        hidden={!isOpen}
-        className={cx(
-          css({
-            position: 'absolute',
-            top: '[100%]',
-            left: '[50%]',
-            transform: 'translateX(-50%)',
-            mt: '7',
-            maxW: '[calc(100vw - 32px)]',
-            bg: 'white',
-            borderWidth: '1px',
-            borderColor: 'line',
-            rounded: '3xl',
-            shadow: 'window',
-            zIndex: 10,
-            '&[hidden]': { display: 'none' },
-            // Invisible bridge over the top margin, so the pointer stays
-            // inside the group on its way from the button to the panel.
-            _before: {
-              content: '""',
-              position: 'absolute',
-              left: '0',
-              right: '0',
-              bottom: '[100%]',
-              h: '7',
-            },
-          }),
-          panelWidth[width],
-        )}
+        data-state={isOpen ? 'open' : 'closed'}
+        // Visibility, not `hidden`, so the panel can fade out. `inert` takes
+        // a closing panel out of reach at once: no pointer, focus or reader.
+        style={{ visibility: isOpen ? 'visible' : 'hidden' }}
+        {...(isOpen ? {} : INERT)}
+        className={cx(panelStyles, panelWidth[width])}
       >
         {children}
       </div>

@@ -343,15 +343,6 @@ describe('homepage loader: challenge cards (#241)', () => {
     ]);
   });
 
-  it('returns no challenge, and fetches none, while the challenge pages are disabled', async () => {
-    isPageEnabledMock.mockImplementation((slug) => slug !== 'challenges');
-
-    const data = await loadHome();
-
-    expect(fetchValidChallengesMock).not.toHaveBeenCalled();
-    expect(data.challenges).toEqual([]);
-  });
-
   it('still renders the home, with no challenge, when the list fails', async () => {
     fetchValidChallengesMock.mockResolvedValueOnce([
       500,

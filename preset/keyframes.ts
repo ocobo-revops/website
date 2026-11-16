@@ -15,6 +15,11 @@ export const keyframes = defineKeyframes({
         'translate3d(var(--shadow-panda-exit-translate-x, 0), var(--shadow-panda-exit-translate-y, 0), 0) scale3d(var(--shadow-panda-exit-scale, 1), var(--shadow-panda-exit-scale, 1), var(--shadow-panda-exit-scale, 1)) rotate(var(--shadow-panda-exit-rotate, 0))',
     },
   },
+  // Entrance of a navbar panel link: it slides 10px in from the left.
+  'nav-link-in': {
+    from: { opacity: 0, transform: 'translateX(-10px)' },
+    to: { opacity: 1, transform: 'none' },
+  },
   'accordion-down': {
     from: { height: 0 },
     to: { height: 'var(--height)' }, // Ark UI provides --height CSS variable
@@ -87,6 +92,16 @@ export const keyframes = defineKeyframes({
   pulse: {
     '0%, 100%': { opacity: '1' },
     '50%': { opacity: '0.5' },
+  },
+  // Bow tie (#242): each active column uncovers its flow lines from the left,
+  // and the knot ring expands and fades, as in the prototype challenge pages.
+  'bowtie-draw': {
+    from: { clipPath: 'inset(0 100% 0 0)' },
+    to: { clipPath: 'inset(0 0 0 0)' },
+  },
+  'bowtie-ring': {
+    '0%': { transform: 'scale(0.92)', opacity: '1' },
+    '100%': { transform: 'scale(1.7)', opacity: '0' },
   },
   'radar-sweep': {
     from: { transform: 'rotate(0deg)' },

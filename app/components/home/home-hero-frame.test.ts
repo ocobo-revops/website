@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  AI_X,
   AXIS_END,
   AXIS_START,
   AXIS_Y,
   CURVE_END,
   DOT_COUNT,
+  GAIN_X,
   SETTLED_FRAME,
   SETTLE_TIME,
   TEAM_X,
@@ -18,6 +20,7 @@ describe('curveY', () => {
     expect(curveY(TEAM_X[0])).toBe(175);
     expect(curveY(AXIS_END)).toBeCloseTo(40);
     expect(curveY(TEAM_X[3])).toBeLessThan(curveY(TEAM_X[2]));
+    expect(curveY(AI_X)).toBeLessThan(curveY(TEAM_X[3]));
   });
 
   it('ends where the Ocobo mark sits', () => {
@@ -51,6 +54,25 @@ describe('heroFrame', () => {
       expect(team.y).toBeCloseTo(AXIS_Y);
       expect(team.opacity).toBe(1);
     }
+  });
+
+  it('brings the AI agents from the top right onto the axis', () => {
+    const start = heroFrame(1).ai;
+    expect(start.opacity).toBe(0);
+    expect(start.x).toBeGreaterThan(AI_X);
+    expect(start.y).toBeLessThan(AXIS_Y);
+
+    const aligned = heroFrame(4).ai;
+    expect(aligned).toMatchObject({ x: AI_X, opacity: 1, ringOpacity: 0 });
+    expect(aligned.y).toBeCloseTo(AXIS_Y);
+  });
+
+  it('gives a guide, a node and a gain to every team and the agents', () => {
+    const frame = SETTLED_FRAME;
+    expect(GAIN_X).toHaveLength(5);
+    expect(frame.guides).toHaveLength(5);
+    expect(frame.nodes).toHaveLength(5);
+    expect(frame.gains.every((gain) => gain.opacity === 1)).toBe(true);
   });
 
   it('settles with the curve drawn and the mark in place', () => {

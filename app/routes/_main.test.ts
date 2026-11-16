@@ -50,29 +50,8 @@ async function challengesFor(contentRoot: string, lang?: string) {
 }
 
 describe('_main loader', () => {
-  beforeEach(() => {
-    // Challenges are disabled by default: enable every page.
-    vi.stubEnv('DISABLED_PAGES', '');
-  });
-
   afterEach(() => {
     vi.unstubAllEnvs();
-  });
-
-  it('returns no challenge and reads no content when the flag is disabled', async () => {
-    vi.stubEnv('DISABLED_PAGES', undefined);
-    const fetchValidChallenges = vi.fn();
-    vi.doMock('~/modules/content/api', () => ({ fetchValidChallenges }));
-
-    try {
-      expect(await loadFor(FIXTURES)).toEqual({
-        challenges: [],
-        failed: false,
-      });
-      expect(fetchValidChallenges).not.toHaveBeenCalled();
-    } finally {
-      vi.doUnmock('~/modules/content/api');
-    }
   });
 
   it('lists the French challenges in order', async () => {

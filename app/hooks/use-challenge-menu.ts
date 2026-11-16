@@ -9,8 +9,7 @@ import type { loader as mainLoader } from '~/routes/_main';
 
 /**
  * The published challenges of the page language, as the `_main` layout
- * loads and caches them for the navbar (#237). Empty when the load failed
- * or the `challenges` page is disabled.
+ * loads and caches them for the navbar (#237). Empty when the load failed.
  */
 export function useChallengeMenu(): {
   challenges: ChallengeMenuEntry[];

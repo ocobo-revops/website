@@ -106,6 +106,9 @@ export const tokens = defineTokens({
     'spin-slow': { value: 'spin-slow 20s linear infinite' },
     'radar-sweep': { value: 'radar-sweep 10s linear infinite' },
     pulse: { value: 'pulse 2s cubic-bezier(0.4,0,0.6,1) infinite' },
+    // Two rings stop before 5 seconds: no pause control needed (WCAG 2.2.2).
+    'bowtie-draw': { value: 'bowtie-draw 0.32s linear both' },
+    'bowtie-ring': { value: 'bowtie-ring 2.4s ease-out 2' },
     'marquee-ultra-slow': {
       value: 'marquee-ultra-slow 90s linear infinite',
     },

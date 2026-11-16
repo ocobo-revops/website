@@ -10,10 +10,7 @@ type NavbarV2Props = {
   leadingItems?: NavItem[];
 };
 
-/**
- * v2 navbar, fixed to the top of the viewport. Built but not switched on:
- * `LayoutMain` still renders the v1 navbar until #242.
- */
+/** v2 navbar, fixed to the top of the viewport, rendered by `LayoutMain`. */
 export function NavbarV2({ leadingItems }: NavbarV2Props) {
   const scrolled = useScrolled();
 

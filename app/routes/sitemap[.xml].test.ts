@@ -8,8 +8,7 @@
  *  4. Draft/closed jobs are excluded; only published ones appear.
  *  5. Loader degrades gracefully when any content fetcher fails.
  *  6. All fetchers fire in parallel (no sequential awaiting).
- *  7. Challenge routes are listed in both languages, and none while the
- *     `challenges` flag is disabled.
+ *  7. Challenge routes are listed in both languages.
  *
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
@@ -114,8 +113,6 @@ function jobEntry(
 }
 
 beforeEach(() => {
-  // Challenges are disabled by default: enable every page.
-  vi.stubEnv('DISABLED_PAGES', '');
   loadChallengeMenuMock.mockResolvedValue({ challenges: [], failed: false });
 });
 
@@ -328,26 +325,6 @@ describe('sitemap loader', () => {
     expect(loadChallengeMenuMock).toHaveBeenCalledWith('fr', {
       refresh: true,
     });
-  });
-
-  it('lists no challenge and skips the fetch when the flag is disabled', async () => {
-    vi.stubEnv('DISABLED_PAGES', undefined);
-    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
-    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
-    fetchJobsMock.mockResolvedValue([200, 'success', []]);
-    loadChallengeMenuMock.mockResolvedValue({
-      challenges: [{ slug: 'revenue-performance' }],
-      failed: false,
-    });
-
-    const { loader } = await import('./sitemap[.xml]');
-    const outcome = await invokeLoader(loader);
-
-    if (outcome.type !== 'response') throw new Error('expected response');
-    const body = await outcome.response.text();
-
-    expect(loadChallengeMenuMock).not.toHaveBeenCalled();
-    expect(body).not.toContain('/challenges/');
   });
 
   it('degrades gracefully when the challenge list is empty', async () => {

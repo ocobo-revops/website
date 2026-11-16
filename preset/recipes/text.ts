@@ -6,7 +6,8 @@ export const text = defineRecipe({
   base: {},
   variants: {
     // v2 type scale (ADR 0002): six sizes. Kept names are display-xl,
-    // display-lg, display-md-bold, body, small and label; every other name
+    // display-lg, display-md-black, display-md-bold, body, small and label
+    // (display-md-black is the Bermia H3, added in #242); every other name
     // takes the value of its size and is retired page by page.
     variant: {
       // Display
@@ -60,7 +61,14 @@ export const text = defineRecipe({
         lineHeight: 'heading',
         letterSpacing: 'tight',
       },
-      // H3
+      // H3: Bermia card titles (mockup 24 to 28px), then the Bornia H3.
+      'display-md-black': {
+        fontFamily: 'display',
+        fontSize: 'h3',
+        fontWeight: 'black',
+        lineHeight: 'tight',
+        letterSpacing: 'normal',
+      },
       'display-md-bold': {
         fontFamily: 'body',
         fontSize: 'h3',

@@ -116,8 +116,8 @@ function pickFooterLinks(items: NavItem[]): FooterLink[] {
 }
 
 /**
- * v2 footer: wordmark and one row of links, then a legal row. Built but not
- * switched on: `LayoutMain` still renders the v1 footer until #242.
+ * v2 footer: wordmark and one row of links, then a legal row. Rendered by
+ * `LayoutMain` on every page.
  */
 export function FooterV2({ layout = 'auto' }: FooterV2Props) {
   const { t } = useTranslation('common');
@@ -151,7 +151,7 @@ export function FooterV2({ layout = 'auto' }: FooterV2Props) {
           <nav aria-label={t('footer.navigation')}>
             <ul
               className={cx(
-                text({ variant: 'body' }),
+                text({ variant: 'body', color: 'white' }),
                 css({
                   display: 'flex',
                   flexWrap: 'wrap',

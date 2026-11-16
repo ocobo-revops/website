@@ -41,14 +41,16 @@ export const flipCard = defineSlotRecipe({
     },
     trigger: {
       position: 'absolute',
-      top: '4',
-      right: '4',
+      // The mockup hint: 28px, 14px from the corner (above the 24px target
+      // minimum of WCAG 2.5.8).
+      top: '3.5',
+      right: '3.5',
       zIndex: '1',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      w: '10',
-      h: '10',
+      w: '7',
+      h: '7',
       borderRadius: 'full',
       bg: 'gray.100',
       color: 'gray.600',
@@ -64,7 +66,7 @@ export const flipCard = defineSlotRecipe({
         // Light halo keeps the dark ring visible on dark or coloured backs.
         boxShadow: 'ring',
       },
-      '& > svg': { w: '4', h: '4' },
+      '& > svg': { w: '3.5', h: '3.5' },
     },
     inner: {
       position: 'relative',

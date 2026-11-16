@@ -23,7 +23,11 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
     <section className={section({ bg: 'white', padding: 'lg' })}>
       <Container className={css({ textAlign: 'center' })}>
         <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '6' }))}>
-          {t('stack.title')}
+          {t('stack.title.line1')}
+          <br />
+          <span className={css({ color: 'gray.400' })}>
+            {t('stack.title.line2')}
+          </span>
         </h2>
         <p
           className={css({
@@ -35,6 +39,16 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
             fontWeight: 'medium',
           })}
         >
+          <strong
+            className={css({
+              display: 'block',
+              mb: '3',
+              color: 'dark',
+              fontWeight: 'bold',
+            })}
+          >
+            {t('stack.tagline')}
+          </strong>
           {t('stack.description')}
         </p>
 
@@ -42,10 +56,10 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
           <ModularStackGrid items={DEFAULT_STACK_ITEMS} showLabels />
         </div>
 
-        <div
-          className={`${flex({ direction: 'column', align: 'center' })} ${css({ mt: '8' })}`}
-        >
-          {showTechnology ? (
+        {showTechnology ? (
+          <div
+            className={`${flex({ direction: 'column', align: 'center' })} ${css({ mt: '8' })}`}
+          >
             <ButtonLink
               to={getLocalizedPath(url.technology)}
               variant="outline"
@@ -53,20 +67,8 @@ export const StackSection = ({ showTechnology = true }: StackSectionProps) => {
             >
               {t('stack.cta')}
             </ButtonLink>
-          ) : null}
-          <p
-            className={css({
-              mt: '6',
-              color: 'gray.400',
-              fontSize: 'base',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: 'tag',
-            })}
-          >
-            {t('stack.tagline')}
-          </p>
-        </div>
+          </div>
+        ) : null}
       </Container>
     </section>
   );

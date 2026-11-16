@@ -9,15 +9,19 @@ test.describe('homepage golden path', () => {
   test('hero heading is visible', async ({ page }) => {
     await page.goto('/');
     await expect(
-      page.getByRole('heading', { name: /architecture/i }).first(),
+      page.getByRole('heading', { level: 1, name: /système/i }),
     ).toBeVisible();
   });
 
-  test('primary CTA is visible and links to contact', async ({ page }) => {
+  test('primary CTA leads to the diagnostic block', async ({ page }) => {
     await page.goto('/');
     const cta = page.getByTestId('hero-cta');
     await expect(cta).toBeVisible();
-    await expect(cta).toHaveAttribute('href', /\/contact/);
+    await expect(cta).toHaveAttribute('href', '#diagnostic');
+    await expect(page.getByTestId('diagnostic-cta')).toHaveAttribute(
+      'href',
+      /\/contact/,
+    );
   });
 });
 
@@ -61,7 +65,7 @@ test.describe('english locale smoke test', () => {
   test('/en/ hero heading is visible', async ({ page }) => {
     await page.goto('/en/');
     await expect(
-      page.getByRole('heading', { name: /architecture/i }).first(),
+      page.getByRole('heading', { level: 1, name: /system/i }),
     ).toBeVisible();
   });
 });
