@@ -1,10 +1,11 @@
 import { Trans, useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { button, card, section, text } from '@ocobo/styled-system/recipes';
+import { card, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
+import { ContactCta } from '~/components/ui/contact-cta';
 import type { HomeChallengeCard } from '~/modules/home-challenges';
 
 import { HomeChallengeCards } from './home-challenge-cards';
@@ -89,12 +90,7 @@ export function ChallengesSection({ challenges }: ChallengesSectionProps) {
               {t('challenges.start.text')}
             </p>
           </div>
-          <a
-            href={`#${DIAGNOSTIC_ID}`}
-            className={button({ variant: 'primary', size: 'md' })}
-          >
-            {t('challenges.start.cta')}
-          </a>
+          <ContactCta size="md">{t('challenges.start.cta')}</ContactCta>
         </div>
       </Container>
     </section>

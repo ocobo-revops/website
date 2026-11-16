@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,11 +6,9 @@ import { button, section, text } from '@ocobo/styled-system/recipes';
 
 import { UnifiedBowtie } from '~/components/method/unified-bowtie';
 import { Container } from '~/components/ui/Container';
-import { ButtonLink } from '~/components/ui/button-link';
-import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
+import { ContactCta } from '~/components/ui/contact-cta';
 import type { ChallengeHero as ChallengeHeroData } from '~/modules/challenge-page';
 import type { ChallengeKey } from '~/modules/challenge-schema';
-import { url } from '~/utils/url';
 
 import { challengeHeadlineAccent } from './challenge-palette';
 import { challengePill } from './challenge-pill';
@@ -42,7 +39,6 @@ export function ChallengeHero({
 }: ChallengeHeroProps) {
   const { t } = useTranslation('challenges');
   const titleId = useId();
-  const getLocalizedPath = useLocalizedPathname();
   const showCta = hero.cta !== null;
 
   return (
@@ -121,16 +117,7 @@ export function ChallengeHero({
                 justifyContent: 'center',
               })}
             >
-              {showCta ? (
-                <ButtonLink
-                  to={getLocalizedPath(url.contact)}
-                  variant="primary"
-                  size="lg"
-                >
-                  {hero.cta}
-                  <ArrowRight size={18} aria-hidden="true" />
-                </ButtonLink>
-              ) : null}
+              {showCta ? <ContactCta size="lg">{hero.cta}</ContactCta> : null}
               {hasWorkstreams ? (
                 <a
                   href={`#${WORKSTREAMS_ID}`}

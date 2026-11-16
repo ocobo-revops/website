@@ -13,11 +13,11 @@ test.describe('homepage golden path', () => {
     ).toBeVisible();
   });
 
-  test('primary CTA leads to the diagnostic block', async ({ page }) => {
+  test('primary CTA leads to the contact page', async ({ page }) => {
     await page.goto('/');
     const cta = page.getByTestId('hero-cta');
     await expect(cta).toBeVisible();
-    await expect(cta).toHaveAttribute('href', '#diagnostic');
+    await expect(cta).toHaveAttribute('href', /\/contact$/);
     await expect(page.getByTestId('diagnostic-cta')).toHaveAttribute(
       'href',
       /\/contact/,

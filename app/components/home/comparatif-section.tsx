@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { button, section, text } from '@ocobo/styled-system/recipes';
+import { section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
+import { ContactCta } from '~/components/ui/contact-cta';
 
-import { DIAGNOSTIC_ID } from './challenges-section';
 import { ComparatifGap } from './comparatif-gap';
 
 /**
@@ -44,12 +44,9 @@ export function ComparatifSection() {
         <ComparatifGap />
 
         <div className={css({ mt: '2', textAlign: 'center' })}>
-          <a
-            href={`#${DIAGNOSTIC_ID}`}
-            className={button({ variant: 'yellow', size: 'lg' })}
-          >
+          <ContactCta variant="yellow" size="lg">
             {t('comparatif.cta')}
-          </a>
+          </ContactCta>
         </div>
       </Container>
     </section>
