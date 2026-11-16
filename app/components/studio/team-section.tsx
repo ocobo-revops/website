@@ -30,7 +30,14 @@ export function TeamSection({ members }: TeamSectionProps) {
       className={cx(section({ bg: 'white' }), css({ scrollMarginTop: '24' }))}
     >
       <Container>
-        <div className={css({ maxW: '3xl', mb: '14' })}>
+        <div
+          className={css({
+            maxW: '3xl',
+            mx: 'auto',
+            mb: '16',
+            textAlign: 'center',
+          })}
+        >
           <h2 className={cx(text({ variant: 'display-lg' }), css({ mb: '5' }))}>
             {t('team.title')}
           </h2>
