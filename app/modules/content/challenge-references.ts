@@ -115,14 +115,17 @@ function logBrokenReference(slug: string, message: string): void {
 }
 
 /**
- * Logs a broken Tool slug. An empty registry means the Tool files failed to
- * load (`loadToolRegistry` already logged why): every tool then drops
- * without one log per slug, which would blame the challenge file.
+ * Logs a broken Tool slug through `log`. An empty registry means the Tool
+ * files failed to load (`loadToolRegistry` already logged why): every tool
+ * then drops without one log per slug, which would blame the content file.
  */
-function toolReporter(slug: string, tools: ToolRegistry) {
+export function toolReporter(
+  tools: ToolRegistry,
+  log: (message: string) => void,
+) {
   const registryLoaded = Object.keys(tools).length > 0;
   return (message: string) => {
-    if (registryLoaded) logBrokenReference(slug, message);
+    if (registryLoaded) log(message);
   };
 }
 
@@ -225,39 +228,57 @@ function resolvePartner(
   return { tool, sentence, metrics, source };
 }
 
+/**
+ * The expert fields of one Team member, as a card shows them: tools resolved
+ * to Tools (a broken slug drops only that tool), and the contribution and
+ * previous companies cleaned of mockup placeholders. A member without expert
+ * fields comes out with no tools, no contribution and no companies. Challenge
+ * pages and the studio page (#244) share it.
+ */
+export function resolveExpertFields(
+  member: Member,
+  tools: ToolRegistry,
+  reportTool: (message: string) => void,
+  reportDrop: ReportDrop,
+): ChallengeExpert {
+  const field = (name: string) => `team/${member.slug} ${name}`;
+  const contribution = (lang: 'fr' | 'en') =>
+    writtenOrNull(member.contribution?.[lang], () =>
+      reportDrop(field(`contribution.${lang}`)),
+    );
+  return {
+    ...member,
+    tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
+      reportTool(`team/${member.slug} tools "${toolSlug}" is not a Tool`),
+    ),
+    contribution: { fr: contribution('fr'), en: contribution('en') },
+    previousCompanies: (member.previousCompanies ?? []).filter(
+      (company, index) => {
+        if (!hasPlaceholder(company)) return true;
+        reportDrop(field(`previousCompanies[${index}]`));
+        return false;
+      },
+    ),
+  };
+}
+
 function resolveExperts(
   { challenge, tools, members }: ChallengeReferenceSources,
   reportTool: (message: string) => void,
   reportDrop: ReportDrop,
 ): ChallengeExpert[] {
-  return getChallengeExperts(members, challenge.key).map((member) => {
-    const field = (name: string) => `team/${member.slug} ${name}`;
-    const contribution = (lang: 'fr' | 'en') =>
-      writtenOrNull(member.contribution?.[lang], () =>
-        reportDrop(field(`contribution.${lang}`)),
-      );
-    return {
-      ...member,
-      tools: resolveTools(member.tools ?? [], tools, (toolSlug) =>
-        reportTool(`team/${member.slug} tools "${toolSlug}" is not a Tool`),
-      ),
-      contribution: { fr: contribution('fr'), en: contribution('en') },
-      previousCompanies: (member.previousCompanies ?? []).filter(
-        (company, index) => {
-          if (!hasPlaceholder(company)) return true;
-          reportDrop(field(`previousCompanies[${index}]`));
-          return false;
-        },
-      ),
-    };
-  });
+  return getChallengeExperts(members, challenge.key).map((member) =>
+    resolveExpertFields(member, tools, reportTool, reportDrop),
+  );
 }
 
 export function resolveChallengeReferences(
   sources: ChallengeReferenceSources,
 ): ChallengeReferences {
   const { slug, challenge, tools } = sources;
-  const reportTool = toolReporter(slug, tools);
+  const reportTool = toolReporter(tools, (message) =>
+    logBrokenReference(slug, message),
+  );
   const reportDrop = dropReporter('ChallengeReferences', slug);
   return {
     clientCase: resolveClientCase(sources, reportDrop),
