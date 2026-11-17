@@ -73,17 +73,33 @@ const gallery = css({
     base: 'repeat(2, minmax(0, 1fr))',
     md: 'repeat(4, minmax(0, 1fr))',
   },
-  gridAutoRows: { base: '[10rem]', md: '[14rem]' },
+  // 220px rows from tablet, as in the mockup.
+  gridAutoRows: { base: '[10rem]', md: '[13.75rem]' },
   gap: '4',
   mt: '6',
 });
-const widePhoto = css({ gridColumn: 'span 2', gridRow: 'span 2' });
-const photoStyle = css({
-  w: 'full',
-  h: 'full',
-  objectFit: 'cover',
+// The photo zooms in on hover, as in the mockup (0.6s ease, snapped to the
+// `slowest` duration and the default curve). No zoom with reduced motion.
+const tile = css({
+  overflow: 'hidden',
   borderRadius: '2xl',
+  _motionSafe: { '&:hover .office-photo': { transform: 'scale(1.05)' } },
 });
+const widePhoto = css({ gridColumn: 'span 2', gridRow: 'span 2' });
+const photoStyle = cx(
+  'office-photo',
+  css({
+    display: 'block',
+    w: 'full',
+    h: 'full',
+    objectFit: 'cover',
+    _motionSafe: {
+      transitionProperty: 'common',
+      transitionDuration: 'slowest',
+      transitionTimingFunction: 'default',
+    },
+  }),
+);
 
 function FranceMap({ offices }: { offices: Office[] }) {
   return (
@@ -227,7 +243,10 @@ export function OfficesSection() {
 
         <ul className={gallery}>
           {photos.map((photo, index) => (
-            <li key={photo.src} className={index === 0 ? widePhoto : undefined}>
+            <li
+              key={photo.src}
+              className={index === 0 ? cx(tile, widePhoto) : tile}
+            >
               <img
                 src={photo.src}
                 alt={t(photo.altKey)}
