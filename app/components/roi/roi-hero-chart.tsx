@@ -16,7 +16,8 @@ const easeBack = 'cubic-bezier(0.2, 0.8, 0.2, 1.4)';
 
 const root = css({
   position: 'relative',
-  maxW: '6xl',
+  // 1024px of chart, as in the mockup.
+  maxW: '5xl',
   mx: 'auto',
   mt: '14',
   '& svg': { display: 'block', overflow: 'visible', w: 'full', h: 'auto' },

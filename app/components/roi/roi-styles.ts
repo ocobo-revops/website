@@ -30,6 +30,17 @@ export const dotBackdrop = cx(
   }),
 );
 
+// Under the hero, densest behind the chart.
+export const dotBackdropHero = cx(
+  dotBase,
+  css({
+    _before: {
+      maskImage:
+        '[radial-gradient(ellipse 55% 50% at 50% 72%, black 15%, transparent 85%)]',
+    },
+  }),
+);
+
 export const dotBackdropTop = cx(
   dotBase,
   css({
