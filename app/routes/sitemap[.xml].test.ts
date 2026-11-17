@@ -9,6 +9,7 @@
  *  5. Loader degrades gracefully when any content fetcher fails.
  *  6. All fetchers fire in parallel (no sequential awaiting).
  *  7. Challenge routes are listed in both languages.
+ *  8. The ROI page is listed in both languages only while its flag is on.
  *
  * Uses the `invokeLoader` harness (`app/test/loader-harness.ts`).
  */
@@ -378,5 +379,44 @@ describe('sitemap loader', () => {
     resolvePosts([200, 'success', []]);
     resolveJobs([200, 'success', []]);
     await loaderPromise;
+  });
+
+  describe('ROI page', () => {
+    async function sitemapBody() {
+      fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+      fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+      fetchJobsMock.mockResolvedValue([200, 'success', []]);
+      const { loader } = await import('./sitemap[.xml]');
+      const outcome = await invokeLoader(loader);
+      if (outcome.type !== 'response') throw new Error('expected response');
+      return outcome.response.text();
+    }
+
+    it('omits the ROI page while its flag is off', async () => {
+      vi.stubEnv('DISABLED_PAGES', 'news,tools,roi');
+
+      const body = await sitemapBody();
+
+      expect(body).not.toContain('/roi</loc>');
+    });
+
+    it('omits the ROI page in production until its copy is signed off', async () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', 'production');
+      vi.stubEnv('DISABLED_PAGES', 'news,tools');
+
+      const body = await sitemapBody();
+
+      expect(body).not.toContain('/roi</loc>');
+    });
+
+    it('lists the ROI page in both languages once its flag is on', async () => {
+      vi.stubEnv('DISABLED_PAGES', 'news,tools');
+
+      const body = await sitemapBody();
+
+      expect(body).toContain('<loc>https://www.ocobo.co/fr/roi</loc>');
+      expect(body).toContain('<loc>https://www.ocobo.co/en/roi</loc>');
+    });
   });
 });

@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 import { cleanup } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import type { NavItem } from '~/components/navbar-v2/types';
@@ -250,9 +250,12 @@ describe('useMenuItems', () => {
       } else {
         process.env.DISABLED_PAGES = originalEnv;
       }
+      vi.unstubAllEnvs();
     });
 
-    it('hides the ROI calculator until its page exists (#248)', () => {
+    it('hides the ROI calculator in production until its copy is signed off (#248)', () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', 'production');
       process.env.DISABLED_PAGES = 'news,tools';
       const resources = find(
         renderMenu({ disabledPages: getDisabledPages() }),
