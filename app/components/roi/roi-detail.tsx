@@ -6,6 +6,7 @@ import { card } from '@ocobo/styled-system/recipes';
 import type { RoiResult } from '~/utils/roi';
 
 import { ROI_DETAIL_ID } from './roi-ids';
+import { stepHint, stepTitle } from './roi-step';
 import { type RoiFormat, useRoiFormat } from './use-roi-format';
 
 /**
@@ -201,10 +202,8 @@ export function RoiDetail({ result }: RoiDetailProps) {
       )}
     >
       <div className={css({ px: '4' })}>
-        <h3 className={css({ fontSize: 'body', fontWeight: 'bold' })}>
-          {t('detail.title')}
-        </h3>
-        <p className={css({ fontSize: 'caption', color: 'gray' })}>
+        <h3 className={stepTitle}>{t('detail.title')}</h3>
+        <p className={cx(stepHint, css({ color: 'gray' }))}>
           {t('detail.hint')}
         </p>
       </div>
