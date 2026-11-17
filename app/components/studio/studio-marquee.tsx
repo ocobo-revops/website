@@ -13,9 +13,20 @@ const TRACK_CLASS = 'studio-marquee-track';
 const track = css({
   display: 'flex',
   w: 'max',
-  animation: 'marquee-ultra-slow',
   // No motion: the one visible copy fits the width and wraps.
   _motionReduce: { animation: '[none]', w: 'full' },
+});
+// One move per track. The GPU slides the default one.
+const slidingTrack = css({ animation: 'marquee-ultra-slow' });
+// The repainted one, for a track under a rotated parent. `left` takes its
+// percentage from the parent, so a wrapper as wide as the track sits between.
+const paintedTrack = css({
+  position: 'relative',
+  animation: 'marquee-ultra-slow-painted',
+});
+const paintedFrame = css({
+  w: 'max',
+  _motionReduce: { w: 'full' },
 });
 // Static literals per direction and state: Panda drops runtime values.
 const directionStyles = {
@@ -56,6 +67,12 @@ type MarqueeTrackProps = {
   direction: 'left' | 'right';
   paused: boolean;
   /**
+   * Repaints the row at each frame instead of sliding it on the GPU. Use it
+   * under a rotated parent: the GPU would draw the row flat, then rotate and
+   * shift it between pixels, which blurs text and photos.
+   */
+  painted?: boolean;
+  /**
    * Renders one copy of the content. The copies after the first are hidden
    * from assistive tech and under reduced motion: they take `className`.
    */
@@ -69,13 +86,15 @@ type MarqueeTrackProps = {
 export function MarqueeTrack({
   direction,
   paused,
+  painted = false,
   renderCopy,
 }: MarqueeTrackProps) {
-  return (
+  const row = (
     <div
       className={cx(
         TRACK_CLASS,
         track,
+        painted ? paintedTrack : slidingTrack,
         directionStyles[direction],
         paused && pausedStyle,
       )}
@@ -89,6 +108,8 @@ export function MarqueeTrack({
       ))}
     </div>
   );
+
+  return painted ? <div className={paintedFrame}>{row}</div> : row;
 }
 
 const pauseStyles = cx(

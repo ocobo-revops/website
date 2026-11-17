@@ -111,6 +111,9 @@ export const tokens = defineTokens({
     'marquee-ultra-slow': {
       value: 'marquee-ultra-slow 90s linear infinite',
     },
+    'marquee-ultra-slow-painted': {
+      value: 'marquee-ultra-slow-painted 90s linear infinite',
+    },
     'blueprint-in': {
       value: 'blueprint-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
     },

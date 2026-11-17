@@ -188,6 +188,8 @@ export function HeroSection({ members }: HeroSectionProps) {
                     <MarqueeTrack
                       direction={row.direction}
                       paused={paused}
+                      // The rows are tilted: a GPU layer would blur them.
+                      painted
                       renderCopy={({ hidden, className }) => (
                         <MemberCards
                           members={row.members}
