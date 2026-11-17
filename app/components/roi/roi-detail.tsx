@@ -150,6 +150,8 @@ const revopsCell = cx(
     whiteSpace: 'nowrap',
   }),
 );
+// `text()` sets the dark colour, invisible on the dark final row.
+const finalRevopsCell = css({ color: 'white' });
 const pill = css({
   display: 'inline-block',
   minW: '16',
@@ -270,7 +272,13 @@ export function RoiDetail({ result }: RoiDetailProps) {
                   </span>
                 )}
               </span>
-              <span role="cell" className={revopsCell}>
+              <span
+                role="cell"
+                className={cx(
+                  revopsCell,
+                  row.kind === 'final' && finalRevopsCell,
+                )}
+              >
                 {row.withRevops}
               </span>
             </div>

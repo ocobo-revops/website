@@ -17,13 +17,20 @@ import { useRoiFormat } from './use-roi-format';
  */
 
 const compareLabel = cx(text({ variant: 'label' }), css({ color: 'white/55' }));
-const compareValue = cx(
-  text({ variant: 'display-md-black' }),
-  css({
-    fontSize: { base: 'xl', md: 'h3' },
-    fontVariantNumeric: 'tabular-nums',
-    whiteSpace: 'nowrap',
-  }),
+// `text()` defaults to the dark colour, invisible on this dark card: each
+// figure names its colour (white today, yellow with RevOps, as in the mockup).
+const compareFigure = css({
+  fontSize: { base: 'xl', md: 'h3' },
+  fontVariantNumeric: 'tabular-nums',
+  whiteSpace: 'nowrap',
+});
+const todayValue = cx(
+  text({ variant: 'display-md-black', color: 'white' }),
+  compareFigure,
+);
+const revopsValue = cx(
+  text({ variant: 'display-md-black', color: 'yellow' }),
+  compareFigure,
 );
 
 type RoiResultCardProps = {
@@ -83,9 +90,7 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
               className={css({ display: 'flex', flexDir: 'column', gap: '1' })}
             >
               <span className={compareLabel}>{t('calculator.today')}</span>
-              <span className={compareValue}>
-                {f.euro(today.contractValue)}
-              </span>
+              <span className={todayValue}>{f.euro(today.contractValue)}</span>
             </div>
             <ArrowRight
               size={18}
@@ -102,7 +107,7 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
               })}
             >
               <span className={compareLabel}>{t('calculator.withRevops')}</span>
-              <span className={cx(compareValue, css({ color: 'yellow' }))}>
+              <span className={revopsValue}>
                 {f.euro(withRevops.contractValue)}
               </span>
             </div>
