@@ -128,7 +128,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | Component | File | Purpose | Reusability |
 |-----------|------|---------|-------------|
 | **HeroSection** | `hero-section.tsx` | Studio hero with a marquee of member tiles | Studio-specific |
-| **CompaniesStrip** | `companies-strip.tsx` | The team's previous companies, from the member files | Studio-specific |
+| **CompaniesStrip** | `companies-strip.tsx` | Scrolling logos of the team's former employers, a fixed list with files in `public/images/companies/` | Studio-specific |
 | **SquadSection** | `squad-section.tsx` | How we work (`#squad`): the three squad roles with their tags, then the 2-week sprint timeline | Studio-specific |
 | **ExpertisesSection** | `expertises-section.tsx` | One card per published challenge with its experts' faces (`#expertises`) | Studio-specific |
 | **TeamSection** | `team-section.tsx` | Every active member as a `PersonCard`, all tools (`#equipe`) | Studio-specific |

@@ -32,14 +32,13 @@ export const loader = createHybridLoader(async (args: LoaderFunctionArgs) => {
     loadMemberRegistry(),
     loadToolRegistry(),
   ]);
-  const { members, previousCompanies } = buildStudioTeam(registry, tools, lang);
+  const { members } = buildStudioTeam(registry, tools, lang);
 
   return {
     title: t('meta.title'),
     description: t('meta.description'),
     ogImageSrc: getImageOgFullPath('studio', args.request.url),
     members,
-    previousCompanies,
     jobsEnabled: isPageEnabled('jobs'),
     lang,
   };
@@ -58,13 +57,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
 };
 
 export default function StudioPage() {
-  const { members, previousCompanies, jobsEnabled } =
-    useLoaderData<typeof loader>();
+  const { members, jobsEnabled } = useLoaderData<typeof loader>();
 
   return (
     <div>
       <HeroSection members={members} />
-      <CompaniesStrip companies={previousCompanies} />
+      <CompaniesStrip />
       <SquadSection />
       <ExpertisesSection members={members} />
       <TeamSection members={members} />
