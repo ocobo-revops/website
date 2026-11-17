@@ -6,7 +6,6 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { button, card, section, text } from '@ocobo/styled-system/recipes';
 
 import { Container } from '~/components/ui/Container';
-import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
 const cardGap = css({ gap: '3.5' });
@@ -38,7 +37,6 @@ const srOnly = css({ srOnly: true });
 /** Podcast, club and blog: what the team shares (`#partage`). */
 export function ShareSection() {
   const { t } = useTranslation(['studio', 'common']);
-  const getLocalizedPath = useLocalizedPathname();
 
   const items = [
     {
@@ -61,7 +59,8 @@ export function ShareSection() {
       key: 'blog',
       title: t('common:navigation.resources.blog'),
       description: t('common:navigation.resources.blog.description'),
-      href: getLocalizedPath(url.blog),
+      // The blog has no English route.
+      href: url.blog,
       external: false,
       dark: false,
     },
