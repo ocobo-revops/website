@@ -33,23 +33,9 @@ export type StudioMemberCard = ExpertCard & {
 
 export type StudioTeam = {
   members: StudioMemberCard[];
-  /** Every member's previous companies, once each, in member order. */
-  previousCompanies: string[];
 };
 
 const SCOPE = 'StudioTeam';
-
-function uniqueCompanies(cards: readonly StudioMemberCard[]): string[] {
-  const seen = new Set<string>();
-  return cards
-    .flatMap((card) => card.previousCompanies)
-    .filter((company) => {
-      const key = company.trim().toLowerCase();
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-}
 
 export function buildStudioTeam(
   registry: MemberRegistry,
@@ -70,5 +56,5 @@ export function buildStudioTeam(
       ),
     };
   });
-  return { members, previousCompanies: uniqueCompanies(members) };
+  return { members };
 }

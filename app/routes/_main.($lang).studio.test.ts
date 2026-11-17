@@ -5,8 +5,7 @@
  *  1. Every active member gets a card, with or without expert fields.
  *  2. Expert fields resolve in the page language: tool names through the Tool
  *     registry, all tools kept, placeholders dropped.
- *  3. Previous companies are collected once each, in member order.
- *  4. The i18n, member and tool loads fire in parallel.
+ *  3. The i18n, member and tool loads fire in parallel.
  */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -155,8 +154,6 @@ describe('studio loader', () => {
     // A placeholder contribution drops; the card stays.
     expect(carol.contribution).toBeNull();
     expect(carol.tools).toEqual(['HubSpot']);
-
-    expect(data.previousCompanies).toEqual(['Qonto', 'Alan', 'Payfit']);
   });
 
   it('resolves the cards in English on /en', async () => {
