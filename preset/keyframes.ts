@@ -99,6 +99,14 @@ export const keyframes = defineKeyframes({
     '0%': { transform: 'translateX(0)' },
     '100%': { transform: 'translateX(-33.33%)' },
   },
+  // Same move through `left`, which the browser repaints each frame instead
+  // of sliding a GPU layer. Under a rotated parent, a GPU layer is drawn flat
+  // then resampled, which blurs its text and photos (studio hero).
+  'marquee-ultra-slow-painted': {
+    '0%': { left: '0' },
+    // An exact third: a rounded one jumps a fraction of a pixel each loop.
+    '100%': { left: 'calc(-100% / 3)' },
+  },
   'blueprint-in': {
     from: { opacity: '0', transform: 'scaleX(0)' },
     to: { opacity: '1', transform: 'scaleX(1)' },
