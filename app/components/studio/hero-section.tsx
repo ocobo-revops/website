@@ -40,6 +40,16 @@ const tiltedRows = css({
   // Still rows sit flat and inside the screen.
   _motionReduce: { w: 'full', ml: '0', transform: 'none' },
 });
+// The rows stop at the content width and fade out on both sides (mockup
+// `equipe`). Still rows need no fade.
+const rowsFrame = css({
+  mt: '10',
+  py: '7',
+  overflow: 'hidden',
+  maskImage:
+    '[linear-gradient(90deg, transparent 0, black 12%, black 88%, transparent 100%)]',
+  _motionReduce: { maskImage: '[none]' },
+});
 const rowList = css({ display: 'flex', gap: '5', pr: '5' });
 const staticList = css({
   display: 'flex',
@@ -166,32 +176,35 @@ export function HeroSection({ members }: HeroSectionProps) {
 
       {members.length >= MARQUEE_MIN_MEMBERS && (
         <>
-          <div
-            role="group"
-            aria-label={t('hero.members')}
-            className={cx(
-              css({ mt: '10', py: '7', overflow: 'hidden' }),
-              marqueeHoverPause,
-            )}
-          >
-            <div className={tiltedRows}>
-              {rows.map((row) => (
-                <div key={row.key} className={marqueeEdgeFade}>
-                  <MarqueeTrack
-                    direction={row.direction}
-                    paused={paused}
-                    renderCopy={({ hidden, className }) => (
-                      <MemberCards
-                        members={row.members}
-                        hidden={hidden}
-                        className={cx(rowList, marqueeWrapWhenStill, className)}
-                      />
-                    )}
-                  />
-                </div>
-              ))}
+          <Container>
+            <div
+              role="group"
+              aria-label={t('hero.members')}
+              className={cx(rowsFrame, marqueeHoverPause)}
+            >
+              <div className={tiltedRows}>
+                {rows.map((row) => (
+                  <div key={row.key} className={marqueeEdgeFade}>
+                    <MarqueeTrack
+                      direction={row.direction}
+                      paused={paused}
+                      renderCopy={({ hidden, className }) => (
+                        <MemberCards
+                          members={row.members}
+                          hidden={hidden}
+                          className={cx(
+                            rowList,
+                            marqueeWrapWhenStill,
+                            className,
+                          )}
+                        />
+                      )}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </Container>
           <Container
             className={css({ display: 'flex', justifyContent: 'flex-end' })}
           >
