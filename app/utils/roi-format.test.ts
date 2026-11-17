@@ -41,6 +41,17 @@ describe('formatRoiEuro', () => {
   it('keeps the sign of a negative amount', () => {
     expect(formatRoiEuro(-1_250, 'en')).toBe('-€1.3k');
   });
+
+  it('moves to the next unit when rounding reaches a thousand', () => {
+    expect(formatRoiEuro(999.6, 'fr')).toBe(`1${NBSP}k€`);
+    expect(formatRoiEuro(999_600, 'fr')).toBe(`1,00${NBSP}M€`);
+  });
+
+  it('takes the decimals of the rounded figure', () => {
+    expect(formatRoiEuro(9_999_000, 'fr')).toBe(`10,0${NBSP}M€`);
+    expect(formatRoiEuro(99_960_000, 'en')).toBe('€100M');
+    expect(formatRoiEuro(99_960, 'en')).toBe('€100k');
+  });
 });
 
 describe('formatRoiDecimal', () => {
@@ -63,7 +74,7 @@ describe('formatRoiCount', () => {
 
   it('groups thousands', () => {
     expect(formatRoiCount(1_234, 'en')).toBe('1,234');
-    expect(formatRoiCount(1_234, 'fr')).toMatch(/^1\s234$/u);
+    expect(formatRoiCount(1_234, 'fr')).toBe(`1${NBSP}234`);
   });
 });
 

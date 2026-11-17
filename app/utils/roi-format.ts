@@ -25,17 +25,40 @@ export const formatRoiDecimal = (value: number, lang: Language): string => {
   return toLocaleDecimal(rounded.toFixed(digits), lang);
 };
 
+type EuroUnit = { size: number; suffix: string; maxDigits: number };
+
+const EURO_UNITS: ReadonlyArray<EuroUnit> = [
+  { size: 1e6, suffix: 'M', maxDigits: 2 },
+  { size: 1e3, suffix: 'k', maxDigits: 1 },
+  { size: 1, suffix: '', maxDigits: 0 },
+];
+
+// Fewer decimals as the figure grows: "3,44", "10,3", "123".
+const digitsFor = (scaled: number, maxDigits: number): number =>
+  scaled >= 100 ? 0 : scaled >= 10 ? Math.min(1, maxDigits) : maxDigits;
+
+// Decimals come from the rounded figure, so 9,999 M€ reads "10,0", not
+// "10,00".
+const figureIn = (amount: number, unit: EuroUnit): string => {
+  const scaled = amount / unit.size;
+  const figure = scaled.toFixed(digitsFor(scaled, unit.maxDigits));
+  const digits = digitsFor(Number(figure), unit.maxDigits);
+  return Number(figure).toFixed(digits);
+};
+
 const scaleEuro = (amount: number): { figure: string; suffix: string } => {
-  if (amount >= 1e6) {
-    const digits = amount >= 1e8 ? 0 : amount >= 1e7 ? 1 : 2;
-    return { figure: (amount / 1e6).toFixed(digits), suffix: 'M' };
-  }
-  if (amount >= 1e3) {
-    const digits = amount >= 1e5 ? 0 : 1;
-    const figure = (amount / 1e3).toFixed(digits).replace(/\.0$/, '');
-    return { figure, suffix: 'k' };
-  }
-  return { figure: String(Math.round(amount)), suffix: '' };
+  const start = amount >= 1e6 ? 0 : amount >= 1e3 ? 1 : 2;
+  // Rounding can reach a thousand ("1000 k€"): show the next unit instead.
+  const index =
+    start > 0 && Number(figureIn(amount, EURO_UNITS[start])) >= 1000
+      ? start - 1
+      : start;
+  const unit = EURO_UNITS[index];
+  const figure = figureIn(amount, unit);
+  return {
+    figure: unit.suffix === 'k' ? figure.replace(/\.0$/, '') : figure,
+    suffix: unit.suffix,
+  };
 };
 
 /** A euro amount, shortened to k€ or M€: "26,3 k€", "€9.00M". */
@@ -48,11 +71,17 @@ export const formatRoiEuro = (value: number, lang: Language): string => {
     : `${sign}€${localised}${suffix}`;
 };
 
-/** A whole number with thousands grouped: "1 234", "1,234". */
+/**
+ * A whole number with thousands grouped: "1 234", "1,234". French Intl
+ * groups with a narrow space; the other helpers use NBSP, so this one does
+ * too.
+ */
 export const formatRoiCount = (value: number, lang: Language): string =>
   new Intl.NumberFormat(INTL_LOCALE[lang], {
     maximumFractionDigits: 0,
-  }).format(value);
+  })
+    .format(value)
+    .replace(/\s/gu, NBSP);
 
 const percentSuffix = (lang: Language): string =>
   lang === 'fr' ? `${NBSP}%` : '%';
