@@ -29,7 +29,7 @@ These come from the preset and show up everywhere. Check them once on Home, then
 | Decorative blurs: 32px and 48px both become 40px (`2xl`) (#217) | |
 | Transitions that used `ease` or `ease-in-out` take the Panda default curve, cubic-bezier(0.4, 0, 0.2, 1); durations unchanged. Includes every `button` hover and its arrow (#217) | |
 | Transitions written for one or two properties now use the `colors` or `common` preset, which animates a wider property set (team member card, team photo corners, contact inputs and button, design system tokens block) (#217) | |
-| Under reduced motion (`prefers-reduced-motion: reduce`), every animation jumps to its end frame and every transition is instant: nothing loops or floats, entrance content shows at once. The v2 navbar panel fade under reduced motion becomes instant too. With reduced motion off, nothing changes (#316) | |
+| Under reduced motion (`prefers-reduced-motion: reduce`), animations last 0ms and transitions are instant: nothing loops or floats, entrance content shows at once, loops rest on their element's own style. Transition delays stay. The navbar panel keeps its fade through `data-motion-own`. About us: the illustration cursor rests on its first frame. With reduced motion off, nothing changes (#316) | |
 
 ## Routes
 
