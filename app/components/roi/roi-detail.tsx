@@ -114,8 +114,10 @@ const rowGrid = css({
   columnGap: '4',
   rowGap: '1',
   px: '4',
-  py: '3.5',
 });
+// `cx` does not merge classes: the header and the rows each set their own
+// vertical padding, never both on one element.
+const rowPad = css({ py: '3.5' });
 const rowKinds: Record<RowKind, string> = {
   input: css({
     borderTopWidth: '1px',
@@ -176,8 +178,11 @@ const headCell = css({
   fontSize: 'xs',
   fontWeight: 'bold',
   textTransform: 'uppercase',
-  letterSpacing: 'label',
-  color: 'gray.400',
+  // The label tracking does not fit the narrow phone columns.
+  letterSpacing: { base: 'chip', md: 'label' },
+  lineHeight: 'tight',
+  // gray.400 is 2.6:1 on white, below WCAG AA for small text.
+  color: 'gray',
 });
 
 type RoiDetailProps = {
@@ -217,28 +222,52 @@ export function RoiDetail({ result }: RoiDetailProps) {
           aria-label={t('detail.title')}
           className={css({ minW: { base: '0', md: '[680px]' } })}
         >
-          <div
-            role="row"
-            className={cx(
-              rowGrid,
-              css({ display: { base: 'none', md: 'grid' }, py: '2' }),
-            )}
-          >
+          <div role="row" className={cx(rowGrid, css({ py: '2' }))}>
             {/* The operator column is hidden in every row, so here too. */}
             <span role="columnheader" aria-hidden="true" />
-            <span role="columnheader" />
-            <span role="columnheader" className={headCell}>
-              {t('detail.head.today')}
-            </span>
+            {/* On a phone the labels sit on their own line: this empty
+                header leaves the grid there, so the figure headers line up
+                with the figures, and stays a header for screen readers. */}
             <span
               role="columnheader"
-              className={cx(headCell, css({ textAlign: 'center' }))}
+              className={css({
+                position: { base: 'absolute', md: 'static' },
+              })}
+            />
+            <span
+              role="columnheader"
+              className={cx(
+                headCell,
+                css({ gridColumn: { base: '2 / 4', md: 'auto' } }),
+              )}
+            >
+              {t('detail.head.today')}
+            </span>
+            {/* Too wide for a phone, where the pills speak for themselves:
+                hidden there but still read as the column header. */}
+            <span
+              role="columnheader"
+              className={cx(
+                headCell,
+                css({
+                  textAlign: 'center',
+                  position: { base: 'absolute', md: 'static' },
+                  opacity: { base: 0, md: 1 },
+                }),
+              )}
             >
               {t('detail.head.lever')}
             </span>
             <span
               role="columnheader"
-              className={cx(headCell, css({ textAlign: 'right' }))}
+              className={cx(
+                headCell,
+                css({
+                  gridColumn: { base: '4', md: 'auto' },
+                  justifySelf: 'end',
+                  whiteSpace: 'nowrap',
+                }),
+              )}
             >
               {t('detail.head.withRevops')}
             </span>
@@ -247,7 +276,7 @@ export function RoiDetail({ result }: RoiDetailProps) {
             <div
               key={row.key}
               role="row"
-              className={cx(rowGrid, rowKinds[row.kind])}
+              className={cx(rowGrid, rowPad, rowKinds[row.kind])}
             >
               <span role="cell" aria-hidden="true" className={operatorCell}>
                 {row.operator}

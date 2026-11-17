@@ -80,21 +80,19 @@ export function RoiRangeInput({
           gap: '3',
         })}
       >
-        <label
-          htmlFor={id}
-          className={css({ display: 'flex', flexDir: 'column' })}
-        >
-          <span className={css({ fontSize: 'md', fontWeight: 'bold' })}>
-            {label}
-          </span>
-          {/* The hint describes the slider without lengthening its name. */}
-          <span
-            id={hintId}
-            className={css({ fontSize: 'xs', color: 'gray.400' })}
+        <div className={css({ display: 'flex', flexDir: 'column' })}>
+          <label
+            htmlFor={id}
+            className={css({ fontSize: 'md', fontWeight: 'bold' })}
           >
+            {label}
+          </label>
+          {/* Outside the label: the hint describes the slider (through
+              aria-describedby) without lengthening its name. */}
+          <span id={hintId} className={css({ fontSize: 'xs', color: 'gray' })}>
             {hint}
           </span>
-        </label>
+        </div>
         <output
           htmlFor={id}
           className={cx(

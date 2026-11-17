@@ -72,76 +72,72 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
             amount: f.signedEuro(gain.contractValue),
           })}
         </p>
-        <>
-          <div
-            className={css({
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0,1fr) auto minmax(0,1fr)',
-              alignItems: 'center',
-              gap: '3',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'white/12',
-              rounded: '2xl',
-              p: '4',
-            })}
-          >
-            <div
-              className={css({ display: 'flex', flexDir: 'column', gap: '1' })}
-            >
-              <span className={compareLabel}>{t('calculator.today')}</span>
-              <span className={todayValue}>{f.euro(today.contractValue)}</span>
-            </div>
-            <ArrowRight
-              size={18}
-              aria-hidden="true"
-              className={css({ color: 'white/40' })}
-            />
-            <div
-              className={css({
-                display: 'flex',
-                flexDir: 'column',
-                alignItems: 'flex-end',
-                gap: '1',
-                textAlign: 'right',
-              })}
-            >
-              <span className={compareLabel}>{t('calculator.withRevops')}</span>
-              <span className={revopsValue}>
-                {f.euro(withRevops.contractValue)}
-              </span>
-            </div>
-          </div>
+        <div
+          className={css({
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0,1fr) auto minmax(0,1fr)',
+            alignItems: 'center',
+            gap: '3',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: 'white/12',
+            rounded: '2xl',
+            p: '4',
+          })}
+        >
           <div
             className={css({ display: 'flex', flexDir: 'column', gap: '1' })}
           >
-            <span className={compareLabel}>{t('calculator.gain')}</span>
-            <span
-              className={cx(
-                text({ variant: 'display-md-black' }),
-                css({
-                  fontSize: { base: '5xl', md: '6xl' },
-                  lineHeight: 'heading',
-                  color: 'mint',
-                  fontVariantNumeric: 'tabular-nums',
-                  overflowWrap: 'anywhere',
-                }),
-              )}
-            >
-              {f.signedEuro(gain.contractValue)}
+            <span className={compareLabel}>{t('calculator.today')}</span>
+            <span className={todayValue}>{f.euro(today.contractValue)}</span>
+          </div>
+          <ArrowRight
+            size={18}
+            aria-hidden="true"
+            className={css({ color: 'white/40' })}
+          />
+          <div
+            className={css({
+              display: 'flex',
+              flexDir: 'column',
+              alignItems: 'flex-end',
+              gap: '1',
+              textAlign: 'right',
+            })}
+          >
+            <span className={compareLabel}>{t('calculator.withRevops')}</span>
+            <span className={revopsValue}>
+              {f.euro(withRevops.contractValue)}
             </span>
           </div>
-          <p className={css({ fontSize: 'md', color: 'white/75' })}>
-            <Trans
-              t={t}
-              i18nKey="calculator.bookingGain"
-              values={{ amount: f.signedEuro(gain.booking) }}
-              components={[
-                <strong key="amount" className={css({ color: 'white' })} />,
-              ]}
-            />
-          </p>
-        </>
+        </div>
+        <div className={css({ display: 'flex', flexDir: 'column', gap: '1' })}>
+          <span className={compareLabel}>{t('calculator.gain')}</span>
+          <span
+            className={cx(
+              text({ variant: 'display-md-black' }),
+              css({
+                fontSize: { base: '5xl', md: '6xl' },
+                lineHeight: 'heading',
+                color: 'mint',
+                fontVariantNumeric: 'tabular-nums',
+                overflowWrap: 'anywhere',
+              }),
+            )}
+          >
+            {f.signedEuro(gain.contractValue)}
+          </span>
+        </div>
+        <p className={css({ fontSize: 'md', color: 'white/75' })}>
+          <Trans
+            t={t}
+            i18nKey="calculator.bookingGain"
+            values={{ amount: f.signedEuro(gain.booking) }}
+            components={[
+              <strong key="amount" className={css({ color: 'white' })} />,
+            ]}
+          />
+        </p>
         <a
           href={`#${ROI_DETAIL_ID}`}
           className={css({
