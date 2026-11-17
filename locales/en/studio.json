@@ -13,6 +13,18 @@
   "companies.label": "Before Ocobo, we worked at",
   "companies.pause": "Pause the companies animation",
   "companies.play": "Resume the companies animation",
+  "stats.title": "The team in figures",
+  "stats.list": [
+    {
+      "value": "20",
+      "label": "people who worked in operations before consulting"
+    },
+    {
+      "value": "25+",
+      "label": "scale-ups and large companies that trained our team"
+    },
+    { "value": "60+", "label": "companies supported" }
+  ],
   "squad.badge": "Revenue Squad",
   "squad.title": "How we work",
   "squad.subtitle": "Every mission gets a dedicated squad. A manager who builds with you day to day, a director who holds the course, and data, tech or AI expertise when the project calls for it.",

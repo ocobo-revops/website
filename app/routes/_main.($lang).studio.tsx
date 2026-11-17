@@ -11,6 +11,7 @@ import { HeroSection } from '~/components/studio/hero-section';
 import { OfficesSection } from '~/components/studio/offices-section';
 import { ShareSection } from '~/components/studio/share-section';
 import { SquadSection } from '~/components/studio/squad-section';
+import { StatsSection } from '~/components/studio/stats-section';
 import { TeamSection } from '~/components/studio/team-section';
 import i18nServer from '~/localization/i18n.server';
 import { createHybridLoader } from '~/modules/cache';
@@ -63,6 +64,7 @@ export default function StudioPage() {
     <div>
       <HeroSection members={members} />
       <CompaniesStrip />
+      <StatsSection />
       <SquadSection />
       <ExpertisesSection members={members} />
       <TeamSection members={members} />

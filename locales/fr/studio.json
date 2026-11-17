@@ -13,6 +13,18 @@
   "companies.label": "Avant Ocobo, nous étions chez",
   "companies.pause": "Mettre en pause le défilement des entreprises",
   "companies.play": "Reprendre le défilement des entreprises",
+  "stats.title": "L'équipe en chiffres",
+  "stats.list": [
+    {
+      "value": "20",
+      "label": "personnes, passées par l'opérationnel avant le conseil"
+    },
+    {
+      "value": "+25",
+      "label": "scale-ups et grands comptes qui ont formé nos équipes"
+    },
+    { "value": "+60", "label": "entreprises accompagnées" }
+  ],
   "squad.badge": "Revenue Squad",
   "squad.title": "Comment nous travaillons",
   "squad.subtitle": "Pour chaque mission, une squad dédiée. Un manager qui construit avec vous au quotidien, un directeur qui tient le cap, et l'expertise data, tech ou IA quand le chantier la demande.",
