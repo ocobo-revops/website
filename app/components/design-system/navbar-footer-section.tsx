@@ -5,7 +5,7 @@ import { css } from '@ocobo/styled-system/css';
 import { challengePalette } from '~/components/challenges/challenge-palette';
 import { FooterV2 } from '~/components/footer-v2/footer-v2';
 import { NavbarBar } from '~/components/navbar-v2/navbar-bar';
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { placeChallengeItem, useMenuItems } from '~/hooks/useMenuItems';
 
 import { ShowcaseSection } from './showcase-section';

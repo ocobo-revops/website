@@ -39,8 +39,8 @@ ocobo-website/
 │   │   │   └── StoryMetas.tsx    # ℹ️  Story metadata display
 │   │   │
 │   │   ├── ContactForm.tsx       # 📧 HubSpot-integrated contact form
-│   │   ├── Header.tsx            # 📱 Site header with navigation
-│   │   └── Footer.tsx            # 📍 Site footer with links
+│   │   ├── navbar-v2/            # 📱 Site navbar, desktop panels and mobile menu
+│   │   └── footer-v2/            # 📍 Site footer with links
 │   │
 │   ├── modules/                  # 🧠 Business logic and utilities
 │   │   ├── content/              # 📚 Content management abstraction

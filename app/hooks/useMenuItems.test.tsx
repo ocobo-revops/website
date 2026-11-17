@@ -1,10 +1,16 @@
 /**
  * @vitest-environment jsdom
  */
+import { cleanup } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import type { NavItem } from '~/components/navbar/types';
+import { challengePalette } from '~/components/challenges/challenge-palette';
+import type { NavItem } from '~/components/navbar-v2/types';
 import type { ChallengeMenuEntry } from '~/modules/challenge-menu';
+import {
+  didChallengeLoadFail,
+  setChallengeLoadFailed,
+} from '~/modules/challenge-menu-state';
 import { type PageSlug, getDisabledPages } from '~/modules/feature-flags';
 import { render, screen } from '~/test/utils';
 
@@ -94,18 +100,20 @@ const revenueAi: ChallengeMenuEntry = {
 type MenuOptions = {
   challenges?: ChallengeMenuEntry[];
   disabledPages?: PageSlug[];
+  failed?: boolean;
   lang?: 'fr' | 'en';
 };
 
 function renderMenu({
   challenges = [revenuePerformance, revenueAi],
   disabledPages = ['roi'],
+  failed = false,
   lang = 'fr',
 }: MenuOptions = {}): NavItem[] {
   render(<MenuProbe />, {
     loaderData: {
       root: { disabledPages },
-      'routes/_main': { challenges, failed: false },
+      'routes/_main': { challenges, failed },
     },
     ...(lang === 'en'
       ? { i18nLang: 'en', initialEntries: ['/en'], path: ':lang/*' }
@@ -121,6 +129,42 @@ const find = (items: NavItem[], key: string) =>
   items.find((item) => item.key === key);
 
 describe('useMenuItems', () => {
+  // The flag is module state: reset it so no test sees another's value.
+  afterEach(() => setChallengeLoadFailed(false));
+
+  it('maps each published challenge to a tinted, localised entry', () => {
+    expect(find(renderMenu(), 'challenges')?.dropdown).toMatchObject([
+      {
+        key: 'challenge-revenue-performance',
+        label: 'Revenue Performance',
+        description: 'Un chiffre que vous voyez venir',
+        path: '/fr/challenges/revenue-performance',
+        palette: challengePalette.rp,
+      },
+      {
+        key: 'challenge-revenue-ai',
+        path: '/fr/challenges/revenue-ai',
+        palette: challengePalette.ai,
+      },
+    ]);
+    cleanup();
+
+    const english = find(renderMenu({ lang: 'en' }), 'challenges');
+    expect(english?.dropdown?.[0]?.path).toBe(
+      '/en/challenges/revenue-performance',
+    );
+  });
+
+  it('records whether the last challenge load failed, for shouldRevalidate', () => {
+    renderMenu({ challenges: [], failed: true });
+    expect(didChallengeLoadFail()).toBe(true);
+    cleanup();
+
+    // An empty list that loaded fine (flag off, nothing published).
+    renderMenu({ challenges: [] });
+    expect(didChallengeLoadFail()).toBe(false);
+  });
+
   it('follows the prototype order, IA after À propos', () => {
     expect(keysOf(renderMenu())).toEqual([
       'challenges',

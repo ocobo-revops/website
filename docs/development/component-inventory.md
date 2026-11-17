@@ -55,7 +55,7 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 | Component | File | Purpose | Dependencies |
 |-----------|------|---------|--------------|
 | **Loader** | `Loader.tsx` | Loading states | SVG animations |
-| **Spinner** | `Spinner.tsx` | Inline loading indicator | CSS animations |
+| **Spinner** | `Spinner.tsx` | Inline loading indicator, unused since the v1 navbar was deleted | CSS animations |
 | **ScrollProgressBar** | `ScrollProgressBar.tsx` | Reading progress indicator | Scroll events |
 
 ## Feature-Specific Components
@@ -237,11 +237,16 @@ One `*-section.tsx` module per `/design-system` section, each wrapped in `Showca
 ### Navigation Components
 | Component | File | Purpose | Usage |
 |-----------|------|---------|--------|
-| **MainMenu** | `MainMenu.tsx` | Desktop navigation | Header component |
-| **MainMobileMenu** | `MainMobileMenu.tsx` | Mobile navigation | Header component |
-| **MobileMenu** | `MobileMenu.tsx` | Mobile menu wrapper | Mobile layouts |
-| **SubMenu** | `SubMenu.tsx` | Secondary navigation | Contextual |
-| **LanguageSwitcher** | `LanguageSwitcher.tsx` | Language toggle | Header component |
+| **NavbarBar** | `navbar-v2/navbar-bar.tsx` | The v2 bar without positioning or scroll state | `NavbarV2`, `/design-system` |
+| **NavDisclosure** | `navbar-v2/nav-disclosure.tsx` | Desktop dropdown (disclosure pattern) | `NavbarBar` |
+| **ChallengesPanel** | `navbar-v2/challenges-panel.tsx` | "Vos enjeux" mega panel | `nav-panel-content.tsx` |
+| **MethodPanel** | `navbar-v2/method-panel.tsx` | "Méthode" mega panel, with the ROI card | `nav-panel-content.tsx` |
+| **NavPanelItem** | `navbar-v2/nav-panel-item.tsx` | One panel or accordion entry | Desktop panels, mobile menu |
+| **MobileMenu** | `navbar-v2/mobile-menu.tsx` | Burger and dialog card with accordion groups | `NavbarBar` |
+| **LanguageLinks** | `navbar-v2/language-links.tsx` | FR and EN links to the current page | Navbar, footer |
+| **LanguageSwitcher** | `LanguageSwitcher.tsx` | Language select | Not rendered by the v2 layout |
+
+The navigation types (`NavItem`, `DropdownItem`) live in `navbar-v2/types.ts`. The menu data comes from `useMenuItems` (`app/hooks/useMenuItems.ts`).
 
 ## Content Components
 
@@ -265,7 +270,7 @@ One `*-section.tsx` module per `/design-system` section, each wrapped in `Showca
 |-----------|------|---------|--------|
 | **ContactForm** | `ContactForm.tsx` | Main contact form | Contact page |
 | **IntContactForm** | `IntContactForm.tsx` | International contact form | Localized contact |
-| **NewsletterForm** | `NewsletterForm.tsx` | Newsletter subscription | Footer, CTAs |
+| **NewsletterForm** | `NewsletterForm.tsx` | Newsletter subscription | Not rendered since the v1 footer was deleted |
 
 ### Form Support
 | Component | File | Purpose | Usage |
@@ -283,7 +288,7 @@ One `*-section.tsx` module per `/design-system` section, each wrapped in `Showca
 
 ### Highly Reusable (Design System)
 - All `ui/` components
-- Layout components (LayoutMain, Header, Footer)
+- Layout components (LayoutMain, LayoutPost, NavbarV2, FooterV2)
 - Content wrappers (MarkdownContainer, etc.)
 - Form components (ContactForm patterns)
 

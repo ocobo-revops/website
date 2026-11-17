@@ -1,6 +1,6 @@
 import { css } from '@ocobo/styled-system/css';
 
-import type { DropdownItem, NavItem } from '~/components/navbar/types';
+import type { DropdownItem, NavItem } from '~/components/navbar-v2/types';
 
 import { ChallengesPanel } from './challenges-panel';
 import { MethodPanel } from './method-panel';

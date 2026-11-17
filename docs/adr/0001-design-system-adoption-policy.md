@@ -107,8 +107,6 @@ These shared/layout components were out of scope for the #86–#93 per-feature m
 | File | Occurrences | Note |
 |------|-------------|------|
 | `app/components/PageMarkdownContainer.tsx` | 4 | Markdown renderer headings |
-| `app/components/Footer.tsx` | 1 | Footer heading |
-| `app/components/navbar/mobile-menu.tsx` | 1 | Mobile nav heading |
 
 ### Deferred per-feature occurrences
 

@@ -7,7 +7,7 @@ import { center } from '@ocobo/styled-system/patterns';
 import { text } from '@ocobo/styled-system/recipes';
 
 import { LanguageLinks } from '~/components/navbar-v2/language-links';
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { Container } from '~/components/ui/Container';
 import { Logocobo } from '~/components/ui/Logocobo';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';

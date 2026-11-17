@@ -1,7 +1,7 @@
 import { css, cx } from '@ocobo/styled-system/css';
 import { text } from '@ocobo/styled-system/recipes';
 
-import type { Color, DropdownItemTint } from '~/components/navbar/types';
+import type { Color, DropdownItemTint } from '~/components/navbar-v2/types';
 
 /**
  * Icon box tint per colour, shared by the desktop panels and the mobile

@@ -1,6 +1,6 @@
 import { css } from '@ocobo/styled-system/css';
 
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 
 import { NavbarBar } from './navbar-bar';
 import { useScrolled } from './use-scrolled';

@@ -1,7 +1,7 @@
 import { Target } from 'lucide-react';
 import { describe, expect, it } from 'vitest';
 
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { axe, render, screen, userEvent, waitFor, within } from '~/test/utils';
 
 import { NavbarBar } from './navbar-bar';
@@ -453,10 +453,42 @@ describe('NavbarBar mobile menu', () => {
     await user.click(screen.getByRole('button', { name: 'Ouvrir le menu' }));
     const dialog = await screen.findByRole('dialog', { name: 'Menu' });
 
-    expect(
-      within(dialog).getByRole('button', { name: 'Fermer le menu' }),
-    ).toBeInTheDocument();
     expect(await axe(dialog)).toHaveNoViolations();
+    await user.click(
+      within(dialog).getByRole('button', { name: 'Fermer le menu' }),
+    );
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument(),
+    );
+  });
+
+  it('lists the published challenges from the layout data', async () => {
+    const user = userEvent.setup();
+    render(<NavbarBar scrolled={false} layout="mobile" />, {
+      loaderData: {
+        'routes/_main': {
+          challenges: [
+            {
+              slug: 'revenue-performance',
+              key: 'rp',
+              name: 'Revenue Performance',
+              tagline: 'Un chiffre que vous voyez venir',
+            },
+          ],
+          failed: false,
+        },
+      },
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Ouvrir le menu' }));
+    const dialog = await screen.findByRole('dialog', { name: 'Menu' });
+    await user.click(
+      within(dialog).getByRole('button', { name: 'Vos enjeux' }),
+    );
+
+    expect(
+      within(dialog).getByRole('link', { name: /Revenue Performance/ }),
+    ).toHaveAttribute('href', '/fr/challenges/revenue-performance');
   });
 
   it('uses English labels on English pages', async () => {

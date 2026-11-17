@@ -19,7 +19,7 @@ describe('LayoutMain', () => {
     ).toBeInTheDocument();
     // A single banner: the navbar. Page heroes must not add another.
     expect(screen.getAllByRole('banner')).toHaveLength(1);
-    // The v1 footer has no labelled link row.
+    // The labelled link row identifies the v2 footer.
     expect(
       screen.getByRole('navigation', { name: 'Liens du site' }),
     ).toBeInTheDocument();

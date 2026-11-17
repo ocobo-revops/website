@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { challengePalette } from '~/components/challenges/challenge-palette';
-import type { NavItem } from '~/components/navbar/types';
+import type { NavItem } from '~/components/navbar-v2/types';
 import { setChallengeLoadFailed } from '~/modules/challenge-menu-state';
 import type { ChallengeKey } from '~/modules/challenge-schema';
 
