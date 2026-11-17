@@ -230,6 +230,7 @@ Sections of the ROI calculator page (`app/routes/_main.($lang).roi.tsx`), behind
 | **RoiHero** | `roi-hero.tsx` | Pill, title with the yellow marker, lead, CTA to the walkthrough, and `RoiHeroChart` (`roi-hero-chart.tsx`, the animated multiplier curve) | ROI-specific |
 | **RoiExperience** | `roi-experience.tsx` | State owner: walkthrough, then the calculator section (inputs, sticky result from `lg`, detail) | ROI-specific |
 | **RoiWalkthrough** | `roi-walkthrough.tsx` | The multiplication laid out in three bands (formula, today, with RevOps) and the gain; scrolls inside its own region on a phone | ROI-specific |
+| **Band**, `buildCells` | `roi-walkthrough-band.tsx` | One band of the walkthrough: the terms and operators on a 15-column grid, in reading order | ROI-specific |
 | **RoiInputsCard** | `roi-inputs-card.tsx` | Steps 1 and 2: five sliders, the scenario toggle (`aria-pressed`) and the lever pills | ROI-specific |
 | **RoiRangeInput** | `roi-range-input.tsx` | Native range input with label, hint, formatted `<output>` and `aria-valuetext` | Reusable (any slider) |
 | **RoiStep** | `roi-step.tsx` | Numbered step heading; also exports `stepTitle` and `stepHint` for small card titles | ROI-specific |
