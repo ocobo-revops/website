@@ -8,6 +8,7 @@ import { ASSETS_BASE_URL } from '~/config/assets';
 
 import { OptimizedImage } from './ui/optimized-image';
 
+import { usePrefersReducedMotion } from '~/hooks/use-prefers-reduced-motion';
 import { useWindowSize } from '~/hooks/useWindowSize';
 
 const items = [
@@ -91,6 +92,9 @@ const ClientCarousel: React.FunctionComponent<{
 }> = ({ shouldDisplayTitle }) => {
   const { t } = useTranslation('common');
   const browserWidth = useWindowSize();
+  // The CSS reduced motion rule cannot reach framer-motion: the logos stand
+  // still at their start position instead of looping.
+  const reducedMotion = usePrefersReducedMotion();
 
   const slideWidth = useMemo(
     () => (itemWidth * items.length + itemGap * (items.length + 1)) * 2,
@@ -144,14 +148,18 @@ const ClientCarousel: React.FunctionComponent<{
               w: 'auto',
               px: '4',
             })}
-            animate={{
-              x: [0, -delta + 'px'],
-              transition: {
-                ease: 'linear',
-                duration: delta / 15,
-                repeat: Infinity,
-              },
-            }}
+            animate={
+              reducedMotion
+                ? { x: 0, transition: { duration: 0 } }
+                : {
+                    x: [0, -delta + 'px'],
+                    transition: {
+                      ease: 'linear',
+                      duration: delta / 15,
+                      repeat: Infinity,
+                    },
+                  }
+            }
           >
             {duplicateItems.map((item, i) => (
               <li
