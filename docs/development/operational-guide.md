@@ -65,9 +65,11 @@ AGO_BASEPATH="https://your-ago-instance.com"
 ```bash
 # Pages to disable, comma-separated. Unset: the default list in
 # app/modules/feature-flags.ts (news, tools, roi). Empty: all pages on,
-# except the pages not built yet (roi).
+# except the pages awaiting Ocobo's copy sign-off (roi) in production.
 DISABLED_PAGES="news,tools"
 ```
+
+Pages awaiting copy sign-off (`AWAITING_SIGN_OFF_PAGES` in `app/modules/feature-flags.ts`) stay off in production whatever the variable says. On a Vercel preview (`VERCEL_ENV=preview`) and in local development they follow the variable, so `DISABLED_PAGES="news,tools"` shows them there for review. To launch such a page, remove its slug from that list.
 
 The variable replaces the whole default list: to enable one page, list every other page that must stay disabled. A slug with a typo is ignored, so the page it meant to disable goes live. On Vercel, a change to the variable applies only after a redeploy.
 
