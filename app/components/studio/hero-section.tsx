@@ -71,11 +71,10 @@ const memberCard = css({
   bg: 'gray.100',
   borderRadius: '2xl',
   textAlign: 'center',
-  // The card lifts and tilts a little more on hover (mockup `equipe`).
+  // The card lifts and tilts a little more on hover (mockup `equipe`). No
+  // shadow: the row clips its overflow, so it would be cut off.
   transitionProperty: 'common',
   transitionDuration: 'slow',
-  // Without motion, the card only takes the shadow.
-  _hover: { boxShadow: 'hover' },
   _motionSafe: { _hover: { transform: 'translateY(-6px) rotate(-1deg)' } },
 });
 const cardName = text({ variant: 'display-md-black' });
