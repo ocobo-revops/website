@@ -4,6 +4,12 @@ import { css, cx } from '@ocobo/styled-system/css';
 import { flex } from '@ocobo/styled-system/patterns';
 import { card, text } from '@ocobo/styled-system/recipes';
 
+// Under reduced motion the cursor rests on the loop's first frame: without
+// it, the SVG `transform` attributes apply and the arrow is clipped (#316).
+const cursorAtRest = css({
+  _motionReduce: { transform: 'translate(430px, 430px) rotate(-10deg)' },
+});
+
 export const DataIllustration = () => {
   const { t } = useTranslation('about');
 
@@ -138,7 +144,7 @@ export const DataIllustration = () => {
 
             <g
               transform="translate(485, 460)"
-              className={css({ animation: 'float-cursor' })}
+              className={cx(css({ animation: 'float-cursor' }), cursorAtRest)}
             >
               <circle
                 cx="0"
@@ -165,7 +171,7 @@ export const DataIllustration = () => {
               transform="translate(470, 455) scale(1.2)"
               d="M0,0 L25,40 L10,35 L0,55 Z"
               fill="currentColor"
-              className={css({ animation: 'float-cursor' })}
+              className={cx(css({ animation: 'float-cursor' }), cursorAtRest)}
             />
           </svg>
         </div>
