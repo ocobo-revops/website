@@ -28,14 +28,6 @@ export const keyframes = defineKeyframes({
     from: { height: 'var(--height)' }, // Ark UI provides --height CSS variable
     to: { height: 0 },
   },
-  slide: {
-    '0%': { left: 0 },
-    '100%': { left: '-100%' },
-  },
-  scaleProgress: {
-    '0%': { transform: 'scaleX(0)' },
-    '100%': { transform: 'scaleX(1)' },
-  },
   'float-cursor': {
     '0%, 100%': { transform: 'translate(430px, 430px) rotate(-10deg)' },
     '50%': { transform: 'translate(440px, 420px) rotate(-5deg)' },
