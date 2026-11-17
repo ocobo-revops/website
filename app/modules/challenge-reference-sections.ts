@@ -58,11 +58,12 @@ export function buildClientCaseSection(
   };
 }
 
-export function buildExpertCards(
-  experts: readonly ChallengeExpert[],
+/** One expert as a card shows it, in the page language. */
+export function buildExpertCard(
+  expert: ChallengeExpert,
   lang: Language,
-): ExpertCard[] {
-  return experts.map((expert) => ({
+): ExpertCard {
+  return {
     slug: expert.slug,
     name: expert.name,
     role: expert.role[lang],
@@ -70,7 +71,14 @@ export function buildExpertCards(
     contribution: expert.contribution[lang],
     tools: expert.tools.map((tool) => tool.name),
     previousCompanies: expert.previousCompanies,
-  }));
+  };
+}
+
+export function buildExpertCards(
+  experts: readonly ChallengeExpert[],
+  lang: Language,
+): ExpertCard[] {
+  return experts.map((expert) => buildExpertCard(expert, lang));
 }
 
 export function buildChallengeReferenceSections(

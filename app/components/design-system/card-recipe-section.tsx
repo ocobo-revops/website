@@ -25,6 +25,12 @@ export function CardRecipeSection() {
           <p className={cardTitle}>Tinted card</p>
           <p className={cardCaption}>tone tinted (gray.50 bg)</p>
         </li>
+        <li className={card({ tone: 'dark', border: false })}>
+          <p className={cardTitle}>Dark card</p>
+          <p className={css({ color: 'gray.300', fontSize: 'sm', mt: '2' })}>
+            tone dark (dark bg, white text)
+          </p>
+        </li>
         <li className={card({ border: false })}>
           <p className={cardTitle}>No-border card</p>
           <p className={cardCaption}>border false · shadow only</p>

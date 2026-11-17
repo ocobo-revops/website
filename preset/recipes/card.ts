@@ -22,6 +22,7 @@ export const card = defineRecipe({
     tone: {
       white: { bg: 'white' },
       tinted: { bg: 'gray.50' },
+      dark: { bg: 'dark', color: 'white' },
     },
     border: {
       true: {

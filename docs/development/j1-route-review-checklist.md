@@ -78,6 +78,7 @@ Keeps its style; tokens only.
 | Team member cards: radius 12px becomes 16px, H3 names in Bornia | | |
 | Model section tiles: radius 12px becomes 16px | | |
 | Team photo hover: contrast and brightness stay, only the grayscale goes (#217) | | |
+| Podcast share card and "join us" card use the new `card({ tone: 'dark' })`: dark background, white text, as before (#332) | | |
 
 ### Technology (`/technology`, `/en/technology`)
 
@@ -134,7 +135,7 @@ Keep their style; not locale-prefixed, so FR views only.
 | Markdoc prose: `medium` and `small` text styles take the body and small values | | |
 | Breadcrumb in the `small` text style | | |
 
-### Design system (`/design-system/tokens`, `/design-system/colours`, `/design-system/typography`, `/design-system/forms`)
+### Design system (`/design-system/tokens`, `/design-system/colours`, `/design-system/typography`, `/design-system/forms`, `/design-system/cards`)
 
 | Change | Views checked | Status |
 |---|---|---|
@@ -142,6 +143,7 @@ Keep their style; not locale-prefixed, so FR views only.
 | `gradients.ai-text` title readable on white | | |
 | Coral border sample now renders (#217) | | |
 | Form section: the Select label now targets the Select trigger (#217) | | |
+| Cards page (`/design-system/cards`): the card recipe shows a dark tone sample (#332) | | |
 
 ### Not found page (any unknown URL, FR and EN)
 

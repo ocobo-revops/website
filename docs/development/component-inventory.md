@@ -122,6 +122,19 @@ The OCOBO website implements a comprehensive component library built on Ark UI p
 |-----------|------|---------|-------------|
 | **MemberCard** | `member-card.tsx` | Profile card: avatar, role, bio, LinkedIn (jobs, blog author) | Reusable |
 | **PersonCard** | `person-card.tsx` | Person variant of `FlipCard`: photo, role and challenge label, then contribution or bio, tools (with a limit) and previous companies | Reusable |
+| **MemberAvatar** | `member-avatar.tsx` | Round photo in a ring of the member's challenge colour, initials behind it; `lg` on person cards, `sm` in a row of faces | Reusable |
+
+### Studio Components (`app/components/studio/`)
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **HeroSection** | `hero-section.tsx` | Studio hero with a marquee of member tiles | Studio-specific |
+| **CompaniesStrip** | `companies-strip.tsx` | The team's previous companies, from the member files | Studio-specific |
+| **SquadSection** | `squad-section.tsx` | How we work (`#squad`): the three squad roles with their tags, then the 2-week sprint timeline | Studio-specific |
+| **ExpertisesSection** | `expertises-section.tsx` | One card per published challenge with its experts' faces (`#expertises`) | Studio-specific |
+| **TeamSection** | `team-section.tsx` | Every active member as a `PersonCard`, all tools (`#equipe`) | Studio-specific |
+| **OfficesSection** | `offices-section.tsx` | Offices, three cities (`#vie`) | Studio-specific |
+| **ShareSection** | `share-section.tsx` | Podcast, club and blog cards (`#partage`) | Studio-specific |
+| **ClosingSection** | `closing-section.tsx` | Work with us, and join us when the jobs page is on | Studio-specific |
 
 ### Legacy Homepage Components (`app/components/homepage/`)
 | Component | File | Purpose | Reusability |
