@@ -32,10 +32,10 @@ const EAGER_PHOTOS = 4;
 const tiltedRows = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '6',
   w: '[108%]',
   ml: '[-4%]',
-  py: '6',
+  // With the row padding, 24px around and between the rows.
+  py: '3',
   transform: 'rotate(-3deg)',
   // Still rows sit flat and inside the screen.
   _motionReduce: { w: 'full', ml: '0', transform: 'none' },
@@ -50,7 +50,8 @@ const rowsFrame = css({
     '[linear-gradient(90deg, transparent 0, black 12%, black 88%, transparent 100%)]',
   _motionReduce: { maskImage: '[none]' },
 });
-const rowList = css({ display: 'flex', gap: '5', pr: '5' });
+// The row clips its overflow: the padding leaves room for a lifted card.
+const rowList = css({ display: 'flex', gap: '5', pr: '5', py: '3' });
 const staticList = css({
   display: 'flex',
   flexWrap: 'wrap',
@@ -70,6 +71,14 @@ const memberCard = css({
   bg: 'gray.100',
   borderRadius: '2xl',
   textAlign: 'center',
+  // The card lifts and tilts a little more on hover (mockup `equipe`).
+  transitionProperty: 'common',
+  transitionDuration: 'slow',
+  _hover: {
+    boxShadow: 'hover',
+    transform: 'translateY(-6px) rotate(-1deg)',
+  },
+  _motionReduce: { _hover: { transform: 'none' } },
 });
 const cardName = text({ variant: 'display-md-black' });
 const cardRole = text({ variant: 'small', color: 'muted' });
