@@ -104,7 +104,8 @@ export const keyframes = defineKeyframes({
   // then resampled, which blurs its text and photos (studio hero).
   'marquee-ultra-slow-painted': {
     '0%': { left: '0' },
-    '100%': { left: '-33.33%' },
+    // An exact third: a rounded one jumps a fraction of a pixel each loop.
+    '100%': { left: 'calc(-100% / 3)' },
   },
   'blueprint-in': {
     from: { opacity: '0', transform: 'scaleX(0)' },

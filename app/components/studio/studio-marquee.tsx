@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { css, cx } from '@ocobo/styled-system/css';
 import { button } from '@ocobo/styled-system/recipes';
 
-/** Copies per track: the `marquee-ultra-slow` keyframes move by a third. */
+/**
+ * Copies per track: the `marquee-ultra-slow` and `marquee-ultra-slow-painted`
+ * keyframes move by a third.
+ */
 const COPIES = [0, 1, 2] as const;
 
 const TRACK_CLASS = 'studio-marquee-track';

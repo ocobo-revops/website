@@ -74,11 +74,9 @@ const memberCard = css({
   // The card lifts and tilts a little more on hover (mockup `equipe`).
   transitionProperty: 'common',
   transitionDuration: 'slow',
-  _hover: {
-    boxShadow: 'hover',
-    transform: 'translateY(-6px) rotate(-1deg)',
-  },
-  _motionReduce: { _hover: { transform: 'none' } },
+  // Without motion, the card only takes the shadow.
+  _hover: { boxShadow: 'hover' },
+  _motionSafe: { _hover: { transform: 'translateY(-6px) rotate(-1deg)' } },
 });
 const cardName = text({ variant: 'display-md-black' });
 const cardRole = text({ variant: 'small', color: 'muted' });
