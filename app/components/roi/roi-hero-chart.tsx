@@ -86,21 +86,25 @@ const linearLabel = css({
   fontWeight: 'semibold',
 });
 
+// `cx` does not merge classes: two classes setting the same property
+// resolve by stylesheet order. Each property is set by one class only.
 const chip = css({
   position: 'absolute',
-  // Centred above its point on the curve.
-  transform: 'translate(-50%, calc(-100% - 18px))',
   whiteSpace: 'nowrap',
-  bg: 'white',
   borderWidth: '1px',
   borderStyle: 'solid',
-  borderColor: 'gray.200',
-  boxShadow: 'rest',
   rounded: 'full',
+  boxShadow: 'rest',
+  fontWeight: 'bold',
+});
+const chipStep = css({
+  // Centred above its point on the curve.
+  transform: 'translate(-50%, calc(-100% - 18px))',
+  bg: 'white',
+  borderColor: 'gray.200',
   px: { base: '2', md: '3.5' },
   py: { base: '1', md: '1.5' },
   fontSize: { base: 'xs', md: 'sm' },
-  fontWeight: 'bold',
   color: 'dark',
 });
 // Two chips would overlap the others on a phone.
@@ -187,13 +191,29 @@ export function RoiHeroChart() {
           {t('hero.chart.linear')}
         </text>
       </svg>
-      <span className={cx('hx-chip hx-c1', chip, chipWide, chipPositions.c1)}>
+      <span
+        className={cx(
+          'hx-chip hx-c1',
+          chip,
+          chipStep,
+          chipWide,
+          chipPositions.c1,
+        )}
+      >
         {t('hero.chart.opps')}
       </span>
-      <span className={cx('hx-chip hx-c2', chip, chipWide, chipPositions.c2)}>
+      <span
+        className={cx(
+          'hx-chip hx-c2',
+          chip,
+          chipStep,
+          chipWide,
+          chipPositions.c2,
+        )}
+      >
         {t('hero.chart.winRate')}
       </span>
-      <span className={cx('hx-chip hx-c3', chip, chipPositions.c3)}>
+      <span className={cx('hx-chip hx-c3', chip, chipStep, chipPositions.c3)}>
         {t('hero.chart.acv')}
       </span>
       <span

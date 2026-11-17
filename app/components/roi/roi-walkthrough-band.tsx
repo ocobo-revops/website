@@ -130,13 +130,17 @@ const cellBase = css({
   alignSelf: 'center',
   textAlign: 'center',
   whiteSpace: 'nowrap',
-  px: '1',
-  py: '2',
 });
+// `cx` does not merge classes, so the padding lives in each kind only:
+// the pills need more than the plain cells.
+const cellPad = css({ px: '1', py: '2' });
 const cellStyles: Record<CellKind, string> = {
-  label: cx(text({ variant: 'label', color: 'muted' }), css({ px: '1' })),
-  op: css({ fontSize: 'md', color: 'gray.300' }),
-  value: css({ fontSize: 'md', fontWeight: 'semibold', color: 'dark' }),
+  label: cx(text({ variant: 'label', color: 'muted' }), cellPad),
+  op: cx(cellPad, css({ fontSize: 'md', color: 'gray.300' })),
+  value: cx(
+    cellPad,
+    css({ fontSize: 'md', fontWeight: 'semibold', color: 'dark' }),
+  ),
   ring: css({
     fontSize: 'md',
     fontWeight: 'semibold',
@@ -147,7 +151,10 @@ const cellStyles: Record<CellKind, string> = {
     px: '3',
     py: '1.5',
   }),
-  result: css({ fontSize: 'md', fontWeight: 'extrabold', color: 'dark' }),
+  result: cx(
+    cellPad,
+    css({ fontSize: 'md', fontWeight: 'extrabold', color: 'dark' }),
+  ),
   final: cx(
     text({ variant: 'display-md-black' }),
     css({
