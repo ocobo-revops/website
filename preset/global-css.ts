@@ -28,6 +28,24 @@ export const globalCss = defineGlobalStyles({
     textDecoration: 'none',
   },
 
+  // Reduced motion (#316). The v1 illustrations loop and float without
+  // reading the visitor setting. Under `prefers-reduced-motion: reduce`,
+  // every animation jumps to its end frame at once, so entrance animations
+  // that start at `opacity: 0` still show their content, and every
+  // transition is instant. `!important` is required: in the base layer it
+  // wins over the atomic utilities, where the animations are declared.
+  // Components that handle reduced motion themselves already resolve to
+  // `animation: none` or an `instant` duration, so nothing changes for them.
+  '*, *::before, *::after': {
+    _motionReduce: {
+      animationDuration: 'instant !important',
+      animationDelay: 'instant !important',
+      animationIterationCount: '1 !important',
+      transitionDuration: 'instant !important',
+      transitionDelay: 'instant !important',
+    },
+  },
+
   '::selection': {
     backgroundColor: 'yellow',
     color: 'dark',
