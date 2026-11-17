@@ -208,10 +208,7 @@ export function RoiInputsCard({
           </button>
         ))}
       </fieldset>
-      <ul
-        aria-live="polite"
-        className={css({ display: 'flex', flexWrap: 'wrap', gap: '2' })}
-      >
+      <ul className={css({ display: 'flex', flexWrap: 'wrap', gap: '2' })}>
         {leverPills.map((pill) => (
           <li key={pill.key} className={leverPill}>
             <strong className={css({ color: 'mint.dark' })}>

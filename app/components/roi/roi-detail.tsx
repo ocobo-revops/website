@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
-import { card } from '@ocobo/styled-system/recipes';
+import { card, text } from '@ocobo/styled-system/recipes';
 
 import type { RoiResult } from '~/utils/roi';
 
@@ -126,28 +126,30 @@ const rowKinds: Record<RowKind, string> = {
   final: css({ bg: 'dark', color: 'white', rounded: '2xl', my: '1' }),
 };
 // On a phone the label takes the top line and the figures sit below it.
-const operatorCell = css({
-  gridRow: { base: 'span 2', md: 'auto' },
-  fontFamily: 'display',
-  fontWeight: 'black',
-  fontSize: 'xl',
-  color: 'gray.400',
-  textAlign: 'center',
-});
+const operatorCell = cx(
+  text({ variant: 'display-md-black' }),
+  css({
+    gridRow: { base: 'span 2', md: 'auto' },
+    fontSize: 'xl',
+    color: 'gray.400',
+    textAlign: 'center',
+  }),
+);
 const labelCell = css({
   gridColumn: { base: '2 / -1', md: 'auto' },
   fontWeight: 'semibold',
 });
 const todayCell = css({ fontVariantNumeric: 'tabular-nums' });
 const changeCell = css({ justifySelf: 'center' });
-const revopsCell = css({
-  justifySelf: 'end',
-  fontFamily: 'display',
-  fontWeight: 'black',
-  fontSize: 'xl',
-  fontVariantNumeric: 'tabular-nums',
-  whiteSpace: 'nowrap',
-});
+const revopsCell = cx(
+  text({ variant: 'display-md-black' }),
+  css({
+    justifySelf: 'end',
+    fontSize: 'xl',
+    fontVariantNumeric: 'tabular-nums',
+    whiteSpace: 'nowrap',
+  }),
+);
 const pill = css({
   display: 'inline-block',
   minW: '16',
@@ -220,7 +222,8 @@ export function RoiDetail({ result }: RoiDetailProps) {
               css({ display: { base: 'none', md: 'grid' }, py: '2' }),
             )}
           >
-            <span role="columnheader" />
+            {/* The operator column is hidden in every row, so here too. */}
+            <span role="columnheader" aria-hidden="true" />
             <span role="columnheader" />
             <span role="columnheader" className={headCell}>
               {t('detail.head.today')}

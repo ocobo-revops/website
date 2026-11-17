@@ -1,6 +1,7 @@
 import { useId } from 'react';
 
-import { css } from '@ocobo/styled-system/css';
+import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 import type { RoiInputRange } from '~/utils/roi';
 
@@ -59,6 +60,7 @@ export function RoiRangeInput({
   onChange,
 }: RoiRangeInputProps) {
   const id = useId();
+  const hintId = `${id}-hint`;
   const filled = ((value - min) / (max - min)) * 100;
 
   return (
@@ -85,19 +87,24 @@ export function RoiRangeInput({
           <span className={css({ fontSize: 'md', fontWeight: 'bold' })}>
             {label}
           </span>
-          <span className={css({ fontSize: 'xs', color: 'gray.400' })}>
+          {/* The hint describes the slider without lengthening its name. */}
+          <span
+            id={hintId}
+            className={css({ fontSize: 'xs', color: 'gray.400' })}
+          >
             {hint}
           </span>
         </label>
         <output
           htmlFor={id}
-          className={css({
-            fontFamily: 'display',
-            fontWeight: 'black',
-            fontSize: '2xl',
-            fontVariantNumeric: 'tabular-nums',
-            whiteSpace: 'nowrap',
-          })}
+          className={cx(
+            text({ variant: 'display-md-black' }),
+            css({
+              fontSize: '2xl',
+              fontVariantNumeric: 'tabular-nums',
+              whiteSpace: 'nowrap',
+            }),
+          )}
         >
           {formatted}
         </output>
@@ -110,6 +117,7 @@ export function RoiRangeInput({
         step={step}
         value={value}
         aria-valuetext={formatted}
+        aria-describedby={hintId}
         onChange={(event) => onChange(Number(event.target.value))}
         className={range}
         // The filled part of the track follows the value.

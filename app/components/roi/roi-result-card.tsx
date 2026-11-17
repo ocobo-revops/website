@@ -12,18 +12,19 @@ import { useRoiFormat } from './use-roi-format';
 
 /**
  * Step 3 of the ROI calculator (mockup `roi`): contract value today and with
- * RevOps, and the gain between the two. Announced politely to screen
- * readers as the sliders move.
+ * RevOps, and the gain between the two. Only the gain is announced to
+ * screen readers as the sliders move: the slider already reads its value.
  */
 
 const compareLabel = cx(text({ variant: 'label' }), css({ color: 'white/55' }));
-const compareValue = css({
-  fontFamily: 'display',
-  fontWeight: 'black',
-  fontSize: { base: 'xl', md: 'h3' },
-  fontVariantNumeric: 'tabular-nums',
-  whiteSpace: 'nowrap',
-});
+const compareValue = cx(
+  text({ variant: 'display-md-black' }),
+  css({
+    fontSize: { base: 'xl', md: 'h3' },
+    fontVariantNumeric: 'tabular-nums',
+    whiteSpace: 'nowrap',
+  }),
+);
 
 type RoiResultCardProps = {
   result: RoiResult;
@@ -55,7 +56,16 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
           })}
           tone="dark"
         />
-        <div aria-live="polite" className={css({ display: 'contents' })}>
+        <p
+          aria-live="polite"
+          aria-atomic="true"
+          className={css({ srOnly: true })}
+        >
+          {t('calculator.liveGain', {
+            amount: f.signedEuro(gain.contractValue),
+          })}
+        </p>
+        <>
           <div
             className={css({
               display: 'grid',
@@ -102,15 +112,16 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
           >
             <span className={compareLabel}>{t('calculator.gain')}</span>
             <span
-              className={css({
-                fontFamily: 'display',
-                fontWeight: 'black',
-                fontSize: { base: '5xl', md: '6xl' },
-                lineHeight: 'heading',
-                color: 'mint',
-                fontVariantNumeric: 'tabular-nums',
-                overflowWrap: 'anywhere',
-              })}
+              className={cx(
+                text({ variant: 'display-md-black' }),
+                css({
+                  fontSize: { base: '5xl', md: '6xl' },
+                  lineHeight: 'heading',
+                  color: 'mint',
+                  fontVariantNumeric: 'tabular-nums',
+                  overflowWrap: 'anywhere',
+                }),
+              )}
             >
               {f.signedEuro(gain.contractValue)}
             </span>
@@ -125,7 +136,7 @@ export function RoiResultCard({ result }: RoiResultCardProps) {
               ]}
             />
           </p>
-        </div>
+        </>
         <a
           href={`#${ROI_DETAIL_ID}`}
           className={css({

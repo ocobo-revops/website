@@ -22,7 +22,7 @@ export function RoiHero() {
   const { t } = useTranslation('roi');
 
   return (
-    <header
+    <div
       className={css({
         pt: '40',
         pb: '10',
@@ -58,6 +58,6 @@ export function RoiHero() {
         </div>
         <RoiHeroChart />
       </Container>
-    </header>
+    </div>
   );
 }

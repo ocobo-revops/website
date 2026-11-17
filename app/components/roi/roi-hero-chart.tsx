@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 /**
  * The hero curve of the ROI page (mockup `roi`): revenue grows in a straight
@@ -107,8 +108,6 @@ const chipEnd = css({
   bg: 'dark',
   borderColor: 'dark',
   color: 'yellow',
-  fontFamily: 'display',
-  fontWeight: 'black',
   fontSize: { base: 'sm', md: 'lg' },
   px: { base: '3', md: '5' },
   py: { base: '1.5', md: '2.5' },
@@ -196,7 +195,15 @@ export function RoiHeroChart() {
       <span className={cx('hx-chip hx-c3', chip, chipPositions.c3)}>
         {t('hero.chart.acv')}
       </span>
-      <span className={cx('hx-chip hx-end', chip, chipEnd, chipPositions.end)}>
+      <span
+        className={cx(
+          'hx-chip hx-end',
+          text({ variant: 'display-md-black' }),
+          chip,
+          chipEnd,
+          chipPositions.end,
+        )}
+      >
         {t('hero.chart.multiplier')}
       </span>
     </div>

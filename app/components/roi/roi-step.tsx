@@ -1,4 +1,5 @@
 import { css, cx } from '@ocobo/styled-system/css';
+import { text } from '@ocobo/styled-system/recipes';
 
 // The numbered step header of the calculator cards (mockup `roi`).
 
@@ -28,19 +29,20 @@ export function RoiStep({ number, title, hint, tone = 'light' }: RoiStepProps) {
     <div className={css({ display: 'flex', alignItems: 'center', gap: '3' })}>
       <span
         aria-hidden="true"
-        className={css({
-          display: 'grid',
-          placeItems: 'center',
-          flex: 'none',
-          w: '8',
-          h: '8',
-          rounded: 'full',
-          bg: 'yellow',
-          color: 'dark',
-          fontFamily: 'display',
-          fontWeight: 'black',
-          fontSize: 'sm',
-        })}
+        className={cx(
+          text({ variant: 'display-md-black' }),
+          css({
+            display: 'grid',
+            placeItems: 'center',
+            flex: 'none',
+            w: '8',
+            h: '8',
+            rounded: 'full',
+            bg: 'yellow',
+            color: 'dark',
+            fontSize: 'sm',
+          }),
+        )}
       >
         {number}
       </span>
