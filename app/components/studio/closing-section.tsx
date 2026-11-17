@@ -24,9 +24,12 @@ const twoDoors = css({
 const column = css({ gap: '5', alignItems: 'flex-start' });
 // Flat cards on the yellow band, as in the mockup.
 const door = card({ padding: 'xl', border: false, shadow: 'none' });
-// The card recipe has no dark tone yet (PR #332, open question on the dark
-// tone): a static class until it gets one.
-const darkTone = css({ bg: 'dark', color: 'white' });
+const darkDoor = card({
+  padding: 'xl',
+  border: false,
+  shadow: 'none',
+  tone: 'dark',
+});
 
 /** Two closing doors: work with the Studio, or join it. */
 export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
@@ -50,7 +53,7 @@ export function ClosingSection({ jobsEnabled }: ClosingSectionProps) {
         </div>
 
         {jobsEnabled && (
-          <div className={cx(door, column, darkTone)}>
+          <div className={cx(darkDoor, column)}>
             <p className={text({ variant: 'label', color: 'yellow' })}>
               {t('closing.join.eyebrow')}
             </p>

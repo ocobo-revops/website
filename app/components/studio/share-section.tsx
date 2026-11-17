@@ -9,16 +9,24 @@ import { Container } from '~/components/ui/Container';
 import { useLocalizedPathname } from '~/hooks/useLocalizedPathname';
 import { url } from '~/utils/url';
 
-const cardStyle = cx(
-  card({ padding: 'lg', border: false, shadow: 'none' }),
-  css({ gap: '3.5' }),
-);
-// The card recipe has no dark, yellow or sky tone yet: one static class per
-// card until it gets a tone variant (PR #332, open question on the dark tone).
-const toneStyles = {
-  podcast: css({ bg: 'dark', color: 'white' }),
-  club: css({ bg: 'yellow.light' }),
-  blog: css({ bg: 'sky.light' }),
+const cardGap = css({ gap: '3.5' });
+// One static class per card. The card recipe has a dark tone; the yellow and
+// sky tints stay inline, as only this section uses them.
+const cardStyles = {
+  podcast: cx(
+    card({ padding: 'lg', border: false, shadow: 'none', tone: 'dark' }),
+    cardGap,
+  ),
+  club: cx(
+    card({ padding: 'lg', border: false, shadow: 'none' }),
+    cardGap,
+    css({ bg: 'yellow.light' }),
+  ),
+  blog: cx(
+    card({ padding: 'lg', border: false, shadow: 'none' }),
+    cardGap,
+    css({ bg: 'sky.light' }),
+  ),
 } as const;
 const linkStyle = cx(
   button({ variant: 'link' }),
@@ -100,7 +108,7 @@ export function ShareSection() {
               </>
             );
             return (
-              <li key={key} className={cx(cardStyle, toneStyles[key])}>
+              <li key={key} className={cardStyles[key]}>
                 <p
                   className={text({
                     variant: 'label',
