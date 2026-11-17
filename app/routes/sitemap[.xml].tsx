@@ -4,6 +4,7 @@ import type { Language } from '~/localization/resources';
 import { shouldBypassCache } from '~/modules/cache';
 import { loadChallengeMenu } from '~/modules/challenge-menu.server';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
+import { isPageEnabled } from '~/modules/feature-flags';
 
 const baseUrl = 'https://www.ocobo.co';
 
@@ -19,6 +20,7 @@ function generateSiteMap(
   posts: { slug: string; date: Date }[],
   jobs: { slug: string; date: Date }[],
   challenges: { slug: string; lang: Language }[],
+  flaggedPaths: string[],
 ) {
   return `<?xml version="1.0" encoding="UTF-8"?>
         <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
@@ -62,6 +64,14 @@ function generateSiteMap(
               .map((challenge) =>
                 getUrlElementWithDate(
                   `${baseUrl}/${challenge.lang}/challenges/${challenge.slug}`,
+                  new Date().toISOString(),
+                ),
+              )
+              .join('\n')}
+            ${flaggedPaths
+              .map((path) =>
+                getUrlElementWithDate(
+                  `${baseUrl}${path}`,
                   new Date().toISOString(),
                 ),
               )
@@ -124,9 +134,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     challengesQuery('en'),
   ]);
   const challenges = [...frChallenges, ...enChallenges];
-  return new Response(generateSiteMap(stories, posts, jobs, challenges), {
-    headers: {
-      'content-type': 'application/xml',
+  const flaggedPaths = isPageEnabled('roi') ? ['/fr/roi', '/en/roi'] : [];
+  return new Response(
+    generateSiteMap(stories, posts, jobs, challenges, flaggedPaths),
+    {
+      headers: {
+        'content-type': 'application/xml',
+      },
     },
-  });
+  );
 }
