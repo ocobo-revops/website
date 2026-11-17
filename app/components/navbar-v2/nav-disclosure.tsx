@@ -251,6 +251,8 @@ export function NavDisclosure({
       <div
         id={panelId}
         data-state={isOpen ? 'open' : 'closed'}
+        // Keeps its fade under reduced motion: out of the global rule.
+        data-motion-own=""
         // Visibility, not `hidden`, so the panel can fade out. `inert` takes
         // a closing panel out of reach at once: no pointer, focus or reader.
         style={{ visibility: isOpen ? 'visible' : 'hidden' }}
