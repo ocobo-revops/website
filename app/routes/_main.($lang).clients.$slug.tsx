@@ -13,9 +13,10 @@ import {
 } from '~/modules/content';
 import { getLang } from '~/utils/lang';
 import { getMetaTags } from '~/utils/metatags';
+import { getImageOgFullPath } from '~/utils/url';
 
 export const loader = createHybridLoader(
-  async ({ params }: LoaderFunctionArgs) => {
+  async ({ params, request }: LoaderFunctionArgs) => {
     const { slug } = params;
 
     if (!slug) {
@@ -41,7 +42,12 @@ export const loader = createHybridLoader(
     );
 
     return data(
-      { article, resolvedTools, resolvedTeam },
+      {
+        article,
+        resolvedTools,
+        resolvedTeam,
+        ogImageSrc: getImageOgFullPath('clients', request.url),
+      },
       {
         headers: {
           'Cache-Control': 's-maxage=3600, stale-while-revalidate=86400',
@@ -58,6 +64,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     title: data?.article.frontmatter.title,
     description: data?.article.frontmatter.subtitle,
     locale: getLang(params),
+    image: data?.ogImageSrc,
   });
 };
 

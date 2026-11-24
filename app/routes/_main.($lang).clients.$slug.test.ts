@@ -111,9 +111,11 @@ describe('clients detail loader', () => {
     const data = outcome.data as {
       article: typeof article;
       resolvedTools: unknown[];
+      ogImageSrc: string;
     };
     expect(data.article).toBe(article);
     expect(data.resolvedTools).toEqual([tool]);
+    expect(data.ogImageSrc).toBe('http://test.local/og/clients.jpg');
   });
 
   it('returns resolvedTeam as a deferred promise', async () => {
