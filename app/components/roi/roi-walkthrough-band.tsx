@@ -136,7 +136,8 @@ const cellBase = css({
 const cellPad = css({ px: '1', py: '2' });
 const cellStyles: Record<CellKind, string> = {
   label: cx(text({ variant: 'label', color: 'muted' }), cellPad),
-  op: cx(cellPad, css({ fontSize: 'md', color: 'gray.300' })),
+  // gray.300 was too pale to read (Ocobo review): the muted grey, 4.8:1.
+  op: cx(cellPad, css({ fontSize: 'md', color: 'gray' })),
   value: cx(
     cellPad,
     css({ fontSize: 'md', fontWeight: 'semibold', color: 'dark' }),

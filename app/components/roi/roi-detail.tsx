@@ -133,7 +133,8 @@ const operatorCell = cx(
   css({
     gridRow: { base: 'span 2', md: 'auto' },
     fontSize: 'xl',
-    color: 'gray.400',
+    // gray.400 was too pale to read (Ocobo review).
+    color: 'gray',
     textAlign: 'center',
   }),
 );
@@ -293,7 +294,7 @@ export function RoiDetail({ result }: RoiDetailProps) {
                     {row.change}
                   </span>
                 ) : (
-                  <span className={css({ color: 'gray.300' })}>
+                  <span className={css({ color: 'gray' })}>
                     <span aria-hidden="true">·</span>
                     <span className={css({ srOnly: true })}>
                       {t('detail.noLever')}

@@ -175,7 +175,7 @@ export function RoiWalkthrough({ result, scenario }: RoiWalkthroughProps) {
                   <ArrowDown
                     size={14}
                     aria-hidden="true"
-                    className={css({ color: 'gray.400' })}
+                    className={css({ color: 'gray' })}
                   />
                   <span className={leverChip}>{chip.content}</span>
                 </span>
