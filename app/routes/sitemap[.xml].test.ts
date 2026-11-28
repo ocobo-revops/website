@@ -3,7 +3,7 @@
  *
  * Covers the observable behaviours of `loader` in `sitemap[.xml].tsx`:
  *  1. Returns an XML Response with the correct content-type.
- *  2. Static routes are always present in the output.
+ *  2. Static routes are listed in both languages, behind their flags.
  *  3. Dynamic routes from stories, posts, and jobs are included.
  *  4. Draft/closed jobs are excluded; only published ones appear.
  *  5. Loader degrades gracefully when any content fetcher fails.
@@ -29,9 +29,9 @@ const fetchJobsMock = vi.fn();
 const loadChallengeMenuMock = vi.fn();
 
 vi.mock('~/modules/content', () => ({
-  fetchStories: () => fetchStoriesMock(),
+  fetchStories: (lang?: string) => fetchStoriesMock(lang),
   fetchBlogposts: () => fetchBlogpostsMock(),
-  fetchJobs: () => fetchJobsMock(),
+  fetchJobs: (lang?: string) => fetchJobsMock(lang),
 }));
 
 // The challenge list comes from the navbar loader module, which skips
@@ -141,10 +141,18 @@ describe('sitemap loader', () => {
     expect(body).toContain('<urlset');
   });
 
-  it('includes all static routes', async () => {
-    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+  it('lists the static pages of each language that has them', async () => {
+    fetchStoriesMock.mockImplementation(async (lang: string) =>
+      lang === 'fr'
+        ? [200, 'success', [storyEntry()]]
+        : [404, 'not_found', undefined],
+    );
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
-    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockImplementation(async (lang: string) =>
+      lang === 'fr'
+        ? [200, 'success', [jobEntry()]]
+        : [404, 'not_found', undefined],
+    );
 
     const { loader } = await import('./sitemap[.xml]');
     const outcome = await invokeLoader(loader);
@@ -152,28 +160,58 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    const staticUrls = [
-      'https://www.ocobo.co/fr',
-      'https://www.ocobo.co/fr/offer',
-      'https://www.ocobo.co/fr/method',
-      'https://www.ocobo.co/fr/about-us',
-      'https://www.ocobo.co/fr/contact',
-      'https://www.ocobo.co/stories',
-      'https://www.ocobo.co/blog',
-      'https://www.ocobo.co/fr/jobs',
-      'https://www.ocobo.co/legal/confidentialite',
-      'https://www.ocobo.co/legal/cgu',
+    const everyLanguage = [
+      '',
+      '/offer',
+      '/method',
+      '/studio',
+      '/technology',
+      '/about-us',
+      '/contact',
     ];
-    for (const url of staticUrls) {
-      expect(body).toContain(`<loc>${url}</loc>`);
+    for (const lang of ['fr', 'en']) {
+      for (const path of everyLanguage) {
+        expect(body).toContain(
+          `<loc>https://www.ocobo.co/${lang}${path}</loc>`,
+        );
+      }
     }
+    for (const path of [
+      '/clients',
+      '/jobs',
+      '/legal/confidentialite',
+      '/legal/cgu',
+    ]) {
+      expect(body).toContain(`<loc>https://www.ocobo.co/fr${path}</loc>`);
+      expect(body).not.toContain(`<loc>https://www.ocobo.co/en${path}</loc>`);
+    }
+    expect(body).toContain('<loc>https://www.ocobo.co/blog</loc>');
+    expect(body).not.toContain('/stories');
+  });
+
+  it('leaves out pages whose feature flag is off', async () => {
+    vi.stubEnv('DISABLED_PAGES', 'studio,technology,jobs');
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
+    fetchJobsMock.mockResolvedValue([200, 'success', [jobEntry()]]);
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+
+    expect(body).not.toContain('/studio');
+    expect(body).not.toContain('/technology');
+    expect(body).not.toContain('/jobs');
+    expect(body).toContain('<loc>https://www.ocobo.co/fr/offer</loc>');
   });
 
   it('includes dynamic story routes from content fetcher', async () => {
-    fetchStoriesMock.mockResolvedValue([
+    fetchStoriesMock.mockImplementation(async (lang: string) => [
       200,
       'success',
-      [storyEntry({ slug: 'acme', date: '2024-03-15' })],
+      lang === 'fr' ? [storyEntry({ slug: 'acme', date: '2024-03-15' })] : [],
     ]);
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);
     fetchJobsMock.mockResolvedValue([200, 'success', []]);
@@ -184,7 +222,10 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    expect(body).toContain('<loc>https://www.ocobo.co/stories/acme</loc>');
+    expect(fetchStoriesMock).toHaveBeenCalledWith('fr');
+    expect(fetchStoriesMock).toHaveBeenCalledWith('en');
+    expect(body).toContain('<loc>https://www.ocobo.co/fr/clients/acme</loc>');
+    expect(body).not.toContain('/en/clients/acme');
   });
 
   it('includes dynamic blog post routes from content fetcher', async () => {
@@ -225,8 +266,9 @@ describe('sitemap loader', () => {
     const body = await outcome.response.text();
 
     expect(body).toContain('<loc>https://www.ocobo.co/fr/jobs/live-job</loc>');
-    expect(body).not.toContain('/fr/jobs/draft-job');
-    expect(body).not.toContain('/fr/jobs/closed-job');
+    expect(body).toContain('<loc>https://www.ocobo.co/en/jobs/live-job</loc>');
+    expect(body).not.toContain('/jobs/draft-job');
+    expect(body).not.toContain('/jobs/closed-job');
   });
 
   it('degrades gracefully when stories fetcher fails', async () => {
@@ -240,8 +282,7 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    expect(body).toContain('<loc>https://www.ocobo.co/stories</loc>');
-    expect(body).not.toContain('<loc>https://www.ocobo.co/stories/');
+    expect(body).not.toContain('/clients');
   });
 
   it('degrades gracefully when posts fetcher fails', async () => {
@@ -270,8 +311,7 @@ describe('sitemap loader', () => {
     if (outcome.type !== 'response') throw new Error('expected response');
     const body = await outcome.response.text();
 
-    expect(body).toContain('<loc>https://www.ocobo.co/fr/jobs</loc>');
-    expect(body).not.toContain('<loc>https://www.ocobo.co/fr/jobs/');
+    expect(body).not.toContain('/jobs');
   });
 
   it('includes challenge routes in both languages', async () => {
@@ -310,6 +350,48 @@ describe('sitemap loader', () => {
     expect(body).not.toContain(
       '<loc>https://www.ocobo.co/en/challenges/revenue-ai</loc>',
     );
+  });
+
+  it('links French and English versions with hreflang', async () => {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', [postEntry()]]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    loadChallengeMenuMock.mockImplementation(async (lang: string) => ({
+      challenges:
+        lang === 'fr'
+          ? [{ slug: 'revenue-performance' }, { slug: 'revenue-ai' }]
+          : [{ slug: 'revenue-performance' }],
+      failed: false,
+    }));
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+    const urlOf = (loc: string) =>
+      body.split('\n').find((line) => line.includes(`<loc>${loc}</loc>`));
+
+    expect(body).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
+    expect(urlOf('https://www.ocobo.co/en/offer')).toContain(
+      '<xhtml:link rel="alternate" hreflang="fr" href="https://www.ocobo.co/fr/offer"/>',
+    );
+    expect(urlOf('https://www.ocobo.co/fr')).toContain(
+      '<xhtml:link rel="alternate" hreflang="en" href="https://www.ocobo.co/en"/>',
+    );
+    expect(
+      urlOf('https://www.ocobo.co/fr/challenges/revenue-performance'),
+    ).toContain(
+      'hreflang="en" href="https://www.ocobo.co/en/challenges/revenue-performance"',
+    );
+    for (const loc of [
+      'https://www.ocobo.co/fr/challenges/revenue-ai',
+      'https://www.ocobo.co/fr/legal/cgu',
+      'https://www.ocobo.co/blog/hello-world',
+    ]) {
+      expect(urlOf(loc)).toBeDefined();
+      expect(urlOf(loc)).not.toContain('<xhtml:link');
+    }
   });
 
   it('passes ?refresh=1 to the challenge list', async () => {
@@ -369,9 +451,9 @@ describe('sitemap loader', () => {
 
     await new Promise((r) => setImmediate(r));
 
-    expect(fetchStoriesMock).toHaveBeenCalledTimes(1);
+    expect(fetchStoriesMock).toHaveBeenCalledTimes(2);
     expect(fetchBlogpostsMock).toHaveBeenCalledTimes(1);
-    expect(fetchJobsMock).toHaveBeenCalledTimes(1);
+    expect(fetchJobsMock).toHaveBeenCalledTimes(2);
     expect(loadChallengeMenuMock).toHaveBeenCalledTimes(2);
 
     resolveStories([200, 'success', []]);
