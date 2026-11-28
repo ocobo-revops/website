@@ -238,13 +238,17 @@ Use `.env.local` for dev. Never commit secrets. Server-only vars must never be i
 
 ## 14. Agent skills
 
-GitHub issues on `ocobo-revops/website`, via `gh` CLI. Triage vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`.
+### Issue tracker
 
-- Issue tracker → [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md)
-- Triage labels → [docs/agents/triage-labels.md](docs/agents/triage-labels.md)
-- Domain docs convention → [docs/agents/domain.md](docs/agents/domain.md)
+Linear, team GTM, project Website (`P-GTM-7`), via the Linear MCP tools. GitHub issues are no longer used. See [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md).
 
-Single-context repo: glossary in `CONTEXT.md` (root, lazily created) + decisions in `docs/adr/`. If your output contradicts an ADR, surface it explicitly.
+### Triage labels
+
+Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See [docs/agents/triage-labels.md](docs/agents/triage-labels.md).
+
+### Domain docs
+
+Single-context: glossary in `GLOSSARY.md` (root, lazily created) + decisions in `docs/adr/`. If your output contradicts an ADR, say so explicitly. See [docs/agents/domain.md](docs/agents/domain.md).
 
 ---
 
