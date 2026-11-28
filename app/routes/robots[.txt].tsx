@@ -1,7 +1,9 @@
 function generateRobotsTxt() {
-  return `User-agent: *
-  Allow: /
-  Sitemap: https://andrelandgraf.dev/sitemap.xml`;
+  return [
+    'User-agent: *',
+    'Allow: /',
+    'Sitemap: https://www.ocobo.co/sitemap.xml',
+  ].join('\n');
 }
 
 export async function loader() {
