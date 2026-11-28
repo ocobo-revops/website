@@ -1,130 +1,108 @@
 import type { LoaderFunctionArgs } from 'react-router';
 
-import type { Language } from '~/localization/resources';
+import { type Language, languages } from '~/localization/resources';
 import { shouldBypassCache } from '~/modules/cache';
 import { loadChallengeMenu } from '~/modules/challenge-menu.server';
 import { fetchBlogposts, fetchJobs, fetchStories } from '~/modules/content';
+import { isPageEnabled } from '~/modules/feature-flags';
+import {
+  type ContentKind,
+  type SitemapEntry,
+  buildLocalizedPageEntries,
+  localizedPath,
+  renderSitemap,
+} from '~/modules/sitemap';
 
 const baseUrl = 'https://www.ocobo.co';
 
-function getUrlElementWithDate(url: string, date: string) {
-  return `<url>
-        <loc>${url}</loc>
-        <lastmod>${date}</lastmod>
-        </url>`;
+/** Entries for one content folder, empty when the folder is missing. */
+type ContentEntries = {
+  kind: ContentKind;
+  lang: Language;
+  entries: SitemapEntry[];
+};
+
+async function storyEntries(lang: Language): Promise<ContentEntries> {
+  const [, state, data] = await fetchStories(lang);
+  const stories = state === 'success' && data ? data : [];
+  return {
+    kind: 'stories',
+    lang,
+    entries: stories.map((story) => ({
+      path: localizedPath(lang, `/clients/${encodeURIComponent(story.slug)}`),
+      lastmod: new Date(story.frontmatter.date),
+    })),
+  };
 }
 
-function generateSiteMap(
-  stories: { slug: string; date: Date }[],
-  posts: { slug: string; date: Date }[],
-  jobs: { slug: string; date: Date }[],
-  challenges: { slug: string; lang: Language }[],
-) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
-            ${getUrlElementWithDate(`${baseUrl}/fr`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/offer`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/method`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/about-us`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/fr/contact`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/stories`, new Date().toISOString())}
+// Blog routes carry no language segment: French posts only.
+async function blogEntries(): Promise<SitemapEntry[]> {
+  const [, state, data] = await fetchBlogposts();
+  if (state !== 'success' || !data) return [];
+  return data.map((post) => ({
+    path: `/blog/${encodeURIComponent(post.slug)}`,
+    lastmod: new Date(post.frontmatter.date),
+  }));
+}
 
-            ${stories
-              .map(
-                (story) =>
-                  `${getUrlElementWithDate(
-                    `${baseUrl}/stories/${story.slug}`,
-                    story.date.toISOString(),
-                  )}`,
-              )
-              .join('\n')}
-            ${getUrlElementWithDate(`${baseUrl}/blog`, new Date().toISOString())}
-            ${posts
-              .map(
-                (post) =>
-                  `${getUrlElementWithDate(
-                    `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
-                    post.date.toISOString(),
-                  )}`,
-              )
-              .join('\n')}
-            ${getUrlElementWithDate(`${baseUrl}/fr/jobs`, new Date().toISOString())}
-            ${jobs
-              .map(
-                (job) =>
-                  `${getUrlElementWithDate(
-                    `${baseUrl}/fr/jobs/${job.slug}`,
-                    job.date.toISOString(),
-                  )}`,
-              )
-              .join('\n')}
-            ${challenges
-              .map((challenge) =>
-                getUrlElementWithDate(
-                  `${baseUrl}/${challenge.lang}/challenges/${challenge.slug}`,
-                  new Date().toISOString(),
-                ),
-              )
-              .join('\n')}
-            ${getUrlElementWithDate(`${baseUrl}/legal/confidentialite`, new Date().toISOString())}
-            ${getUrlElementWithDate(`${baseUrl}/legal/cgu`, new Date().toISOString())}
-        </urlset>`;
+async function jobEntries(lang: Language): Promise<ContentEntries> {
+  if (!isPageEnabled('jobs')) return { kind: 'jobs', lang, entries: [] };
+  const [, state, data] = await fetchJobs(lang);
+  const jobs = state === 'success' && data ? data : [];
+  return {
+    kind: 'jobs',
+    lang,
+    entries: jobs
+      .filter((job) => job.frontmatter.status === 'published')
+      .map((job) => ({
+        path: localizedPath(lang, `/jobs/${encodeURIComponent(job.slug)}`),
+        lastmod: new Date(job.frontmatter.publishedAt),
+      })),
+  };
+}
+
+// Challenge files carry no date: every file in the folder is published.
+// Same list as the navbar entry: it skips invalid files and slugs the
+// route answers 404 to, and shares its in-memory cache.
+async function challengeEntries(
+  lang: Language,
+  refresh: boolean,
+): Promise<SitemapEntry[]> {
+  const { challenges } = await loadChallengeMenu(lang, { refresh });
+  return challenges.map(({ slug }) => ({
+    path: localizedPath(lang, `/challenges/${encodeURIComponent(slug)}`),
+  }));
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const storiesQuery = fetchStories().then((result) => {
-    const [, state, data] = result;
-    if (state === 'success' && data) {
-      return data.map((story) => ({
-        slug: story.slug,
-        date: new Date(story.frontmatter.date),
-      }));
-    }
-    return [];
-  });
-
-  const postsQuery = fetchBlogposts().then((result) => {
-    const [, state, data] = result;
-    if (state === 'success' && data) {
-      return data.map((post) => ({
-        slug: post.slug,
-        date: new Date(post.frontmatter.date),
-      }));
-    }
-    return [];
-  });
-
-  const jobsQuery = fetchJobs().then((result) => {
-    const [, state, data] = result;
-    if (state === 'success' && data) {
-      return data
-        .filter((job) => job.frontmatter.status === 'published')
-        .map((job) => ({
-          slug: job.slug,
-          date: new Date(job.frontmatter.publishedAt),
-        }));
-    }
-    return [];
-  });
-
-  // Challenge files carry no date: every file in the folder is published.
-  // Same list as the navbar entry: it skips invalid files and slugs the
-  // route answers 404 to, and shares its in-memory cache.
   const refresh = shouldBypassCache(request);
-  const challengesQuery = async (lang: Language) => {
-    const { challenges } = await loadChallengeMenu(lang, { refresh });
-    return challenges.map(({ slug }) => ({ slug, lang }));
-  };
-
-  const [stories, posts, jobs, frChallenges, enChallenges] = await Promise.all([
-    storiesQuery,
-    postsQuery,
-    jobsQuery,
-    challengesQuery('fr'),
-    challengesQuery('en'),
+  const [content, posts, challenges] = await Promise.all([
+    Promise.all([...languages.map(storyEntries), ...languages.map(jobEntries)]),
+    blogEntries(),
+    Promise.all(languages.map((lang) => challengeEntries(lang, refresh))),
   ]);
-  const challenges = [...frChallenges, ...enChallenges];
-  return new Response(generateSiteMap(stories, posts, jobs, challenges), {
+
+  // An index page with nothing to list renders an error state: leave it out.
+  const hasContent = (kind: ContentKind, lang: Language) =>
+    content.some(
+      (folder) =>
+        folder.kind === kind &&
+        folder.lang === lang &&
+        folder.entries.length > 0,
+    );
+
+  const entries = [
+    ...buildLocalizedPageEntries(languages, {
+      isEnabled: isPageEnabled,
+      hasContent,
+    }),
+    { path: '/blog' },
+    ...content.flatMap((folder) => folder.entries),
+    ...posts,
+    ...challenges.flat(),
+  ];
+
+  return new Response(renderSitemap(baseUrl, entries), {
     headers: {
       'content-type': 'application/xml',
     },
