@@ -10,9 +10,11 @@
 
 ### 1. Clone the project
 
+Clone the team repository itself, not a personal fork (see [Branches and pull requests](#3-branches-and-pull-requests)).
+
 ```bash
-git clone <repository-url>
-cd ocobo-website
+git clone https://github.com/ocobo-revops/website.git
+cd website
 ```
 
 ### 2. Install dependencies
@@ -128,7 +130,15 @@ pnpm build:analyze     # Bundle analysis
 4. **Verify** quality with `pnpm check`
 5. **Validate** types with `pnpm typecheck`
 
-### 3. Styling with Panda CSS
+### 3. Branches and pull requests
+
+- **Work on a branch of `ocobo-revops/website`.** Push it to this repository and open the pull request from there. Do not open pull requests from a fork.
+- **Why:** the repository is public, so Vercel holds every fork deployment until a member of the Vercel team approves it. A branch of this repository gets its preview deployment automatically, and the Vercel bot posts the URL on the pull request.
+- **Access:** pushing a branch needs the `write` role on the repository. Ask an admin if you only have `triage`.
+- **Merging into `main`:** one approved review and green `lint`, `format`, `test`, `typecheck` and `e2e` checks are required. A new commit pushed after the approval dismisses it. Repository admins can merge without the review.
+- **Merge method:** merge commit (`--merge`), never squash or rebase.
+
+### 4. Styling with Panda CSS
 
 ```typescript
 // Using design tokens
@@ -145,7 +155,7 @@ const dynamicStyle = css({
 <Button variant="primary" size="md">Click me</Button>
 ```
 
-### 4. Content Management
+### 5. Content Management
 
 ```typescript
 // Fetching content
