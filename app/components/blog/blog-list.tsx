@@ -130,6 +130,8 @@ const BlogList: React.FunctionComponent<BlogListProps> = ({ items }) => {
                 w: 'full',
                 h: 'full',
                 objectFit: 'cover',
+                // Anchor left so banners keep their title visible when cropped
+                objectPosition: 'left',
                 opacity: 0.8,
               })}
             />
