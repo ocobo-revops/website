@@ -1,6 +1,6 @@
 # Triage labels
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the label strings used in Linear (team GTM, label group "Triage").
+The skills speak in terms of five canonical triage roles. This file maps those roles to the label strings used in Linear (team GTM, single-select label group `triage`). Pass the child name (`labels: ["needs-triage"]`): an issue carries one triage label at a time.
 
 | Label in mattpocock/skills | Label in our tracker | Meaning                                  |
 | -------------------------- | -------------------- | ---------------------------------------- |
