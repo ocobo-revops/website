@@ -240,7 +240,7 @@ Use `.env.local` for dev. Never commit secrets. Server-only vars must never be i
 
 ### Issue tracker
 
-Linear, team GTM, project Website (`P-GTM-7`), via the Linear MCP tools. GitHub issues are no longer used. See [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md).
+Linear, team GTM: every site ticket carries the `website` label, projects sit under the Website initiative. Use the Linear MCP tools. GitHub issues are no longer used. See [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md).
 
 ### Triage labels
 

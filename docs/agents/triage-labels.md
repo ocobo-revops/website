@@ -2,6 +2,8 @@
 
 The `/triage` skill speaks in terms of two category roles and five state roles. This file maps those roles to the label strings used in Linear (team GTM).
 
+`/triage` works on the issues of team GTM that carry the `website` label (see `issue-tracker.md`). Team GTM also tracks content work, which it must leave alone.
+
 When a skill mentions a role (for example "apply the AFK-ready triage label"), use the corresponding label string from these tables. Never create a label named after a role (`bug`, `enhancement`): the labels below already exist.
 
 ## Category roles
