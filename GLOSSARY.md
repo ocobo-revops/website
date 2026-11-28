@@ -41,5 +41,9 @@ A point where a human must approve before the work moves on.
 _Avoid_: checkpoint, approval step, review
 
 **Sensitive zone**:
-A part of the site whose changes require the technical owner's approval at a Gate, on top of the Requester's.
+A part of the site whose changes require the Technical owner's approval at a Gate, on top of the Requester's.
 _Avoid_: critical path, protected area
+
+**Technical owner**:
+The human who approves, at a Gate, any change that touches a Sensitive zone.
+_Avoid_: tech lead, maintainer, admin
