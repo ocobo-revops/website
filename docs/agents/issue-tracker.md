@@ -9,6 +9,7 @@ Issue identifiers look like `GTM-42`. Older tickets reference GitHub issues as `
 The site is continuous work, so no single project holds it.
 
 - **Label `website`**: every ticket about the site's code or infrastructure carries it. It is the only filter that finds all of them. Team GTM also tracks content work, which does not carry it.
+- **View "Website"**: the shared team view [Website](https://linear.app/ocobo/view/347b179d-d7ff-4443-add2-e421bdf329f8) shows every `website` ticket, grouped by project. The "No project" group holds maintenance.
 - **Initiative "Website"**: groups the site's projects. It has no lead team, because team initiatives require the Business plan.
 - **Projects**: one per bounded effort with an end (a spec), attached to the Website initiative. The current one is **Refonte v2**. A ticket gets a project only when it belongs to an active project.
 - **Maintenance tickets** (dependency upgrades, CI, performance, infrastructure) have the `website` label and no project.
