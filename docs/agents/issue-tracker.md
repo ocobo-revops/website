@@ -9,8 +9,8 @@ Issue identifiers look like `GTM-42`. Older tickets reference GitHub issues as `
 - **Create an issue**: `save_issue` with `team: "GTM"`, `project: "P-GTM-7"`, a `title`, a markdown `description`, `labels` and `state`. Check `list_issues` first to avoid a duplicate.
 - **Read an issue**: `get_issue` with the identifier, then `list_comments` for the discussion (`get_issue` does not include comments).
 - **List issues**: `list_issues` with `project: "P-GTM-7"`, filtered by `state`, `label` or `query`. Follow `cursor` while `hasNextPage` is true.
-- **Statuses**: `Backlog` (not triaged), `Todo`, `In Progress` (claimed, work started), `In Review` (a PR is open), `Done`, `Canceled`, `Duplicate`.
-- **Start work**: `save_issue` with `assignee: "me"` and `state: "In Progress"`.
+- **Statuses**: `Backlog` (not triaged), `Todo`, `In progress` (claimed, work started), `In Review` (a PR is open), `Done`, `Canceled`, `Duplicate`.
+- **Start work**: `save_issue` with `assignee: "me"` and `state: "In progress"`.
 - **Labels**: the triage labels (see `triage-labels.md`), plus a type: `Feature`, `Improvement`, `Bug`, `Perf`, `Tests`, `Deps`. `save_issue` `labels` replaces the whole set: pass every label to keep.
 - **Specs**: a spec (PRD) is a Linear document attached to the project (`save_document` with `project: "P-GTM-7"`). Its tickets link to it in a `## Parent` section at the top of their description.
 - **Milestones**: a spec's delivery steps are project milestones (`save_milestone`). Set `milestone` on each ticket that belongs to one. Milestones carry no date until the maintainer adds one.
@@ -43,5 +43,5 @@ The wayfinder labels already exist on team GTM, as children of the single-select
 - **Child ticket**: an issue with `parentId` set to the map, labelled with its type (`research`, `prototype`, `grilling` or `task`). Once claimed, the ticket is assigned to the driving dev.
 - **Blocking**: see **Blocking** under Conventions.
 - **Frontier query**: `list_issues` on the map's children that are not `Done` or `Canceled`, drop any with an open blocker or an assignee; first in map order wins.
-- **Claim**: `save_issue` with `assignee: "me"` and `state: "In Progress"`, the session's first write.
+- **Claim**: `save_issue` with `assignee: "me"` and `state: "In progress"`, the session's first write.
 - **Resolve**: `save_comment` with the answer, then `save_issue` with `state: "Done"`, then append a context pointer (gist + link) to the map's Decisions-so-far.
