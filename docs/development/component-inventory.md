@@ -211,7 +211,7 @@ Shared pieces:
 | **ChallengeClientCase** | `challenge-client-case.tsx` | Case headline, summary, metric cards and the link to the Story; one column without metrics | Challenge-specific |
 | **ChallengeExperts** | `challenge-experts.tsx` | Expert cards (`PersonCard`) of the Team members on the challenge | Challenge-specific |
 | **ChallengeStack** | `challenge-stack.tsx` | Revenue Systems only (key `sy`): heading, CTA to the technology page and `StackDiagram`; copy in the `challenges` namespace | Challenge-specific |
-| **ChallengeDiagnostic** | `challenge-diagnostic.tsx` | Yellow closing block with the contact CTA (`#diagnostic`) | Challenge-specific |
+| **ChallengeDiagnostic** | `challenge-diagnostic.tsx` | Yellow closing block with the contact CTA (`#diagnostic`) | Reusable (challenge pages, ROI page) |
 | **ChallengeOtherChallenges** | `challenge-other-challenges.tsx` | Pills to the other challenges, from the navbar list | Challenge-specific |
 
 ### Stack diagram (`app/components/stack/`)
@@ -221,6 +221,22 @@ Ocobo's Revenue Systems stack: the CRM at the centre, four numbered layers aroun
 |-----------|------|---------|-------------|
 | **StackDiagram** | `stack-diagram.tsx` | The whole figure: layer cards, CRM core, animated connectors; entrance on scroll, animations off under reduced motion | Reusable (challenge page, technology page, home) |
 | **StackLabel**, **ToolChips**, **ToolList**, **ToolIcon** | `stack-parts.tsx` | Layer label with its dot, tool chips, tool rows with their role, logo or monogram | Stack-specific |
+
+### ROI page components (`app/components/roi/`)
+Sections of the ROI calculator page (`app/routes/_main.($lang).roi.tsx`), behind the `roi` page flag. The calculation is pure and lives in `app/utils/roi.ts` (`computeRoi`, `clampRoiInput`, the scenarios and the input ranges); the components only format and display it. `RoiExperience` holds the five inputs and the scenario in state and passes the same result to the walkthrough, the result card and the detail. Figures are formatted per language by `useRoiFormat` (`use-roi-format.ts`). Copy lives in the `roi` locale namespace. Anchor ids (`#calcul`, `#calculateur`, `#detail`) are in `roi-ids.ts`; the dotted backdrop classes are in `roi-styles.ts`.
+
+| Component | File | Purpose | Reusability |
+|-----------|------|---------|-------------|
+| **RoiHero** | `roi-hero.tsx` | Pill, title with the yellow marker, lead, CTA to the walkthrough, and `RoiHeroChart` (`roi-hero-chart.tsx`, the animated multiplier curve) | ROI-specific |
+| **RoiExperience** | `roi-experience.tsx` | State owner: walkthrough, then the calculator section (inputs, sticky result from `lg`, detail) | ROI-specific |
+| **RoiWalkthrough** | `roi-walkthrough.tsx` | The multiplication laid out in three bands (formula, today, with RevOps) and the gain; scrolls inside its own region on a phone | ROI-specific |
+| **Band**, `buildCells` | `roi-walkthrough-band.tsx` | One band of the walkthrough: the terms and operators on a 15-column grid, in reading order | ROI-specific |
+| **RoiInputsCard** | `roi-inputs-card.tsx` | Steps 1 and 2: five sliders, the scenario toggle (`aria-pressed`) and the lever pills | ROI-specific |
+| **RoiRangeInput** | `roi-range-input.tsx` | Native range input with label, hint, formatted `<output>` and `aria-valuetext` | Reusable (any slider) |
+| **RoiStep** | `roi-step.tsx` | Numbered step heading; also exports `stepTitle` and `stepHint` for small card titles | ROI-specific |
+| **RoiResultCard** | `roi-result-card.tsx` | Step 3 on a dark card: today against RevOps, the gain, the booking gain and the disclaimer | ROI-specific |
+| **RoiDetail** | `roi-detail.tsx` | Line-by-line table (ARIA table roles) with the lever or relative change per row; reflows on a phone | ROI-specific |
+| **RoiDiagnostic** | `roi-diagnostic.tsx` | `ChallengeDiagnostic` with the `roi` copy | ROI-specific |
 
 ### Design system showcase (`app/components/design-system/`)
 One `*-section.tsx` module per `/design-system` section, each wrapped in `ShowcaseSection` (`showcase-section.tsx`), whose heading carries an anchor id derived from its title. The registry `designSystemGroups` in `subpages.ts` lists the pages in three groups (foundations, components, patterns) and each page's section titles. It feeds the sidebar (`design-system-sidebar.tsx`) and the grouped index (`design-system._index.tsx`). The sidebar lists the current page's sections under its link when the page has more than one, from `lg`. `app/routes/design-system.tsx` is the layout: one sidebar, then the page title and `Outlet`. Each page is a route `design-system.<slug>.tsx` that only composes its section modules. A new showcase section is a new module, its title in the registry and one line in its page route.

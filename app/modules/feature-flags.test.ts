@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   DISABLED_PAGES_DEFAULT,
@@ -16,6 +16,7 @@ describe('feature-flags', () => {
     } else {
       process.env.DISABLED_PAGES = originalEnv;
     }
+    vi.unstubAllEnvs();
   });
 
   describe('getDisabledPages', () => {
@@ -24,20 +25,51 @@ describe('feature-flags', () => {
       expect(getDisabledPages()).toEqual(DISABLED_PAGES_DEFAULT);
     });
 
-    it('keeps only the unbuilt pages when env var is empty', () => {
+    it('returns no page when env var is empty', () => {
       process.env.DISABLED_PAGES = '';
-      expect(getDisabledPages()).toEqual(['roi']);
+      expect(getDisabledPages()).toEqual([]);
     });
 
     it('parses comma-separated slugs', () => {
       process.env.DISABLED_PAGES = 'news, tools';
-      expect(getDisabledPages()).toEqual(['news', 'tools', 'roi']);
+      expect(getDisabledPages()).toEqual(['news', 'tools']);
     });
+  });
 
-    it('keeps roi disabled whatever the env var says, until #248', () => {
+  describe('pages awaiting copy sign-off (roi)', () => {
+    it('keeps roi disabled in production whatever the env var says', () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', 'production');
       process.env.DISABLED_PAGES = 'news,tools';
       expect(isPageEnabled('roi')).toBe(false);
       process.env.DISABLED_PAGES = '';
+      expect(isPageEnabled('roi')).toBe(false);
+    });
+
+    it('keeps roi disabled on a production build outside Vercel', () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', undefined);
+      process.env.DISABLED_PAGES = '';
+      expect(isPageEnabled('roi')).toBe(false);
+    });
+
+    it('lets the env var enable roi on a Vercel preview', () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', 'preview');
+      process.env.DISABLED_PAGES = 'news,tools';
+      expect(isPageEnabled('roi')).toBe(true);
+    });
+
+    it('lets the env var enable roi in local development', () => {
+      vi.stubEnv('NODE_ENV', 'development');
+      process.env.DISABLED_PAGES = 'news,tools';
+      expect(isPageEnabled('roi')).toBe(true);
+    });
+
+    it('keeps roi disabled by default on a preview', () => {
+      vi.stubEnv('NODE_ENV', 'production');
+      vi.stubEnv('VERCEL_ENV', 'preview');
+      delete process.env.DISABLED_PAGES;
       expect(isPageEnabled('roi')).toBe(false);
     });
   });
@@ -75,7 +107,7 @@ describe('feature-flags', () => {
 
     it('ignores invalid slugs in env var', () => {
       process.env.DISABLED_PAGES = 'news,bogus,tools';
-      expect(getDisabledPages()).toEqual(['news', 'tools', 'roi']);
+      expect(getDisabledPages()).toEqual(['news', 'tools']);
     });
 
     it('does not throw when page is enabled', () => {

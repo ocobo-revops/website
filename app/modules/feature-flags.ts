@@ -25,25 +25,39 @@ const VALID_SLUGS: Set<string> = new Set<PageSlug>([
 ]);
 
 /**
- * P2+ pages disabled by default until launched. `roi` waits for the ROI page
- * (#248) and Ocobo's sign-off on its assumptions copy.
+ * P2+ pages disabled by default until launched. `roi` also waits for Ocobo's
+ * sign-off on its assumptions copy (#248).
  */
 export const DISABLED_PAGES_DEFAULT: PageSlug[] = ['news', 'tools', 'roi'];
 
 /**
- * Pages not built yet: disabled whatever DISABLED_PAGES says, since that env
- * var replaces the default list. #248 removes `roi` from here when it ships
- * the ROI calculator page.
+ * Built pages waiting for Ocobo's sign-off on their copy. Production keeps
+ * them off whatever DISABLED_PAGES says, since that env var replaces the
+ * default list. Vercel previews and local development follow DISABLED_PAGES,
+ * so the copy can be reviewed there. Remove a slug once Ocobo approves it.
  */
-const UNBUILT_PAGES: PageSlug[] = ['roi'];
+const AWAITING_SIGN_OFF_PAGES: PageSlug[] = ['roi'];
+
+/**
+ * True on a Vercel preview and outside production builds. Fails closed: a
+ * production build without VERCEL_ENV counts as production.
+ */
+function isReviewEnvironment(): boolean {
+  return (
+    process.env.VERCEL_ENV === 'preview' ||
+    process.env.NODE_ENV !== 'production'
+  );
+}
 
 /**
  * Returns the list of currently disabled page slugs.
  * Reads from DISABLED_PAGES env var, falls back to DISABLED_PAGES_DEFAULT,
- * then adds UNBUILT_PAGES. Server-only, reads process.env.
+ * then adds AWAITING_SIGN_OFF_PAGES in production. Server-only, reads
+ * process.env.
  */
 export function getDisabledPages(): PageSlug[] {
-  return [...new Set([...readDisabledPages(), ...UNBUILT_PAGES])];
+  const held = isReviewEnvironment() ? [] : AWAITING_SIGN_OFF_PAGES;
+  return [...new Set([...readDisabledPages(), ...held])];
 }
 
 function readDisabledPages(): PageSlug[] {
