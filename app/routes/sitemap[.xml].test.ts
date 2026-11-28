@@ -352,6 +352,48 @@ describe('sitemap loader', () => {
     );
   });
 
+  it('links French and English versions with hreflang', async () => {
+    fetchStoriesMock.mockResolvedValue([200, 'success', []]);
+    fetchBlogpostsMock.mockResolvedValue([200, 'success', [postEntry()]]);
+    fetchJobsMock.mockResolvedValue([200, 'success', []]);
+    loadChallengeMenuMock.mockImplementation(async (lang: string) => ({
+      challenges:
+        lang === 'fr'
+          ? [{ slug: 'revenue-performance' }, { slug: 'revenue-ai' }]
+          : [{ slug: 'revenue-performance' }],
+      failed: false,
+    }));
+
+    const { loader } = await import('./sitemap[.xml]');
+    const outcome = await invokeLoader(loader);
+
+    if (outcome.type !== 'response') throw new Error('expected response');
+    const body = await outcome.response.text();
+    const urlOf = (loc: string) =>
+      body.split('\n').find((line) => line.includes(`<loc>${loc}</loc>`));
+
+    expect(body).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
+    expect(urlOf('https://www.ocobo.co/en/offer')).toContain(
+      '<xhtml:link rel="alternate" hreflang="fr" href="https://www.ocobo.co/fr/offer"/>',
+    );
+    expect(urlOf('https://www.ocobo.co/fr')).toContain(
+      '<xhtml:link rel="alternate" hreflang="en" href="https://www.ocobo.co/en"/>',
+    );
+    expect(
+      urlOf('https://www.ocobo.co/fr/challenges/revenue-performance'),
+    ).toContain(
+      'hreflang="en" href="https://www.ocobo.co/en/challenges/revenue-performance"',
+    );
+    for (const loc of [
+      'https://www.ocobo.co/fr/challenges/revenue-ai',
+      'https://www.ocobo.co/fr/legal/cgu',
+      'https://www.ocobo.co/blog/hello-world',
+    ]) {
+      expect(urlOf(loc)).toBeDefined();
+      expect(urlOf(loc)).not.toContain('<xhtml:link');
+    }
+  });
+
   it('passes ?refresh=1 to the challenge list', async () => {
     fetchStoriesMock.mockResolvedValue([200, 'success', []]);
     fetchBlogpostsMock.mockResolvedValue([200, 'success', []]);

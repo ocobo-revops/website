@@ -9,7 +9,7 @@ import {
   type ContentKind,
   type SitemapEntry,
   buildLocalizedPageEntries,
-  localizedPath,
+  localizedEntry,
   renderSitemap,
 } from '~/modules/sitemap';
 
@@ -28,10 +28,13 @@ async function storyEntries(lang: Language): Promise<ContentEntries> {
   return {
     kind: 'stories',
     lang,
-    entries: stories.map((story) => ({
-      path: localizedPath(lang, `/clients/${encodeURIComponent(story.slug)}`),
-      lastmod: new Date(story.frontmatter.date),
-    })),
+    entries: stories.map((story) =>
+      localizedEntry(
+        lang,
+        `/clients/${encodeURIComponent(story.slug)}`,
+        new Date(story.frontmatter.date),
+      ),
+    ),
   };
 }
 
@@ -54,10 +57,13 @@ async function jobEntries(lang: Language): Promise<ContentEntries> {
     lang,
     entries: jobs
       .filter((job) => job.frontmatter.status === 'published')
-      .map((job) => ({
-        path: localizedPath(lang, `/jobs/${encodeURIComponent(job.slug)}`),
-        lastmod: new Date(job.frontmatter.publishedAt),
-      })),
+      .map((job) =>
+        localizedEntry(
+          lang,
+          `/jobs/${encodeURIComponent(job.slug)}`,
+          new Date(job.frontmatter.publishedAt),
+        ),
+      ),
   };
 }
 
@@ -69,9 +75,9 @@ async function challengeEntries(
   refresh: boolean,
 ): Promise<SitemapEntry[]> {
   const { challenges } = await loadChallengeMenu(lang, { refresh });
-  return challenges.map(({ slug }) => ({
-    path: localizedPath(lang, `/challenges/${encodeURIComponent(slug)}`),
-  }));
+  return challenges.map(({ slug }) =>
+    localizedEntry(lang, `/challenges/${encodeURIComponent(slug)}`),
+  );
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {

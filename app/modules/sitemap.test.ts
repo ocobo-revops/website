@@ -5,6 +5,7 @@ import type { PageSlug } from '~/modules/feature-flags';
 import {
   LOCALIZED_PAGES,
   buildLocalizedPageEntries,
+  localizedEntry,
   localizedPath,
   renderSitemap,
 } from './sitemap';
@@ -19,6 +20,23 @@ describe('localizedPath', () => {
 
   it('gives the home page with no trailing slash', () => {
     expect(localizedPath('en', '')).toBe('/en');
+  });
+});
+
+describe('localizedEntry', () => {
+  it('keys the entry on the path with no language', () => {
+    expect(localizedEntry('en', '/offer')).toEqual({
+      path: '/en/offer',
+      lang: 'en',
+      key: '/offer',
+    });
+  });
+
+  it('keeps the lastmod when given', () => {
+    const lastmod = new Date('2024-03-15T00:00:00Z');
+    expect(localizedEntry('fr', '/clients/acme', lastmod).lastmod).toBe(
+      lastmod,
+    );
   });
 });
 
@@ -83,7 +101,7 @@ describe('renderSitemap', () => {
     const xml = renderSitemap('https://example.test', []);
     expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
     expect(xml).toContain(
-      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     );
   });
 
@@ -113,5 +131,32 @@ describe('renderSitemap', () => {
   it('escapes XML special characters', () => {
     const xml = renderSitemap('https://example.test', [{ path: '/a?x=1&y=2' }]);
     expect(xml).toContain('<loc>https://example.test/a?x=1&amp;y=2</loc>');
+  });
+
+  it('links the translations of a page as hreflang alternates', () => {
+    const xml = renderSitemap('https://example.test', [
+      localizedEntry('fr', '/offer'),
+      localizedEntry('en', '/offer'),
+    ]);
+    const links = [
+      '<xhtml:link rel="alternate" hreflang="fr" href="https://example.test/fr/offer"/>',
+      '<xhtml:link rel="alternate" hreflang="en" href="https://example.test/en/offer"/>',
+      '<xhtml:link rel="alternate" hreflang="x-default" href="https://example.test/fr/offer"/>',
+    ].join('');
+
+    expect(xml).toContain(
+      `<url><loc>https://example.test/fr/offer</loc>${links}</url>`,
+    );
+    expect(xml).toContain(
+      `<url><loc>https://example.test/en/offer</loc>${links}</url>`,
+    );
+  });
+
+  it('writes no alternates for a page in one language only', () => {
+    const xml = renderSitemap('https://example.test', [
+      localizedEntry('fr', '/legal/cgu'),
+      { path: '/blog/hello' },
+    ]);
+    expect(xml).not.toContain('<xhtml:link');
   });
 });
